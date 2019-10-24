@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/logo.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          LeetCode October - 张天宇 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://tyzhang.tk/article/leetcode/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#一跪一路" title="一跪一路">一跪一路</a>
+                            
+                        </div>
+                        <h1>LeetCode October</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 张天宇 on
+                            2019-10-15
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">张天宇</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <blockquote>
+<p>开个新坑，记录LeetCode和剑指offer路上印象深刻的题目，十月篇。</p>
+</blockquote>
+<h2 id="leetcode">LeetCode</h2>
+<h3 id="3-longest-substring-without-repeating-characters">3  Longest Substring Without Repeating Characters</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>寻找最长的无重复的子串。</p>
+<h4 id="解题思路">解题思路</h4>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> resu=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> len=s.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> a[<span class="number">128</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j=i;j&lt;len;j++)&#123;</span><br><span class="line">                a[s[j]<span class="number">-0</span>]++;</span><br><span class="line">                <span class="keyword">if</span> (a[s[j]<span class="number">-0</span>]&gt;<span class="number">1</span>)&#123;</span><br><span class="line">                    <span class="keyword">int</span> tmp=j-i;</span><br><span class="line">                    <span class="keyword">if</span> (tmp&gt;resu) resu=tmp;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (j==len<span class="number">-1</span>)&#123;</span><br><span class="line">                    <span class="keyword">int</span> tmp=j-i+<span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">if</span> (tmp&gt;resu) resu=tmp;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resu;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="15-3sum">15 3Sum</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>在数组中寻找三个和为0的数的组合。</p>
+<h4 id="解题思路">解题思路</h4>
+<p>排序后，固定一个值，另外两个夹逼寻找。如果和大于零，说明正数太大，右边的需要缩小往左移。如果和小于零，说明负数太小，需要左边的需要往右移。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; threeSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</span><br><span class="line">        <span class="keyword">if</span> (nums.size() == <span class="number">0</span>) <span class="keyword">return</span> result;</span><br><span class="line">        sort(nums.begin(), nums.end());</span><br><span class="line">        <span class="keyword">int</span> left, right, temp;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &gt; <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[i - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">            left = i + <span class="number">1</span>;</span><br><span class="line">            right = nums.size() - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">                temp = nums[i] + nums[left] + nums[right];</span><br><span class="line">                <span class="keyword">if</span> (temp == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result_s;</span><br><span class="line">                    result_s.push_back(nums[i]);</span><br><span class="line">                    result_s.push_back(nums[left]);</span><br><span class="line">                    result_s.push_back(nums[right]);</span><br><span class="line">                    <span class="keyword">int</span> iii = nums[i];</span><br><span class="line">                    <span class="keyword">int</span> lll = nums[left];</span><br><span class="line">                    <span class="keyword">int</span> rrr = nums[right];</span><br><span class="line">                    result.push_back(result_s);</span><br><span class="line">                    <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[left] == lll) left++;</span><br><span class="line">                    <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[right] == rrr) right--;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (temp &gt; <span class="number">0</span>)</span><br><span class="line">                    right--;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    left++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="17-letter-combinations-of-a-phone-number">17  Letter Combinations of a Phone Number</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>输出电话号码代表的字母全排列。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: &quot;23&quot;</span><br><span class="line">Output: [&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&quot;, &quot;bf&quot;, &quot;cd&quot;, &quot;ce&quot;, &quot;cf&quot;].</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路">解题思路</h4>
+<p>将电话号码对应的字母存储到Map中，定义一个空vector，每处理一个字符串中的字符就将vector中的所有元素拿出来追加这个电话号码的全排列。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; letterCombinations(<span class="built_in">string</span> digits) &#123;</span><br><span class="line">        <span class="keyword">if</span> (digits == <span class="string">""</span>) <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; resu(<span class="number">1</span>, <span class="string">""</span>);</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; key;</span><br><span class="line">        <span class="comment">//存储键值对</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; t = &#123;<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>&#125;;</span><br><span class="line">        key.insert(make_pair(<span class="number">2</span>, t));</span><br><span class="line">        t = &#123;<span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>&#125;;</span><br><span class="line">        key.insert(make_pair(<span class="number">3</span>, t));</span><br><span class="line">        t = &#123;<span class="string">"g"</span>, <span class="string">"h"</span>, <span class="string">"i"</span>&#125;;</span><br><span class="line">        key.insert(make_pair(<span class="number">4</span>, t));</span><br><span class="line">        t = &#123;<span class="string">"j"</span>, <span class="string">"k"</span>, <span class="string">"l"</span>&#125;;</span><br><span class="line">        key.insert(make_pair(<span class="number">5</span>, t));</span><br><span class="line">        t = &#123;<span class="string">"m"</span>, <span class="string">"n"</span>, <span class="string">"o"</span>&#125;;</span><br><span class="line">        key.insert(make_pair(<span class="number">6</span>, t));</span><br><span class="line">        t = &#123;<span class="string">"p"</span>, <span class="string">"q"</span>, <span class="string">"r"</span>, <span class="string">"s"</span>&#125;;</span><br><span class="line">        key.insert(make_pair(<span class="number">7</span>, t));</span><br><span class="line">        t = &#123;<span class="string">"t"</span>, <span class="string">"u"</span>, <span class="string">"v"</span>&#125;;</span><br><span class="line">        key.insert(make_pair(<span class="number">8</span>, t));</span><br><span class="line">        t = &#123;<span class="string">"w"</span>, <span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>&#125;;</span><br><span class="line">        key.insert(make_pair(<span class="number">9</span>, t));</span><br><span class="line">        <span class="comment">//对每个电话号码处理</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> d : digits) &#123;</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; temp;</span><br><span class="line">            <span class="comment">//将上个电话号码处理后的结果拿出来</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> r : resu) &#123;</span><br><span class="line">                <span class="comment">//追加当前号码代表的字母</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">auto</span> k : key[d - <span class="string">'0'</span>]) &#123;</span><br><span class="line">                    temp.push_back(r + k);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            resu = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resu;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="26-remove-duplicates-from-sorted-array">26  Remove Duplicates from Sorted Array</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>数组去重并返回去重后的长度。</p>
+<h4 id="解题思路">解题思路</h4>
+<p>本题主要记录Vector函数的使用。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> it =unique(nums.begin(),nums.end());</span><br><span class="line">        nums.resize(distance(nums.begin(),it));</span><br><span class="line">        <span class="keyword">return</span> nums.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="38-count-and-say">38 Count and Say</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>按照题述规律打印指定项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.     1</span><br><span class="line">2.     11</span><br><span class="line">3.     21</span><br><span class="line">4.     1211</span><br><span class="line">5.     111221</span><br><span class="line">1 is read off as &quot;one 1&quot; or 11.</span><br><span class="line">11 is read off as &quot;two 1s&quot; or 21.</span><br><span class="line">21 is read off as &quot;one 2, then one 1&quot; or 1211.</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路">解题思路</h4>
+<p>显然每一项都是上一项“数”出来的，因此写出相邻两项的转换规则之后递归解决就可以了。相邻两项就是数数。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">count</span><span class="params">(<span class="built_in">string</span> input)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i, j;</span><br><span class="line">        <span class="built_in">string</span> resu = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; input.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (j = i; j &lt; input.size(); j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (input[j] != input[i]) <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            resu += j - i + <span class="string">'0'</span>;</span><br><span class="line">            resu += input[i];</span><br><span class="line">            i = j - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resu;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">countAndSay</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="string">"1"</span>;</span><br><span class="line">        <span class="built_in">string</span> str = <span class="string">"1"</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            str = count(str);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="48-rotate-image">48  Rotate Image</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>将矩阵顺时针旋转90°。</p>
+<h4 id="解题思路">解题思路</h4>
+<p>将矩阵对角线对称，然后左右对称，即可。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//先转置，再水平对称</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> l = matrix.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; l; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i+<span class="number">1</span>; j &lt; l; j++) &#123;</span><br><span class="line">                swap(matrix[i][j], matrix[j][i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; l; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; l / <span class="number">2</span> ; j++) &#123;</span><br><span class="line">                swap(matrix[i][j], matrix[i][l - j - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="49-group-anagrams">49  Group Anagrams</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>将属于一个全排列的字符串粗放到一起。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;],</span><br><span class="line">Output:</span><br><span class="line">[</span><br><span class="line">  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],</span><br><span class="line">  [&quot;nat&quot;,&quot;tan&quot;],</span><br><span class="line">  [&quot;bat&quot;]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路">解题思路</h4>
+<p>事实上，对全排列的字符串排序的结果应该相同，以结果作为索引储存到unorder_map中。</p>
+<p>比如，“ate” “aet” “tae”排序后都是“aet”。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; groupAnagrams(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; strs) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; res;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; m;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> str : strs) &#123;</span><br><span class="line">            <span class="built_in">string</span> temp = str;</span><br><span class="line">            sort(temp.begin(), temp.end());</span><br><span class="line">            m[temp].push_back(str);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> a : m) res.push_back(a.second);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="54-spiral-matrix">54  Spiral Matrix</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>矩阵螺旋遍历。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input:</span><br><span class="line">[</span><br><span class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</span><br><span class="line"> [ <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> ],</span><br><span class="line"> [ <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> ]</span><br><span class="line">]</span><br><span class="line">Output: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路">解题思路</h4>
+<p>用变量left, right, top, bottom记录左，右，顶，底。然后按照左到右，顶到底，右到左，底到顶的顺序循环，把遍历的元素加入到结果。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; spiralOrder(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;matrix) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">if</span> (matrix.empty() || matrix[<span class="number">0</span>].empty()) <span class="keyword">return</span> res;</span><br><span class="line">        <span class="keyword">int</span> m = matrix.size(), n = matrix[<span class="number">0</span>].size();</span><br><span class="line">        <span class="keyword">int</span> c = m &gt; n ? (n + <span class="number">1</span>) / <span class="number">2</span> : (m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> p = m, q = n;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; c; ++i, p -= <span class="number">2</span>, q -= <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> col = i; col &lt; i + q; ++col) res.push_back(matrix[i][col]);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> row = i + <span class="number">1</span>; row &lt; i + p; ++row)</span><br><span class="line">                res.push_back(matrix[row][i + q - <span class="number">1</span>]);</span><br><span class="line">            <span class="keyword">if</span> (p == <span class="number">1</span> || q == <span class="number">1</span>) <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> col = i + q - <span class="number">2</span>; col &gt;= i; --col)</span><br><span class="line">                res.push_back(matrix[i + p - <span class="number">1</span>][col]);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> row = i + p - <span class="number">2</span>; row &gt; i; --row)</span><br><span class="line">                res.push_back(matrix[row][i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//2</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; spiralOrder(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">        <span class="keyword">if</span> (matrix.size() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> ans;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//上下左右四个边界</span></span><br><span class="line">        <span class="keyword">int</span> up = <span class="number">0</span>, down = matrix.size() - <span class="number">1</span>, left = <span class="number">0</span>, right = matrix[<span class="number">0</span>].size() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (up &lt;= down &amp;&amp; left &lt;= right) &#123;</span><br><span class="line">            <span class="comment">//从左到右</span></span><br><span class="line">            <span class="keyword">if</span> (up &lt; matrix.size()) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = left; i &lt;= right; ++i) &#123;</span><br><span class="line">                    ans.push_back(matrix[up][i]);</span><br><span class="line">                &#125;</span><br><span class="line">                up++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//从上到下</span></span><br><span class="line">            <span class="keyword">if</span> (right &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = up; i &lt;= down; ++i) &#123;</span><br><span class="line">                    ans.push_back(matrix[i][right]);</span><br><span class="line">                &#125;</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//从右往左</span></span><br><span class="line">            <span class="keyword">if</span> (down &gt;= up) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = right; i &gt;= left; --i) &#123;</span><br><span class="line">                    ans.push_back(matrix[down][i]);</span><br><span class="line">                &#125;</span><br><span class="line">                down--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//从下到上</span></span><br><span class="line">            <span class="keyword">if</span> (left &lt;= right) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = down; i &gt;= up; --i) &#123;</span><br><span class="line">                    ans.push_back(matrix[i][left]);</span><br><span class="line">                &#125;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="70-climbing-stairs">70 Climbing Stairs</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>数字拆解，1和2的组合。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Input: 2</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: There are two ways to climb to the top.</span><br><span class="line">1. 1 step + 1 step</span><br><span class="line">2. 2 steps</span><br><span class="line"></span><br><span class="line">Input: 3</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: There are three ways to climb to the top.</span><br><span class="line">1. 1 step + 1 step + 1 step</span><br><span class="line">2. 1 step + 2 steps</span><br><span class="line">3. 2 steps + 1 step</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路">解题思路</h4>
+<p>dp[i] = dp[i-1] + dp[i-2] ，因为每次走一步或者两步， 所以dp[i]的方法就是它一步前和两步前方法加和 。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//递归在数量增长时候会超时</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// cout &lt;&lt; n &lt;&lt; endl;</span></span><br><span class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> (climbStairs(n - <span class="number">1</span>)) + (climbStairs(n - <span class="number">2</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//DP解法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp(n);</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>; dp[<span class="number">1</span>] = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp.back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="75-sort-colors">75 Sort Colors</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>一串0 1 2构成的数字，排序，要求尽可能只遍历一次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: [2,0,2,1,1,0]</span><br><span class="line">Output: [0,0,1,1,2,2]</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路">解题思路</h4>
+<ol>
+<li>统计个数，然后安排。</li>
+<li>根据题目要求，我们只能遍历array一次，可以用到two pointers来实现。设一个指针red 在开头，blue 在最后。想法就是，遇到红色0，就交换，把0放到最左边去；遇到蓝色2就交换，把2都放到最右边去，这样1就会被保留在最中间。需要注意的是，当把蓝色2交换完毕之后，需要i–， 停留 i 在原地一次，因为还需要继续检查 被2交换回来的数字。那当遇到红色0，交换完毕不需要停留i 的原因是， 交换回来的只可能是1，对于1，我们不需要做任何处理，直接过就可以。</li>
+</ol>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//思路1</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a[<span class="number">3</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); i++) a[nums[i]]++;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (a[<span class="number">0</span>] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                nums[i] = <span class="number">0</span>;</span><br><span class="line">                a[<span class="number">0</span>]--;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[<span class="number">1</span>] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                nums[i] = <span class="number">1</span>;</span><br><span class="line">                a[<span class="number">1</span>]--;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[<span class="number">2</span>] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                nums[i] = <span class="number">2</span>;</span><br><span class="line">                a[<span class="number">2</span>]--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//思路2</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> red = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> blue = nums.size() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= blue; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] == <span class="number">0</span>)  <span class="comment">// if find 0, swap with red pointer</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">                nums[i] = nums[red];</span><br><span class="line">                nums[red] = temp;</span><br><span class="line">                red++;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[i] == <span class="number">2</span>)  <span class="comment">// if find 2, swap with blue pointer</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">                nums[i] = nums[blue];</span><br><span class="line">                nums[blue] = temp;</span><br><span class="line">                i--;</span><br><span class="line">                blue--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="88-merge-sorted-array">88  Merge Sorted Array</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>合并两个有序vector。</p>
+<h4 id="解题思路">解题思路</h4>
+<ol>
+<li>将nums2复制进nums1然后排序。</li>
+<li>高级一点，因为nums1预留了空间，所以可以从后往前存储。</li>
+</ol>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="keyword">int</span> m, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = m - <span class="number">1</span>, j = n - <span class="number">1</span>, k = m + n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; j &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums1[i] &gt; nums2[j])</span><br><span class="line">                nums1[k--] = nums1[i--];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                nums1[k--] = nums2[j--];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (j &gt;= <span class="number">0</span>) nums1[k--] = nums2[j--];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="剑指offer">剑指Offer</h2>
+<h3 id="11-二进制中1的个数">11 二进制中1的个数</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
+<h4 id="解题思路">解题思路</h4>
+<p>调用bitset函数即可，相关内容在边走边学中有记录。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">     <span class="function"><span class="keyword">int</span>  <span class="title">NumberOf1</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">bitset</span>&lt;<span class="number">32</span>&gt;(n).count();</span><br><span class="line">     &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//知道并会用函数真的强</span></span><br></pre></td></tr></table></figure>
+<h3 id="20-包含min函数的栈">20 包含min函数的栈</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。</p>
+<h4 id="解题思路">解题思路</h4>
+<p>引入辅助栈即最小元素栈，每次压栈元素比当前元素更小，就把这个元素压入最小元素栈，原本的元素成了最小元素。同理，如果弹出的元素和最小栈的栈顶元素相等，就把最小元素的栈顶弹出。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        resu.push(value);</span><br><span class="line">        <span class="keyword">if</span> (mins.empty())</span><br><span class="line">            mins.push(value);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (mins.top() &gt;= value)</span><br><span class="line">            mins.push(value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (resu.top() == mins.top()) mins.pop();</span><br><span class="line">        resu.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> resu.top(); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">min</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> mins.top(); &#125;</span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; resu;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; mins;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="21-栈的压入弹出序列">21 栈的压入弹出序列</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+<h4 id="解题思路">解题思路</h4>
+<p>模拟这个过程，最后栈空就是正确的。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">IsPopOrder</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; pushV, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; popV)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//一直压 压到相等 弹出去</span></span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; resu;</span><br><span class="line">        resu.push(pushV[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>, tmp = i;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; (<span class="keyword">int</span>)pushV.size() &amp;&amp; j &lt; (<span class="keyword">int</span>)popV.size()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (resu.top() != popV[j]) &#123;</span><br><span class="line">                i += <span class="number">1</span>;</span><br><span class="line">                tmp = i;</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="string">"r"</span> &lt;&lt; pushV[tmp] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">                resu.push(pushV[tmp]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="string">"c"</span> &lt;&lt; resu.top() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">                resu.pop();</span><br><span class="line">                j += <span class="number">1</span>;</span><br><span class="line">                tmp = i + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resu.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/leetcode1/" data-toggle="tooltip" data-placement="top" title="LeetCode 边走边学">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/birth/" data-toggle="tooltip" data-placement="top" title="十">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#leetcode"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">LeetCode</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-longest-substring-without-repeating-characters"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">3  Longest Substring Without Repeating Characters</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#15-3sum"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">15 3Sum</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#17-letter-combinations-of-a-phone-number"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">17  Letter Combinations of a Phone Number</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#26-remove-duplicates-from-sorted-array"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">26  Remove Duplicates from Sorted Array</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#38-count-and-say"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">38 Count and Say</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#48-rotate-image"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">48  Rotate Image</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.6.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.6.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.6.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#49-group-anagrams"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">49  Group Anagrams</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.7.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.7.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.7.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#54-spiral-matrix"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">54  Spiral Matrix</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.8.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.8.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.8.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#70-climbing-stairs"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">70 Climbing Stairs</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.9.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.9.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.9.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#75-sort-colors"><span class="toc-nav-number">1.10.</span> <span class="toc-nav-text">75 Sort Colors</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.10.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.10.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.10.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#88-merge-sorted-array"><span class="toc-nav-number">1.11.</span> <span class="toc-nav-text">88  Merge Sorted Array</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">1.11.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">1.11.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">1.11.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#剑指offer"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5251;&#x6307;Offer</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#11-二进制中1的个数"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">11 &#x4E8C;&#x8FDB;&#x5236;&#x4E2D;1&#x7684;&#x4E2A;&#x6570;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">2.1.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#20-包含min函数的栈"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">20 &#x5305;&#x542B;min&#x51FD;&#x6570;&#x7684;&#x6808;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">2.2.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">2.2.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">2.2.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#21-栈的压入弹出序列"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">21 &#x6808;&#x7684;&#x538B;&#x5165;&#x5F39;&#x51FA;&#x5E8F;&#x5217;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目大意"><span class="toc-nav-number">2.3.1.</span> <span class="toc-nav-text">&#x9898;&#x76EE;&#x5927;&#x610F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解题思路"><span class="toc-nav-number">2.3.2.</span> <span class="toc-nav-text">&#x89E3;&#x9898;&#x601D;&#x8DEF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">2.3.3.</span> <span class="toc-nav-text">&#x4EE3;&#x7801;</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#一跪一路" title="一跪一路">一跪一路</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+				<!--
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.csdn.net/huwh_" target="_blank">ABC</a></li>
+                    
+                </ul>
+                
+				-->
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-tian-yu-65-49">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ztygalaxy">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 张天宇 2019 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    re-Ported by <a href="http://www.huweihuang.com">Huwei Huang</a> | 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://tyzhang.tk/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://tyzhang.tk/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
