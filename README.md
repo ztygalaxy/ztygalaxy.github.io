@@ -8,10 +8,10 @@
 [https://tyzhang.tk](https://tyzhang.tk)
 
 ### 博客搭建及域名申请
-[GitHub Pages & Freenom](https://tyzhang.tk/2019/01/07/github.html)
+[GitHub Pages & Freenom](https://tyzhang.tk/article/github/)
 
 ### Gitalk评论插件
-[Gitalk](https://tyzhang.tk/2019/03/22/gitalk.html)
+[Gitalk](https://tyzhang.tk/article/gitalk/)
 
 ### 朋友们
 
