@@ -14,7 +14,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          次元画社(一)，带有渐变动画的启动Activity - 张天宇 | Blog
+          次元画社(一)，带有渐变动画的启动Activity - 张天宇的博客
         
     </title>
 
@@ -71,7 +71,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/article_header/article_bg.jpg')
+            background-image: url('/img/article_header/article_header.png')
             /*post*/
         
     }
@@ -119,7 +119,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">张天宇</a>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -135,6 +135,9 @@
                         <a href="/">Home</a>
                     </li>
 
+                    
+
+                        
                     
 
                         
@@ -220,14 +223,14 @@
 <h3 id="1创建一个新的空activitystartactivity">1.创建一个新的空Activity，StartActivity。</h3>
 <h3 id="2设计布局文件activity_startxml">2.设计布局文件，activity_start.xml.</h3>
 <p>​	布局规划及效果图如下：</p>
-<p><img src="../../../assets/img/start.jpg" alt="效果图"></p>
+<p><img src="/img/article/start.jpg" alt="效果图"></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 采用常规摆放方式，logo左上，AppName、Slogan和声明放在下方.</span></span><br><span class="line"><span class="comment">	 工程全部采用string.xml引用字符串编写.</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="comment">&lt;!--相对布局兜底--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_centerVertical</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:background</span>=<span class="string">"@mipmap/spll"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">tools:context</span>=<span class="string">"com.android.zty.ssssss.StartActivity"</span>&gt;</span></span><br><span class="line"> 	<span class="comment">&lt;!--logo放置左上角--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_margin</span>=<span class="string">"20dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:src</span>=<span class="string">"@mipmap/logo"</span>/&gt;</span></span><br><span class="line">  	<span class="comment">&lt;!--线性布局，包裹AppName、Slogan--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_above</span>=<span class="string">"@id/tv_group"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"10dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:gravity</span>=<span class="string">"center_horizontal"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"50sp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginBottom</span>=<span class="string">"10dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">"@mipmap/appname"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_gravity</span>=<span class="string">"center_horizontal"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"@string/slogan"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textColor</span>=<span class="string">"#000"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textSize</span>=<span class="string">"15sp"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line">  	<span class="comment">&lt;!--作者信息--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/tv_group"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"8dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"@string/author"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:textColor</span>=<span class="string">"#6b6b6b"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:textSize</span>=<span class="string">"10sp"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>配合自动生成的StartActivity代码，此时一个启动页面就做好了，但它还没有自动跳转功能，一般而言我们所见到的APP启动后都会简单展示自动跳转到主页面。</p>
 <p>下面，我们来实现这个功能。</p>
 <h2 id="三-渐变的加入">三、渐变的加入</h2>
 <p>加入一个动作较短的渐变动画是一个很好的主意。</p>
 <h3 id="1动画设计">1.动画设计</h3>
-<p><img src="../../../assets/img/alpha.png" alt="动画文件位置"></p>
+<p><img src="/img/article/alpha.png" alt="动画文件位置"></p>
 <p>​	在资源文件夹res下新建anim文件夹用于存放渐变动画xml文件，这里新建了一个alpha.xml用于执行启动页面的渐变动画，代码如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    alpha 渐变动画</span></span><br><span class="line"><span class="comment">    duration 设置动画播放时长</span></span><br><span class="line"><span class="comment">    fromAlpha 动画开始时的透明度</span></span><br><span class="line"><span class="comment">    toAlpha 动画结束时的透明度</span></span><br><span class="line"><span class="comment">      （0 完全透明 1 完全不透明）</span></span><br><span class="line"><span class="comment"> --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">alpha</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:duration</span>=<span class="string">"1700"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:fromAlpha</span>=<span class="string">"0.2"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:toAlpha</span>=<span class="string">"1.0"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="2动画装入">2.动画装入</h3>
@@ -238,7 +241,7 @@
 <p>​	在这里发现因为下一个布局加载延迟，直接finish掉StartActivity可能会出现黑屏空隙，因此想到这么一个思路，增加了一个新变量指向自己，在下一个活动加载完成后finish。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> StartActivity mActivity = <span class="keyword">null</span>;</span><br><span class="line">mActivity = <span class="keyword">this</span>;</span><br><span class="line"><span class="comment">//在下一个活动中调用</span></span><br><span class="line">StartActivity.mActivity.finish();</span><br></pre></td></tr></table></figure>
 <p>​	<strong>这样，一个带有一定动画效果的启动页面就做好了。</strong></p>
-<p><img src="../../../assets/img/start_demo.gif" alt="效果图"></p>
+<p><img src="/img/article/start_demo.gif" alt="效果图"></p>
 
                 
 
@@ -290,6 +293,24 @@
             
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一-概述"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4E00;&#x3001;&#x6982;&#x8FF0;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#二-基础准备"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x4E8C;&#x3001;&#x57FA;&#x7840;&#x51C6;&#x5907;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1创建一个新的空activitystartactivity"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">1.&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x7A7A;Activity&#xFF0C;StartActivity&#x3002;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2设计布局文件activity_startxml"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2.&#x8BBE;&#x8BA1;&#x5E03;&#x5C40;&#x6587;&#x4EF6;&#xFF0C;activity_start.xml.</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#三-渐变的加入"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x4E09;&#x3001;&#x6E10;&#x53D8;&#x7684;&#x52A0;&#x5165;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1动画设计"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1.&#x52A8;&#x753B;&#x8BBE;&#x8BA1;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2动画装入"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2.&#x52A8;&#x753B;&#x88C5;&#x5165;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1基本设置"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">1.&#x57FA;&#x672C;&#x8BBE;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2设置渐变动画"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">2.&#x8BBE;&#x7F6E;&#x6E10;&#x53D8;&#x52A8;&#x753B;</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
 
                 
             <!-- Sidebar Container -->
@@ -421,6 +442,15 @@
 
                 
 
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/100011805250413">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
                 
 
                 

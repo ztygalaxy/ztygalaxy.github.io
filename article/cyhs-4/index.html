@@ -14,7 +14,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          次元画社(四)，与服务器聊聊天 - 张天宇 | Blog
+          次元画社(四)，与服务器聊聊天 - 张天宇的博客
         
     </title>
 
@@ -71,7 +71,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/article_header/article_bg.jpg')
+            background-image: url('/img/article_header/article_header.png')
             /*post*/
         
     }
@@ -119,7 +119,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">张天宇</a>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -135,6 +135,9 @@
                         <a href="/">Home</a>
                     </li>
 
+                    
+
+                        
                     
 
                         
@@ -215,7 +218,7 @@
                 <h2 id="一-前">一、前</h2>
 <p>​	对于一个图片社区来说，仅使用自带的图片当然是远远不够的。现在来加入图片从服务器获取的功能，因为对保密性及性能要求不高，这里采用Servlet传输数据，Json解析，本次介绍暂不涉及数据库操作。</p>
 <p>​	流程简要如下：</p>
-<p><img src="../../../assets/img/cyhs_server.png" alt="效果图"></p>
+<p><img src="/img/article/cyhs_server.png" alt="效果图"></p>
 <h2 id="二-服务器设置">二、服务器设置</h2>
 <h3 id="1准备">1.准备</h3>
 <p>​	这里我们为了临时测试Android，使用已经写好的Json字符串放置在Servlet等待访问。</p>
@@ -292,6 +295,24 @@
             
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一-前"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4E00;&#x3001;&#x524D;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#二-服务器设置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x4E8C;&#x3001;&#x670D;&#x52A1;&#x5668;&#x8BBE;&#x7F6E;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1准备"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">1.&#x51C6;&#x5907;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2servlet"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2.Servlet</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#三-实体类"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x4E09;&#x3001;&#x5B9E;&#x4F53;&#x7C7B;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#四-解析"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x56DB;&#x3001;&#x89E3;&#x6790;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1网络访问httputils"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">1.&#x7F51;&#x7EDC;&#x8BBF;&#x95EE;HttpUtils</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2解析类imageparse"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">2.&#x89E3;&#x6790;&#x7C7B;ImageParse</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3使用"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">3.&#x4F7F;&#x7528;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#五-后"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x4E94;&#x3001;&#x540E;</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
 
                 
             <!-- Sidebar Container -->
@@ -423,6 +444,15 @@
 
                 
 
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/100011805250413">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
                 
 
                 

@@ -14,7 +14,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          次元画社(三)，侧滑菜单的加入 - 张天宇 | Blog
+          次元画社(三)，侧滑菜单的加入 - 张天宇的博客
         
     </title>
 
@@ -71,7 +71,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/article_header/article_bg.jpg')
+            background-image: url('/img/article_header/article_header.png')
             /*post*/
         
     }
@@ -119,7 +119,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">张天宇</a>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -135,6 +135,9 @@
                         <a href="/">Home</a>
                     </li>
 
+                    
+
+                        
                     
 
                         
@@ -214,10 +217,10 @@
 
                 <h2 id="一-前">一、前</h2>
 <p>​	Google在Android Design Support Library中加入了DrawerLayout+NavigationView代替了SlideMenu。这次借用次元画社简单实现侧滑菜单。先来看下效果图：</p>
-<p><img src="../../../assets/img/nav_review.jpg" alt="效果图"></p>
+<p><img src="/img/article/nav_review.jpg" alt="效果图"></p>
 <h3 id="1素材准备">1.素材准备</h3>
 <h4 id="1头部背景图片一张">1.头部背景图片一张</h4>
-<p><img src="../../../assets/img/nav_back.jpg" alt="效果图"></p>
+<p><img src="/img/article/nav_back.jpg" alt="效果图"></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--drawable下back.xml--&gt;</span></span><br><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">bitmap</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:src</span>=<span class="string">"@drawable/only"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:tileMode</span>=<span class="string">"disabled"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 <h4 id="2相关功能设计">2.相关功能设计</h4>
 <p>​	这里按照次元画社的实际需求设置了随便看看、开始创作、相册上传、联系作者和设置功能。</p>
@@ -297,6 +300,24 @@
             
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一-前"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4E00;&#x3001;&#x524D;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1素材准备"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1.&#x7D20;&#x6750;&#x51C6;&#x5907;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1头部背景图片一张"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">1.&#x5934;&#x90E8;&#x80CC;&#x666F;&#x56FE;&#x7247;&#x4E00;&#x5F20;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2相关功能设计"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">2.&#x76F8;&#x5173;&#x529F;&#x80FD;&#x8BBE;&#x8BA1;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#二-布局文件"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x4E8C;&#x3001;&#x5E03;&#x5C40;&#x6587;&#x4EF6;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1主布局"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">1.&#x4E3B;&#x5E03;&#x5C40;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2侧滑菜单布局"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2.&#x4FA7;&#x6ED1;&#x83DC;&#x5355;&#x5E03;&#x5C40;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1头部布局"><span class="toc-nav-number">2.2.1.</span> <span class="toc-nav-text">1.&#x5934;&#x90E8;&#x5E03;&#x5C40;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2功能区布局"><span class="toc-nav-number">2.2.2.</span> <span class="toc-nav-text">2.&#x529F;&#x80FD;&#x533A;&#x5E03;&#x5C40;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#三-activity"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x4E09;&#x3001;Activity</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1基本"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1.&#x57FA;&#x672C;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1单独设置头部监听"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">1.&#x5355;&#x72EC;&#x8BBE;&#x7F6E;&#x5934;&#x90E8;&#x76D1;&#x542C;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2菜单选项监听"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">2.&#x83DC;&#x5355;&#x9009;&#x9879;&#x76D1;&#x542C;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#1修改当前activity继承-接口关系"><span class="toc-nav-number">3.1.2.1.</span> <span class="toc-nav-text">1.&#x4FEE;&#x6539;&#x5F53;&#x524D;Activity&#x7EE7;&#x627F;&#x3001;&#x63A5;&#x53E3;&#x5173;&#x7CFB;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#2重写监听函数"><span class="toc-nav-number">3.1.2.2.</span> <span class="toc-nav-text">2.&#x91CD;&#x5199;&#x76D1;&#x542C;&#x51FD;&#x6570;</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#四-后"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x56DB;&#x3001;&#x540E;</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
 
                 
             <!-- Sidebar Container -->
@@ -428,6 +449,15 @@
 
                 
 
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/100011805250413">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
                 
 
                 
