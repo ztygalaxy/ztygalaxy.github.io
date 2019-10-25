@@ -7,6 +7,22 @@
     </url>
 
     <url>
+        <loc>http://tyzhang.tk/article/leetcode/</loc>
+        <lastmod>2019-10-25T08:26:07.325Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/two/</loc>
+        <lastmod>2019-10-25T01:02:01.185Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://tyzhang.tk/article/deepin/</loc>
         <lastmod>2019-10-24T12:00:29.429Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -311,14 +327,6 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/leetcode/</loc>
-        <lastmod>2019-10-24T08:43:36.206Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://tyzhang.tk/article/birth/</loc>
         <lastmod>2019-10-20T08:45:33.653Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -345,14 +353,6 @@
     <url>
         <loc>http://tyzhang.tk/article/three/</loc>
         <lastmod>2019-10-20T08:37:51.238Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/two/</loc>
-        <lastmod>2019-10-20T08:37:26.767Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

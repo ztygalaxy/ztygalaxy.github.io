@@ -18,3 +18,7 @@
 [Freedomly](https://felon03.github.io)    [MQQM](https://github.com/MQQM)    [SiwenZheng](http://siwenzheng.github.io/)    [jlwang1996](https://jlwang1996.github.io)
 
 [LostStarTvT](https://loststartvt.github.io)
+
+本博客在[胡伟煌的博客](https://www.huweihuang.com/)基础上修改而成。
+
+![](/img/article/qrcode_zdplxs_word.png)
