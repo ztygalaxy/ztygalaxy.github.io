@@ -7,15 +7,22 @@
     </url>
     
     <url>
-        <loc>http://tyzhang.tk/tags/</loc>
-        <lastmod>2019-10-25T00:39:22.508Z</lastmod>
+        <loc>http://tyzhang.tk/about/</loc>
+        <lastmod>2019-10-28T06:53:27.931Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
         <loc>http://tyzhang.tk/archive/</loc>
-        <lastmod>2019-10-25T00:38:36.587Z</lastmod>
+        <lastmod>2019-10-28T06:45:25.351Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://tyzhang.tk/tags/</loc>
+        <lastmod>2019-10-25T00:39:22.508Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

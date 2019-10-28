@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://tyzhang.tk/article/xu/</loc>
+        <lastmod>2019-10-25T12:00:07.765Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://tyzhang.tk/article/leetcode/</loc>
         <lastmod>2019-10-25T08:26:07.325Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -153,14 +161,6 @@
     <url>
         <loc>http://tyzhang.tk/article/leihuo/</loc>
         <lastmod>2019-10-24T11:49:48.831Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/xu/</loc>
-        <lastmod>2019-10-24T11:46:58.048Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
