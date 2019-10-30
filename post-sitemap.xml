@@ -8,7 +8,23 @@
 
     <url>
         <loc>http://tyzhang.tk/article/leetcode/</loc>
-        <lastmod>2019-10-28T13:29:19.434Z</lastmod>
+        <lastmod>2019-10-29T13:07:42.555Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/leetcode1/</loc>
+        <lastmod>2019-10-29T08:59:20.992Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/webhook/</loc>
+        <lastmod>2019-10-29T03:42:15.871Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -305,14 +321,6 @@
     <url>
         <loc>http://tyzhang.tk/article/mountain/</loc>
         <lastmod>2019-10-24T11:42:04.553Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/leetcode1/</loc>
-        <lastmod>2019-10-24T08:55:17.668Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

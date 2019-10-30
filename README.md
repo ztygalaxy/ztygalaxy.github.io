@@ -19,6 +19,6 @@
 
 [LostStarTvT](https://loststartvt.github.io)
 
-本博客在[胡伟煌的博客](https://www.huweihuang.com/)基础上修改而成。
+本博客在[Weihuang Hu的博客](https://www.huweihuang.com/)基础上重新修改。
 
 ![](/img/article/qrcode_zdplxs_word.png)
