@@ -14,7 +14,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Python经纬度计算 - 张天宇的博客
+          Python经纬度计算 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
@@ -71,7 +71,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/article_header/article_header.png')
+            background-image: url('https://api.dujin.org/bing/1920.php')
             /*post*/
         
     }
@@ -119,7 +119,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">张天宇</a>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -227,7 +227,6 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getArea</span><span class="params">(latitude, longitude, dis)</span>:</span></span><br><span class="line">    r = <span class="number">6371.137</span></span><br><span class="line">    dlng = <span class="number">2</span> * math.asin(math.sin(dis / (<span class="number">2</span> * r)) / math.cos(latitude * math.pi / <span class="number">180</span>))</span><br><span class="line">    dlng = dlng * <span class="number">180</span> / math.pi</span><br><span class="line">    dlat = dis / r</span><br><span class="line">    dlat = dlat * <span class="number">180</span> / math.pi</span><br><span class="line">    minlat = latitude - dlat</span><br><span class="line">    maxlat = latitude + dlat</span><br><span class="line">    minlng = longitude - dlng</span><br><span class="line">    maxlng = longitude + dlng</span><br><span class="line">    <span class="keyword">return</span> minlat, maxlat, minlng, maxlng</span><br></pre></td></tr></table></figure>
 
                 
-
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
@@ -257,21 +256,6 @@
                 
                 <!-- require APlayer -->
                 
-
-                <!-- duoshuo Share start -->
-                
-                <!-- 多说 Share end-->
-
-                <!-- 多说评论框 start -->
-                
-                <!-- 多说评论框 end -->
-
-                <!-- disqus comment start -->
-                
-                <!-- disqus comment end -->
-
-                
-
             </div>
             
             <!-- Tabe of Content -->
@@ -338,12 +322,6 @@
         </div>
     </div>
 </article>
-
-
-
-
-
-
 
 
 <!-- async load function -->
@@ -460,7 +438,7 @@
                     Copyright &copy; 张天宇 2019 
                     <br>
                     Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
-                    re-Ported by <a href="">Tianyu Zhang</a>
+                    re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
                 </p>
             </div>
         </div>

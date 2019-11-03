@@ -7,16 +7,24 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/leetcode/</loc>
-        <lastmod>2019-10-29T13:07:42.555Z</lastmod>
+        <loc>http://tyzhang.tk/article/leetcode1/</loc>
+        <lastmod>2019-11-03T09:04:54.580Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/leetcode1/</loc>
-        <lastmod>2019-10-29T08:59:20.992Z</lastmod>
+        <loc>http://tyzhang.tk/article/algorithm0/</loc>
+        <lastmod>2019-11-02T11:19:24.778Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/leetcode0/</loc>
+        <lastmod>2019-11-01T03:09:07.478Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

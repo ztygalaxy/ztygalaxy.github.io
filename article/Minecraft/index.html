@@ -14,7 +14,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          树莓派搭建低功耗Minecraft服务器 - 张天宇的博客
+          树莓派搭建低功耗Minecraft服务器 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
@@ -71,7 +71,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/article_header/article_header.png')
+            background-image: url('https://api.dujin.org/bing/1920.php')
             /*post*/
         
     }
@@ -119,7 +119,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">张天宇</a>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -246,7 +246,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"># 以下是Minecraft服务器设置文件，true代表执行，false代表不执行。</span><br><span class="line"></span><br><span class="line">#Sun Mar 11 18:24:34 CST 2012 此为文件生成时间</span><br><span class="line"># 是否开启地狱，不开启话地狱门将无效</span><br><span class="line">	allow-nether=true</span><br><span class="line"># 地图文件夹名称，下界与末路之地将会自动以nether,ender加上并用下划线隔开</span><br><span class="line">　　level-name=world</span><br><span class="line"># 是否开启GameSpy4协议服务器监听器，用于获取服务器信息，国内应该用不上。</span><br><span class="line">　　enable-query=false</span><br><span class="line"># 是否允许飞行</span><br><span class="line">　　allow-flight=false</span><br><span class="line"># 远程访问服务器的密码，此项可以留空或删除</span><br><span class="line">　　rcon.password=</span><br><span class="line"># 服务器端口(25565为默认端口，联机时无需输入)</span><br><span class="line">　　server-port=25565</span><br><span class="line"># 第5行对应功能的端口</span><br><span class="line">　　query.port=25565</span><br><span class="line"># 地图类型，Default=默认，FLAT=超平坦，LARGEBIOMES=巨型生物群系</span><br><span class="line">　　level-type=DEFAULT</span><br><span class="line"># 是否开启远程访问服务器控制台。技术人员可选。</span><br><span class="line">　　enable-rcon=false</span><br><span class="line"># 地图种子，在生成地图文件夹之前填入此项，可生成特定的地图</span><br><span class="line">　　level-seed=</span><br><span class="line"># 服务器IP，不输入则为默认IP，内网用户的话请填内网IP</span><br><span class="line">　　server-ip=</span><br><span class="line"># 最大建筑高度，上限是256，因为Chunk的高度最大值是256</span><br><span class="line">　　max-build-height=256</span><br><span class="line"># 是否生成NPC</span><br><span class="line">　　spawn-npcs=true</span><br><span class="line"># 是否开启白名单，没有白名单的玩家尝试进入服务器会被自动拒绝</span><br><span class="line">　　white-list=false</span><br><span class="line"># 是否生成动物</span><br><span class="line">　　spawn-animals=true</span><br><span class="line"># 此处填写服务器默认材质下载链接，链接必须以.zip结尾</span><br><span class="line">　　texture-pack=</span><br><span class="line"># 用于给http://snoop.minecraft.net网站发送服务器数据，这样玩家可以从客户端上获取服务器信息，推荐关闭</span><br><span class="line">　　snooper-enabled=false</span><br><span class="line"># 是否开启极限模式，玩家死亡将自动被ban</span><br><span class="line">　　hardcore=false</span><br><span class="line"># 是否开启联网模式(正版专用，盗版必须改成false)</span><br><span class="line">　　online-mode=false</span><br><span class="line"># 是否开启PVP，不是战争服就不要开了</span><br><span class="line">　　pvp=false</span><br><span class="line"># 游戏难度，与单机相同</span><br><span class="line">　　difficulty=1</span><br><span class="line"># 玩家第一次进入游戏时的游戏模式</span><br><span class="line">　　gamemode=0</span><br><span class="line"># 同时在线的最大玩家数</span><br><span class="line">　　max-players=20</span><br><span class="line"># 远程访问服务器的端口号，此项可以留空或删除</span><br><span class="line">　　rcon.port=25575</span><br><span class="line"># 是否生成怪物</span><br><span class="line">　　spawn-monsters=true</span><br><span class="line"># 是否生成建筑物(包括村庄和地牢)</span><br><span class="line">　　generate-structures=true</span><br><span class="line"># 可见距离，最大值为10</span><br><span class="line">	view-distance=10</span><br><span class="line"># 服务器欢迎信息(显示在玩家联机页面)，中文需中文补丁支持和转码，推荐EmEditor文本编辑器，自带转码功能。</span><br><span class="line">　　motd=A Minecraft Server</span><br></pre></td></tr></table></figure>
 
                 
-
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
@@ -276,21 +275,6 @@
                 
                 <!-- require APlayer -->
                 
-
-                <!-- duoshuo Share start -->
-                
-                <!-- 多说 Share end-->
-
-                <!-- 多说评论框 start -->
-                
-                <!-- 多说评论框 end -->
-
-                <!-- disqus comment start -->
-                
-                <!-- disqus comment end -->
-
-                
-
             </div>
             
             <!-- Tabe of Content -->
@@ -357,12 +341,6 @@
         </div>
     </div>
 </article>
-
-
-
-
-
-
 
 
 <!-- async load function -->
@@ -479,7 +457,7 @@
                     Copyright &copy; 张天宇 2019 
                     <br>
                     Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
-                    re-Ported by <a href="">Tianyu Zhang</a>
+                    re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
                 </p>
             </div>
         </div>
