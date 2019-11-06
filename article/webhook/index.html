@@ -92,9 +92,9 @@
                             
                         </div>
                         <h1>WebHook自动拉取服务器代码</h1>
-                        <h2 class="subheading"></h2>
+                        <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
-                            Posted by 张天宇 on
+                            张天宇 on
                             2019-10-29
                         </span>
                     </div>
@@ -150,13 +150,13 @@
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -218,6 +218,7 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
+				
                 <blockquote>
 <p>这篇主要记录了如何通过WebHook，实现git自动拉取服务器代码。</p>
 </blockquote>
@@ -229,7 +230,7 @@
 <h3 id="二-安装github并克隆">二、安装GitHub并克隆</h3>
 <p>在服务器上安装GitHub并配置公钥，这里不再赘述。</p>
 <p>将项目克隆到本地。</p>
-<p>###三、 钩子</p>
+<h3 id="三-钩子">三、 钩子</h3>
 <p>我的服务器采用了宝塔Linux面板管理，它集成了很多开发环境，这里使用宝塔配置WebHook。</p>
 <h4 id="1-安装webhook并添加记录">1. 安装WebHook并添加记录</h4>
 <p>在宝塔面板中安装WebHook，并添加一条记录。</p>
@@ -290,7 +291,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#一-webhook"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4E00;&#x3001;WebHook</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#二-安装github并克隆"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x4E8C;&#x3001;&#x5B89;&#x88C5;GitHub&#x5E76;&#x514B;&#x9686;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1-安装webhook并添加记录"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">1. &#x5B89;&#x88C5;WebHook&#x5E76;&#x6DFB;&#x52A0;&#x8BB0;&#x5F55;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-查看记录获取回调网址"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2. &#x67E5;&#x770B;&#x8BB0;&#x5F55;&#x83B7;&#x53D6;&#x56DE;&#x8C03;&#x7F51;&#x5740;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#3-填写回调地址"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">3. &#x586B;&#x5199;&#x56DE;&#x8C03;&#x5730;&#x5740;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#一-webhook"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4E00;&#x3001;WebHook</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#二-安装github并克隆"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x4E8C;&#x3001;&#x5B89;&#x88C5;GitHub&#x5E76;&#x514B;&#x9686;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#三-钩子"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x4E09;&#x3001; &#x94A9;&#x5B50;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1-安装webhook并添加记录"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1. &#x5B89;&#x88C5;WebHook&#x5E76;&#x6DFB;&#x52A0;&#x8BB0;&#x5F55;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-查看记录获取回调网址"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2. &#x67E5;&#x770B;&#x8BB0;&#x5F55;&#x83B7;&#x53D6;&#x56DE;&#x8C03;&#x7F51;&#x5740;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#3-填写回调地址"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3. &#x586B;&#x5199;&#x56DE;&#x8C03;&#x5730;&#x5740;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
