@@ -7,8 +7,40 @@
     </url>
 
     <url>
+        <loc>http://tyzhang.tk/article/xu/</loc>
+        <lastmod>2019-11-08T06:19:01.615Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/buildwebsite/</loc>
+        <lastmod>2019-11-08T06:02:03.727Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/priorityqueue/</loc>
+        <lastmod>2019-11-07T08:51:48.677Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://tyzhang.tk/article/leetcode1/</loc>
-        <lastmod>2019-11-06T13:02:31.558Z</lastmod>
+        <lastmod>2019-11-07T08:44:25.361Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/algorithm0/</loc>
+        <lastmod>2019-11-07T07:44:53.547Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -23,24 +55,8 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/algorithm0/</loc>
-        <lastmod>2019-11-02T11:19:24.778Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://tyzhang.tk/article/leetcode0/</loc>
         <lastmod>2019-11-01T03:09:07.478Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/xu/</loc>
-        <lastmod>2019-10-25T12:00:07.765Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -329,14 +345,6 @@
     <url>
         <loc>http://tyzhang.tk/article/mountain/</loc>
         <lastmod>2019-10-24T11:42:04.553Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/launch/</loc>
-        <lastmod>2019-10-24T08:46:34.371Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

@@ -5,8 +5,8 @@
   margin: 20px 0;
   padding: 15px;
   font-size: 13px;
-  color: #ccc;
-  background: #2d2d2d;
+  color: #c5c8c6;
+  background: #1d1f21;
   line-height: $line-height-code-block;
 }
 /*pre, code { 
@@ -23,7 +23,7 @@
 }*/
 .post-container pre code {
   padding: 0;
-  color: #ccc;
+  color: #c5c8c6;
   background: none;
   text-shadow: none;
 }
@@ -44,7 +44,7 @@
 .post-container .highlight figcaption {
   zoom: 1;
   font-size: 1em;
-  color: #ccc;
+  color: #c5c8c6;
   line-height: 1em;
   margin-bottom: 1em;
 }
@@ -58,10 +58,10 @@
 }
 .post-container .highlight figcaption a {
   float: right;
-  color: #ccc;
+  color: #c5c8c6;
 }
 .post-container .highlight figcaption a:hover {
-  border-bottom-color: #ccc;
+  border-bottom-color: #c5c8c6;
 }
 .post-container .highlight .gutter pre {
   color: #666;
@@ -78,7 +78,7 @@
   border: none;
 }
 .post-container pre .comment {
-  color: #999;
+  color: #969896;
 }
 .post-container pre .variable,
 .post-container pre .attribute,
@@ -92,7 +92,7 @@
 .post-container pre .css .id,
 .post-container pre .css .class,
 .post-container pre .css .pseudo {
-  color: #f2777a;
+  color: #c66;
 }
 .post-container pre .number,
 .post-container pre .preprocessor,
@@ -101,7 +101,7 @@
 .post-container pre .params,
 .post-container pre .constant,
 .post-container pre .command {
-  color: #f99157;
+  color: #de935f;
 }
 .post-container pre .ruby .class .title,
 .post-container pre .css .rules .attribute,
@@ -114,11 +114,11 @@
 .post-container pre .special,
 .post-container pre .number,
 .post-container pre .formula {
-  color: #9c9;
+  color: #b5bd68;
 }
 .post-container pre .title,
 .post-container pre .css .hexcolor {
-  color: #6cc;
+  color: #8abeb7;
 }
 .post-container pre .function,
 .post-container pre .python .decorator,
@@ -128,9 +128,9 @@
 .post-container pre .perl .sub,
 .post-container pre .javascript .title,
 .post-container pre .coffeescript .title {
-  color: #69c;
+  color: #81a2be;
 }
 .post-container pre .keyword,
 .post-container pre .javascript .function {
-  color: #c9c;
+  color: #b294bb;
 }
