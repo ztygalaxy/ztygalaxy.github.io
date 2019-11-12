@@ -7,6 +7,38 @@
     </url>
 
     <url>
+        <loc>http://tyzhang.tk/article/leetcode1/</loc>
+        <lastmod>2019-11-12T02:56:13.449Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/javadata/</loc>
+        <lastmod>2019-11-12T02:53:14.990Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/algorithm0/</loc>
+        <lastmod>2019-11-12T02:43:04.610Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/leetcode0/</loc>
+        <lastmod>2019-11-11T08:34:58.420Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://tyzhang.tk/article/xu/</loc>
         <lastmod>2019-11-08T06:19:01.615Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -23,40 +55,8 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/priorityqueue/</loc>
-        <lastmod>2019-11-07T08:51:48.677Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/leetcode1/</loc>
-        <lastmod>2019-11-07T08:44:25.361Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/algorithm0/</loc>
-        <lastmod>2019-11-07T07:44:53.547Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://tyzhang.tk/article/webhook/</loc>
         <lastmod>2019-11-05T07:13:00.364Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/leetcode0/</loc>
-        <lastmod>2019-11-01T03:09:07.478Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

@@ -7,6 +7,13 @@
     </url>
     
     <url>
+        <loc>http://tyzhang.tk/404.html</loc>
+        <lastmod>2019-11-08T08:28:36.544Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>http://tyzhang.tk/google710fe662679044f2.html</loc>
         <lastmod>2019-11-08T02:37:19.052Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -37,13 +44,6 @@
     <url>
         <loc>http://tyzhang.tk/archive/</loc>
         <lastmod>2019-10-30T12:38:02.970Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>http://tyzhang.tk/404.html</loc>
-        <lastmod>2019-08-16T12:43:34.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
