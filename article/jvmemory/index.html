@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          十 - 张天宇的博客 | ztygalaxy Blog
+          Java内存区域与内存溢出异常 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
-    <link rel="canonical" href="http://tyzhang.tk/article/birth/">
+    <link rel="canonical" href="http://tyzhang.tk/article/jvmemory/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#少年游" title="少年游">少年游</a>
+                              <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
                             
                         </div>
-                        <h1>十</h1>
+                        <h1>Java内存区域与内存溢出异常</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2019-10-08
+                            2019-11-13
                         </span>
                     </div>
                 
@@ -223,30 +223,61 @@
                 post-container">
 
 				
-                <p>二十二，二十三。</p>
-<p>我其实并没有什么好写的，既然已经成为了习惯，就应该坚持下去。生活已经很难了，还是要有一些仪式感。</p>
-<p>其实这篇起意是很久的事情了，恰巧生日那几天非常忙，也没有写。</p>
-<p>十一假期见到了七八年没见的初中同桌。我阿黄圈圈总算是凑到了一起。圈圈估计是坐火箭了，长这么高，大概应该都应该归功于当初我亲手喂的那一抔粉笔末吧。一起聊聊上学时候的傻事情，还能被逗得哈哈笑。送回圈圈我和阿黄又去沂河边聊了一阵。这好像是假期我唯一一次和别人出门，可能大家都比较忙。不过还是真好。</p>
-<p>回学校的最后一天，我无意间向爸妈说我现在的境地，我说等我毕业以后会细细道来。爸妈觉察这里面有些事情便追问我，还是像以前那样疏导我。我说我不怎么提就是不想让你们担心，这些问题我都可以自己处理自我消化。最后妈妈发现这次我遇到的问题确实不是简简单单就能说服的。爸爸认为我可以坚持自己的想法，但是要注意方式方法。临走前，妈妈说，我们和你姥姥不一样，正在出力的时候，有什么问题可以直接和我们说，我们肯定会支持你的。还没成家立业，我和爸妈就已经开始习惯向对方隐瞒自己生活的难处、报喜不报忧了。</p>
-<p>// 下面一段是吐槽，可自动忽略。</p>
-<p>我是一个很佛系的人。不感兴趣的事争一争抢一抢，可以，但没必要。现在都讲生态，办公室讲生态，官场讲生态，学习讲生态。最近我发现，打破生态的往往是最先主张生态的那一个。我又开始讲大道理了，碎碎叨叨，但我希望看到这的人明白，有些东西，就像蔬菜，开始坏了就收不住了，大家都看在眼里，那个人所说的一切也就都成了笑谈。你以为自己吃掉了别人的一头马，根本没意识到自己是别人的車；你知道自己是个車了，別人却开始玩起了丢車保帅，大家都是一颗棋子。</p>
-<p>最近我老感觉心里有什么东西死了，我也不知道是什么。人是恒温动物，秋天来了，心却越来越冷了。我处在一个不能过多解释自己处境的时期，不过即使随便讲，或好或坏，我也没有太多好说的。</p>
-<p>今年要特别感谢的对象有些特殊，我的电脑依旧给力，很多时候都是它陪我，在无数个日夜亮着。最近我为它贴了一张漫威的贴纸，不大，我很喜欢。</p>
-<p>二十二，二十三。</p>
-<p>迷失的岁月，贫瘠的未来，时间啊，理想啊，你等等我。</p>
+                <blockquote>
+<p>深入理解Java虚拟机读书笔记，之Java内存区域与内存溢出异常。</p>
+</blockquote>
+<h2 id="1-运行时数据区域">1 运行时数据区域</h2>
+<h3 id="11-程序计数器">1.1 程序计数器</h3>
+<p>程序计数器(Program Counter Register)，<strong>内存空间小，线程私有</strong>，是当前线程所执行的字节码的行号指示器。</p>
+<ol>
+<li>
+<p>字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的指令。</p>
+</li>
+<li>
+<p>每一个线程都需要一个独立的程序计数器，各个线程之间的计数器互不影响、独立存储，称这类内存区域”线程私有“。</p>
+</li>
+<li>
+<p>如果线程执行的是一个Java方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址；如果执行的是Native方法，这个计数器值为空(Undefined)。</p>
+</li>
+<li>
+<p><strong>唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</strong></p>
+</li>
+</ol>
+<h3 id="12-java虚拟机栈">1.2 Java虚拟机栈</h3>
+<p>线程私有，生命周期和线程一致，描述的是Java方法执行的内存模型。每个方法在执行的时候都会创建一个栈帧(Stack Frame)用于存储<code>局部变量表</code>、<code>操作数栈</code>、<code>动态链接</code>、<code>方法出口</code>等信息。每个方法从调用直至执行结束，就对应着一个栈帧从虚拟机栈中入栈到出栈的过程。</p>
+<p>局部变量表：存放编译期可知的各种基本数据类型(0boolean、byte、char、short、int、float、long、double)、对象引用(reference类型)和returnAddress类型(指向了一条字节码指令地址)。</p>
+<p><strong>异常情况</strong></p>
+<ol>
+<li>StackOverflowError: 线程请求的深度大于虚拟机所允许的深度。</li>
+<li>OutOfMemoryError: 如果虚拟机栈可以动态扩展，如果扩展时无法申请到足够的内存。</li>
+</ol>
+<h3 id="13-本地方法栈">1.3 本地方法栈</h3>
+<p>与Java虚拟机栈的区别是，Java虚拟机栈为虚拟机执行Java方法(也就是字节码)服务，而本地方法栈为虚拟机使用的Native方法服务。</p>
+<p><strong>异常情况</strong> 也会抛出StackOverflowError和OutOfMemoryError异常。</p>
+<h3 id="14-java堆">1.4 Java堆</h3>
+<p>内存中最大的一块，所有线程共享，存放对象实例和数组。</p>
+<p>内部会划分出多个线程私有的分配缓冲区(Thread Local Allocation Buffer, TLAB)。物理上不连续，逻辑上连续。</p>
+<p><strong>异常情况</strong> 如果堆内没有内存完成实例分配，并且堆也无法再扩展时，抛出OutOfMemoryError。</p>
+<h3 id="15-方法区">1.5 方法区</h3>
+<p>各个线程共享的内存区域，存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。</p>
+<p><strong>异常情况</strong> 当方法区无法满足内存分配需求时，抛出OutOfMemoryError异常。</p>
+<h3 id="16-运行时常量池">1.6 运行时常量池</h3>
+<p>是方法区的一部分，存放编译期生成的各种字面量和符号引用。编译期和运行期(String的intern())都可以将常量放入池中。</p>
+<p><strong>异常情况</strong> 内存有限，当常量池无法再申请到内存时会抛出OutOfMemoryError异常。</p>
+<h3 id="17-直接内存">1.7 直接内存</h3>
+<p>不是虚拟机运行时数据区的一部分。</p>
+<p><strong>异常情况</strong> 受到本机内存的限制，如果内存区域总和大于物理内存限制从而导致动态扩展时出现该异常。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAxNy85LzQvZGE3N2Q5MDE0Njc4NmMwY2IzZTE3MGI5YzkzNzZhZTQ_aW1hZ2VWaWV3Mi8wL3cvMTI4MC9oLzk2MC9mb3JtYXQvd2VicC9pZ25vcmUtZXJyb3IvMQ" alt="运行时数据区"></p>
+<h2 id="2-hotspot虚拟机对象探秘">2 HotSpot虚拟机对象探秘</h2>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/algorithm0/" data-toggle="tooltip" data-placement="top" title="C++中的零碎">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/xu/" data-toggle="tooltip" data-placement="top" title="序">下一篇 &rarr;</a>
+                            <a href="/article/javadata/" data-toggle="tooltip" data-placement="top" title="Java中的零碎">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -270,6 +301,24 @@
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
 
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-运行时数据区域"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1 &#x8FD0;&#x884C;&#x65F6;&#x6570;&#x636E;&#x533A;&#x57DF;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#11-程序计数器"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1.1 &#x7A0B;&#x5E8F;&#x8BA1;&#x6570;&#x5668;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#12-java虚拟机栈"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">1.2 Java&#x865A;&#x62DF;&#x673A;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#13-本地方法栈"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">1.3 &#x672C;&#x5730;&#x65B9;&#x6CD5;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#14-java堆"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">1.4 Java&#x5806;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#15-方法区"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">1.5 &#x65B9;&#x6CD5;&#x533A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#16-运行时常量池"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">1.6 &#x8FD0;&#x884C;&#x65F6;&#x5E38;&#x91CF;&#x6C60;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#17-直接内存"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">1.7 &#x76F4;&#x63A5;&#x5185;&#x5B58;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-hotspot虚拟机对象探秘"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2 HotSpot&#x865A;&#x62DF;&#x673A;&#x5BF9;&#x8C61;&#x63A2;&#x79D8;</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
                 
             <!-- Sidebar Container -->
             <div class="
@@ -284,7 +333,7 @@
                     <h5><a href="/tags/">标签</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#少年游" title="少年游">少年游</a>
+                          <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
                         
                     </div>
                 </section>

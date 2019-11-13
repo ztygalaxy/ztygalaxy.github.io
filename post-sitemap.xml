@@ -7,8 +7,16 @@
     </url>
 
     <url>
+        <loc>http://tyzhang.tk/article/jvmemory/</loc>
+        <lastmod>2019-11-13T14:23:11.979Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://tyzhang.tk/article/leetcode1/</loc>
-        <lastmod>2019-11-12T02:56:13.449Z</lastmod>
+        <lastmod>2019-11-13T13:45:38.683Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -16,7 +24,7 @@
 
     <url>
         <loc>http://tyzhang.tk/article/javadata/</loc>
-        <lastmod>2019-11-12T02:53:14.990Z</lastmod>
+        <lastmod>2019-11-13T01:40:17.607Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -24,7 +32,7 @@
 
     <url>
         <loc>http://tyzhang.tk/article/algorithm0/</loc>
-        <lastmod>2019-11-12T02:43:04.610Z</lastmod>
+        <lastmod>2019-11-13T01:39:36.610Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
