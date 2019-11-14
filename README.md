@@ -5,13 +5,13 @@
 随笔向博客。
 
 ### 博客地址
-[https://tyzhang.tk](https://tyzhang.tk)
+[https://tyzhang.top](https://tyzhang.top)
 
 ### 博客搭建及域名申请
-[GitHub Pages & Freenom](https://tyzhang.tk/article/github/)
+[GitHub Pages & Freenom](https://tyzhang.top/article/github/)
 
 ### Gitalk评论插件
-[Gitalk](https://tyzhang.tk/article/gitalk/)
+[Gitalk](https://tyzhang.top/article/gitalk/)
 
 ### 朋友们
 

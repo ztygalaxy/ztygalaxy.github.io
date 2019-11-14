@@ -154,13 +154,13 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -269,15 +269,32 @@
 <p><strong>异常情况</strong> 受到本机内存的限制，如果内存区域总和大于物理内存限制从而导致动态扩展时出现该异常。</p>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAxNy85LzQvZGE3N2Q5MDE0Njc4NmMwY2IzZTE3MGI5YzkzNzZhZTQ_aW1hZ2VWaWV3Mi8wL3cvMTI4MC9oLzk2MC9mb3JtYXQvd2VicC9pZ25vcmUtZXJyb3IvMQ" alt="运行时数据区"></p>
 <h2 id="2-hotspot虚拟机对象探秘">2 HotSpot虚拟机对象探秘</h2>
+<h3 id="分代划分内存">分代划分内存</h3>
+<p>整个JVM内存总共划分为三代：年轻代（Young Generation）、年老代（Old Generation）、持久代（Permanent Generation）</p>
+<ol>
+<li>
+<p>年轻代：所有新生成的对象首先都放在年轻代内存中。年轻代的目标就是尽可能快速的手机掉那些生命周期短的对象。年轻代内存分为一块较大的Eden空间和两块较小的Survior空间，每次使用Eden和其中的一块Survior.当回收时，将Eden和Survior中还存活的对象一次性拷贝到另外一块Survior空间上，最后清理Eden和刚才用过的Survior空间。</p>
+</li>
+<li>
+<p>年老代：在年轻代经历了N次GC后，仍然存活的对象，就会被放在老年代中。因此可以认为老年代存放的都是一些生命周期较长的对象。</p>
+</li>
+<li>
+<p>持久代：基本固定不变，用于存放静态文件，例如Java类和方法。持久代对GC没有显著的影响。持久代可以通过-XX:MaxPermSize=进行设置。</p>
+</li>
+</ol>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
+                        <li class="previous">
+                            <a href="/article/leetcode1/" data-toggle="tooltip" data-placement="top" title="Algorithm November">&larr; 上一篇</a>
+                        </li>
+                    
                     
                         <li class="next">
-                            <a href="/article/javadata/" data-toggle="tooltip" data-placement="top" title="Java中的零碎">下一篇 &rarr;</a>
+                            <a href="/article/javadata/" data-toggle="tooltip" data-placement="top" title="Java 方法篇">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -313,7 +330,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-运行时数据区域"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1 &#x8FD0;&#x884C;&#x65F6;&#x6570;&#x636E;&#x533A;&#x57DF;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#11-程序计数器"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1.1 &#x7A0B;&#x5E8F;&#x8BA1;&#x6570;&#x5668;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#12-java虚拟机栈"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">1.2 Java&#x865A;&#x62DF;&#x673A;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#13-本地方法栈"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">1.3 &#x672C;&#x5730;&#x65B9;&#x6CD5;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#14-java堆"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">1.4 Java&#x5806;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#15-方法区"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">1.5 &#x65B9;&#x6CD5;&#x533A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#16-运行时常量池"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">1.6 &#x8FD0;&#x884C;&#x65F6;&#x5E38;&#x91CF;&#x6C60;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#17-直接内存"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">1.7 &#x76F4;&#x63A5;&#x5185;&#x5B58;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-hotspot虚拟机对象探秘"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2 HotSpot&#x865A;&#x62DF;&#x673A;&#x5BF9;&#x8C61;&#x63A2;&#x79D8;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-运行时数据区域"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1 &#x8FD0;&#x884C;&#x65F6;&#x6570;&#x636E;&#x533A;&#x57DF;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#11-程序计数器"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1.1 &#x7A0B;&#x5E8F;&#x8BA1;&#x6570;&#x5668;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#12-java虚拟机栈"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">1.2 Java&#x865A;&#x62DF;&#x673A;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#13-本地方法栈"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">1.3 &#x672C;&#x5730;&#x65B9;&#x6CD5;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#14-java堆"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">1.4 Java&#x5806;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#15-方法区"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">1.5 &#x65B9;&#x6CD5;&#x533A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#16-运行时常量池"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">1.6 &#x8FD0;&#x884C;&#x65F6;&#x5E38;&#x91CF;&#x6C60;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#17-直接内存"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">1.7 &#x76F4;&#x63A5;&#x5185;&#x5B58;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-hotspot虚拟机对象探秘"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2 HotSpot&#x865A;&#x62DF;&#x673A;&#x5BF9;&#x8C61;&#x63A2;&#x79D8;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分代划分内存"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5206;&#x4EE3;&#x5212;&#x5206;&#x5185;&#x5B58;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
