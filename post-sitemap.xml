@@ -7,6 +7,38 @@
     </url>
 
     <url>
+        <loc>http://tyzhang.tk/article/leetcodesolu/</loc>
+        <lastmod>2019-11-16T07:41:47.747Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/hdu-cs/</loc>
+        <lastmod>2019-11-16T06:11:11.234Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/offersolu/</loc>
+        <lastmod>2019-11-16T04:19:59.256Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/article/javaknow/</loc>
+        <lastmod>2019-11-15T02:33:45.145Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://tyzhang.tk/article/jvmemory/</loc>
         <lastmod>2019-11-14T13:34:09.297Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,30 +49,6 @@
     <url>
         <loc>http://tyzhang.tk/article/leihuo/</loc>
         <lastmod>2019-11-14T12:44:42.834Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/javaknow/</loc>
-        <lastmod>2019-11-14T12:43:38.435Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/leetcode1/</loc>
-        <lastmod>2019-11-14T12:43:16.267Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/leetcode0/</loc>
-        <lastmod>2019-11-14T12:42:37.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -241,14 +249,6 @@
     <url>
         <loc>http://tyzhang.tk/article/five/</loc>
         <lastmod>2019-10-24T11:45:31.850Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://tyzhang.tk/article/hdu-cs/</loc>
-        <lastmod>2019-10-24T11:45:15.492Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

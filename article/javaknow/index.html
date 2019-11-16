@@ -228,6 +228,24 @@
 </blockquote>
 <h2 id="servlet生命周期">Servlet生命周期</h2>
 <img src="https://pic.tyzhang.top/images/2019/11/14/Servlet.png" alt="生命周期" style="zoom:80%;">
+<p>Servlet的生命周期分为5个阶段：加载、创建、初始化、处理客户请求、卸载。</p>
+<ol>
+<li>
+<p>加载：容器通过类加载器使用servlet类对应的文件加载servlet</p>
+</li>
+<li>
+<p>创建：通过调用servlet构造函数创建一个servlet对象</p>
+</li>
+<li>
+<p>初始化：调用init方法初始化</p>
+</li>
+<li>
+<p>处理客户请求：每当有一个客户请求，容器会创建一个线程来处理客户请求</p>
+</li>
+<li>
+<p>卸载：调用destroy方法让servlet自己释放其占用的资源</p>
+</li>
+</ol>
 <h2 id="applet">Applet</h2>
 <p>Applet 类是浏览器类库中最为重要的类，同时也是所有 JAVA 小应用程序的基本类。 一个 Applet 应用程序从开始运行到结束时所经历的过程被称为 Applet 的生命周期。 Applet 的生命周期涉及 init() 、 start() 、 stop() 和 destroy() 四种方法，这 4 种方法都是 Applet 类的成员，可以继承这些方法，也可以重写这些方法，覆盖原来定义的这些方法。除此之外，为了在 Applet 程序中实现输出功能，每个 Applet 程序中还需要重载 paint() 方法：</p>
 <ol>
@@ -331,9 +349,13 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
+                        <li class="previous">
+                            <a href="/article/leetcodesolu/" data-toggle="tooltip" data-placement="top" title="LeetCode 解题报告">&larr; 上一篇</a>
+                        </li>
+                    
                     
                         <li class="next">
-                            <a href="/article/leetcode1/" data-toggle="tooltip" data-placement="top" title="Algorithm November">下一篇 &rarr;</a>
+                            <a href="/article/offersolu/" data-toggle="tooltip" data-placement="top" title="剑指Offer 解题报告">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
