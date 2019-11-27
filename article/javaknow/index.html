@@ -154,13 +154,13 @@
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -628,7 +628,7 @@
 </tr>
 </tbody>
 </table>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">不能用来修饰<span class="class"><span class="keyword">interface</span>的有（<span class="title">private</span>、<span class="title">protected</span>、<span class="title">static</span>）。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">不能用来修饰<span class="class"><span class="keyword">interface</span>的有（<span class="title">private</span>、<span class="title">protected</span>、<span class="title">static</span>）。</span></span><br><span class="line"><span class="class">子类重写父类方法时，方法的访问权限不能小于原访问权限。</span></span><br></pre></td></tr></table></figure>
 <h2 id="hash冲突">Hash冲突</h2>
 <h3 id="概述">概述</h3>
 <p>对象Hash的前提是实现equals()和hashCode()两个方法，HashCode()的作用就是保证对象返回唯一hash值，但当两个对象计算值一样时，这就发生了碰撞冲突。如下将介绍如何处理冲突，当然其前提是一致性hash。</p>
@@ -657,22 +657,82 @@
 <p>同步是害怕在操作过程的时候被其他线程也进行读取操作，一旦是原子性的操作就不会发生这种情况。因为一步到位的操作，其他线程不可能在中间干涉。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例题： 以下多线程对int型变量x的操作,哪个不需要进行同步() </span><br><span class="line">A. ++x	B. x=y	C. x++	D. x=1</span><br><span class="line">解析：ABC不是原子性操作，都需要先读取再操作。例如想x++，先获取x的值，自增一，然后再把值赋给x，三步，中间任何一步执行时都可能被其他线程访问或者修改。所以需要同步。</span><br></pre></td></tr></table></figure>
 <h2 id="b树">B树</h2>
-<h2 id="零碎知识点">零碎知识点</h2>
+<h2 id="hash表">Hash表</h2>
+<h3 id="1-构造方法">1. 构造方法</h3>
 <ol>
-<li>
+<li>数字分析法：事先知道关键字的集合，且每个关键字的位数比哈希表的地址码位数多时，可以从关键字中选出分布比较均匀的若干位，构成哈希地址。</li>
+<li>平方取中法：当无法确定关键字中哪几位分布比较均匀时，可以先求出关键字的平方值的中间几位作为哈希地址</li>
+<li>分段叠加法：按哈希表的地址位数将关键字分成位数相等的几部分（最后一部分较短），然后将这几部分相加，舍弃最高位后的结果就是该关键字的哈希地址。</li>
+<li>除留余数法：假设哈希表长为 m,p为小于等于 m 的 最大数数，则哈希 函数为 H(k) = k%p</li>
+<li>伪随机数为：采用一个伪随机函数作为哈希函数，即 H(key) = random(key)</li>
+</ol>
+<h3 id="2-处理冲突">2. 处理冲突</h3>
+<ol>
+<li>开放定址法</li>
+<li>再哈希法</li>
+<li>链地址法</li>
+<li>建立公共溢出区</li>
+</ol>
+<h3 id="3-性能分析">3. 性能分析</h3>
+<p>​        哈希法中影响关键字比较次数的因素有三个：哈希函数，处理冲突的方法，哈希表的装填因子。装填因子 a 的定义如下：     a = 哈希表中元素的个数 / 哈希表的长度      a 可描述哈希表的装满程度。a 越小，发生冲突的可能性越小； a 越大 ，发生冲突的可能性越大。</p>
+<h2 id="hashtable和hashmap">HashTable和HashMap</h2>
+<p><a href="https://blog.csdn.net/fujiakai/article/details/51585767" target="_blank" rel="noopener">https://blog.csdn.net/fujiakai/article/details/51585767</a></p>
+<h2 id="抽象类和接口">抽象类和接口</h2>
+<ol>
+<li>一个子类只能继承一个抽象类,但能实现多个接口</li>
+<li>抽象类可以有构造方法,接口没有构造方法</li>
+<li>抽象类可以有普通成员变量,接口没有普通成员变量</li>
+<li>抽象类和接口都可有静态成员变量,抽象类中静态成员变量访问类型任意,接口只能public static final(默认)</li>
+<li>抽象类可以没有抽象方法,抽象类可以有普通方法,接口中都是抽象方</li>
+<li>抽象类可以有静态方法,接口不能有静态方法</li>
+<li>抽象类中的方法可以是public、protected;接口方法只有public</li>
+</ol>
+<h2 id="collection和collections">Collection和Collections</h2>
+<p><img src="http://uploadfiles.nowcoder.com/images/20150904/458054_1441352361202_2B9A4774B9C5C489A9E9564854FFCD6C" alt=""></p>
+<p><img src="http://uploadfiles.nowcoder.com/images/20150928/458054_1443399626006_AA40C8919CE65157D5F251E7622A75FB" alt=""></p>
+<h2 id="零碎知识点">零碎知识点</h2>
+<h3 id="1-编译相关">1. 编译相关</h3>
 <p>java文件中只能包含一个由public修饰的 与文件名称相同的类。 一个以”.java”为后缀的源文件只能有一个文件名相同的类，可以包含其他类。</p>
-</li>
-<li>
-<p>正则表达式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\d      匹配一个数字字符。等价于 [0-9]。</span><br><span class="line">\D     匹配一个非数字字符。等价于 [^0-9]。</span><br><span class="line">\f       匹配一个换页符。等价于 \x0c 和 \cL。</span><br><span class="line">\n      匹配一个换行符。等价于 \x0a 和 \cJ。</span><br><span class="line">\r       匹配一个回车符。等价于 \x0d 和 \cM。</span><br><span class="line">\s      匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [ \f\n\r\t\v]。</span><br><span class="line">\S      匹配任何非空白字符。等价于 [^ \f\n\r\t\v]。</span><br><span class="line">\t       匹配一个制表符。等价于 \x09 和 \cI。</span><br><span class="line">\v      匹配一个垂直制表符。等价于 \x0b 和 \cK。</span><br><span class="line">\w     匹配字母、数字、下划线。等价于&apos;[A-Za-z0-9_]&apos;。</span><br><span class="line">\W    匹配非字母、数字、下划线。等价于 &apos;[^A-Za-z0-9_]&apos;。</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>形参的修改</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下参数的修改</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassTest</span></span>&#123;</span><br><span class="line">     String str = <span class="keyword">new</span> String(<span class="string">"hello"</span>);</span><br><span class="line">     <span class="keyword">char</span>[] ch = &#123;<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>&#125;;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">(String str, <span class="keyword">char</span> ch[])</span></span>&#123;</span><br><span class="line">     str=<span class="string">"world"</span>;</span><br><span class="line">     ch[<span class="number">0</span>]=<span class="string">'d'</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">     ClassTest test1 = <span class="keyword">new</span> ClassTest();</span><br><span class="line">     test1.fun(test1.str,test1.ch);</span><br><span class="line">     System.out.print(test1.str + <span class="string">" and "</span>);</span><br><span class="line">     System.out.print(test1.ch);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-正则表达式">2. 正则表达式</h3>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\d      匹配一个数字字符。等价于 [0-9]。</span><br><span class="line">\D     匹配一个非数字字符。等价于 [^0-9]。</span><br><span class="line">\f       匹配一个换页符。等价于 \x0c 和 \cL。</span><br><span class="line">\n      匹配一个换行符。等价于 \x0a 和 \cJ。</span><br><span class="line">\r       匹配一个回车符。等价于 \x0d 和 \cM。</span><br><span class="line">\s      匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [ \f\n\r\t\v]。</span><br><span class="line">\S      匹配任何非空白字符。等价于 [^ \f\n\r\t\v]。</span><br><span class="line">\t       匹配一个制表符。等价于 \x09 和 \cI。</span><br><span class="line">\v      匹配一个垂直制表符。等价于 \x0b 和 \cK。</span><br><span class="line">\w     匹配字母、数字、下划线。等价于&apos;[A-Za-z0-9_]&apos;。</span><br><span class="line">\W    匹配非字母、数字、下划线。等价于 &apos;[^A-Za-z0-9_]&apos;。</span><br></pre></td></tr></table></figure>
+<h3 id="3-形参的修改">3. 形参的修改</h3>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下参数的修改</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassTest</span></span>&#123;</span><br><span class="line">     String str = <span class="keyword">new</span> String(<span class="string">"hello"</span>);</span><br><span class="line">     <span class="keyword">char</span>[] ch = &#123;<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>&#125;;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">(String str, <span class="keyword">char</span> ch[])</span></span>&#123;</span><br><span class="line">     str=<span class="string">"world"</span>;</span><br><span class="line">     ch[<span class="number">0</span>]=<span class="string">'d'</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">     ClassTest test1 = <span class="keyword">new</span> ClassTest();</span><br><span class="line">     test1.fun(test1.str,test1.ch);</span><br><span class="line">     System.out.print(test1.str + <span class="string">" and "</span>);</span><br><span class="line">     System.out.print(test1.ch);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>Java只有值转递没有引用传递。</p>
-<img src="https://uploadfiles.nowcoder.com/images/20171205/5600283_1512458079962_0426C2E93E9C117364CC25A474513D98" style="zoom: 25%;">
+   <img src="https://uploadfiles.nowcoder.com/images/20171205/5600283_1512458079962_0426C2E93E9C117364CC25A474513D98" style="zoom: 25%;">
 <p><a href="https://www.nowcoder.com/questionTerminal/ea753f170fff4b9f8e242458b2fc5a6d" target="_blank" rel="noopener">https://www.nowcoder.com/questionTerminal/ea753f170fff4b9f8e242458b2fc5a6d</a></p>
-</li>
+<h3 id="4-二叉树公式总结">4. 二叉树公式总结</h3>
+<ol>
+<li>n个节点的二叉树一共有((2n)!)/(n! * (n+1)!)种</li>
+<li>n层二叉树的第n层最多为2^(n-1)个</li>
+<li>二叉树节点计算公式 N = n0+n1+n2，度为0的叶子节点比度为2的节点数多一个。N=1<em>n1+2</em>n2+1</li>
+<li>对任何一棵二叉树T，如果其终端节点数为n0，度为2的节点数为n2，则n0=n2+1</li>
+<li>具有n个节点的完全二叉树的深度为log2(n) + 1</li>
+<li>B-树，除叶子与根节点以外的任意结点的分支数介于<a href="%E5%8F%96%E4%B8%8A%E6%95%B4">m/2，m</a></li>
+<li>具有n 个结点的完全二叉树的深度为[log2n]+1</li>
+<li>树的高度：从根节点到所有叶节点中最大的边的数目。树的深度：从根节点到所有叶节点中最多的节点数目。</li>
+</ol>
+<h3 id="5-javalang包含">5. java.lang包含</h3>
+<ul>
+<li>包装类</li>
+<li>String 类</li>
+<li>Math 类   ——  包含函数</li>
+<li>Class 类</li>
+<li>Object 类</li>
+</ul>
+<h3 id="6-继承执行顺序">6. 继承执行顺序</h3>
+<ol>
+<li>执行父类的静态代码块</li>
+<li>执行子类的静态代码块</li>
+<li>执行父类的构造代码块</li>
+<li>执行父类的构造函数</li>
+<li>执行子类的构造代码块</li>
+<li>执行子类的构造函数</li>
+</ol>
+<h3 id="7-内存与磁盘查找性能">7. 内存与磁盘查找性能</h3>
+<ol>
+<li>Hash操作能根据散列值直接定位数据的存储地址，设计良好的hash表能在常数级时间下找到需要的数据，但是更适合于内存中的查找。</li>
+<li>B+树是一种是一种树状的数据结构，适合做索引，对磁盘数据来说，索引查找是比较高效的</li>
+<li>STL_Map的内部实现是一颗红黑树，但是只是一颗在内存中建立二叉树树，不能用于磁盘操作，而其内存查找性能也比不上Hash查找。</li>
 </ol>
 
                 
@@ -722,7 +782,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#servlet生命周期"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Servlet&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#applet"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Applet</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#访问修饰符"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x8BBF;&#x95EE;&#x4FEE;&#x9970;&#x7B26;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hash冲突"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Hash&#x51B2;&#x7A81;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概述"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">&#x6982;&#x8FF0;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-开放地址法"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">1. &#x5F00;&#x653E;&#x5730;&#x5740;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-再哈希法"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">2. &#x518D;&#x54C8;&#x5E0C;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-链地址法拉链法"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">3. &#x94FE;&#x5730;&#x5740;&#x6CD5;(&#x62C9;&#x94FE;&#x6CD5;)</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#基本数据类型"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x57FA;&#x672C;&#x6570;&#x636E;&#x7C7B;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-精度问题"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">1. &#x7CBE;&#x5EA6;&#x95EE;&#x9898;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#线程操作"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x64CD;&#x4F5C;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-同步"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">1. &#x540C;&#x6B65;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#b树"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">B&#x6811;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#零碎知识点"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">&#x96F6;&#x788E;&#x77E5;&#x8BC6;&#x70B9;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#servlet生命周期"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Servlet&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#applet"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Applet</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#访问修饰符"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x8BBF;&#x95EE;&#x4FEE;&#x9970;&#x7B26;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hash冲突"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Hash&#x51B2;&#x7A81;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概述"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">&#x6982;&#x8FF0;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-开放地址法"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">1. &#x5F00;&#x653E;&#x5730;&#x5740;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-再哈希法"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">2. &#x518D;&#x54C8;&#x5E0C;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-链地址法拉链法"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">3. &#x94FE;&#x5730;&#x5740;&#x6CD5;(&#x62C9;&#x94FE;&#x6CD5;)</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#基本数据类型"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x57FA;&#x672C;&#x6570;&#x636E;&#x7C7B;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-精度问题"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">1. &#x7CBE;&#x5EA6;&#x95EE;&#x9898;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#线程操作"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x64CD;&#x4F5C;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-同步"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">1. &#x540C;&#x6B65;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#b树"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">B&#x6811;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hash表"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">Hash&#x8868;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-构造方法"><span class="toc-nav-number">8.1.</span> <span class="toc-nav-text">1. &#x6784;&#x9020;&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-处理冲突"><span class="toc-nav-number">8.2.</span> <span class="toc-nav-text">2. &#x5904;&#x7406;&#x51B2;&#x7A81;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-性能分析"><span class="toc-nav-number">8.3.</span> <span class="toc-nav-text">3. &#x6027;&#x80FD;&#x5206;&#x6790;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hashtable和hashmap"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">HashTable&#x548C;HashMap</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#抽象类和接口"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">&#x62BD;&#x8C61;&#x7C7B;&#x548C;&#x63A5;&#x53E3;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#collection和collections"><span class="toc-nav-number">11.</span> <span class="toc-nav-text">Collection&#x548C;Collections</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#零碎知识点"><span class="toc-nav-number">12.</span> <span class="toc-nav-text">&#x96F6;&#x788E;&#x77E5;&#x8BC6;&#x70B9;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-编译相关"><span class="toc-nav-number">12.1.</span> <span class="toc-nav-text">1. &#x7F16;&#x8BD1;&#x76F8;&#x5173;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-正则表达式"><span class="toc-nav-number">12.2.</span> <span class="toc-nav-text">2. &#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-形参的修改"><span class="toc-nav-number">12.3.</span> <span class="toc-nav-text">3. &#x5F62;&#x53C2;&#x7684;&#x4FEE;&#x6539;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-二叉树公式总结"><span class="toc-nav-number">12.4.</span> <span class="toc-nav-text">4. &#x4E8C;&#x53C9;&#x6811;&#x516C;&#x5F0F;&#x603B;&#x7ED3;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-javalang包含"><span class="toc-nav-number">12.5.</span> <span class="toc-nav-text">5. java.lang&#x5305;&#x542B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-继承执行顺序"><span class="toc-nav-number">12.6.</span> <span class="toc-nav-text">6. &#x7EE7;&#x627F;&#x6267;&#x884C;&#x987A;&#x5E8F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#7-内存与磁盘查找性能"><span class="toc-nav-number">12.7.</span> <span class="toc-nav-text">7. &#x5185;&#x5B58;&#x4E0E;&#x78C1;&#x76D8;&#x67E5;&#x627E;&#x6027;&#x80FD;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
