@@ -7,8 +7,16 @@
     </url>
 
     <url>
+        <loc>http://tyzhang.tk/article/userfullink/</loc>
+        <lastmod>2019-12-11T13:01:42.952Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://tyzhang.tk/article/javaknow/</loc>
-        <lastmod>2019-12-11T11:10:49.162Z</lastmod>
+        <lastmod>2019-12-11T12:17:08.539Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
