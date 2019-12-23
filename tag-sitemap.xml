@@ -16,13 +16,6 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/tags/JVM/</loc>
-        <lastmod>2019-11-16T09:30:15.770Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://tyzhang.tk/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</loc>
         <lastmod>2019-12-11T12:17:08.539Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -38,7 +31,14 @@
 
     <url>
         <loc>http://tyzhang.tk/tags/%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/</loc>
-        <lastmod>2019-12-22T07:19:31.715Z</lastmod>
+        <lastmod>2019-12-23T12:46:03.586Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://tyzhang.tk/tags/JVM/</loc>
+        <lastmod>2019-12-23T14:10:00.230Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

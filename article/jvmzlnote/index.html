@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          关于圆滑物体计数的一点思考 - 张天宇的博客 | ztygalaxy Blog
+          张龙JVM系列课程笔记 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
-    <link rel="canonical" href="http://tyzhang.tk/article/think-about-count/">
+    <link rel="canonical" href="http://tyzhang.tk/article/jvmzlnote/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                              <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
                             
                         </div>
-                        <h1>关于圆滑物体计数的一点思考</h1>
+                        <h1>张龙JVM系列课程笔记</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2018-03-16
+                            2019-12-23
                         </span>
                     </div>
                 
@@ -223,16 +223,83 @@
                 post-container">
 
 				
-                <p>​	在做SRT的时候，涉及到了对种子粘连的一个计数，前期做了一些边缘检测算法，效果不是很好，由于时间原因没有深入理解。偶然的机会，有了一点其他想法。</p>
-<p>​	遗传学上广泛应用的拟南芥种子实在是太小了，本身计数就很费劲。出现粘连的时候更是折煞，肉眼几乎分辨不出来。这也是SRT的主攻方向。当时定的方案是主流预处理后边缘检测或者是封闭区域计数，但是由于拟南芥形状过于特殊，经过几轮测试效果都不理想。</p>
-<p>​	暑假有一天在学校聊天聊到煮花生，想要对刚刨出来的花生米计数，就需要先把泥土洗掉，然后再把外壳剥掉，花生米散开，就完成了。恰恰是得益于花生壳紧贴花生米长，因此但从花生壳也可以基本大致判断花生米的个数。由此发散，当出现粘连时候，层层剥皮最后剩下特征点，计数，可行。</p>
-<p>​	如下</p>
-<p>​	<img src="/img/article/qlz_al.jpg" alt="加载失败"></p>
-<p>​	识别基本流程</p>
-<p>​	<img src="/img/article/qlz_lc.jpg" alt="效果图"></p>
-<p>​	这样存在的一个问题就是种子出现缺口时，可能会导致误判。拟南芥种子因为十分小，目前测试的100-200数据误差可以忽略不计。不过从算法的复用性及准确性看，边缘检测、连通区域计数才是王道啊。</p>
-<p>​	后记：记得有一次看过一句话，“程序员的使命就是让程序员失业”，不如说是让所有人失业，长远看，那其实是创造幸福。<br>
-​		Just Works!</p>
+                <blockquote>
+<p>B站张龙JVM虚拟机系列课程学习笔记</p>
+</blockquote>
+<p>课程地址: <a href="https://www.bilibili.com/video/av47756459" target="_blank" rel="noopener">av47756459</a></p>
+<p>在Java代码中，类型（class、interface，不涉及对象的概念）的加载、连接和初始化过程都是在程序运行期间完成的。提供了更大的灵活性，增加了更多的可能性。</p>
+<h3 id="jvm结束生命周期">JVM结束生命周期：</h3>
+<ol>
+<li>执行了System.exit()方法</li>
+<li>程序正常执行结束</li>
+<li>程序在执行过程中遇到了异常或错误而异常终止</li>
+<li>由于操作系统出现错误而导致Java虚拟机进程终止</li>
+</ol>
+<h2 id="类的加载-连接-初始化">类的加载、连接、初始化</h2>
+<ol>
+<li>加载
+<ol>
+<li>将类的.class文件中的二进制数据读入到内存中，将其放在运行时数据区的方法区内，然后在内存中创建一个java.clang.Class对象（规范并未说明Class对象位于哪里，HotSpot虚拟机将其放在了方法去中）用来封装类在方法区内的数据结构。</li>
+<li>加载.class文件的方式
+<ol>
+<li>从本地系统中直接加载</li>
+<li>通过网络下载.class文件</li>
+<li>从zip,jar等归档文件中加载.class文件</li>
+<li>从专有数据库中提取.class文件</li>
+<li>将Java源文件动态编译为.class文件（动态代理：在运行期生成的类）</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>连接
+<ol>
+<li>验证：确保被加载的类的正确性</li>
+<li>准备：为类的<strong>静态变量</strong>分配内存，并将其初始化为<strong>默认值</strong></li>
+<li>解析：<strong>把类中的符号引用转换为直接引用</strong></li>
+</ol>
+</li>
+<li><strong>初始化：为类的静态变量赋予正确的初始值</strong></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 准备阶段，将a初始化为整型变量的默认值0</span></span><br><span class="line"><span class="comment">// 初始化，将1赋值给a</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>使用</li>
+<li>卸载</li>
+</ol>
+<p><strong>符号引用</strong>：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能够无歧义的定位到目标即可。</p>
+<p>在<a href="http://lib.csdn.net/base/javaee" target="_blank" rel="noopener">Java</a>中，一个java类将会编译成一个class文件。在编译时，java类并不知道所引用的类的实际地址，因此只能使用符号引用来代替。各种虚拟机实现的内存布局可能有所不同，但是它们能接受的符号引用都是一致的，因为符号引用的字面量形式明确定义在Java虚拟机规范的Class文件格式中。</p>
+<p><strong>直接引用</strong>：</p>
+<ol>
+<li>
+<p>直接指向目标的指针（比如，指向“类型”【Class对象】、类变量、类方法的直接引用可能是指向方法区的指针）</p>
+</li>
+<li>
+<p>相对偏移量（比如，指向实例变量、实例方法的直接引用都是偏移量）</p>
+</li>
+<li>
+<p>一个能间接定位到目标的句柄</p>
+</li>
+</ol>
+<p>直接引用是和虚拟机的布局相关的，同一个符号引用在不同的虚拟机实例上翻译出来的直接引用一般不会相同。如果有了直接引用，那引用的目标必定已经被加载入内存中了。</p>
+<h3 id="java程序对类的使用方式">Java程序对类的使用方式</h3>
+<ul>
+<li>主动使用
+<ul>
+<li>创建类的实例</li>
+<li>访问某个类或接口的静态变量，或者对该静态变量赋值</li>
+<li>调用类的静态方法</li>
+<li>反射</li>
+<li>初始化一个类的子类</li>
+<li>Java虚拟机启动时被标明为启动类的类</li>
+<li>JDK1.7开始提供的动态语言支持：如果java.long.invoke.MethodHandle实例的解析结果REF_getStatic、REF_putStatic和REF_invokeStatic句柄对应的类没有初始化，则初始化。</li>
+</ul>
+</li>
+<li>被动使用
+<ul>
+<li>除了上述七种情况，其他使用Java类的使用方法都属于对类的被动使用，并不会<strong>导致类的初始化</strong>。</li>
+</ul>
+</li>
+</ul>
+<p>所有的Java虚拟机实现必须在每个类或接口被Java程序“<strong>首次主动使用</strong>”时才初始化他们。</p>
 
                 
                 <hr>
@@ -240,12 +307,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/one/" data-toggle="tooltip" data-placement="top" title="一">&larr; 上一篇</a>
+                            <a href="/article/leetcodesolu/" data-toggle="tooltip" data-placement="top" title="LeetCode 解题报告">&larr; 上一篇</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/cyhs-5/" data-toggle="tooltip" data-placement="top" title="次元画社(五)，图片云中来">下一篇 &rarr;</a>
+                            <a href="/article/userfullink/" data-toggle="tooltip" data-placement="top" title="他山之玉">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -281,7 +348,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jvm结束生命周期"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">JVM&#x7ED3;&#x675F;&#x751F;&#x547D;&#x5468;&#x671F;&#xFF1A;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#类的加载-连接-初始化"><span class="toc-nav-number"></span> <span class="toc-nav-text">&#x7C7B;&#x7684;&#x52A0;&#x8F7D;&#x3001;&#x8FDE;&#x63A5;&#x3001;&#x521D;&#x59CB;&#x5316;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#java程序对类的使用方式"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Java&#x7A0B;&#x5E8F;&#x5BF9;&#x7C7B;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;</span></a></li></ol>
         
         </div>
       </aside>
@@ -301,7 +368,7 @@
                     <h5><a href="/tags/">标签</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                          <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
                         
                     </div>
                 </section>
