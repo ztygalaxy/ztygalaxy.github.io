@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          六 - 张天宇的博客 | ztygalaxy Blog
+          日期YYYY与yyyy的区别 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
-    <link rel="canonical" href="http://tyzhang.tk/article/six/">
+    <link rel="canonical" href="http://tyzhang.tk/article/yyyy/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -89,14 +89,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#少年游" title="少年游">少年游</a>
+                              <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
                             
                         </div>
-                        <h1>六</h1>
+                        <h1>日期YYYY与yyyy的区别</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2019-01-11
+                            2020-01-01
                         </span>
                     </div>
                 
@@ -224,26 +224,27 @@
                 post-container">
 
 				
-                <p>​	说起思维定势，有时候根本感觉不到，就已经进入了这个怪圈。用老妈话讲，叫吃煎饼不知道倒把。</p>
-<p>​	最近看别人的博客发现很多人底下加了个赞赏码，是一个三合一的，比如下面这个图，意思就是你用什么扫都行。当然我也没扫过，这也是为什么我后来踩了很多坑。想了好久也没找到很好的解决办法，特别是有些小程序做这个要收费，又把我带到沟里了。以为这是一个一锤子买卖，和支付宝他们的离线解决方案一样，码是写死的。就想自己试试也做一个，苦于一直没找到好的思路。直到前几天，在GitHub摸鱼的时候想起来这事，去查了一下，没想到竟然是个在线方案。而且解决方案简单粗暴。这个方案实现的原理，简单来讲就是见人说人话，见鬼说鬼话。下面的流程图解释了这个流程。</p>
-<p><img src="https://github.com/ztygalaxy/ztygalaxy.github.io/blob/master/assets/img/codegenerate.jpg?raw=true" alt="流程图"></p>
-<p>​	有时候程序写多了，就会进入思维定势，在一个牛角尖里就钻不出来。还有，要想搞懂一个东西，先入为主是行不通的，得先动手摸清楚，再想法子开始做。实践出真知。</p>
-<p>​	“你怎么夏天还用保温杯啊”</p>
-<p>​	“夏天可以放冰水啊”</p>
-<p>​	相关：<a href="https://github.com/ztygalaxy/PaymentCodeGenerate" target="_blank" rel="noopener">PaymentCodeGenerate三码合一</a></p>
+                <blockquote>
+<p>在V站看到讨论跨年导致日期格式YYYY和yyyy导致日期显示Bug的帖子，没想到腾讯也中招了。</p>
+</blockquote>
+<p>帖子中指出，腾讯的微信公众平台在2019年元旦所在的星期显示全部按照2020显示了，如2019-12-31显示为了2020-12-31。并据该现象推测，应该是日期格式使用出错。</p>
+<p>先看一段程序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Calendar calendar = Calendar.getInstance();</span><br><span class="line"><span class="comment">// 2019-12-31</span></span><br><span class="line">calendar.set(<span class="number">2019</span>, Calendar.DECEMBER, <span class="number">31</span>);</span><br><span class="line">Date strDate1 = calendar.getTime();</span><br><span class="line"><span class="comment">// 2020-01-01</span></span><br><span class="line">calendar.set(<span class="number">2020</span>, Calendar.JANUARY, <span class="number">1</span>);</span><br><span class="line">Date strDate2 = calendar.getTime();</span><br><span class="line"><span class="comment">// 大写 YYYY</span></span><br><span class="line">DateFormat dateFormat0 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"YYYY/MM/dd"</span>);</span><br><span class="line">System.out.println(<span class="string">"2019-12-31 to YYYY/MM/dd: "</span> + dateFormat0.format(strDate1));</span><br><span class="line">System.out.println(<span class="string">"2020-01-01 to YYYY/MM/dd: "</span> + dateFormat0.format(strDate2));</span><br><span class="line"><span class="comment">// 小写 YYYY</span></span><br><span class="line">DateFormat dateFormat1 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy/MM/dd"</span>);</span><br><span class="line">System.out.println(<span class="string">"2019-12-31 to yyyy/MM/dd: "</span> + dateFormat1.format(strDate1));</span><br><span class="line">System.out.println(<span class="string">"2020-01-01 to yyyy/MM/dd: "</span> + dateFormat1.format(strDate2));</span><br></pre></td></tr></table></figure>
+<p>程序输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2019-12-31 to YYYY/MM/dd: 2020/12/31</span><br><span class="line">2020-01-01 to YYYY/MM/dd: 2020/01/01</span><br><span class="line">2019-12-31 to yyyy/MM/dd: 2019/12/31</span><br><span class="line">2020-01-01 to yyyy/MM/dd: 2020/01/01</span><br></pre></td></tr></table></figure>
+<p>确实如此，经过查证原因如下：</p>
+<p>YYYY表示的是以周为基础的年度，会计人员依靠这一点来避免在两个不同的年份之间拆分周数，从而避免公司的工资单出错。意思是当天所在周属于的年份，一周从周日开始算计算，周六结束，只要本周跨年，那么这一周就算下一年的。也就是说：年份如果用Y会是这周的年份，y才是标准的年份。</p>
+<p>结合今年的情况来看，2019-12-31，按照YYYY，已经是2020的第一周了。</p>
+<p>立即推，以后使用尽量使用&quot;yyyy-MM-dd&quot;避免衍生问题。</p>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/what_a_programmer/" data-toggle="tooltip" data-placement="top" title="什么是真正的程序员">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/github/" data-toggle="tooltip" data-placement="top" title="个人博客搭建及域名申请绑定">下一篇 &rarr;</a>
+                            <a href="/article/jvmzlnote/" data-toggle="tooltip" data-placement="top" title="深入理解JVM课程笔记">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -299,7 +300,7 @@
                     <h5><a href="/tags/">标签</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#少年游" title="少年游">少年游</a>
+                          <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
                         
                     </div>
                 </section>
