@@ -3,17 +3,17 @@
 
 
     <sitemap>
-        <loc>http://tyzhang.tk/post-sitemap.xml</loc>
+        <loc>tyzhang.top/post-sitemap.xml</loc>
         <lastmod>2020-01-02T12:52:01.153Z</lastmod>
     </sitemap>
 
     <sitemap>
-        <loc>http://tyzhang.tk/page-sitemap.xml</loc>
+        <loc>tyzhang.top/page-sitemap.xml</loc>
         <lastmod>2019-11-08T08:28:36.544Z</lastmod>
     </sitemap>
 
     <sitemap>
-        <loc>http://tyzhang.tk/tag-sitemap.xml</loc>
+        <loc>tyzhang.top/tag-sitemap.xml</loc>
         <lastmod>2020-01-02T12:52:01.153Z</lastmod>
     </sitemap>
 

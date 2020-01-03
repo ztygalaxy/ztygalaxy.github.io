@@ -2,13 +2,13 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>http://tyzhang.tk</loc>
+        <loc>tyzhang.top</loc>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/yyyy/</loc>
+        <loc>tyzhang.top/article/yyyy/</loc>
         <lastmod>2020-01-02T12:52:01.153Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -16,7 +16,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/jvmzlnote/</loc>
+        <loc>tyzhang.top/article/jvmzlnote/</loc>
         <lastmod>2019-12-28T04:08:10.326Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -24,7 +24,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/userfullink/</loc>
+        <loc>tyzhang.top/article/userfullink/</loc>
         <lastmod>2019-12-26T12:55:15.794Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -32,7 +32,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/leetcodesolu/</loc>
+        <loc>tyzhang.top/article/leetcodesolu/</loc>
         <lastmod>2019-12-23T12:46:03.586Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -40,7 +40,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/javaknow/</loc>
+        <loc>tyzhang.top/article/javaknow/</loc>
         <lastmod>2019-12-11T12:17:08.539Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -48,7 +48,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/algorithm0/</loc>
+        <loc>tyzhang.top/article/algorithm0/</loc>
         <lastmod>2019-11-21T01:55:16.094Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -56,7 +56,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/javadata/</loc>
+        <loc>tyzhang.top/article/javadata/</loc>
         <lastmod>2019-11-16T08:49:02.681Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -64,7 +64,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/hdu-cs/</loc>
+        <loc>tyzhang.top/article/hdu-cs/</loc>
         <lastmod>2019-11-16T06:11:11.234Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -72,7 +72,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/offersolu/</loc>
+        <loc>tyzhang.top/article/offersolu/</loc>
         <lastmod>2019-11-16T04:19:59.256Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -80,7 +80,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/leihuo/</loc>
+        <loc>tyzhang.top/article/leihuo/</loc>
         <lastmod>2019-11-14T12:44:42.834Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -88,7 +88,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/xu/</loc>
+        <loc>tyzhang.top/article/xu/</loc>
         <lastmod>2019-11-08T06:19:01.615Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -96,7 +96,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/buildwebsite/</loc>
+        <loc>tyzhang.top/article/buildwebsite/</loc>
         <lastmod>2019-11-08T06:02:03.727Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -104,7 +104,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/webhook/</loc>
+        <loc>tyzhang.top/article/webhook/</loc>
         <lastmod>2019-11-05T07:13:00.364Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -112,7 +112,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/two/</loc>
+        <loc>tyzhang.top/article/two/</loc>
         <lastmod>2019-10-25T01:02:01.185Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -120,7 +120,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/deepin/</loc>
+        <loc>tyzhang.top/article/deepin/</loc>
         <lastmod>2019-10-24T12:00:29.429Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -128,7 +128,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/winedit/</loc>
+        <loc>tyzhang.top/article/winedit/</loc>
         <lastmod>2019-10-24T12:00:29.424Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -136,7 +136,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/gitalk/</loc>
+        <loc>tyzhang.top/article/gitalk/</loc>
         <lastmod>2019-10-24T12:00:29.417Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -144,7 +144,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/seven/</loc>
+        <loc>tyzhang.top/article/seven/</loc>
         <lastmod>2019-10-24T12:00:29.394Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -152,7 +152,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/hdu_vpn/</loc>
+        <loc>tyzhang.top/article/hdu_vpn/</loc>
         <lastmod>2019-10-24T12:00:29.387Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -160,7 +160,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/what_a_programmer/</loc>
+        <loc>tyzhang.top/article/what_a_programmer/</loc>
         <lastmod>2019-10-24T12:00:29.381Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -168,7 +168,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/github/</loc>
+        <loc>tyzhang.top/article/github/</loc>
         <lastmod>2019-10-24T12:00:29.376Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -176,7 +176,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/think-about-count/</loc>
+        <loc>tyzhang.top/article/think-about-count/</loc>
         <lastmod>2019-10-24T12:00:29.370Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -184,7 +184,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/cyhs-4/</loc>
+        <loc>tyzhang.top/article/cyhs-4/</loc>
         <lastmod>2019-10-24T12:00:29.365Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -192,7 +192,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/cyhs-3/</loc>
+        <loc>tyzhang.top/article/cyhs-3/</loc>
         <lastmod>2019-10-24T12:00:29.361Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -200,7 +200,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/cyhs-2/</loc>
+        <loc>tyzhang.top/article/cyhs-2/</loc>
         <lastmod>2019-10-24T12:00:29.355Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -208,7 +208,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/cyhs-1/</loc>
+        <loc>tyzhang.top/article/cyhs-1/</loc>
         <lastmod>2019-10-24T12:00:29.351Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -216,7 +216,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/Minecraft/</loc>
+        <loc>tyzhang.top/article/Minecraft/</loc>
         <lastmod>2019-10-24T12:00:29.346Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -224,7 +224,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/talkflow/</loc>
+        <loc>tyzhang.top/article/talkflow/</loc>
         <lastmod>2019-10-24T12:00:29.341Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -232,7 +232,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/eight/</loc>
+        <loc>tyzhang.top/article/eight/</loc>
         <lastmod>2019-10-24T11:59:50.379Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -240,7 +240,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/galaxy/</loc>
+        <loc>tyzhang.top/article/galaxy/</loc>
         <lastmod>2019-10-24T11:58:43.900Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -248,7 +248,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/what%20every%20computer%20science%20major%20should%20know/</loc>
+        <loc>tyzhang.top/article/what%20every%20computer%20science%20major%20should%20know/</loc>
         <lastmod>2019-10-24T11:46:42.337Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -256,7 +256,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/six/</loc>
+        <loc>tyzhang.top/article/six/</loc>
         <lastmod>2019-10-24T11:45:47.037Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -264,7 +264,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/five/</loc>
+        <loc>tyzhang.top/article/five/</loc>
         <lastmod>2019-10-24T11:45:31.850Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -272,7 +272,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/Stable%20MatchingGale-Shapley%20Algorithm/</loc>
+        <loc>tyzhang.top/article/Stable%20MatchingGale-Shapley%20Algorithm/</loc>
         <lastmod>2019-10-24T11:45:01.173Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -280,7 +280,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/2018-11-1-Python-latlon-cal/</loc>
+        <loc>tyzhang.top/article/2018-11-1-Python-latlon-cal/</loc>
         <lastmod>2019-10-24T11:44:51.290Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -288,7 +288,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/four/</loc>
+        <loc>tyzhang.top/article/four/</loc>
         <lastmod>2019-10-24T11:44:44.974Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -296,7 +296,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/How%20to%20implement%20an%20algorithm%20from%20a%20scientific%20paper/</loc>
+        <loc>tyzhang.top/article/How%20to%20implement%20an%20algorithm%20from%20a%20scientific%20paper/</loc>
         <lastmod>2019-10-24T11:44:38.061Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -304,7 +304,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/Pyecharts/</loc>
+        <loc>tyzhang.top/article/Pyecharts/</loc>
         <lastmod>2019-10-24T11:44:30.807Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -312,7 +312,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/TeX-gra/</loc>
+        <loc>tyzhang.top/article/TeX-gra/</loc>
         <lastmod>2019-10-24T11:44:24.249Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -320,7 +320,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/GitHub-opera/</loc>
+        <loc>tyzhang.top/article/GitHub-opera/</loc>
         <lastmod>2019-10-24T11:44:16.969Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -328,7 +328,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/Python-data-deal/</loc>
+        <loc>tyzhang.top/article/Python-data-deal/</loc>
         <lastmod>2019-10-24T11:44:08.556Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -336,7 +336,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/cyhs-6/</loc>
+        <loc>tyzhang.top/article/cyhs-6/</loc>
         <lastmod>2019-10-24T11:43:52.552Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -344,7 +344,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/cyhs-5/</loc>
+        <loc>tyzhang.top/article/cyhs-5/</loc>
         <lastmod>2019-10-24T11:43:46.296Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -352,7 +352,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/yun/</loc>
+        <loc>tyzhang.top/article/yun/</loc>
         <lastmod>2019-10-24T11:42:31.740Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -360,7 +360,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/zero/</loc>
+        <loc>tyzhang.top/article/zero/</loc>
         <lastmod>2019-10-24T11:42:18.801Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -368,7 +368,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/sui/</loc>
+        <loc>tyzhang.top/article/sui/</loc>
         <lastmod>2019-10-24T11:42:11.012Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -376,7 +376,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/mountain/</loc>
+        <loc>tyzhang.top/article/mountain/</loc>
         <lastmod>2019-10-24T11:42:04.553Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -384,7 +384,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/birth/</loc>
+        <loc>tyzhang.top/article/birth/</loc>
         <lastmod>2019-10-20T08:45:33.653Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -392,7 +392,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/nine/</loc>
+        <loc>tyzhang.top/article/nine/</loc>
         <lastmod>2019-10-20T08:44:23.277Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -400,7 +400,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/bye/</loc>
+        <loc>tyzhang.top/article/bye/</loc>
         <lastmod>2019-10-20T08:44:14.693Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -408,7 +408,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/three/</loc>
+        <loc>tyzhang.top/article/three/</loc>
         <lastmod>2019-10-20T08:37:51.238Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -416,7 +416,7 @@
     </url>
 
     <url>
-        <loc>http://tyzhang.tk/article/one/</loc>
+        <loc>tyzhang.top/article/one/</loc>
         <lastmod>2019-10-20T08:37:17.597Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>

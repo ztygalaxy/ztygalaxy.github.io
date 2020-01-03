@@ -5,9 +5,9 @@
   <subtitle>分享对技术与人生的思考</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://tyzhang.tk/"/>
+  <link href="tyzhang.top/"/>
   <updated>2020-01-02T12:52:01.153Z</updated>
-  <id>http://tyzhang.tk/</id>
+  <id>tyzhang.top/</id>
   
   <author>
     <name>张天宇</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>日期YYYY与yyyy的区别</title>
-    <link href="http://tyzhang.tk/article/yyyy/"/>
-    <id>http://tyzhang.tk/article/yyyy/</id>
+    <link href="tyzhang.top/article/yyyy/"/>
+    <id>tyzhang.top/article/yyyy/</id>
     <published>2019-12-31T16:00:00.000Z</published>
     <updated>2020-01-02T12:52:01.153Z</updated>
     
@@ -39,14 +39,14 @@
     
     
     
-      <category term="笔记" scheme="http://tyzhang.tk/tags/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="tyzhang.top/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>深入理解JVM课程笔记</title>
-    <link href="http://tyzhang.tk/article/jvmzlnote/"/>
-    <id>http://tyzhang.tk/article/jvmzlnote/</id>
+    <link href="tyzhang.top/article/jvmzlnote/"/>
+    <id>tyzhang.top/article/jvmzlnote/</id>
     <published>2019-12-27T16:00:00.000Z</published>
     <updated>2019-12-28T04:08:10.326Z</updated>
     
@@ -66,14 +66,14 @@
     
     
     
-      <category term="JVM" scheme="http://tyzhang.tk/tags/JVM/"/>
+      <category term="JVM" scheme="tyzhang.top/tags/JVM/"/>
     
   </entry>
   
   <entry>
     <title>LeetCode 解题报告</title>
-    <link href="http://tyzhang.tk/article/leetcodesolu/"/>
-    <id>http://tyzhang.tk/article/leetcodesolu/</id>
+    <link href="tyzhang.top/article/leetcodesolu/"/>
+    <id>tyzhang.top/article/leetcodesolu/</id>
     <published>2019-12-22T16:00:00.000Z</published>
     <updated>2019-12-23T12:46:03.586Z</updated>
     
@@ -93,14 +93,14 @@
     
     
     
-      <category term="解题报告" scheme="http://tyzhang.tk/tags/%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/"/>
+      <category term="解题报告" scheme="tyzhang.top/tags/%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/"/>
     
   </entry>
   
   <entry>
     <title>他山之玉</title>
-    <link href="http://tyzhang.tk/article/userfullink/"/>
-    <id>http://tyzhang.tk/article/userfullink/</id>
+    <link href="tyzhang.top/article/userfullink/"/>
+    <id>tyzhang.top/article/userfullink/</id>
     <published>2019-12-10T16:00:00.000Z</published>
     <updated>2019-12-26T12:55:15.794Z</updated>
     
@@ -121,14 +121,14 @@
     
     
     
-      <category term="他山之玉" scheme="http://tyzhang.tk/tags/%E4%BB%96%E5%B1%B1%E4%B9%8B%E7%8E%89/"/>
+      <category term="他山之玉" scheme="tyzhang.top/tags/%E4%BB%96%E5%B1%B1%E4%B9%8B%E7%8E%89/"/>
     
   </entry>
   
   <entry>
     <title>牛客拾遗</title>
-    <link href="http://tyzhang.tk/article/javaknow/"/>
-    <id>http://tyzhang.tk/article/javaknow/</id>
+    <link href="tyzhang.top/article/javaknow/"/>
+    <id>tyzhang.top/article/javaknow/</id>
     <published>2019-12-06T16:00:00.000Z</published>
     <updated>2019-12-11T12:17:08.539Z</updated>
     
@@ -150,14 +150,14 @@
     
     
     
-      <category term="基础知识" scheme="http://tyzhang.tk/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <category term="基础知识" scheme="tyzhang.top/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     
   </entry>
   
   <entry>
     <title>剑指Offer 解题报告</title>
-    <link href="http://tyzhang.tk/article/offersolu/"/>
-    <id>http://tyzhang.tk/article/offersolu/</id>
+    <link href="tyzhang.top/article/offersolu/"/>
+    <id>tyzhang.top/article/offersolu/</id>
     <published>2019-11-13T16:00:00.000Z</published>
     <updated>2019-11-16T04:19:59.256Z</updated>
     
@@ -179,14 +179,14 @@
     
     
     
-      <category term="解题报告" scheme="http://tyzhang.tk/tags/%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/"/>
+      <category term="解题报告" scheme="tyzhang.top/tags/%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/"/>
     
   </entry>
   
   <entry>
     <title>Java 方法篇</title>
-    <link href="http://tyzhang.tk/article/javadata/"/>
-    <id>http://tyzhang.tk/article/javadata/</id>
+    <link href="tyzhang.top/article/javadata/"/>
+    <id>tyzhang.top/article/javadata/</id>
     <published>2019-11-11T16:00:00.000Z</published>
     <updated>2019-11-16T08:49:02.681Z</updated>
     
@@ -208,14 +208,14 @@
     
     
     
-      <category term="基础知识" scheme="http://tyzhang.tk/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <category term="基础知识" scheme="tyzhang.top/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     
   </entry>
   
   <entry>
     <title>域名备案过程全记录</title>
-    <link href="http://tyzhang.tk/article/buildwebsite/"/>
-    <id>http://tyzhang.tk/article/buildwebsite/</id>
+    <link href="tyzhang.top/article/buildwebsite/"/>
+    <id>tyzhang.top/article/buildwebsite/</id>
     <published>2019-11-07T16:00:00.000Z</published>
     <updated>2019-11-08T06:02:03.727Z</updated>
     
@@ -236,14 +236,14 @@
     
     
     
-      <category term="笔记" scheme="http://tyzhang.tk/tags/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="tyzhang.top/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>WebHook自动拉取服务器代码</title>
-    <link href="http://tyzhang.tk/article/webhook/"/>
-    <id>http://tyzhang.tk/article/webhook/</id>
+    <link href="tyzhang.top/article/webhook/"/>
+    <id>tyzhang.top/article/webhook/</id>
     <published>2019-10-28T16:00:00.000Z</published>
     <updated>2019-11-05T07:13:00.364Z</updated>
     
@@ -263,14 +263,14 @@
     
     
     
-      <category term="笔记" scheme="http://tyzhang.tk/tags/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="tyzhang.top/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>C++中的零碎</title>
-    <link href="http://tyzhang.tk/article/algorithm0/"/>
-    <id>http://tyzhang.tk/article/algorithm0/</id>
+    <link href="tyzhang.top/article/algorithm0/"/>
+    <id>tyzhang.top/article/algorithm0/</id>
     <published>2019-10-16T16:00:00.000Z</published>
     <updated>2019-11-21T01:55:16.094Z</updated>
     
@@ -291,14 +291,14 @@
     
     
     
-      <category term="基础知识" scheme="http://tyzhang.tk/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <category term="基础知识" scheme="tyzhang.top/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     
   </entry>
   
   <entry>
     <title>十</title>
-    <link href="http://tyzhang.tk/article/birth/"/>
-    <id>http://tyzhang.tk/article/birth/</id>
+    <link href="tyzhang.top/article/birth/"/>
+    <id>tyzhang.top/article/birth/</id>
     <published>2019-10-07T16:00:00.000Z</published>
     <updated>2019-10-20T08:45:33.653Z</updated>
     
@@ -318,14 +318,14 @@
     
     
     
-      <category term="少年游" scheme="http://tyzhang.tk/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
+      <category term="少年游" scheme="tyzhang.top/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
     
   </entry>
   
   <entry>
     <title>序</title>
-    <link href="http://tyzhang.tk/article/xu/"/>
-    <id>http://tyzhang.tk/article/xu/</id>
+    <link href="tyzhang.top/article/xu/"/>
+    <id>tyzhang.top/article/xu/</id>
     <published>2019-09-22T16:00:00.000Z</published>
     <updated>2019-11-08T06:19:01.615Z</updated>
     
@@ -346,14 +346,14 @@
     
     
     
-      <category term="少年游" scheme="http://tyzhang.tk/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
+      <category term="少年游" scheme="tyzhang.top/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
     
   </entry>
   
   <entry>
     <title>2019秋招笔试题</title>
-    <link href="http://tyzhang.tk/article/leihuo/"/>
-    <id>http://tyzhang.tk/article/leihuo/</id>
+    <link href="tyzhang.top/article/leihuo/"/>
+    <id>tyzhang.top/article/leihuo/</id>
     <published>2019-08-21T16:00:00.000Z</published>
     <updated>2019-11-14T12:44:42.834Z</updated>
     
@@ -373,14 +373,14 @@
     
     
     
-      <category term="解题报告" scheme="http://tyzhang.tk/tags/%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/"/>
+      <category term="解题报告" scheme="tyzhang.top/tags/%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/"/>
     
   </entry>
   
   <entry>
     <title>What every computer science major should know</title>
-    <link href="http://tyzhang.tk/article/what%20every%20computer%20science%20major%20should%20know/"/>
-    <id>http://tyzhang.tk/article/what%20every%20computer%20science%20major%20should%20know/</id>
+    <link href="tyzhang.top/article/what%20every%20computer%20science%20major%20should%20know/"/>
+    <id>tyzhang.top/article/what%20every%20computer%20science%20major%20should%20know/</id>
     <published>2019-08-08T16:00:00.000Z</published>
     <updated>2019-10-24T11:46:42.337Z</updated>
     
@@ -399,14 +399,14 @@
     
     
     
-      <category term="他山之玉" scheme="http://tyzhang.tk/tags/%E4%BB%96%E5%B1%B1%E4%B9%8B%E7%8E%89/"/>
+      <category term="他山之玉" scheme="tyzhang.top/tags/%E4%BB%96%E5%B1%B1%E4%B9%8B%E7%8E%89/"/>
     
   </entry>
   
   <entry>
     <title>不如放在云上银河</title>
-    <link href="http://tyzhang.tk/article/galaxy/"/>
-    <id>http://tyzhang.tk/article/galaxy/</id>
+    <link href="tyzhang.top/article/galaxy/"/>
+    <id>tyzhang.top/article/galaxy/</id>
     <published>2019-08-07T16:00:00.000Z</published>
     <updated>2019-10-24T11:58:43.900Z</updated>
     
@@ -427,14 +427,14 @@
     
     
     
-      <category term="笔记" scheme="http://tyzhang.tk/tags/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="tyzhang.top/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>九</title>
-    <link href="http://tyzhang.tk/article/nine/"/>
-    <id>http://tyzhang.tk/article/nine/</id>
+    <link href="tyzhang.top/article/nine/"/>
+    <id>tyzhang.top/article/nine/</id>
     <published>2019-06-08T16:00:00.000Z</published>
     <updated>2019-10-20T08:44:23.277Z</updated>
     
@@ -453,14 +453,14 @@
     
     
     
-      <category term="少年游" scheme="http://tyzhang.tk/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
+      <category term="少年游" scheme="tyzhang.top/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
     
   </entry>
   
   <entry>
     <title>别了，“自由民主”灯塔国</title>
-    <link href="http://tyzhang.tk/article/bye/"/>
-    <id>http://tyzhang.tk/article/bye/</id>
+    <link href="tyzhang.top/article/bye/"/>
+    <id>tyzhang.top/article/bye/</id>
     <published>2019-06-02T16:00:00.000Z</published>
     <updated>2019-10-20T08:44:14.693Z</updated>
     
@@ -478,14 +478,14 @@
     
     
     
-      <category term="少年游" scheme="http://tyzhang.tk/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
+      <category term="少年游" scheme="tyzhang.top/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
     
   </entry>
   
   <entry>
     <title>八</title>
-    <link href="http://tyzhang.tk/article/eight/"/>
-    <id>http://tyzhang.tk/article/eight/</id>
+    <link href="tyzhang.top/article/eight/"/>
+    <id>tyzhang.top/article/eight/</id>
     <published>2019-05-25T16:00:00.000Z</published>
     <updated>2019-10-24T11:59:50.379Z</updated>
     
@@ -504,14 +504,14 @@
     
     
     
-      <category term="少年游" scheme="http://tyzhang.tk/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
+      <category term="少年游" scheme="tyzhang.top/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
     
   </entry>
   
   <entry>
     <title>Deepin安装到移动硬盘</title>
-    <link href="http://tyzhang.tk/article/deepin/"/>
-    <id>http://tyzhang.tk/article/deepin/</id>
+    <link href="tyzhang.top/article/deepin/"/>
+    <id>tyzhang.top/article/deepin/</id>
     <published>2019-05-19T16:00:00.000Z</published>
     <updated>2019-10-24T12:00:29.429Z</updated>
     
@@ -530,14 +530,14 @@
     
     
     
-      <category term="笔记" scheme="http://tyzhang.tk/tags/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="tyzhang.top/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>WinEdit的配置及常用快捷键整理</title>
-    <link href="http://tyzhang.tk/article/winedit/"/>
-    <id>http://tyzhang.tk/article/winedit/</id>
+    <link href="tyzhang.top/article/winedit/"/>
+    <id>tyzhang.top/article/winedit/</id>
     <published>2019-03-29T16:00:00.000Z</published>
     <updated>2019-10-24T12:00:29.424Z</updated>
     
@@ -556,7 +556,7 @@
     
     
     
-      <category term="笔记" scheme="http://tyzhang.tk/tags/%E7%AC%94%E8%AE%B0/"/>
+      <category term="笔记" scheme="tyzhang.top/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
