@@ -155,13 +155,13 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -380,14 +380,22 @@
 <p>类加载器用来把类加载到Java虚拟机中，从JDK1.2版本开始，类的加载过程采用父类委托机制，这种机制能更好的保证Java平台的安全。在此委托机制中，除了Java虚拟机自带的根类加载器以外，其余的类加载器都有且只有一一个父加载器。当Java程序请求加载器loaderl加载Sample类时, loaderl首先委托自己的父知载器去加载Sample类，若父加载器能加载，则由父加载器完成加载任务，否则才由加载器loaderl本身加载Sample类。</p>
 <h3 id="两种类加载器">两种类加载器</h3>
 <ol>
-<li>
-<p>Java虚拟机自带的加载器‘</p>
+<li>Java虚拟机自带的加载器‘
 <ul>
-<li>根类加载器(Bootstrap)：该加载器没有父加载器，它负责家在虚拟机的核心类库。它的实现依赖于底层操作系统，属于虚拟机的实现的一部分，并没有继承java.lang.ClassLoader类。</li>
-<li>扩展类加载器(Extension)：它的父加载器为根类加载器。它是纯Java类，是java.lang.ClassLoader的子类。</li>
-<li>系统(应用)类加载器(System)：也称应用类加载器，它的父类加载器是扩展类加载器。纯Java类，是java.lang.ClassLoader类的子类。</li>
+<li>
+<p>根类加载器(Bootstrap)：该加载器没有父加载器，它负责家在虚拟机的核心类库。它的实现依赖于底层操作系统，属于虚拟机的实现的一部分，并没有继承java.lang.ClassLoader类。</p>
+</li>
+<li>
+<p>扩展类加载器(Extension)：它的父加载器为根类加载器。它是纯Java类，是java.lang.ClassLoader的子类。</p>
+</li>
+<li>
+<p>系统(应用)类加载器(System)：也称应用类加载器，它的父类加载器是扩展类加载器。纯Java类，是java.lang.ClassLoader类的子类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph BT</span><br><span class="line">   用户自定义类加载器 --&gt; 系统类加载器</span><br><span class="line">   系统类加载器 --&gt; 扩展类加载器</span><br><span class="line">   扩展类加载器 --&gt; 根类加载器</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
+</ol>
+<ol start="2">
 <li>
 <p>用户自定义的类加载器</p>
 <ul>
@@ -402,6 +410,10 @@
 </ol>
 <p>类加载器并不需要等到某个类被“首次主动使用”时再加载它，示例MyTest1。</p>
 <p>JVM规范允许类加载器在预料某个类将要被使用时就预先加载它，如果在预先加载的过程中遇到了.class文件缺失或者存在错误，类加载器必须在程序首次主动使用该类时候才报告错误(LinkageError错误)。如果这个类一直没有被程序主动使用，那么类加载器就不会报告错误。</p>
+<h2 id="类加载器双亲委托机制">类加载器双亲委托机制</h2>
+<p>在父亲委托机制中，各个加载器按照父子关系形成了树形结构，除了根类加载器之外，其余的类加载都有且只有一个父加载器。</p>
+<p>双亲委派模式的工作原理的是;如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委托给父类的加载器去执行，如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将到达顶层的启动类加载器，如果父类加载器可以完成类加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载，这就是双亲委派模式，即每个儿子都不愿意干活，每次有活就丢给父亲去干，直到父亲说这件事我也干不了时，儿子自己想办法去完成。</p>
+<p>采用双亲委派模式的是好处是Java类随着它的类加载器一起具备了一种带有优先级的层次关系，通过这种层级关可以避免类的重复加载，当父亲已经加载了该类时，就没有必要子ClassLoader再加载一次。其次是考虑到安全因素，java核心api中定义类型不会被随意替换，假设通过网络传递一个名为java.lang.Integer的类，通过双亲委托模式传递到启动类加载器，而启动类加载器在核心Java API发现这个名字的类，发现该类已被加载，并不会重新加载网络传递的过来的java.lang.Integer，而直接返回已加载过的Integer.class，这样便可以防止核心API库被随意篡改。</p>
 <h2 id="接口初始化规则">接口初始化规则</h2>
 <p>当一个接口初始化的时候，并不要求其父接口初始化，只有在真正使用父接口的时候(如引用接口中所定义的常量时)，才会初始化。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest5</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(MyChild5.a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">MyParent5</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> a = <span class="keyword">new</span> Random().nextInt(<span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">MyChild5</span> <span class="keyword">extends</span> <span class="title">MyParent5</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> b = <span class="number">6</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">输出结果：5</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
@@ -455,7 +467,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#jvm结束生命周期"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">JVM&#x7ED3;&#x675F;&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#类的生命周期"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x7C7B;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#类加载过程"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x7C7B;&#x52A0;&#x8F7D;&#x8FC7;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#类初始化时机"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x7C7B;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x673A;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#类与类加载器"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x7C7B;&#x4E0E;&#x7C7B;&#x52A0;&#x8F7D;&#x5668;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#两种类加载器"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">&#x4E24;&#x79CD;&#x7C7B;&#x52A0;&#x8F7D;&#x5668;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#接口初始化规则"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x63A5;&#x53E3;&#x521D;&#x59CB;&#x5316;&#x89C4;&#x5219;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#jvm选项参数"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">JVM&#x9009;&#x9879;&#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#助记符"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">&#x52A9;&#x8BB0;&#x7B26;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#jvm结束生命周期"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">JVM&#x7ED3;&#x675F;&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#类的生命周期"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x7C7B;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#类加载过程"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x7C7B;&#x52A0;&#x8F7D;&#x8FC7;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#类初始化时机"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x7C7B;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x673A;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#类与类加载器"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x7C7B;&#x4E0E;&#x7C7B;&#x52A0;&#x8F7D;&#x5668;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#两种类加载器"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">&#x4E24;&#x79CD;&#x7C7B;&#x52A0;&#x8F7D;&#x5668;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#类加载器双亲委托机制"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x7C7B;&#x52A0;&#x8F7D;&#x5668;&#x53CC;&#x4EB2;&#x59D4;&#x6258;&#x673A;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#接口初始化规则"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">&#x63A5;&#x53E3;&#x521D;&#x59CB;&#x5316;&#x89C4;&#x5219;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#jvm选项参数"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">JVM&#x9009;&#x9879;&#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#助记符"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">&#x52A9;&#x8BB0;&#x7B26;</span></a></li></ol>
         
         </div>
       </aside>
