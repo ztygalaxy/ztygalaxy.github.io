@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="tyzhang.top/"/>
-  <updated>2020-01-07T12:47:47.697Z</updated>
+  <updated>2020-01-08T12:29:00.512Z</updated>
   <id>tyzhang.top/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>深入理解JVM课程笔记(三)</title>
+    <link href="tyzhang.top/article/jvmgcnote/"/>
+    <id>tyzhang.top/article/jvmgcnote/</id>
+    <published>2020-01-07T16:00:00.000Z</published>
+    <updated>2020-01-08T12:29:00.512Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>B站张龙JVM虚拟机系列课程学习笔记，GC篇</p></blockquote><p>课程地址: <a href="https://www.bilibili.com/video/av78983356" target="_blank" rel="noopener">av78983356</a></p><h2 id="垃圾判断的算法">垃圾判断的算法</h2><h3 id="引用计数算法reference-counting">引用计数算法(Reference Counting)</h3><p>给对象添加一个引用计数器，当有一个地方引用它，计数器+1，当引用失效，计数器-1，任何时刻计数器为0的对象就是不能再被使用的。</p><p>该算法无法解决对象循环引用的问题。</p><h3 id="根搜索算法root-tracing">根搜索算法(Root Tracing)</h3><p>在实际生产语言中使用该算法判断是否存活。</p><p>通过一系列的“GCRoot”的点作为起始进行向下搜索，当一个对象到GC Roots没有任何引用链(Reference Chain)相连，则证明此对象是不可用的。</p><p>在Java语言中，GC Roots包括：</p><ul><li>在VM栈(帧中的本地变量)中的引用；</li><li>方法区中的静态引用；</li><li>JNI(即一般说的Native方法)中的引用。</li></ul><h2 id="方法区的gc">方法区的GC</h2><p>Java虚拟机规范表示可以不要求虚拟机在这区实现GC，这区GC的“性价比”一般。在堆中，尤其在新生代，常规应用进行一次GC一般可以回收70-95%的空间，而方法区的GC效率远低于此。</p><p>当前的商业JVM都有实现方法区的GC，主要回收两部分内容：废弃常量和无用类。</p><p>类回收需要满足以下3个条件：</p><ul><li>该类的所有实例都已经被GC，也就是说JVM中不存在该Class的任何实例；</li><li>加载该类的ClassLoader已经被GC；</li><li>该类所对应的java.lang.Class对象没有在任何地方被引用，如不能在任何地方通过反射访问该类的方法。</li></ul><h2 id="jvm常见gc算法">JVM常见GC算法</h2><h3 id="标记-清除算法mark-sweep">标记-清除算法(Mark-Sweep)</h3><h3 id="标记-整理算法mark-compact">标记-整理算法(Mark-Compact)</h3><h3 id="复制算法copying">复制算法(Copying)</h3><h3 id="分代算法generational">分代算法(Generational)</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;B站张龙JVM虚拟机系列课程学习笔记，GC篇&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;课程地址: &lt;a href=&quot;https://www.bilibili.com/video/av78983356&quot; target=&quot;_blank&quot; rel=&quot;n
+      
+    
+    </summary>
+    
+    
+    
+      <category term="JVM" scheme="tyzhang.top/tags/JVM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解JVM课程笔记(二)</title>
+    <link href="tyzhang.top/article/jvmmemorynote/"/>
+    <id>tyzhang.top/article/jvmmemorynote/</id>
+    <published>2020-01-07T16:00:00.000Z</published>
+    <updated>2020-01-08T12:03:47.790Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>B站张龙JVM虚拟机系列课程学习笔记，内存篇</p></blockquote><p>课程地址: <a href="https://www.bilibili.com/video/av78983356" target="_blank" rel="noopener">av78983356</a></p><h2 id="jvm运行时内存数据区域">JVM运行时内存数据区域</h2><p><img src="https://github.com/GJXAIOU/Notes/raw/master/JavaVirtualMachine/JVMNotes/Java%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.resource/166786b5cf6d7f95" alt=""></p><table><thead><tr><th>区域</th><th>是否线程共享</th><th>是否会内存溢出</th></tr></thead><tbody><tr><td>程序计数器</td><td>否</td><td>不会</td></tr><tr><td>虚拟机栈</td><td>否</td><td>会</td></tr><tr><td>本地方法栈</td><td>否</td><td>会</td></tr><tr><td>堆</td><td>是</td><td>会</td></tr><tr><td>方法区</td><td>是</td><td>会</td></tr></tbody></table><ul><li>虚拟机栈：每个虚拟机栈都是归属于一个线程的，是线程私有的空间，当一个线程创建的时候，与之对应的虚拟机栈就产生了，线程消亡则对应的虚拟机栈就消失；<strong>生命周期同线程相同</strong>；其描述的是 Java 方法执行的内存模型，每个方法执行的同时都会创建一个栈帧。<ul><li>虚拟机栈中数据称为：栈帧：每一个方法执行的时候都会创建一个与该方法有关并且独有的栈帧（JVM 是基于栈执行的），里面存储操作数栈中数据，局部变量表（就是该线程可以自己访问到的局部变量信息（包括八种基本数据类型（其中 64 位的 long、double 占用两个局部变量空间（Slot））和对象引用（reference 类型，它不等同于对象本身，可能是一个指向对象起始地址的引用指针，也可能是指向一个- 代表对象的句柄或者其他与此对象相关的位置）））、方法的返回地址（出口，即执行一条字节码指令的地址）、动态连接等，即主要存储与方法执行相关的内容；<strong>每个方法从调用到执行完毕，对应一个栈帧在虚拟机栈中的入栈和出栈。</strong></li><li><strong>通常所说的栈，一般是指虚拟机栈中的局部变量表部分</strong>。局部变量表所需的内存在编译期间完成分配。 栈的大小可以固定也可以动态扩展，当扩展到无法申请足够的内存，则OutOfMemoryError。 当栈调用深度大于JVM所允许的范围，会抛出StackOverflowError的错误，不过这个深度范围不是一个恒定的值</li><li>局部变量表所需的内存空间实在编译期间完成分配，运行期不会改变；</li><li>异常：如果线程请求的栈深度大于虚拟机所允许的深度，将抛出 StackOverflowError 异常；当虚拟机在动态扩展时候无法申请到足够的内存，将抛出 OutOfMemoryError 异常；</li></ul></li><li>程序计数器（Program Counter Register）：是当前线程所执行的字节码的行号指示器，描述字节码解释权工作时通过改变这个计数器的值来选取下一条需要执行的字节码指令，线程在执行字节码时候，执行完当前字节码之后，指定下一行字节码的位置在哪（因为执行可以顺序也可以跳转）；<ul><li>是线程所私有的内存空间（或者说是数据结构），针对多线程，本质上是通过线程轮流切换并分配处理器执行时间的方式实现，即在任意一个确定时刻，一个处理器都只会执行一条线程中的指令，因此切换执行下一个线程需要记住上一个线程挂起到什么位置（便于恢复到正确的执行位置），因此<strong>每个线程都有一个独立的程序计数器</strong>，各个线程之间计数器互不影响，独立存储；</li><li>如果线程执行的是一个 Java 方法，则计数器记录的是正在执行的虚拟机字节码指令的地址，如果正在执行的是 Native 方法，则计数器值为空（Undefined）；</li></ul></li><li>本地方法栈（Native Method Stack）：方法上加上 Native 关键字，表示该方法是有 C/C++ 实现，不是 Java 实现的，即主要用于执行本地方法；同样会抛出 StackOverflowError 和 OutOfMemoryError 异常。<ul><li>虚拟机栈和本地方法栈区别：前者是为虚拟机执行 Java 方法（即字节码）服务，后者是为虚拟机使用到的 Native 方法服务。</li><li>虚拟机规范中对该部分没有强制规范， <strong>Hotspot 虚拟机直接将本地方法栈和虚拟机栈合二为一</strong>。</li></ul></li><li>堆（Heap）：在虚拟机启动时候创建，对所有线程共享，存放绝大部分的对象实例（部分会使用栈上分配，标量替换 技术存放在其他位置），Java 中不能直接使用对象，只能通过引用方式获取该对象然后使用它，引用作为一个变量是在栈中。GC主要工作区域。<ul><li>线程共享的 Java 堆中可以划分出多个线程私有的分配缓冲区（Thread Local Allocation Buffer,TLAB）</li><li>Java 堆可以处于物理上不连续的内存空间中，只要逻辑上连续即可，一般都是可以扩展的；</li></ul></li><li>方法区：对所有线程共享，存储元信息，包括已被虚拟机加载的类信息、常量、静态变量、即使编译器编译后的代码、类中（Class ）固有的信息；在 Hotspot 中 **永久代（Permanent Generation）从 JDK 1.8 中已经废弃 **，并且永久代不等于方法区，Hotspot 虚拟机（其他虚拟机不存在永久代概念）使用永久代来实现方法区，即将 GC 分代收集器拓展到方法区，使得垃圾收集器可以像管理 Java 堆一样管理该部分内存，省去专门为方法区编写内存管理代码的工作。GC非主要工作区域。<ul><li>运行时常量池（Runtime Constant Pool）：方法区的一部分，Class 文件中的常量池会存储编译期生成的字面值和符号引用，该部分内容在类加载后进入方法区的运行时常量池中存放，<strong>运行时常量池相比 Class 文件常量池而言具有动态性</strong>，因为 Java 并不要求常量一定只有编译期才能产生即并非只有预置在 Class 文件中常量池部分的内容才可以进入方法区运行时常量池，<strong>运行期间也可以将新的常量池放入池中</strong>，例如：String 类的 intern（） 方法；</li></ul></li><li>直接内存：不是虚拟机运行时数据区的一部分，也不是 Java 虚拟机规范中定义的内存区域，即不是 JVM 管理的内存，与 Java NIO（New Input/Output） 密切相关，通过使用 Native 函数库直接分配堆外内存，由操作系统进行管理， JVM 通过存储在堆上的 DirectByteBuffer 对象作为该内存的引用来操作直接内存；</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Object obj = <span class="keyword">new</span> Object();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>上述代码生成了两部分的内存区域，第一部分是obj的引用，因为是方法内的变量，所以放到JVM Stack里面。第二部分是真正Object class的实例对象，放到Heap里面。上述的New语句一共消耗12个Bytes，JVM规定引用占4个Bytes(在JVM Stack)，而空对象是8个Bytes(在Heap)。方法结束后，对应Stack中的变量马上回收，但是Heap中的对象要等到GC来回收。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;B站张龙JVM虚拟机系列课程学习笔记，内存篇&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;课程地址: &lt;a href=&quot;https://www.bilibili.com/video/av78983356&quot; target=&quot;_blank&quot; rel=&quot;n
+      
+    
+    </summary>
+    
+    
+    
+      <category term="JVM" scheme="tyzhang.top/tags/JVM/"/>
+    
+  </entry>
   
   <entry>
     <title>深入理解JVM课程笔记(一)</title>
@@ -505,58 +559,6 @@
     
     
       <category term="少年游" scheme="tyzhang.top/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Deepin安装到移动硬盘</title>
-    <link href="tyzhang.top/article/deepin/"/>
-    <id>tyzhang.top/article/deepin/</id>
-    <published>2019-05-19T16:00:00.000Z</published>
-    <updated>2019-10-24T12:00:29.429Z</updated>
-    
-    <content type="html"><![CDATA[<p>本文主要介绍如何将Deepin安装到移动硬盘中，以便在任何地方都可以使用。</p><p>日常中，经常需要在外处理一些东西，比如小长假回家，电脑太沉，家里电脑没有编程的环境，环境配置起来太麻烦。二来，很多文件、数据处理不完还可以随时带走。</p><p>因此将操作系统安装到移动硬盘是一个不错的选择，处于尝鲜的心理，安装了Deepin，因部分环境下无法截图，故大多为文字描述。</p><h3 id="准备">准备</h3><p>4G及以上容量的空白U盘一个，带有空白分区的移动硬盘一个。</p><h3 id="开始">开始</h3><p>1.官网下载Deepin官方ISO镜像文件，非Live系统。</p><p>​深度科技官网：<a href="https://www.deepin.org/" target="_blank" rel="noopener">https://www.deepin.org/</a></p><p><img src="/img/article/gw.png" alt="官网"></p><p>2.将ISO解压到一个文件夹，注意原ISO不要删除了。</p><p><img src="/img/article/wjj.png" alt="文件夹"></p><p>3.插入优盘，打开文件夹中的EXE程序，插入空白优盘，选择镜像文件，按照提示操作。</p><p><img src="/img/article/s.png" alt="1"></p><p><img src="/img/article/s1.png" alt="2"></p><p><strong>注意！此操作会格式化优盘，请确认优盘中没有重要文件！</strong></p><p>4.插入U盘和移动硬盘，重启，进入BIOS选择U盘启动，关闭Security Boot。不同的电脑进入BIOS的方式有所不同，如华硕为Delete键。</p><p>5.根据提示进行系统安装，如语言、用户名和密码等。</p><p>6.安装位置选用高级选项，不使用默认的简单选项。</p><p>​① 选择移动硬盘的空白分区，删除分区。</p><p>​② 新建一个512MB的EFI分区，必须，否则引导文件将会写入Windows的引导分区。</p><p>​③ 新建一个挂载在“/”的EXT4文件分区，另外根据需要可创建home、swap分区等。</p><p>7.按照提示完成剩余安装。</p><p><img src="/img/article/desktop.png" alt="桌面"></p><h3 id="后记">后记</h3><p>安装完成后，粗略看了一下，应用商店已经具备了很多软件，如QQ、微信、网易云音乐，日常拿来应急使用足够了。</p><p>这个特殊的日子，学习依然与我为伴！</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;本文主要介绍如何将Deepin安装到移动硬盘中，以便在任何地方都可以使用。&lt;/p&gt;
-&lt;p&gt;日常中，经常需要在外处理一些东西，比如小长假回家，电脑太沉，家里电脑没有编程的环境，环境配置起来太麻烦。二来，很多文件、数据处理不完还可以随时带走。&lt;/p&gt;
-&lt;p&gt;因此将操作系统安装到
-      
-    
-    </summary>
-    
-    
-    
-      <category term="笔记" scheme="tyzhang.top/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>WinEdit的配置及常用快捷键整理</title>
-    <link href="tyzhang.top/article/winedit/"/>
-    <id>tyzhang.top/article/winedit/</id>
-    <published>2019-03-29T16:00:00.000Z</published>
-    <updated>2019-10-24T12:00:29.424Z</updated>
-    
-    <content type="html"><![CDATA[<p>​    使用LaTex的编辑器WinEdit的一些个性化配置备份。</p><h3 id="一-安装">一、安装</h3><p>​    WinEdit下载地址：<a href="http://www.winedt.com/download.html" target="_blank" rel="noopener">http://www.winedt.com/download.html</a></p><p>​    激活信息：</p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Name:Cracker TeCHiScy</span><br><span class="line">Code:1130140925535334280</span><br><span class="line"><span class="comment"># 作为一个环境，自带收费编辑器，不知道开发商是怎么想的</span></span><br></pre></td></tr></table></figure><h3 id="二-配置">二、配置</h3><p>​    在工具栏空白处右键，选择Options Interface，注意观察页面左侧，选择Font打开Font.ini</p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">FONT_NAME</span>=<span class="string">"Consolas"</span>//字体样式</span><br><span class="line"><span class="attr">FONT_SIZE</span>=<span class="number">12</span>//字体大小</span><br><span class="line"><span class="attr">FONT_BOLD</span>=<span class="number">0</span>//粗体</span><br><span class="line"><span class="attr">FONT_ITALIC</span>=<span class="number">0</span>   //倾斜</span><br><span class="line"><span class="comment">#Extra Spacing 行间距相关</span></span><br><span class="line"><span class="attr">EXTRA_LINE_SPACING_ABOVE</span>=<span class="number">2</span></span><br><span class="line"><span class="attr">EXTRA_LINE_SPACING_BELOW</span>=<span class="number">2</span></span><br><span class="line"><span class="attr">EXTRA_CHAR_SPACING</span>=<span class="number">0</span></span><br></pre></td></tr></table></figure><p>​    修改完毕后，右键Font.ini选择Load Script即刻生效。</p><h3 id="三-双向跳转">三、双向跳转</h3><p>​    实现TeX文档和PDF文件之间的正反向搜索，这里面有些不必要的坑，例如路径或文件名不能有中文或者空格。</p><ol><li><p>反向搜索：采用PDFLaTeX编译TeX文档后，点击PDF Preview即可查阅生成的PDF文件，在PDF页面上双击某行，即可跳转至TeX文档的对应源码处。</p><p><img src="/img/article/zhengxiang.png" alt="正向"></p></li><li><p>正向搜索：将鼠标光标左击TeX文档的某源码处，然后在左击“PDF Search”按钮，即可跳转至PDF页面上对应的行处。</p><p><img src="/img/article/fanxiang.png" alt="反向"></p></li></ol><p>​    <strong>配置方法：</strong></p><ol><li>点击Options -&gt; Configurations -&gt; 点MiKTex即可</li><li>点击Options -&gt; Execution Modes -&gt;PDF Viewer -&gt;点击右侧的“Browse”按钮，在弹出窗口中选择SumatraPDF程序的路径，下面的Use syc一定要勾上。</li></ol><h3 id="四-常用快捷键">四、常用快捷键</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">PDF编译:Ctrl+Shift+P</span><br><span class="line">自动换行:Ctrl+W</span><br><span class="line"><span class="comment">#【编辑】 </span></span><br><span class="line">Alt+C:在剪贴板原有复制文本后增加新的被选择的文本 </span><br><span class="line">Ctrl+Shift+Alt+Right/Left:对选中文本comment/uncomment </span><br><span class="line">Shift+Enter:对当前单词进行拼写检查 </span><br><span class="line">Alt+F12:对选中文本进行LaTeX语法检查（强烈推荐）。 </span><br><span class="line">Ctrl+Shift+F12:对选中文本进行括号匹配检查。 </span><br><span class="line">Ctrl+G:goto line </span><br><span class="line">Ctrl+Shift+Backspace/Delete:Moving Ring Backward/Forward。</span><br><span class="line">Left+Shift+Ctrl+Alt:选中整块添加注释</span><br><span class="line">Right+Shift+Ctrl+Alt:选中整块删除注释</span><br><span class="line"><span class="comment">#【自动补全】 </span></span><br><span class="line">Ctrl+Enter:补全LaTeX命令</span><br><span class="line"><span class="comment">#【查找】 </span></span><br><span class="line">Ctrl+F:查找</span><br><span class="line">Ctrl+I:incremental search </span><br><span class="line">Ctrl+R:替换 </span><br><span class="line"><span class="comment">#【编译预览】 </span></span><br><span class="line">Ctrl+Shift+X:Texify （生成DVI文件） </span><br><span class="line">Ctrl+Shift+L:LaTeX </span><br><span class="line">Ctrl+Shift+B:编译bib文件 </span><br><span class="line">Ctrl+Shift+C:编译选中的文本 </span><br><span class="line">Ctrl+Shift+D:DVI--&gt;PS </span><br><span class="line">Ctrl+Shift+V:DVI预览 </span><br><span class="line">Ctrl+Shift+G:GSView，查看PS文件</span><br><span class="line">Ctrl+Shift+P:PDF编译</span><br></pre></td></tr></table></figure><h3 id="五-其他">五、其他</h3><p><a href="http://blog.sciencenet.cn/blog-111625-844954.html" target="_blank" rel="noopener">LaTeX书写好习惯以及Latex WinEdt 9.0快捷键</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;​    使用LaTex的编辑器WinEdit的一些个性化配置备份。&lt;/p&gt;
-&lt;h3 id=&quot;一-安装&quot;&gt;一、安装&lt;/h3&gt;
-&lt;p&gt;​    WinEdit下载地址：&lt;a href=&quot;http://www.winedt.com/download.html&quot; target=&quot;
-      
-    
-    </summary>
-    
-    
-    
-      <category term="笔记" scheme="tyzhang.top/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   

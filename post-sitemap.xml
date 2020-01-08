@@ -8,6 +8,22 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/jvmgcnote/</loc>
+        <lastmod>2020-01-08T12:29:00.512Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/jvmmemorynote/</loc>
+        <lastmod>2020-01-08T12:03:47.790Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/jvmzlnote/</loc>
         <lastmod>2020-01-07T12:47:47.697Z</lastmod>
         <changefreq>weekly</changefreq>
