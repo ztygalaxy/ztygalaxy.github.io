@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          深入理解JVM课程笔记(三) - 张天宇的博客 | ztygalaxy Blog
+          年味 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
-    <link rel="canonical" href="tyzhang.top/article/jvmgcnote/">
+    <link rel="canonical" href="tyzhang.top/article/nian/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -89,14 +89,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
+                              <a class="tag" href="/tags/#Vlog" title="Vlog">Vlog</a>
                             
                         </div>
-                        <h1>深入理解JVM课程笔记(三)</h1>
+                        <h1>年味</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2020-01-08
+                            2020-01-20
                         </span>
                     </div>
                 
@@ -225,45 +225,22 @@
 
 				
                 <blockquote>
-<p>B站张龙JVM虚拟机系列课程学习笔记，GC篇</p>
+<p><a href="https://www.bilibili.com/video/av84233780" target="_blank" rel="noopener">年味 by 张天宇</a></p>
 </blockquote>
-<p>课程地址: <a href="https://www.bilibili.com/video/av78983356" target="_blank" rel="noopener">av78983356</a></p>
-<h2 id="垃圾判断的算法">垃圾判断的算法</h2>
-<h3 id="引用计数算法reference-counting">引用计数算法(Reference Counting)</h3>
-<p>给对象添加一个引用计数器，当有一个地方引用它，计数器+1，当引用失效，计数器-1，任何时刻计数器为0的对象就是不能再被使用的。</p>
-<p>该算法无法解决对象循环引用的问题。</p>
-<h3 id="根搜索算法root-tracing">根搜索算法(Root Tracing)</h3>
-<p>在实际生产语言中使用该算法判断是否存活。</p>
-<p>通过一系列的“GCRoot”的点作为起始进行向下搜索，当一个对象到GC Roots没有任何引用链(Reference Chain)相连，则证明此对象是不可用的。</p>
-<p>在Java语言中，GC Roots包括：</p>
-<ul>
-<li>在VM栈(帧中的本地变量)中的引用；</li>
-<li>方法区中的静态引用；</li>
-<li>JNI(即一般说的Native方法)中的引用。</li>
-</ul>
-<h2 id="方法区的gc">方法区的GC</h2>
-<p>Java虚拟机规范表示可以不要求虚拟机在这区实现GC，这区GC的“性价比”一般。在堆中，尤其在新生代，常规应用进行一次GC一般可以回收70-95%的空间，而方法区的GC效率远低于此。</p>
-<p>当前的商业JVM都有实现方法区的GC，主要回收两部分内容：废弃常量和无用类。</p>
-<p>类回收需要满足以下3个条件：</p>
-<ul>
-<li>该类的所有实例都已经被GC，也就是说JVM中不存在该Class的任何实例；</li>
-<li>加载该类的ClassLoader已经被GC；</li>
-<li>该类所对应的java.lang.Class对象没有在任何地方被引用，如不能在任何地方通过反射访问该类的方法。</li>
-</ul>
-<h2 id="jvm常见gc算法">JVM常见GC算法</h2>
-<h3 id="标记-清除算法mark-sweep">标记-清除算法(Mark-Sweep)</h3>
-<h3 id="标记-整理算法mark-compact">标记-整理算法(Mark-Compact)</h3>
-<h3 id="复制算法copying">复制算法(Copying)</h3>
-<h3 id="分代算法generational">分代算法(Generational)</h3>
+<center><iframe src="//player.bilibili.com/player.html?aid=84233780&cid=144083948&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="700px" height="500px"> </iframe></center>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
+                        <li class="previous">
+                            <a href="/article/offersolu/" data-toggle="tooltip" data-placement="top" title="剑指Offer 解题报告">&larr; 上一篇</a>
+                        </li>
+                    
                     
                         <li class="next">
-                            <a href="/article/jvmmemorynote/" data-toggle="tooltip" data-placement="top" title="深入理解JVM课程笔记(二)">下一篇 &rarr;</a>
+                            <a href="/article/yyyy/" data-toggle="tooltip" data-placement="top" title="日期YYYY与yyyy的区别">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -287,24 +264,6 @@
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
 
-  
-    <style>
-      span.toc-nav-number{
-        display: none
-      }
-    </style>
-  
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">目录</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#垃圾判断的算法"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x5783;&#x573E;&#x5224;&#x65AD;&#x7684;&#x7B97;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#引用计数算法reference-counting"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x7B97;&#x6CD5;(Reference Counting)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#根搜索算法root-tracing"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x6839;&#x641C;&#x7D22;&#x7B97;&#x6CD5;(Root Tracing)</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#方法区的gc"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x65B9;&#x6CD5;&#x533A;&#x7684;GC</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#jvm常见gc算法"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">JVM&#x5E38;&#x89C1;GC&#x7B97;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#标记-清除算法mark-sweep"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x6807;&#x8BB0;-&#x6E05;&#x9664;&#x7B97;&#x6CD5;(Mark-Sweep)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#标记-整理算法mark-compact"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x6807;&#x8BB0;-&#x6574;&#x7406;&#x7B97;&#x6CD5;(Mark-Compact)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#复制算法copying"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x590D;&#x5236;&#x7B97;&#x6CD5;(Copying)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分代算法generational"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">&#x5206;&#x4EE3;&#x7B97;&#x6CD5;(Generational)</span></a></li></ol></li></ol>
-        
-        </div>
-      </aside>
-    
-
                 
             <!-- Sidebar Container -->
             <div class="
@@ -319,7 +278,7 @@
                     <h5><a href="/tags/">标签</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
+                          <a class="tag" href="/tags/#Vlog" title="Vlog">Vlog</a>
                         
                     </div>
                 </section>
