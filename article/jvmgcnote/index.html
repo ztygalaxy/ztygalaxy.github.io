@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          张天宇的博客 | ztygalaxy Blog
+          深入理解JVM课程笔记(三) - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
-    <link rel="canonical" href="tyzhang.top/archives/6/">
+    <link rel="canonical" href="tyzhang.top/article/jvmgcnote/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -72,8 +72,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/home.jpg') 
-            /*config*/
+            background-image: url('https://api.dujin.org/bing/1920.php')
+            /*post*/
         
     }
     
@@ -86,10 +86,18 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="site-heading">
-                        <h1>张天宇的博客</h1>
-                        <!--<hr class="small">-->
-                        <span class="subheading">分享对技术与人生的思考</span>
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
+                            
+                        </div>
+                        <h1>深入理解JVM课程笔记(三)</h1>
+                        <!-- <h2 class="subheading"></h2> -->
+                        <span class="meta">
+                            张天宇 on
+                            2020-01-09
+                        </span>
                     </div>
                 
 
@@ -202,252 +210,202 @@
 
 
     <!-- Main Content -->
-    <!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
+    <!-- Modify by Yu-Hsuan Yen -->
 
-<!-- USE SIDEBAR -->
-    <!-- Post Container -->
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
 				
-                <!-- Main Content -->
-
-
-<div class="post-preview">
-
-    <a href="/article/sui/">
-        <h2 class="post-title">
-                                 
-            随
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-		<!--
-		<h3 class="post-content-preview">
-            
-        </h3>
-		-->
-        <div class="post-content-preview">
-			
-            ​    林晶毕业回家了，以后我也没有考试了，也再没有历年题小册子了。晚上考完试出来看她，被罩......
-			
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            2017-06-21
-			
-              <a href="/tags/#少年游" title="少年游">少年游</a>
-            
-        </p>
-		<!--
-        <div class="post-meta" style="margin: 10px 0;">
-            
-              <a href="/tags/#少年游" title="少年游">少年游</a>
-            
-        </div>
-		-->
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/mountain/">
-        <h2 class="post-title">
-                                 
-            曾多情的小山
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-		<!--
-		<h3 class="post-content-preview">
-            
-        </h3>
-		-->
-        <div class="post-content-preview">
-			
-            ​	小山啊在那没变，二十多年后，上来了三个人。
-​	昨天姐姐问，今天回不回姥姥家。很纳闷不是说......
-			
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            2016-09-11
-			
-              <a href="/tags/#少年游" title="少年游">少年游</a>
-            
-        </p>
-		<!--
-        <div class="post-meta" style="margin: 10px 0;">
-            
-              <a href="/tags/#少年游" title="少年游">少年游</a>
-            
-        </div>
-		-->
-    
-
-</div>
-<hr>
-
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-        <li class="previous">
-            <a href="/archives/5/">&larr; 上一页</a>
-        </li>
-    
-    
+                <blockquote>
+<p>B站张龙JVM虚拟机系列课程学习笔记，GC篇</p>
+</blockquote>
+<p>课程地址: <a href="https://www.bilibili.com/video/av78983356" target="_blank" rel="noopener">av78983356</a></p>
+<h2 id="垃圾判断的算法">垃圾判断的算法</h2>
+<h3 id="引用计数算法reference-counting">引用计数算法(Reference Counting)</h3>
+<p>给对象添加一个引用计数器，当有一个地方引用它，计数器+1，当引用失效，计数器-1，任何时刻计数器为0的对象就是不能再被使用的。</p>
+<p>该算法无法解决对象循环引用的问题。</p>
+<h3 id="根搜索算法root-tracing">根搜索算法(Root Tracing)</h3>
+<p>在实际生产语言中使用该算法判断是否存活。</p>
+<p>通过一系列的“GCRoot”的点作为起始进行向下搜索，当一个对象到GC Roots没有任何引用链(Reference Chain)相连，则证明此对象是不可用的。</p>
+<p>在Java语言中，GC Roots包括：</p>
+<ul>
+<li>在VM栈(帧中的本地变量)中的引用；</li>
+<li>方法区中的静态引用；</li>
+<li>JNI(即一般说的Native方法)中的引用。</li>
 </ul>
+<h2 id="方法区的gc">方法区的GC</h2>
+<p>Java虚拟机规范表示可以不要求虚拟机在这区实现GC，这区GC的“性价比”一般。在堆中，尤其在新生代，常规应用进行一次GC一般可以回收70-95%的空间，而方法区的GC效率远低于此。</p>
+<p>当前的商业JVM都有实现方法区的GC，主要回收两部分内容：废弃常量和无用类。</p>
+<p>类回收需要满足以下3个条件：</p>
+<ul>
+<li>该类的所有实例都已经被GC，也就是说JVM中不存在该Class的任何实例；</li>
+<li>加载该类的ClassLoader已经被GC；</li>
+<li>该类所对应的java.lang.Class对象没有在任何地方被引用，如不能在任何地方通过反射访问该类的方法。</li>
+</ul>
+<h2 id="jvm常见gc算法">JVM常见GC算法</h2>
+<h3 id="标记-清除算法mark-sweep">标记-清除算法(Mark-Sweep)</h3>
+<h3 id="标记-整理算法mark-compact">标记-整理算法(Mark-Compact)</h3>
+<h3 id="复制算法copying">复制算法(Copying)</h3>
+<h3 id="分代算法generational">分代算法(Generational)</h3>
 
-
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/nian/" data-toggle="tooltip" data-placement="top" title="年味">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/jvmmemorynote/" data-toggle="tooltip" data-placement="top" title="深入理解JVM课程笔记(二)">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
 
                 <br>
 
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
                 <!-- require APlayer -->
                 
             </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
 
-          <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
     
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-    <h5><a href="/about/">关于我</a></h5>
-    <div class="short-about">
-
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
         
-            <img id = "avatar_pic" src="/img/avatar/ironman.png" />
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#垃圾判断的算法"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x5783;&#x573E;&#x5224;&#x65AD;&#x7684;&#x7B97;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#引用计数算法reference-counting"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x7B97;&#x6CD5;(Reference Counting)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#根搜索算法root-tracing"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x6839;&#x641C;&#x7D22;&#x7B97;&#x6CD5;(Root Tracing)</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#方法区的gc"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x65B9;&#x6CD5;&#x533A;&#x7684;GC</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#jvm常见gc算法"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">JVM&#x5E38;&#x89C1;GC&#x7B97;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#标记-清除算法mark-sweep"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x6807;&#x8BB0;-&#x6E05;&#x9664;&#x7B97;&#x6CD5;(Mark-Sweep)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#标记-整理算法mark-compact"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x6807;&#x8BB0;-&#x6574;&#x7406;&#x7B97;&#x6CD5;(Mark-Compact)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#复制算法copying"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x590D;&#x5236;&#x7B97;&#x6CD5;(Copying)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分代算法generational"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">&#x5206;&#x4EE3;&#x7B97;&#x6CD5;(Generational)</span></a></li></ol></li></ol>
         
+        </div>
+      </aside>
+    
 
-        
-            <p>Do something really cool and make the world a better place.</p>
-        
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-        <!-- SNS Link -->
-        <ul class="list-inline">
-            
-                <li>
-                    <a href="/feed.xml">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
-            
-            
-                <li>
-                    <a target="_blank" href="https://www.zhihu.com/people/zhang-tian-yu-65-49">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa  fa-stack-1x fa-inverse">知</i>
-                        </span>
-                    </a>
-                </li>
-            
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">标签</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
+                        
+                    </div>
+                </section>
+                
 
-            
+                <!-- Friends Blog -->
+				<!--
+                
+                <hr>
+                <h5>朋友们</h5>
+                <ul class="list-inline">
 
-            
-                <li>
-                    <a target="_blank" href="https://www.facebook.com/100011805250413">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
-
-            
-                <li>
-                    <a target="_blank"  href="https://github.com/ztygalaxy">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
-            
-            
-            
-        </ul>
+                    
+                        <li><a href="https://felon03.github.io/" target="_blank">Freedomly</a></li>
+                    
+                        <li><a href="https://jlwang1996.github.io/" target="_blank">jlwang1996</a></li>
+                    
+                        <li><a href="http://siwenzheng.github.io/" target="_blank">SiwenZheng</a></li>
+                    
+                        <li><a href="https://loststartvt.github.io/" target="_blank">LostStarTvT</a></li>
+                    
+                </ul>
+                
+				-->
+            </div>
+        </div>
     </div>
-</section>
+</article>
 
-        <hr>
-    
-        <!-- Friends Blog -->
 
-<h5 display="none">朋友们</h5>
-<ul class="list-inline">
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
-    
-        <li><a href="https://felon03.github.io/" target="_blank">Freedomly</a></li>
-    
-        <li><a href="https://jlwang1996.github.io/" target="_blank">jlwang1996</a></li>
-    
-        <li><a href="http://siwenzheng.github.io/" target="_blank">SiwenZheng</a></li>
-    
-        <li><a href="https://loststartvt.github.io/" target="_blank">LostStarTvT</a></li>
-    
-</ul>
 
-        <hr>
-    
-        <!-- Friends Blog -->
-
-<h5 display="none">服务</h5>
-<ul class="list-inline">
-    <li><a href="https://pic.tyzhang.top" target="_blank">如云图床</a></li>
-</ul>
-<ul class="list-inline">
-    <li><a href="https://ztygalaxy.github.io/Hello_HDU" target="_blank">Hello_HDU</a></li>
-</ul>
-
-        <hr>
-    
-        <!-- 今日诗词 -->
-<h5 display="none">一诗</h5>
-<ul class="list-inline">
-	<span id="jinrishici-sentence">:D 获取中...</span>
-	<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-</ul>
-        <hr>
-    
-        <!-- 二维码 -->
-<h5 display="none">张大炮来巡山</h5>
-<img id="avatar_pic" src="/img/avatar/qrcode.png" width="100%" />
-        <hr>
-    
-</div>
-
-        
-    </div>
-</div>
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
 
 
     <!-- Footer -->

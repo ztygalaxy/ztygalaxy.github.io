@@ -8,8 +8,56 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/springfir/</loc>
+        <lastmod>2020-03-03T11:32:04.640Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/jvmzlnote/</loc>
+        <lastmod>2020-03-03T11:30:43.761Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/jvmgcnote/</loc>
+        <lastmod>2020-03-03T11:30:34.434Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/jvmmemorynote/</loc>
+        <lastmod>2020-03-03T11:30:23.382Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/zero/</loc>
+        <lastmod>2020-03-03T04:47:20.543Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/offersolu/</loc>
-        <lastmod>2020-02-26T07:26:10.555Z</lastmod>
+        <lastmod>2020-02-28T02:30:54.882Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/javaknow/</loc>
+        <lastmod>2020-02-27T02:53:14.496Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +65,7 @@
 
     <url>
         <loc>tyzhang.top/article/nian/</loc>
-        <lastmod>2020-02-26T07:02:28.442Z</lastmod>
+        <lastmod>2020-02-27T02:10:31.365Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -42,14 +90,6 @@
     <url>
         <loc>tyzhang.top/article/leetcodesolu/</loc>
         <lastmod>2019-12-23T12:46:03.586Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/javaknow/</loc>
-        <lastmod>2019-12-11T12:17:08.539Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -354,14 +394,6 @@
     <url>
         <loc>tyzhang.top/article/yun/</loc>
         <lastmod>2019-10-24T11:42:31.740Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/zero/</loc>
-        <lastmod>2019-10-24T11:42:18.801Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
