@@ -8,6 +8,30 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/springfir/</loc>
+        <lastmod>2020-03-04T08:44:32.511Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/buy/</loc>
+        <lastmod>2020-03-04T07:11:38.768Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/javaknow/</loc>
+        <lastmod>2020-03-04T03:15:50.282Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/nian/</loc>
         <lastmod>2020-03-03T11:38:09.468Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -18,14 +42,6 @@
     <url>
         <loc>tyzhang.top/article/xu/</loc>
         <lastmod>2020-03-03T11:38:03.656Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/springfir/</loc>
-        <lastmod>2020-03-03T11:32:04.640Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -66,14 +82,6 @@
     <url>
         <loc>tyzhang.top/article/offersolu/</loc>
         <lastmod>2020-02-28T02:30:54.882Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/javaknow/</loc>
-        <lastmod>2020-02-27T02:53:14.496Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
