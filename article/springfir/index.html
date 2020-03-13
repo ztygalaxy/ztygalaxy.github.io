@@ -155,13 +155,13 @@
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -520,6 +520,24 @@
             
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#耦合与解耦"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x8026;&#x5408;&#x4E0E;&#x89E3;&#x8026;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#实例1jdbc驱动注册"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5B9E;&#x4F8B;1&#xFF1A;JDBC&#x9A71;&#x52A8;&#x6CE8;&#x518C;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#实例2三层框架解耦"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5B9E;&#x4F8B;2&#xFF1A;&#x4E09;&#x5C42;&#x6846;&#x67B6;&#x89E3;&#x8026;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#使用工厂模式解耦"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">&#x4F7F;&#x7528;&#x5DE5;&#x5382;&#x6A21;&#x5F0F;&#x89E3;&#x8026;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring中的ioc"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Spring&#x4E2D;&#x7684;IOC</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#项目创建"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x9879;&#x76EE;&#x521B;&#x5EFA;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#常用容器"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x5E38;&#x7528;&#x5BB9;&#x5668;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#核心容器两个接口引发出的问题"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x6838;&#x5FC3;&#x5BB9;&#x5668;&#x4E24;&#x4E2A;&#x63A5;&#x53E3;&#x5F15;&#x53D1;&#x51FA;&#x7684;&#x95EE;&#x9898;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#bean的细节"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">Bean&#x7684;&#x7EC6;&#x8282;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#bean实例化的三种方式"><span class="toc-nav-number">2.4.1.</span> <span class="toc-nav-text">Bean&#x5B9E;&#x4F8B;&#x5316;&#x7684;&#x4E09;&#x79CD;&#x65B9;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#bean的作用范围和生存周期"><span class="toc-nav-number">2.4.2.</span> <span class="toc-nav-text">Bean&#x7684;&#x4F5C;&#x7528;&#x8303;&#x56F4;&#x548C;&#x751F;&#x5B58;&#x5468;&#x671F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#单例对象"><span class="toc-nav-number">2.4.2.1.</span> <span class="toc-nav-text">&#x5355;&#x4F8B;&#x5BF9;&#x8C61;</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#多例对象"><span class="toc-nav-number">2.4.2.2.</span> <span class="toc-nav-text">&#x591A;&#x4F8B;&#x5BF9;&#x8C61;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#bean标签"><span class="toc-nav-number">2.4.3.</span> <span class="toc-nav-text">Bean&#x6807;&#x7B7E;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring中的di"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Spring&#x4E2D;&#x7684;DI</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于注解的ioc配置"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;&#x6CE8;&#x89E3;&#x7684;IOC&#x914D;&#x7F6E;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#配置beanxml"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">&#x914D;&#x7F6E;<code>bean.xml</code></span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#配置标签"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">&#x914D;&#x7F6E;&#x6807;&#x7B7E;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#spring中的新注解"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">Spring&#x4E2D;&#x7684;&#x65B0;&#x6CE8;&#x89E3;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#junit"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Junit</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#spring整合junit的配置"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">Spring&#x6574;&#x5408;Junit&#x7684;&#x914D;&#x7F6E;</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
 
                 
             <!-- Sidebar Container -->

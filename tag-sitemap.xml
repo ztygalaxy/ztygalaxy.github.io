@@ -4,7 +4,14 @@
 
     <url>
         <loc>tyzhang.top/tags/SSM/</loc>
-        <lastmod>2020-03-05T08:02:23.939Z</lastmod>
+        <lastmod>2020-03-13T08:12:37.827Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>tyzhang.top/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</loc>
+        <lastmod>2020-03-07T03:57:09.222Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -12,13 +19,6 @@
     <url>
         <loc>tyzhang.top/tags/Vlog/</loc>
         <lastmod>2020-03-04T07:11:38.768Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>tyzhang.top/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</loc>
-        <lastmod>2020-03-04T03:15:50.282Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
