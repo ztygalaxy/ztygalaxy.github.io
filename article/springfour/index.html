@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="description" content="张天宇的博客">
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/logo.png">
     <!-- Place this tag in your head or just before your close body tag. -->
@@ -72,7 +72,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('https://api。dujin。org/bing/1920。php')
+            background-image: url('https://api.dujin.org/bing/1920.php')
             /*post*/
         
     }
@@ -351,13 +351,19 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</span><br><span class="line"><span class="meta">@ContextConfiguration</span>(classes = SpringConfiguration.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IAccountService as;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transfer</span><span class="params">()</span></span>&#123;</span><br><span class="line">        as.transfer(<span class="string">"bbb"</span>,<span class="string">"ccc"</span>,<span class="number">234f</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>Spring的编程时事务控制不能实现解耦，反而使耦合更加严重了，因此不推荐使用。</p>
+<h3 id="spring编程式事务控制">Spring编程式事务控制</h3>
+<p>Spring的编程式事务控制不能实现解耦，反而使耦合更加严重了，因此不推荐使用。</p>
 <h3 id="事务基础知识">事务基础知识</h3>
+<p><a href="https://blog.csdn.net/qq_34203492/article/details/84620055" target="_blank" rel="noopener">参考</a></p>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/mybatisfir/" data-toggle="tooltip" data-placement="top" title="MyBatis: Preparation">&larr; 上一篇</a>
+                        </li>
                     
                     
                         <li class="next">
@@ -397,7 +403,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#platformtransactionmanager"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">PlatformTransactionManager</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#transactiondefinition"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">TransactionDefinition</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#transactionstatus"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">TransactionStatus</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于xml的声明式事务配置"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;XML&#x7684;&#x58F0;&#x660E;&#x5F0F;&#x4E8B;&#x52A1;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于注解的声明式事务控制"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;&#x6CE8;&#x89E3;&#x7684;&#x58F0;&#x660E;&#x5F0F;&#x4E8B;&#x52A1;&#x63A7;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于纯注解的事务配置"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;&#x7EAF;&#x6CE8;&#x89E3;&#x7684;&#x4E8B;&#x52A1;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#事务基础知识"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x57FA;&#x7840;&#x77E5;&#x8BC6;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#platformtransactionmanager"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">PlatformTransactionManager</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#transactiondefinition"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">TransactionDefinition</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#transactionstatus"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">TransactionStatus</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于xml的声明式事务配置"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;XML&#x7684;&#x58F0;&#x660E;&#x5F0F;&#x4E8B;&#x52A1;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于注解的声明式事务控制"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;&#x6CE8;&#x89E3;&#x7684;&#x58F0;&#x660E;&#x5F0F;&#x4E8B;&#x52A1;&#x63A7;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于纯注解的事务配置"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;&#x7EAF;&#x6CE8;&#x89E3;&#x7684;&#x4E8B;&#x52A1;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring编程式事务控制"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Spring&#x7F16;&#x7A0B;&#x5F0F;&#x4E8B;&#x52A1;&#x63A7;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#事务基础知识"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x57FA;&#x7840;&#x77E5;&#x8BC6;</span></a></li></ol>
         
         </div>
       </aside>
@@ -509,15 +515,6 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <ul class="list-inline text-center">
-                
-                    <li>
-                        <a href="/feed.xml">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
                 
                 
                 
