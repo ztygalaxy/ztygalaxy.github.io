@@ -12,6 +12,7 @@
     <link rel="shortcut icon" href="/img/logo.png">
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+	<script src="//code.tidio.co/5b6vgmp0rn1xxl0xfqtpstex0m46ttic.js" async></script>
     <title>
         
           MyBatis: Preparation - 张天宇的博客 | ztygalaxy Blog
@@ -155,6 +156,12 @@
                     
                         
                         <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
                             <a href="/about/">关于</a>
                         </li>
                         
@@ -162,12 +169,6 @@
                         
                         <li>
                             <a href="/tags/">标签</a>
-                        </li>
-                        
-                    
-                        
-                        <li>
-                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -304,11 +305,17 @@
 我们在实际开发中，都是越简便越好，所以都是采用不写dao实现类的方式，不管使用XML还是注解配置。但是MyBatis它是支持写dao实现类的，将session传入dao的实现类，使用xml中的namespace作为参数，使用session提供的查询等方法，意义不大增加开发时间。</p>
 </li>
 </ol>
+<h3 id="自定义">自定义</h3>
+<p>有点晕，待补录</p>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/mybatistwo/" data-toggle="tooltip" data-placement="top" title="MyBatis: CRUD">&larr; 上一篇</a>
+                        </li>
                     
                     
                         <li class="next">
@@ -348,7 +355,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#框架"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x6846;&#x67B6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#三层架构"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x4E09;&#x5C42;&#x67B6;&#x6784;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#mybatis"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">MyBatis</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#环境搭建"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x73AF;&#x5883;&#x642D;&#x5EFA;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#环境搭建的注意事项"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x73AF;&#x5883;&#x642D;&#x5EFA;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#入门案例"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x5165;&#x95E8;&#x6848;&#x4F8B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#设计模式分析"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x5206;&#x6790;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#注解配置"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">&#x6CE8;&#x89E3;&#x914D;&#x7F6E;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#框架"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x6846;&#x67B6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#三层架构"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x4E09;&#x5C42;&#x67B6;&#x6784;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#mybatis"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">MyBatis</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#环境搭建"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x73AF;&#x5883;&#x642D;&#x5EFA;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#环境搭建的注意事项"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x73AF;&#x5883;&#x642D;&#x5EFA;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#入门案例"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x5165;&#x95E8;&#x6848;&#x4F8B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#设计模式分析"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x5206;&#x6790;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#注解配置"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">&#x6CE8;&#x89E3;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#自定义"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">&#x81EA;&#x5B9A;&#x4E49;</span></a></li></ol>
         
         </div>
       </aside>
