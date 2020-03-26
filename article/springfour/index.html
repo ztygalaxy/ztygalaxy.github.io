@@ -156,12 +156,6 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
-                        </li>
-                        
-                    
-                        
-                        <li>
                             <a href="/about/">关于</a>
                         </li>
                         
@@ -169,6 +163,12 @@
                         
                         <li>
                             <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -355,6 +355,10 @@
 <h3 id="spring编程式事务控制">Spring编程式事务控制</h3>
 <p>Spring的编程式事务控制不能实现解耦，反而使耦合更加严重了，因此不推荐使用。</p>
 <h3 id="事务基础知识">事务基础知识</h3>
+<h4 id="什么是事务">什么是事务</h4>
+<h4 id="事务四大特性">事务四大特性</h4>
+<h4 id="不考虑隔离性会产生的3个问题">不考虑隔离性会产生的3个问题</h4>
+<h4 id="解决办法四种隔离级别">解决办法：四种隔离级别</h4>
 <p><a href="https://blog.csdn.net/qq_34203492/article/details/84620055" target="_blank" rel="noopener">参考</a></p>
 
                 
@@ -404,7 +408,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#platformtransactionmanager"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">PlatformTransactionManager</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#transactiondefinition"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">TransactionDefinition</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#transactionstatus"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">TransactionStatus</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于xml的声明式事务配置"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;XML&#x7684;&#x58F0;&#x660E;&#x5F0F;&#x4E8B;&#x52A1;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于注解的声明式事务控制"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;&#x6CE8;&#x89E3;&#x7684;&#x58F0;&#x660E;&#x5F0F;&#x4E8B;&#x52A1;&#x63A7;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于纯注解的事务配置"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;&#x7EAF;&#x6CE8;&#x89E3;&#x7684;&#x4E8B;&#x52A1;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring编程式事务控制"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Spring&#x7F16;&#x7A0B;&#x5F0F;&#x4E8B;&#x52A1;&#x63A7;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#事务基础知识"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x57FA;&#x7840;&#x77E5;&#x8BC6;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#platformtransactionmanager"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">PlatformTransactionManager</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#transactiondefinition"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">TransactionDefinition</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#transactionstatus"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">TransactionStatus</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于xml的声明式事务配置"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;XML&#x7684;&#x58F0;&#x660E;&#x5F0F;&#x4E8B;&#x52A1;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于注解的声明式事务控制"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;&#x6CE8;&#x89E3;&#x7684;&#x58F0;&#x660E;&#x5F0F;&#x4E8B;&#x52A1;&#x63A7;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于纯注解的事务配置"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x57FA;&#x4E8E;&#x7EAF;&#x6CE8;&#x89E3;&#x7684;&#x4E8B;&#x52A1;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring编程式事务控制"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Spring&#x7F16;&#x7A0B;&#x5F0F;&#x4E8B;&#x52A1;&#x63A7;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#事务基础知识"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x57FA;&#x7840;&#x77E5;&#x8BC6;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#什么是事务"><span class="toc-nav-number">8.1.</span> <span class="toc-nav-text">&#x4EC0;&#x4E48;&#x662F;&#x4E8B;&#x52A1;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#事务四大特性"><span class="toc-nav-number">8.2.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x56DB;&#x5927;&#x7279;&#x6027;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#不考虑隔离性会产生的3个问题"><span class="toc-nav-number">8.3.</span> <span class="toc-nav-text">&#x4E0D;&#x8003;&#x8651;&#x9694;&#x79BB;&#x6027;&#x4F1A;&#x4EA7;&#x751F;&#x7684;3&#x4E2A;&#x95EE;&#x9898;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解决办法四种隔离级别"><span class="toc-nav-number">8.4.</span> <span class="toc-nav-text">&#x89E3;&#x51B3;&#x529E;&#x6CD5;&#xFF1A;&#x56DB;&#x79CD;&#x9694;&#x79BB;&#x7EA7;&#x522B;</span></a></li></ol></li></ol>
         
         </div>
       </aside>

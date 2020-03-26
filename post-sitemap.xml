@@ -8,6 +8,22 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/mybatisthr/</loc>
+        <lastmod>2020-03-26T07:17:41.910Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/springfour/</loc>
+        <lastmod>2020-03-24T03:14:55.624Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/offersolu/</loc>
         <lastmod>2020-03-21T07:37:30.841Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -34,14 +50,6 @@
     <url>
         <loc>tyzhang.top/article/mybatisfir/</loc>
         <lastmod>2020-03-19T04:30:41.298Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/springfour/</loc>
-        <lastmod>2020-03-18T07:03:26.216Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
