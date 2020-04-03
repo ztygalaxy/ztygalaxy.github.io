@@ -8,8 +8,16 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/mybatisfour/</loc>
+        <lastmod>2020-04-03T08:30:22.156Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/mybatisthr/</loc>
-        <lastmod>2020-03-26T07:17:41.910Z</lastmod>
+        <lastmod>2020-04-03T07:22:02.975Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
