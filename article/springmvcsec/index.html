@@ -15,11 +15,11 @@
 	<script src="//code.tidio.co/5b6vgmp0rn1xxl0xfqtpstex0m46ttic.js" async></script>
     <title>
         
-          POJO, EJB &amp; JavaBean - 张天宇的博客 | ztygalaxy Blog
+          SpringMVC: Second - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
-    <link rel="canonical" href="tyzhang.top/article/pojo/">
+    <link rel="canonical" href="tyzhang.top/article/springmvcsec/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -90,14 +90,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#基础知识" title="基础知识">基础知识</a>
+                              <a class="tag" href="/tags/#SSM" title="SSM">SSM</a>
                             
                         </div>
-                        <h1>POJO, EJB &amp; JavaBean</h1>
+                        <h1>SpringMVC: Second</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2020-04-10
+                            2020-04-11
                         </span>
                     </div>
                 
@@ -226,86 +226,17 @@
 
 				
                 <blockquote>
-<p>pojo,javabean,entity,domain,dto,ejb的区别</p>
+<p>SpringMVC第二篇。</p>
 </blockquote>
-<p>pojo, javabean, ejb的概念很好理解,就是复杂程度逐渐上升而已.</p>
-<p>domain是个比较虚的概念,只要是一个范围概念,都可以用domian来括住</p>
-<p>vo, dto, po, entity的内容容量逐渐上升,vo是界面显示的数据,dto是从po中抽取的数据,po是数据库中的记录,entity是对象对应数据库中的记录</p>
-<p>dao对象是数据库操作的集合</p>
-<p>bo综合多个po对应一个对象,比如一个简历，有教育经历、工作经历、 关系等等。教育经历对应一个po,工作经历对应一个po, 关系对应一个po,</p>
-<p>这三个综合起来就是一个简历,对应一个bo。</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>定义</th>
-<th>作用</th>
-<th>其他</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>pojo</strong></td>
-<td>（Plain Ordinary Java Object）简单的Java对象</td>
-<td>普通JavaBeans,有时可以作为VO（value-object）或DTO（Data Transfer Object）来使用</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>javabean</strong></td>
-<td>为写成JavaBean，类必须是具体和公共的，并且具有无参数的构造器。</td>
-<td>简单的就是pojo,复杂的就是ejb</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>ejb</strong></td>
-<td>EJB(Enterprise JavaBean)，定义用于开发基于组件的企业多重应用程序标准</td>
-<td>java的核心代码,分别是回话Bean（Session Bean）、实体Bean（Entity Bean）、和消息驱动Bean（MessageDriven Bean）</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>domain</strong></td>
-<td>domain是范围,界线,也被用来批一个变量的有效作用域</td>
-<td>也常用这个词做一个包,然后在里面放些DAO类文件.  net.baidu.domain.AddUserDao</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>dto</strong></td>
-<td>数据传输对象(Data Transfer Object),是一种设计模式之间传输数据的对象</td>
-<td>数据传输目标往往是数据访问对象从数据库中检索数据，从PO中取值进行传输</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>entity</strong></td>
-<td>实体bean，一般是用于ORM对象关系映射</td>
-<td>一个实体映射成一张表，一般无业务逻辑代码。</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>po</strong></td>
-<td>persistant object持久对象</td>
-<td>最形象的理解就是一个PO就是数据库中的一条记录,如hibernate中的一个持久化对象</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>vo</strong></td>
-<td>ViewObject表现层对象</td>
-<td>主要对应界面显示的数据对象。对于一个WEB页面，用一个VO对象对应整个界面的值。</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>dao</strong></td>
-<td>data access object数据访问对象</td>
-<td>主要用来封装对数据库的访问，包含了各种数据库的操作方法。通过它可以把POJO持久化为PO，用PO组装出来VO、DTO</td>
-<td></td>
-</tr>
-<tr>
-<td><strong>bo</strong></td>
-<td>business object业务对象</td>
-<td>主要作用是把业务逻辑封装为一个对象。这个对象可以包括一个或多个其它的对象。</td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<h3 id="响应数据和结果视图">响应数据和结果视图</h3>
+<h4 id="返回值分类">返回值分类</h4>
+<h5 id="1-字符串">1. 字符串</h5>
+<p>controller方法返回字符串可以指定逻辑视图名，通过视图解析器解析为物理视图地址。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/testReturnString"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testReturnString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"AccountController 的 testReturnString 方法执行了。。。。"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-void">2. Void</h5>
+<p>如果控制器的方法返回值编写成void，默认会跳转到<code>@RequestMapping(value=&quot;/initUpdate&quot;)</code> initUpdate.jsp的页面。</p>
+<p>可以使用请求转发或者重定向跳转到指定的页面。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value=<span class="string">"/initAdd"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initAdd</span><span class="params">(HttpServletRequest request,HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"请求转发或者重定向"</span>);</span><br><span class="line">    <span class="comment">// 请求转发</span></span><br><span class="line">    <span class="comment">// request.getRequestDispatcher("/WEB-INF/pages/add.jsp").forward(request,</span></span><br><span class="line">    response);</span><br><span class="line">    <span class="comment">// 重定向，因为重定向属于新的请求，无法前往WEB-INF文件夹</span></span><br><span class="line">    <span class="comment">// response.sendRedirect(request.getContextPath()+"/add2.jsp");</span></span><br><span class="line">    response.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br><span class="line">    response.setContentType(<span class="string">"text/html;charset=UTF-8"</span>);</span><br><span class="line">    <span class="comment">// 直接响应数据</span></span><br><span class="line">    response.getWriter().print(<span class="string">"你好"</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
                 
                 <hr>
@@ -313,12 +244,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/springmvcsec/" data-toggle="tooltip" data-placement="top" title="SpringMVC: Second">&larr; 上一篇</a>
+                            <a href="/article/springmvc/" data-toggle="tooltip" data-placement="top" title="SpringMVC: First">&larr; 上一篇</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/mybatisfour/" data-toggle="tooltip" data-placement="top" title="MyBatis: LAZY LOAD">下一篇 &rarr;</a>
+                            <a href="/article/pojo/" data-toggle="tooltip" data-placement="top" title="POJO, EJB & JavaBean">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -354,7 +285,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#响应数据和结果视图"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x54CD;&#x5E94;&#x6570;&#x636E;&#x548C;&#x7ED3;&#x679C;&#x89C6;&#x56FE;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#返回值分类"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x8FD4;&#x56DE;&#x503C;&#x5206;&#x7C7B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#1-字符串"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">1. &#x5B57;&#x7B26;&#x4E32;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#2-void"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">2. Void</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>
@@ -374,7 +305,7 @@
                     <h5><a href="/tags/">标签</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#基础知识" title="基础知识">基础知识</a>
+                          <a class="tag" href="/tags/#SSM" title="SSM">SSM</a>
                         
                     </div>
                 </section>
