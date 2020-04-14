@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="tyzhang.top/"/>
-  <updated>2020-04-12T08:39:18.109Z</updated>
+  <updated>2020-04-14T07:59:36.892Z</updated>
   <id>tyzhang.top/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>红包算法的分析与实现</title>
+    <link href="tyzhang.top/article/lishi/"/>
+    <id>tyzhang.top/article/lishi/</id>
+    <published>2020-04-13T16:00:00.000Z</published>
+    <updated>2020-04-14T07:59:36.892Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>最近在知乎看到关于微信红包的分配方式的讨论，炒个冷饭，整理了一下高赞解决方案。</p></blockquote><h3 id="抢红包规则">抢红包规则</h3><ul><li><p>抢到红包的所有人抢到的金额之和必须等于红包金额。</p></li><li><p>2.每个抢到的人至少分得一分钱。</p></li><li><p>3.所有人抢到金额的概率相等。</p></li></ul><h3 id="普通思路">普通思路</h3><h4 id="方法">方法</h4><p>每次拆开红包，抢到的金额=（0，剩余金额）内的随机数。</p><h4 id="问题">问题</h4><p>以这种方式分配，即以剩下金额随机的期望作为抢到金额。先抢到的人会有很大的优势，越往后的人抢到的金额越少，不满足条件3。例如：一个10个人共100元的红包，第一个人的随机区间为（0，100），他的红包期望是50。如果他真的抢到了50，第二个人的随机区间变为（0，50），他的红包期望为25。以此类推，后面的人抢到的金额会逐渐减少。</p><h3 id="思路一二倍均值法">思路一二倍均值法</h3><h4 id="方法">方法</h4><p>假设剩余红包金额为M，剩余人数为N，每次抢到的金额 = 随机区间 （0， M / N X 2）。</p><p>这个公式，保证了<strong>每次随机金额的平均值是相等的</strong>，不会因为抢红包的先后顺序而造成不公平。</p><h4 id="实现">实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Integer&gt; <span class="title">divideRedPackage</span><span class="params">(Integer totalAmount, Integer totalPeopleNum)</span> </span>&#123;</span><br><span class="line">List&lt;Integer&gt; amountList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line"><span class="comment">// 精确到小数点后两位</span></span><br><span class="line">Integer restAmount = totalAmount * <span class="number">100</span>;</span><br><span class="line">Integer restPeopleNum = totalPeopleNum;</span><br><span class="line">Random random = <span class="keyword">new</span> Random();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; totalPeopleNum - <span class="number">1</span>; i++) &#123;</span><br><span class="line">     <span class="comment">// 随机范围：[1，剩余人均金额的两倍)，左闭右开</span></span><br><span class="line">     <span class="keyword">int</span> amount = random.nextInt(restAmount / restPeopleNum * <span class="number">2</span> - <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">restAmount -= amount;</span><br><span class="line">restPeopleNum--;</span><br><span class="line">amountList.add(amount);</span><br><span class="line">&#125;</span><br><span class="line">amountList.add(restAmount);</span><br><span class="line"><span class="keyword">return</span> amountList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="问题">问题</h4><p>除了最后一次，任何一次抢到的金额都不会超过人均金额的两倍，并不是任意的随机。</p><h3 id="思路二线段切割法">思路二线段切割法</h3><h4 id="方法">方法</h4><p>当N个人一起抢总金额为M的红包时，我们需要做N-1次随机运算，以此确定N-1个切割点。</p><p>随机的范围区间是[1，100* M）。当所有切割点确定以后，子线段的长度也随之确定。这样每个人来抢红包的时候，只需要顺次领取与子线段长度等价的红包金额即可。</p><h4 id="实现">实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;Integer&gt; <span class="title">divide</span><span class="params">(<span class="keyword">double</span> money, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line"><span class="comment">//验证参数合理校验</span></span><br><span class="line"><span class="comment">//为了使用random.nextInt(Integer)方法不得不先把红包金额放大100倍，最后在main函数里面再除以100</span></span><br><span class="line"><span class="comment">//这样就可以保证每个人抢到的金额都可以精确到小数点后两位</span></span><br><span class="line"><span class="keyword">int</span> fen = (<span class="keyword">int</span>) (money * <span class="number">100</span>);</span><br><span class="line"><span class="keyword">if</span> (fen &lt; n || n &lt; <span class="number">1</span>) &#123;</span><br><span class="line">System.out.println(<span class="string">"红包个数必须大于0，并且最小红包不少于1分"</span>);</span><br><span class="line">&#125;</span><br><span class="line">List&lt;Integer&gt; boards = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">boards.add(<span class="number">0</span>);</span><br><span class="line">boards.add(fen);</span><br><span class="line"><span class="comment">//红包个数和板砖个数的关系</span></span><br><span class="line"><span class="keyword">while</span> (boards.size() &lt;= n) &#123;</span><br><span class="line"><span class="keyword">int</span> index = <span class="keyword">new</span> Random().nextInt(fen - <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">if</span> (boards.contains(index)) &#123;</span><br><span class="line"><span class="comment">//保证板子的位置不相同</span></span><br><span class="line"><span class="keyword">continue</span>;</span><br><span class="line">&#125;</span><br><span class="line">boards.add(index);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//计算每个红包的金额，将两个板子之间的钱加起来</span></span><br><span class="line">Collections.sort(boards);</span><br><span class="line">List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; boards.size() - <span class="number">1</span>; i++) &#123;</span><br><span class="line">Integer e = boards.get(i + <span class="number">1</span>) - boards.get(i);</span><br><span class="line">list.add(e);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="问题">问题</h4><ul><li><p>当随机切割点出现重复，如何处理。</p></li><li><p>如何尽可能降低时间复杂度和空间复杂度。</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;最近在知乎看到关于微信红包的分配方式的讨论，炒个冷饭，整理了一下高赞解决方案。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;抢红包规则&quot;&gt;抢红包规则&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;抢到红包的所有人抢到的金额之和必须等于红包金额。&lt;/p
+      
+    
+    </summary>
+    
+    
+    
+      <category term="笔记" scheme="tyzhang.top/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>SpringMVC: Second</title>
@@ -548,32 +578,6 @@
     
     
       <category term="解题报告" scheme="tyzhang.top/tags/%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>过去一年我都剁了啥？！</title>
-    <link href="tyzhang.top/article/buy/"/>
-    <id>tyzhang.top/article/buy/</id>
-    <published>2019-12-13T16:00:00.000Z</published>
-    <updated>2020-03-04T07:11:38.768Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p><a href="https://www.bilibili.com/video/av79241600/" target="_blank" rel="noopener">过去一年我都剁了啥？！ by 张天宇</a></p></blockquote><center><iframe src="//player.bilibili.com/player.html?aid=79241600&cid=135607453&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="600px" height="400px"> </iframe></center>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/av79241600/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;过去一年我都剁了啥？！ by 张天宇&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Vlog" scheme="tyzhang.top/tags/Vlog/"/>
     
   </entry>
   
