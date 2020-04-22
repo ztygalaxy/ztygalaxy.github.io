@@ -156,13 +156,13 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -333,25 +333,36 @@
 <p>把通知Bean也交给Spring来管理</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"logger"</span> <span class="attr">class</span>=<span class="string">"com.ztygalaxy.utils.Logger"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
+<li>
+<p>使用<code>aop:config</code>标签表明开始AOP的配置</p>
+</li>
+<li>
+<p>使用<code>aop:aspect</code>标签表明开始配置切面</p>
+<ul>
+<li><code>id</code>：给切面提供一个唯一标识</li>
+<li><code>ref</code>：指定通知类bean的id</li>
+</ul>
+</li>
+<li>
+<p>在<code>aop:aspect</code>标签的内部使用对应标签来配置通知类型</p>
+<ul>
+<li><code>aop:config</code>：表示配置前置通知
+<ul>
+<li>
+<p>method：用于指定Logger类中的哪个方法是前置通知</p>
+</li>
+<li>
+<p>pointcut：用于指定切入点表达式，该表达式的含义是指对业务层的哪些方法增强</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
 </li>
 </ul>
 </li>
 </ol>
-<pre><code> 2. 使用`aop:config`标签表明开始AOP的配置
- 
- 3. 使用`aop:aspect`标签表明开始配置切面
- 
-    - `id`：给切面提供一个唯一标识
-    - `ref`：指定通知类bean的id
- 
- 4. 在`aop:aspect`标签的内部使用对应标签来配置通知类型
- 
-    - `aop:config`：表示配置前置通知
-      - method：用于指定Logger类中的哪个方法是前置通知
-      
-      - pointcut：用于指定切入点表达式，该表达式的含义是指对业务层的哪些方法增强
-</code></pre>
 <blockquote>
 <p><strong>切入点表达式的写法：</strong></p>
 <p>关键字：execution(表达式)</p>
