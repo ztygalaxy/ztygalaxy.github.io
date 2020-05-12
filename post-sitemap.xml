@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/jvmone/</loc>
+        <lastmod>2020-05-12T13:18:49.940Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/springmvcsec/</loc>
         <lastmod>2020-04-22T09:05:32.632Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -154,30 +162,6 @@
     <url>
         <loc>tyzhang.top/article/xu/</loc>
         <lastmod>2020-03-03T11:38:03.656Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/jvmzlnote/</loc>
-        <lastmod>2020-03-03T11:30:43.761Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/jvmgcnote/</loc>
-        <lastmod>2020-03-03T11:30:34.434Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/jvmmemorynote/</loc>
-        <lastmod>2020-03-03T11:30:23.382Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

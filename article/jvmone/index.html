@@ -15,11 +15,11 @@
 	<script src="//code.tidio.co/5b6vgmp0rn1xxl0xfqtpstex0m46ttic.js" async></script>
     <title>
         
-          深入理解JVM课程笔记(三) - 张天宇的博客 | ztygalaxy Blog
+          JVM - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
-    <link rel="canonical" href="tyzhang.top/article/jvmgcnote/">
+    <link rel="canonical" href="tyzhang.top/article/jvmone/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -93,11 +93,11 @@
                               <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
                             
                         </div>
-                        <h1>深入理解JVM课程笔记(三)</h1>
+                        <h1>JVM</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2020-01-09
+                            2020-05-12
                         </span>
                     </div>
                 
@@ -156,13 +156,13 @@
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -226,49 +226,44 @@
 
 				
                 <blockquote>
-<p>B站张龙JVM虚拟机系列课程学习笔记，GC篇</p>
+<p>JVM第一篇，JVM的内存结构。</p>
 </blockquote>
-<p>课程地址: <a href="https://www.bilibili.com/video/av78983356" target="_blank" rel="noopener">av78983356</a></p>
-<h2 id="垃圾判断的算法">垃圾判断的算法</h2>
-<h3 id="引用计数算法reference-counting">引用计数算法(Reference Counting)</h3>
-<p>给对象添加一个引用计数器，当有一个地方引用它，计数器+1，当引用失效，计数器-1，任何时刻计数器为0的对象就是不能再被使用的。</p>
-<p>该算法无法解决对象循环引用的问题。</p>
-<h3 id="根搜索算法root-tracing">根搜索算法(Root Tracing)</h3>
-<p>在实际生产语言中使用该算法判断是否存活。</p>
-<p>通过一系列的“GCRoot”的点作为起始进行向下搜索，当一个对象到GC Roots没有任何引用链(Reference Chain)相连，则证明此对象是不可用的。</p>
-<p>在Java语言中，GC Roots包括：</p>
+<h3 id="1-程序计数器">1. 程序计数器</h3>
+<p>Program Counter Register</p>
 <ul>
-<li>在VM栈(帧中的本地变量)中的引用；</li>
-<li>方法区中的静态引用；</li>
-<li>JNI(即一般说的Native方法)中的引用。</li>
-</ul>
-<h2 id="方法区的gc">方法区的GC</h2>
-<p>Java虚拟机规范表示可以不要求虚拟机在这区实现GC，这区GC的“性价比”一般。在堆中，尤其在新生代，常规应用进行一次GC一般可以回收70-95%的空间，而方法区的GC效率远低于此。</p>
-<p>当前的商业JVM都有实现方法区的GC，主要回收两部分内容：废弃常量和无用类。</p>
-<p>类回收需要满足以下3个条件：</p>
+<li>作用：记住下一条JVM指令的执行地址，物理上使用寄存器来实现的。</li>
+<li>特点：
 <ul>
-<li>该类的所有实例都已经被GC，也就是说JVM中不存在该Class的任何实例；</li>
-<li>加载该类的ClassLoader已经被GC；</li>
-<li>该类所对应的java.lang.Class对象没有在任何地方被引用，如不能在任何地方通过反射访问该类的方法。</li>
+<li>线程私有。</li>
+<li>唯一一个不会存在内存溢出的区域。</li>
 </ul>
-<h2 id="jvm常见gc算法">JVM常见GC算法</h2>
-<h3 id="标记-清除算法mark-sweep">标记-清除算法(Mark-Sweep)</h3>
-<h3 id="标记-整理算法mark-compact">标记-整理算法(Mark-Compact)</h3>
-<h3 id="复制算法copying">复制算法(Copying)</h3>
-<h3 id="分代算法generational">分代算法(Generational)</h3>
+</li>
+</ul>
+<h3 id="2虚拟机栈">2.虚拟机栈</h3>
+<p>Java Vitural Machine Stacks</p>
+<ul>
+<li>虚拟机栈：每个线程运行时所需要的内存。</li>
+<li>栈帧：每个栈由多个栈帧组成，对应着每次方法调用时所占用的内存。</li>
+<li>每个线程只能有一个活动栈帧，当前栈内最顶部的栈帧，对应着当前正在执行的那个方法。</li>
+</ul>
+<p>栈内存不需要进行垃圾回收。</p>
+<p>栈内存划的大，方便更多次的方法调用，划的过大，会让线程数变少，因为物理内存是一定的。</p>
+<p>方法内局部变量是线程私有的，不需要考虑线程安全，如果是公有的，需要考虑线程安全。</p>
+<p>判断一个变量是不是线程安全的，不仅要看他是不是方法内的局部变量，还要看他是否逃离了方法的作用范围，如method3。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 多线程同时执行此方法</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> m1&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> ( <span class="keyword">int</span> i = <span class="number">0</span>; i&lt;<span class="number">5000</span>; i++)&#123;</span><br><span class="line">        x++;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(x);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 线程1方法调用该方法，新建一个栈帧，每个线程私有int x作为局部变量，与其他线程不相互影响。</span></span><br><span class="line"><span class="comment">* 修改为static int x，线程1和线程2都要读取x自增后再写回，不加安全保护会产生线程安全问题。</span></span><br><span class="line"><span class="comment">**/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1_1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.append(<span class="number">4</span>);</span><br><span class="line">        sb.append(<span class="number">5</span>);</span><br><span class="line">        sb.append(<span class="number">6</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// 与主线程共享sb</span></span><br><span class="line">            method2(sb);</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 同上，线程安全</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.append(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 非线程安全，因为作为方法参数传递进来，因此可能会有其他线程访问，对其他线程共享，如main。需要使用StringBuffer。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">method2</span><span class="params">(StringBuilder s)</span> </span>&#123;</span><br><span class="line">        s.append(<span class="number">1</span>);</span><br><span class="line">        s.append(<span class="number">2</span>);</span><br><span class="line">        s.append(<span class="number">3</span>);</span><br><span class="line">        System.out.println(s.toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> StringBuilder <span class="title">m3</span><span class="params">()</span></span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.append(<span class="number">1</span>);</span><br><span class="line">        sb.append(<span class="number">2</span>);</span><br><span class="line">        sb.append(<span class="number">3</span>);</span><br><span class="line">        <span class="comment">// 其他线程可能拿到这个对象的引用，并发的修改。</span></span><br><span class="line">        <span class="keyword">return</span> sb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-本地方法栈">3. 本地方法栈</h3>
+<h3 id="4堆">4.堆</h3>
+<h3 id="5方法区">5.方法区</h3>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/nian/" data-toggle="tooltip" data-placement="top" title="年味">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/jvmmemorynote/" data-toggle="tooltip" data-placement="top" title="深入理解JVM课程笔记(二)">下一篇 &rarr;</a>
+                            <a href="/article/springmvcthr/" data-toggle="tooltip" data-placement="top" title="SpringMVC: End">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -304,7 +299,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#垃圾判断的算法"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x5783;&#x573E;&#x5224;&#x65AD;&#x7684;&#x7B97;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#引用计数算法reference-counting"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x7B97;&#x6CD5;(Reference Counting)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#根搜索算法root-tracing"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x6839;&#x641C;&#x7D22;&#x7B97;&#x6CD5;(Root Tracing)</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#方法区的gc"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x65B9;&#x6CD5;&#x533A;&#x7684;GC</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#jvm常见gc算法"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">JVM&#x5E38;&#x89C1;GC&#x7B97;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#标记-清除算法mark-sweep"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x6807;&#x8BB0;-&#x6E05;&#x9664;&#x7B97;&#x6CD5;(Mark-Sweep)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#标记-整理算法mark-compact"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x6807;&#x8BB0;-&#x6574;&#x7406;&#x7B97;&#x6CD5;(Mark-Compact)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#复制算法copying"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x590D;&#x5236;&#x7B97;&#x6CD5;(Copying)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分代算法generational"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">&#x5206;&#x4EE3;&#x7B97;&#x6CD5;(Generational)</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-程序计数器"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. &#x7A0B;&#x5E8F;&#x8BA1;&#x6570;&#x5668;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2虚拟机栈"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2.&#x865A;&#x62DF;&#x673A;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-本地方法栈"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. &#x672C;&#x5730;&#x65B9;&#x6CD5;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4堆"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4.&#x5806;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5方法区"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5.&#x65B9;&#x6CD5;&#x533A;</span></a></li></ol>
         
         </div>
       </aside>
