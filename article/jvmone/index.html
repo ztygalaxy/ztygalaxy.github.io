@@ -15,7 +15,7 @@
 	<script src="//code.tidio.co/5b6vgmp0rn1xxl0xfqtpstex0m46ttic.js" async></script>
     <title>
         
-          JVM - 张天宇的博客 | ztygalaxy Blog
+          JVM: First - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
@@ -93,11 +93,11 @@
                               <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
                             
                         </div>
-                        <h1>JVM</h1>
+                        <h1>JVM: First</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2020-05-12
+                            2020-05-13
                         </span>
                     </div>
                 
@@ -162,13 +162,13 @@
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/tags/">标签</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -231,7 +231,7 @@
 <h3 id="1-程序计数器">1. 程序计数器</h3>
 <p>Program Counter Register</p>
 <ul>
-<li>作用：记住下一条JVM指令的执行地址，物理上使用寄存器来实现的。</li>
+<li>作用：存放下一条指令所在单元的地址的地方，物理上使用寄存器来实现的。</li>
 <li>特点：
 <ul>
 <li>线程私有。</li>
@@ -249,9 +249,54 @@
 <p>栈内存不需要进行垃圾回收。</p>
 <p>栈内存划的大，方便更多次的方法调用，划的过大，会让线程数变少，因为物理内存是一定的。</p>
 <p>方法内局部变量是线程私有的，不需要考虑线程安全，如果是公有的，需要考虑线程安全。</p>
+<h4 id="线程安全">线程安全</h4>
 <p>判断一个变量是不是线程安全的，不仅要看他是不是方法内的局部变量，还要看他是否逃离了方法的作用范围，如method3。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 多线程同时执行此方法</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> m1&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> ( <span class="keyword">int</span> i = <span class="number">0</span>; i&lt;<span class="number">5000</span>; i++)&#123;</span><br><span class="line">        x++;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(x);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 线程1方法调用该方法，新建一个栈帧，每个线程私有int x作为局部变量，与其他线程不相互影响。</span></span><br><span class="line"><span class="comment">* 修改为static int x，线程1和线程2都要读取x自增后再写回，不加安全保护会产生线程安全问题。</span></span><br><span class="line"><span class="comment">**/</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1_1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.append(<span class="number">4</span>);</span><br><span class="line">        sb.append(<span class="number">5</span>);</span><br><span class="line">        sb.append(<span class="number">6</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// 与主线程共享sb</span></span><br><span class="line">            method2(sb);</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 同上，线程安全</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.append(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 非线程安全，因为作为方法参数传递进来，因此可能会有其他线程访问，对其他线程共享，如main。需要使用StringBuffer。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">method2</span><span class="params">(StringBuilder s)</span> </span>&#123;</span><br><span class="line">        s.append(<span class="number">1</span>);</span><br><span class="line">        s.append(<span class="number">2</span>);</span><br><span class="line">        s.append(<span class="number">3</span>);</span><br><span class="line">        System.out.println(s.toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> StringBuilder <span class="title">m3</span><span class="params">()</span></span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.append(<span class="number">1</span>);</span><br><span class="line">        sb.append(<span class="number">2</span>);</span><br><span class="line">        sb.append(<span class="number">3</span>);</span><br><span class="line">        <span class="comment">// 其他线程可能拿到这个对象的引用，并发的修改。</span></span><br><span class="line">        <span class="keyword">return</span> sb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="栈内存溢出">栈内存溢出</h4>
+<ul>
+<li>
+<p>栈帧过多超过栈内存</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo_2</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> count;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            method1();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            System.out.println(count);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        count ++;</span><br><span class="line">        method1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// java.lang.StackOverflowError</span></span><br><span class="line"><span class="comment">// 又如，自动转换Json时，部门类套职员类，职员类套部门类，无限嵌套。这时使用@JsonIgnore忽略员工的部门的转换，</span></span><br></pre></td></tr></table></figure>
+<p>使用<code>-Xss256k</code>设置栈内存大小，使递归调用次数变大。</p>
+</li>
+<li>
+<p>栈帧过大超过栈内存</p>
+</li>
+</ul>
+<p>即该区域可能抛出以下异常：</p>
+<ul>
+<li>当线程请求的栈深度超过最大值，即栈帧过多，会抛出 <code>StackOverflowError</code> 异常；</li>
+<li>栈进行动态扩展时如果无法申请到足够内存，会抛出 <code>OutOfMemoryError</code> 异常。</li>
+</ul>
+<h4 id="线程运行诊断">线程运行诊断</h4>
+<ul>
+<li>
+<p>Demo 1: CPU占用过多</p>
+<ol>
+<li>
+<p>定位</p>
+<ol>
+<li>
+<p>使用linux的top命令定位哪个ID的进程对CPU的占用过高</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用ps查看进程的哪个线程占用率过高</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps J -eo pid,tid,%cpu | grep 进程ID</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用jstack命令查看有问题的线程，展示的线程ID为十六进制，可定位到问题代码的行数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack 进程id</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>Demo 2: 程序运行很长时间没有结果</p>
+</li>
+</ul>
 <h3 id="3-本地方法栈">3. 本地方法栈</h3>
 <h3 id="4堆">4.堆</h3>
 <h3 id="5方法区">5.方法区</h3>
@@ -299,7 +344,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-程序计数器"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. &#x7A0B;&#x5E8F;&#x8BA1;&#x6570;&#x5668;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2虚拟机栈"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2.&#x865A;&#x62DF;&#x673A;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-本地方法栈"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. &#x672C;&#x5730;&#x65B9;&#x6CD5;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4堆"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4.&#x5806;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5方法区"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5.&#x65B9;&#x6CD5;&#x533A;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-程序计数器"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. &#x7A0B;&#x5E8F;&#x8BA1;&#x6570;&#x5668;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2虚拟机栈"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2.&#x865A;&#x62DF;&#x673A;&#x6808;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程安全"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x5B89;&#x5168;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#栈内存溢出"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x6808;&#x5185;&#x5B58;&#x6EA2;&#x51FA;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程运行诊断"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x8FD0;&#x884C;&#x8BCA;&#x65AD;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-本地方法栈"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. &#x672C;&#x5730;&#x65B9;&#x6CD5;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4堆"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4.&#x5806;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5方法区"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5.&#x65B9;&#x6CD5;&#x533A;</span></a></li></ol>
         
         </div>
       </aside>
