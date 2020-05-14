@@ -15,7 +15,7 @@
 	<script src="//code.tidio.co/5b6vgmp0rn1xxl0xfqtpstex0m46ttic.js" async></script>
     <title>
         
-          JVM: First - 张天宇的博客 | ztygalaxy Blog
+          JVM: 内存结构 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
@@ -93,11 +93,11 @@
                               <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
                             
                         </div>
-                        <h1>JVM: First</h1>
+                        <h1>JVM: 内存结构</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2020-05-13
+                            2020-05-14
                         </span>
                     </div>
                 
@@ -156,6 +156,12 @@
                     
                         
                         <li>
+                            <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
                             <a href="/archive/">归档</a>
                         </li>
                         
@@ -163,12 +169,6 @@
                         
                         <li>
                             <a href="/tags/">标签</a>
-                        </li>
-                        
-                    
-                        
-                        <li>
-                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -295,11 +295,67 @@
 </li>
 <li>
 <p>Demo 2: 程序运行很长时间没有结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> A a = <span class="keyword">new</span> A();</span><br><span class="line"><span class="keyword">static</span> B b = <span class="keyword">new</span> B();</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException</span>&#123;</span><br><span class="line">    <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(a)&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">                e,printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">synchronized</span>(b)&#123;</span><br><span class="line">                System.out.println(<span class="string">"我获得了a和b"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).start();</span><br><span class="line">    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(b)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span>(a)&#123;&#123;</span><br><span class="line">                System.out.println(<span class="string">"我获得了a和b"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).start();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// deadlock 死锁</span></span><br><span class="line"><span class="comment">// 线程1先锁住a然后休眠2秒，在其休眠这段时间一秒后新线程2锁住了b，当线程2锁线程a时发现已经被锁了需要等待。再过一秒线程1醒过来，想要锁住线程b但是需要等待，于是死锁。</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="3-本地方法栈">3. 本地方法栈</h3>
+<p>Native Method Stacks，本地方法运行时候使用的内存。</p>
+<p>本地方法：本地方法由其他语言如C或C++编写，编译成与处理器相关的机器代码。</p>
 <h3 id="4堆">4.堆</h3>
+<p>通过new关键字，创建对象都会使用堆内存。</p>
+<ul>
+<li>线程共享，堆中的对象都需要考虑线程安全的问题。</li>
+<li>有垃圾回收机制，不再被引用的对象会被回收。</li>
+</ul>
+<h4 id="堆内存溢出">堆内存溢出</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        String a = <span class="string">"hello"</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            list.add(a);</span><br><span class="line">            a = a + a;</span><br><span class="line">            i ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">        System.out.println(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// java.lang.OutofMemoryError:Java heap space</span></span><br></pre></td></tr></table></figure>
+<p>使用<code>-Xmx8m</code>修改堆空间大小。</p>
+<h4 id="堆内存诊断">堆内存诊断</h4>
+<ol>
+<li>
+<p>jps工具</p>
+<p>查看当前系统中有哪些java进程。</p>
+</li>
+<li>
+<p>jmap工具</p>
+<p>查看某一时刻堆内存占用情况。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -heap 进程ID</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>jconsole工具</p>
+<p>图形界面的多功能的检测工具，可以连续监测。</p>
+</li>
+<li>
+<p>jvisualvm工具</p>
+<p>使用<code>堆Dump</code>堆转储对堆内存信息进行快照。</p>
+</li>
+</ol>
+<p>Demo_1: 多次执行垃圾回收后，内存占用仍然很高。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException</span>&#123;</span><br><span class="line">        List&lt;Student&gt; students = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">200</span>; i++)&#123;</span><br><span class="line">            students.add(<span class="keyword">new</span> Student());</span><br><span class="line">        &#125;</span><br><span class="line">        Thread.sleep(<span class="number">1000000000000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] big = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="5方法区">5.方法区</h3>
+<p>Method Area</p>
+<p>方法区，也称非堆（Non-Heap），又是一个被线程共享的内存区域。方法区用于存放class的相关信息，如类名，访问修饰符，常量池，字段描述，方法描述等等。另外，方法区包含了一个特殊的区域“运行时常量池”。</p>
+<h4 id="方法区内存溢出">方法区内存溢出</h4>
+<h5 id="demo">Demo</h5>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.8放在了元空间，1.8前放在永久代。元空间内存溢出，默认使用物理内存，不限制大小，因此默认不会看到溢出</span></span><br><span class="line"><span class="comment">// -XX:MaxMetaspaceSizer=8m</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1_8</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Demo1_8 test = <span class="keyword">new</span> Demo1_8();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20000</span>; i++, j++) &#123;</span><br><span class="line">                ClassWriter cw = <span class="keyword">new</span> ClassWriter(<span class="number">0</span>); <span class="comment">//生成类的二进制字节码</span></span><br><span class="line">                cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, <span class="string">"Class"</span> + i, <span class="keyword">null</span>, <span class="string">"java/lang/Object"</span>, <span class="keyword">null</span>);	<span class="comment">// 版本号，public，类名，包名，父类，接口</span></span><br><span class="line">                <span class="keyword">byte</span>[] code = cw.toByteArray();	<span class="comment">//返回byte[]</span></span><br><span class="line">                test.defineClass(<span class="string">"Class"</span> + i, code, <span class="number">0</span>, code.length);	<span class="comment">// 执行类加载</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            System.out.println(j);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 1.8 java.lang.OutOfMemoryError:Metaspace</span></span><br><span class="line"><span class="comment">// 1.6 java.lang.OutOfMemoryError:PermGen space</span></span><br></pre></td></tr></table></figure>
+<p>Java1.8使用 <code>-XX:MaxMetaspaceSizer=8m</code>设置最大元空间大小。</p>
+<p>Java1.8前使用 <code>-XX:MaxPermSize=8m</code>设置最大元空间大小。</p>
+<h5 id="场景">场景</h5>
+<p>动态加载类</p>
+<ul>
+<li>Spring</li>
+<li>MyBatis</li>
+</ul>
+<p>spring aop中都是使用到了cglib这类字节码的技术，动态代理的类越多，就需要越多的方法区来保证动态生成的class可以加载入到内存中去。</p>
+<h4 id="运行时常量池">运行时常量池</h4>
+<p>常量池，就是一张表，虚拟机指令根据这张常量表找到要执行的类名、方法名、参数类型、字面量等信息。</p>
+<p>运行时常量池，常量池是*.class文件中的，当该类被加载，他的常量池信息就会放入运行时常量池，并把里面的符号地址变为真实地址。</p>
+<p>可以通过javap -v命令反编译.class文件查看。</p>
+<h4 id="stringtable">StringTable</h4>
+<p>String table又称为String pool，字符串常量池，其存在于堆中(jdk1.7之后改的)，hashtable结构，不能扩容。最重要的一点，String table中存储的并不是String类型的对象，存储的而是指向String对象的索引，真实对象还是存储在堆中。</p>
+<p>String table还存在一个hash表的特性，里面不存在相同的两个字符串，延迟加载遇到没见过的才加进去。</p>
+<p>此外String对象调用intern()方法时，会先在String table中查找是否存在于该对象相同的字符串，若存在直接返回String table中字符串的引用，若不存在则在String table中创建一个与该对象相同的字符串。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1_1</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String s1 = <span class="string">"a"</span>;</span><br><span class="line">    String s2 = <span class="string">"b"</span>;</span><br><span class="line">    String s3 = <span class="string">"ab"</span>;</span><br><span class="line">    String s4 = s1 + s2;</span><br><span class="line">    <span class="comment">// 反编译可得细节new StringBuilder().append("a").append("b").toString() new String("ab")</span></span><br><span class="line">    System.out.println(s3 == s4);</span><br><span class="line">    <span class="comment">// false</span></span><br><span class="line">    String s5 = <span class="string">"a"</span> + <span class="string">"b"</span>;</span><br><span class="line">    <span class="comment">// 直接在常量池寻找“ab”和s3是一样的</span></span><br><span class="line">    <span class="comment">// 这是javac在编译期间的优化，结果在编译期间已经确定，与s4的s1s2的变量不相同</span></span><br><span class="line">    System.out.println(s3 == s5);</span><br><span class="line">    <span class="comment">// true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
                 
                 <hr>
@@ -344,7 +400,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-程序计数器"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. &#x7A0B;&#x5E8F;&#x8BA1;&#x6570;&#x5668;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2虚拟机栈"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2.&#x865A;&#x62DF;&#x673A;&#x6808;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程安全"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x5B89;&#x5168;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#栈内存溢出"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x6808;&#x5185;&#x5B58;&#x6EA2;&#x51FA;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程运行诊断"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x8FD0;&#x884C;&#x8BCA;&#x65AD;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-本地方法栈"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. &#x672C;&#x5730;&#x65B9;&#x6CD5;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4堆"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4.&#x5806;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5方法区"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5.&#x65B9;&#x6CD5;&#x533A;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-程序计数器"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. &#x7A0B;&#x5E8F;&#x8BA1;&#x6570;&#x5668;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2虚拟机栈"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2.&#x865A;&#x62DF;&#x673A;&#x6808;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程安全"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x5B89;&#x5168;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#栈内存溢出"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x6808;&#x5185;&#x5B58;&#x6EA2;&#x51FA;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程运行诊断"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x8FD0;&#x884C;&#x8BCA;&#x65AD;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-本地方法栈"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. &#x672C;&#x5730;&#x65B9;&#x6CD5;&#x6808;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4堆"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4.&#x5806;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#堆内存溢出"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">&#x5806;&#x5185;&#x5B58;&#x6EA2;&#x51FA;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#堆内存诊断"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">&#x5806;&#x5185;&#x5B58;&#x8BCA;&#x65AD;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5方法区"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5.&#x65B9;&#x6CD5;&#x533A;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#方法区内存溢出"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">&#x65B9;&#x6CD5;&#x533A;&#x5185;&#x5B58;&#x6EA2;&#x51FA;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#demo"><span class="toc-nav-number">5.1.1.</span> <span class="toc-nav-text">Demo</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#场景"><span class="toc-nav-number">5.1.2.</span> <span class="toc-nav-text">&#x573A;&#x666F;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#运行时常量池"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">&#x8FD0;&#x884C;&#x65F6;&#x5E38;&#x91CF;&#x6C60;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#stringtable"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">StringTable</span></a></li></ol></li></ol>
         
         </div>
       </aside>
