@@ -8,16 +8,40 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/jvmgc/</loc>
-        <lastmod>2020-05-20T14:01:03.851Z</lastmod>
+        <loc>tyzhang.top/article/leetcodesolu/</loc>
+        <lastmod>2020-05-23T13:54:40.190Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>tyzhang.top/article/leetcodesolu/</loc>
-        <lastmod>2020-05-19T13:13:03.160Z</lastmod>
+        <loc>tyzhang.top/article/classloader/</loc>
+        <lastmod>2020-05-23T12:52:58.008Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/jvmgc/</loc>
+        <lastmod>2020-05-23T05:48:13.055Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/moon/</loc>
+        <lastmod>2020-05-22T10:44:42.463Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/zhengze/</loc>
+        <lastmod>2020-05-22T08:07:13.355Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

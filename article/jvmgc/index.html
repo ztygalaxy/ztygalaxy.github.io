@@ -97,7 +97,7 @@
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2020-05-20
+                            2020-05-23
                         </span>
                     </div>
                 
@@ -366,6 +366,7 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UserSerialGC=Serial+SerialOld</span><br><span class="line"><span class="meta">#</span> Serial 复制算法</span><br><span class="line"><span class="meta">#</span> SerialOld 工作在老年代</span><br></pre></td></tr></table></figure>
 <p>其他用户线程都将阻塞等待垃圾回收线程结束。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/6f0ab42c8c4849554cb168dffdd89fd5.jpg" alt=""></p>
 <h4 id="吞吐量优先">吞吐量优先</h4>
 <ul>
 <li>多线程</li>
@@ -374,6 +375,7 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseParallelGC ~ -XX:+UseParallelOldGC</span><br><span class="line">-XX:+UseAdaptiveSizePolicy # 采用自适应新生代大小调整策略</span><br><span class="line">-XX:GCTimeRatio=ratio	# 调整吞吐量目标（垃圾回收时间与总时间占比，1/（1+radio）），一般设置为19</span><br><span class="line">-XX:MaxGCPauseMillis=ms	# 最大暂停毫秒数，默认是200，与上一个参数是冲突的</span><br><span class="line">-XX:ParallelGCThreads=n	# 控制运行时线程数</span><br></pre></td></tr></table></figure>
 <p>垃圾回收器会开启多个线程，线程数量和CPU核数相关。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/7ccf586effa4c3f82a3a2195eb97a415.jpg" alt=""></p>
 <h4 id="响应时间优先">响应时间优先</h4>
 <ul>
 <li>多线程</li>
@@ -382,6 +384,7 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseConcMarkSweepGC ~ -XX:+UseParNewGC ~ SerialOld</span><br><span class="line">-XX:ParallelGCThreads=n ~ -XX:ConcGCThreads=threads	# 一般设置为并行线程数量的1/4</span><br><span class="line">-XX:CMSInitiatingOccupancyFraction=percent	# 执行CMS垃圾回收的内存占比，预留空间给浮动垃圾（在垃圾回收过程中其他用户线程产生的新垃圾）</span><br><span class="line">-XX:+CMSScavengeBeforeRemark	# 在重新标记之前对新生代垃圾做一次回收工作，将来扫描对象就少，减轻回收压力</span><br></pre></td></tr></table></figure>
 <p>只有在初始标记核重新标记时候才会STW。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/e73f87d4078a624723a1e8add0ee5285.jpg" alt=""></p>
 <h4 id="g1">G1</h4>
 <p>Garbage First(Garbage one)</p>
 <h5 id="使用场景">使用场景</h5>
@@ -473,10 +476,12 @@
 </li>
 <li>
 <p>Remark</p>
+</li>
+</ol>
 <ul>
 <li>pre-write barrier+satb_mark_queue</li>
 </ul>
-</li>
+<ol start="7">
 <li>
 <p>JDK 8u20字符串去重</p>
 <ul>
@@ -599,15 +604,35 @@
 </ul>
 </li>
 </ul>
+<h4 id="案例">案例</h4>
+<ol>
+<li>
+<p>Full GC和Minor GC频繁</p>
+<p>GC频繁说明空间紧张。如果是新生代紧张，被塞满，幸存区空间紧张，导致空间晋升阈值降低，老年代存了很多生存周期短的对象，进而触发了Full GC。先试着增大新生代内存，增大幸存区空间和晋升阈值。</p>
+</li>
+<li>
+<p>请求高峰期发生Full GC，单次暂停时间特别长(CMS)</p>
+<p>因为业务需求需要低延迟，所以选择了CMS。查看GC日志CMS的哪个阶段较长。比较慢的一般在重新标记阶段，耗时比较长，因为CMS要扫描整个堆内存。在重新标记前先做一次新生代回收。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+CMSScavengeBeforeRemark</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>老年代充裕情况下，发生Full GC(CMS JDK1.7)</p>
+<p>1.7及以前使用永久代作为方法区，1.8使用元空间。永久代空间不足也会导致Full GC，所以扩大永久代空间。</p>
+</li>
+</ol>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
+                        <li class="previous">
+                            <a href="/article/leetcodesolu/" data-toggle="tooltip" data-placement="top" title="LeetCode 解题报告">&larr; 上一篇</a>
+                        </li>
+                    
                     
                         <li class="next">
-                            <a href="/article/leetcodesolu/" data-toggle="tooltip" data-placement="top" title="LeetCode 解题报告">下一篇 &rarr;</a>
+                            <a href="/article/classloader/" data-toggle="tooltip" data-placement="top" title="JVM: 类加载及字节码技术">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -643,7 +668,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-如何判断对象可以回收"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. &#x5982;&#x4F55;&#x5224;&#x65AD;&#x5BF9;&#x8C61;&#x53EF;&#x4EE5;&#x56DE;&#x6536;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#引用计数法"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#可达性分析算法"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x53EF;&#x8FBE;&#x6027;&#x5206;&#x6790;&#x7B97;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#五种引用"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x4E94;&#x79CD;&#x5F15;&#x7528;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-垃圾回收算法"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. &#x5783;&#x573E;&#x56DE;&#x6536;&#x7B97;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#标记清除"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x6807;&#x8BB0;&#x6E05;&#x9664;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#标记整理"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x6807;&#x8BB0;&#x6574;&#x7406;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#复制"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x590D;&#x5236;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-分代垃圾回收"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. &#x5206;&#x4EE3;&#x5783;&#x573E;&#x56DE;&#x6536;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#新生代"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x65B0;&#x751F;&#x4EE3;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#老年代"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x8001;&#x5E74;&#x4EE3;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#相关虚拟机参数"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x76F8;&#x5173;&#x865A;&#x62DF;&#x673A;&#x53C2;&#x6570;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-垃圾回收器"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4. &#x5783;&#x573E;&#x56DE;&#x6536;&#x5668;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#串行"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">&#x4E32;&#x884C;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#吞吐量优先"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">&#x541E;&#x5410;&#x91CF;&#x4F18;&#x5148;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#响应时间优先"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">&#x54CD;&#x5E94;&#x65F6;&#x95F4;&#x4F18;&#x5148;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#g1"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">G1</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#使用场景"><span class="toc-nav-number">4.4.1.</span> <span class="toc-nav-text">&#x4F7F;&#x7528;&#x573A;&#x666F;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#相关jvm参数"><span class="toc-nav-number">4.4.2.</span> <span class="toc-nav-text">&#x76F8;&#x5173;JVM&#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#垃圾回收阶段"><span class="toc-nav-number">4.4.3.</span> <span class="toc-nav-text">&#x5783;&#x573E;&#x56DE;&#x6536;&#x9636;&#x6BB5;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-垃圾回收调优"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5. &#x5783;&#x573E;&#x56DE;&#x6536;&#x8C03;&#x4F18;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#调优领域"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">&#x8C03;&#x4F18;&#x9886;&#x57DF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#确定目标"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">&#x786E;&#x5B9A;&#x76EE;&#x6807;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#最快的gc是不发生gc"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">&#x6700;&#x5FEB;&#x7684;GC&#x662F;&#x4E0D;&#x53D1;&#x751F;GC</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#新生代调优"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">&#x65B0;&#x751F;&#x4EE3;&#x8C03;&#x4F18;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#老年代调优"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">&#x8001;&#x5E74;&#x4EE3;&#x8C03;&#x4F18;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-如何判断对象可以回收"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. &#x5982;&#x4F55;&#x5224;&#x65AD;&#x5BF9;&#x8C61;&#x53EF;&#x4EE5;&#x56DE;&#x6536;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#引用计数法"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#可达性分析算法"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x53EF;&#x8FBE;&#x6027;&#x5206;&#x6790;&#x7B97;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#五种引用"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x4E94;&#x79CD;&#x5F15;&#x7528;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-垃圾回收算法"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. &#x5783;&#x573E;&#x56DE;&#x6536;&#x7B97;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#标记清除"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x6807;&#x8BB0;&#x6E05;&#x9664;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#标记整理"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x6807;&#x8BB0;&#x6574;&#x7406;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#复制"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x590D;&#x5236;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-分代垃圾回收"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. &#x5206;&#x4EE3;&#x5783;&#x573E;&#x56DE;&#x6536;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#新生代"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x65B0;&#x751F;&#x4EE3;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#老年代"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x8001;&#x5E74;&#x4EE3;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#相关虚拟机参数"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x76F8;&#x5173;&#x865A;&#x62DF;&#x673A;&#x53C2;&#x6570;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-垃圾回收器"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4. &#x5783;&#x573E;&#x56DE;&#x6536;&#x5668;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#串行"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">&#x4E32;&#x884C;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#吞吐量优先"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">&#x541E;&#x5410;&#x91CF;&#x4F18;&#x5148;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#响应时间优先"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">&#x54CD;&#x5E94;&#x65F6;&#x95F4;&#x4F18;&#x5148;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#g1"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">G1</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#使用场景"><span class="toc-nav-number">4.4.1.</span> <span class="toc-nav-text">&#x4F7F;&#x7528;&#x573A;&#x666F;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#相关jvm参数"><span class="toc-nav-number">4.4.2.</span> <span class="toc-nav-text">&#x76F8;&#x5173;JVM&#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#垃圾回收阶段"><span class="toc-nav-number">4.4.3.</span> <span class="toc-nav-text">&#x5783;&#x573E;&#x56DE;&#x6536;&#x9636;&#x6BB5;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-垃圾回收调优"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5. &#x5783;&#x573E;&#x56DE;&#x6536;&#x8C03;&#x4F18;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#调优领域"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">&#x8C03;&#x4F18;&#x9886;&#x57DF;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#确定目标"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">&#x786E;&#x5B9A;&#x76EE;&#x6807;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#最快的gc是不发生gc"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">&#x6700;&#x5FEB;&#x7684;GC&#x662F;&#x4E0D;&#x53D1;&#x751F;GC</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#新生代调优"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">&#x65B0;&#x751F;&#x4EE3;&#x8C03;&#x4F18;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#老年代调优"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">&#x8001;&#x5E74;&#x4EE3;&#x8C03;&#x4F18;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#案例"><span class="toc-nav-number">5.6.</span> <span class="toc-nav-text">&#x6848;&#x4F8B;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
