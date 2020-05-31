@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张天宇的博客">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/logo.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+	<script src="//code.tidio.co/5b6vgmp0rn1xxl0xfqtpstex0m46ttic.js" async></script>
+    <title>
+        
+          Java并发编程 - 张天宇的博客 | ztygalaxy Blog
+        
+    </title>
+
+    <link rel="canonical" href="tyzhang.top/article/thread/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<link rel="alternate" href="/atom.xml" title="张天宇的博客" type="application/atom+xml">
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('https://api.dujin.org/bing/1920.php')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
+                            
+                        </div>
+                        <h1>Java并发编程</h1>
+                        <!-- <h2 class="subheading"></h2> -->
+                        <span class="meta">
+                            张天宇 on
+                            2020-05-30
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">主页</a>
+                    </li>
+					<li>
+                        <a href="/archive/">归档</a>
+                    </li>
+					<li>
+                        <a href="/tags/">标签</a>
+                    </li>
+					<li>
+                        <a href="/about/">关于</a>
+                    </li>
+					<!--
+					修改about在前面的问题
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    -->
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				
+                <blockquote>
+<p>Java并发编程。</p>
+</blockquote>
+<h3 id="准备依赖">准备依赖</h3>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pom.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>ch.qos.logback<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>logback-classic<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- logback.xml --&gt;</span></span><br><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span></span></span><br><span class="line"><span class="tag">               <span class="attr">xmlns</span>=<span class="string">"http://ch.qos.logback/xml/ns/logback"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://ch.qos.logback/xml/ns/logback logback.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"STDOUT"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">encoder</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">pattern</span>&gt;</span>%date&#123;HH:mm:ss&#125; [%t] %logger - %m%n<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"c"</span> <span class="attr">level</span>=<span class="string">"debug"</span> <span class="attr">additivity</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"STDOUT"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">logger</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"ERROR"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"STDOUT"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="进程与线程">进程与线程</h3>
+<h4 id="进程">进程</h4>
+<ul>
+<li>程序由指令和数据组成，但这些指令要运行，数据要读写，就必须将指令加载至CPU，数据加载至内存。在指令运行过程中还需要用到磁盘、网络等设备。进程就是用来加载指令、管理内存、管理IO的，资源管理最小单位。</li>
+<li>当一个程序被运行，从磁盘加载这个程序的代码至内存，这时就开启了一个进程。</li>
+<li>进程就可以视为程序的一个实例。大部分程序可以同时运行多个实例进程(例如记事本、画图、浏览器<br>
+等)，也有的程序只能启动一个实例进程(例如网易云音乐等)。</li>
+</ul>
+<h4 id="线程">线程</h4>
+<ul>
+<li>一个进程之内可以分为一到多个线程。</li>
+<li>一个线程就是一个指令流，将指令流中的一条条指令以一定的顺序交给CPU执行。</li>
+<li>Java 中，线程作为最小调度单位，进程作为资源分配的最小单位。 在windows中进程是不活动的，只是作<br>
+为线程的容器。</li>
+</ul>
+<h4 id="二者对比">二者对比</h4>
+<ul>
+<li>进程基本上相互独立的，而线程存在于进程内，是进程的一个子集。</li>
+<li>进程拥有共享的资源，如内存空间等，供其内部的线程共享。</li>
+<li>进程间通信较为复杂。
+<ul>
+<li>同一台计算机的进程通信称为IPC(Inter-process communication)。</li>
+<li>不同计算机之间的进程通信，需要通过网络，并遵守共同的协议，例如HTTP。</li>
+</ul>
+</li>
+<li>线程通信相对简单，因为它们共享进程内的内存，一个例子是多个线程可以访问同一个共享变量。</li>
+<li>线程更轻量，线程上下文切换(上下文切换就是从当前执行任务切换到另一个任务执行的过程。但是，为了确保下次能从正确的位置继续执行，在切换之前，会保存上一个任务的状态)成本一般上要比进程上下文切换低。</li>
+</ul>
+<h4 id="并行和并发">并行和并发</h4>
+<p>单核CPU下，线程实际还是串行执行的。操作系统有一个组件叫任务调度器，将CPU的时间片(Windows下时间片最小约为15毫秒)分为不同线程使用，只是由于CPU在线程间(时间片很短)的切换非常快，人类感觉是同时运行的。可以总结为，微观串行，宏观并行。</p>
+<p><strong>一般将这种线程轮流使用CPU的做法叫做并发，concurrent。</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">CPU</th>
+<th style="text-align:center">时间片1</th>
+<th style="text-align:center">时间片2</th>
+<th style="text-align:center">时间片3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Core</td>
+<td style="text-align:center">线程1</td>
+<td style="text-align:center">线程2</td>
+<td style="text-align:center">线程3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>多核CPU下，每个核都可以调度运行线程，这时候线程可以是并行的，parallel。</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">CPU</th>
+<th style="text-align:center">时间片1</th>
+<th style="text-align:center">时间片2</th>
+<th style="text-align:center">时间片3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Core1</td>
+<td style="text-align:center">线程2</td>
+<td style="text-align:center">线程3</td>
+<td style="text-align:center">线程1</td>
+</tr>
+<tr>
+<td style="text-align:center">Core2</td>
+<td style="text-align:center">线程1</td>
+<td style="text-align:center">线程2</td>
+<td style="text-align:center">线程3</td>
+</tr>
+</tbody>
+</table>
+<p>引用Rob Pike的描述：</p>
+<ul>
+<li>并发是同一时间应对(deal with)多件事情的能力。</li>
+<li>并行是同一时间动手做(doing)多件事情的能力。</li>
+</ul>
+<h4 id="应用">应用</h4>
+<h5 id="异步调用">异步调用</h5>
+<p>从方法调用的角度来说，如果</p>
+<ul>
+<li>需要等待结果返回才能继续运行，就是同步</li>
+<li>不需要等待结果返回就能继续运行，就是异步</li>
+</ul>
+<p>同步在多线程中还有另外一层意思，就是让多个线程步调一致。</p>
+<ol>
+<li>
+<p>设计</p>
+<p>多线程可以让方法执行变为异步的。比如读取磁盘文件时，假设操作花了5秒，如果没有线程调度机制，这5秒调用者什么都做不了，其他代码都得暂停。</p>
+</li>
+<li>
+<p>结论</p>
+<ul>
+<li>在项目中，视频文件需要格式转换，比较耗时，这时候开一个新线程处理视频转换，避免阻塞主线程。</li>
+<li>Tomcat的异步Servlet也是类似的目的，让用户线程处理耗时较长的操作，避免阻塞Tomcat的工作线程。</li>
+<li>UI程序中，开线程执行其他操作，避免阻塞UI线程。</li>
+</ul>
+</li>
+</ol>
+<h5 id="提高效率">提高效率</h5>
+<p>假设执行三个计算求和，每个计算分别花费10ms、11ms、9ms，汇总需要1ms，那么总共花费需要31ms。</p>
+<p>如果是4核CPU来执行，每个核心分配一个计算，那么三个计算就是并行的，花费时间只取决于最长的那个线程运行的时间，即花费12ms。(需要在多核CPU下才能提高效率，单核仍然是轮流执行。)</p>
+<ul>
+<li>单核CPU下，多线程并不能实际提高程序执行效率，只是为了能够在不同任务之间进行切换，不同线程轮流使用CPU，不至于一个线程总占用CPU，别的线程没法干活。</li>
+<li>多核CPU可以并行跑多个线程，但能否提高程序运行效率还是要分情况：
+<ul>
+<li>有些任务经过精心设计，将任务拆分，并行执行，当然可以提高程序的运行效率，但不是所有计算任务都能拆分，参考阿姆达尔定律。</li>
+<li>也不是所有任务都需要拆分，任务的目的不同，谈拆分和效率没有意义。</li>
+</ul>
+</li>
+<li>IO操作不占用CPU，只是我们一般拷贝文件使用的是阻塞IO，这时相当于线程虽然不用CPU，但需要一直等待IO结束，没能充分利用线程，所以才有后面的非阻塞IO和异步IO优化。</li>
+</ul>
+<h3 id="java线程">Java线程</h3>
+<h4 id="创建和运行线程">创建和运行线程</h4>
+<h5 id="1-直接使用thread">1. 直接使用Thread</h5>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Thread t =<span class="keyword">new</span> Thread()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// todo</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">t.setName(<span class="string">"T1"</span>);	<span class="comment">// 起个名字</span></span><br><span class="line">t.start();</span><br></pre></td></tr></table></figure>
+<h5 id="2-使用runnable配合thread">2. 使用Runnable配合Thread</h5>
+<p>把线程和任务分开</p>
+<ul>
+<li>Thread表示线程</li>
+<li>Runnable表示可执行的任务，即线程要执行的代码</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Runnable runnable = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// todo</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Thread t= <span class="keyword">new</span> Thread(runnable, <span class="string">"name"</span>);</span><br><span class="line">t.start();</span><br></pre></td></tr></table></figure>
+<p>Java 8以后可以使用lambda方法精简代码(查看Runnable源码，只有一个抽象方法的接口，加了一个<code>@FunctionalInterface</code>，表示可以被lambda方法简化)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Runnable runnable = () -&gt; log.debug(<span class="string">"dfsaf"</span>);	<span class="comment">// 在IDEA中点击Runnable类，使用Alt+Enter可以自动替换。</span></span><br><span class="line">Thread t= <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="comment">// todo</span></span><br><span class="line">&#125;, <span class="string">"name"</span>);	<span class="comment">// 写到一起</span></span><br></pre></td></tr></table></figure>
+<p>Thread和Runnable之间的关系：</p>
+<ul>
+<li>方法1是把线程和任务合并到了一起，方法2是把两者分开了</li>
+<li>用Runnable更容易与线程池等高级API配合</li>
+<li>用Runnable让任务脱离了Thread继承体系，更灵活</li>
+</ul>
+<h5 id="3-futuretask配合thread">3. FutureTask配合Thread</h5>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">FutureTask&lt;Integer&gt; task = <span class="keyword">new</span> FutureTask&lt;&gt;(<span class="keyword">new</span> Callable&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">115</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// FutureTask&lt;Integer&gt; task = new FutureTask&lt;&gt;(() -&gt; 115);</span></span><br><span class="line">Thread t =<span class="keyword">new</span> Thread(task);</span><br><span class="line">t.start();</span><br><span class="line">log.debug(<span class="string">"&#123;&#125;"</span>, task.get());	<span class="comment">//使用占位符，可以在写多个&#123;&#125;，并行执行，阻塞等待1秒后的结果</span></span><br></pre></td></tr></table></figure>
+<h4 id="查看进程线程">查看进程线程</h4>
+<h5 id="1-windows">1. Windows</h5>
+<ul>
+<li>任务管理器</li>
+<li>tasklist 查看所有进程
+<ul>
+<li>tasklist | findstr &lt;string&gt;</li>
+</ul>
+</li>
+<li>taskkill 杀死进程</li>
+</ul>
+<h5 id="2-linux">2. Linux</h5>
+<ul>
+<li>ps -fe 查看所有进程</li>
+<li>ps -fT -p &lt;PID&gt; 查看某个进程的所有线程</li>
+<li>kill 杀死进程</li>
+<li>top 按大写 H 切换是否显示线程</li>
+<li>top -H -p &lt;PID&gt; 查看某个进程的所有线程</li>
+</ul>
+<h5 id="3-java">3. Java</h5>
+<ul>
+<li>jps 命令查看所有Java进程</li>
+<li>jstack PID 查看某个进程的所有线程状态</li>
+<li>jconsole 来查看某个Java进程中线程的运行情况</li>
+</ul>
+<h4 id="线程运行原理">线程运行原理</h4>
+<h5 id="栈与栈帧">栈与栈帧</h5>
+<p>Java Virtual Machine Stacks(Java虚拟机栈)，每个线程启动后，虚拟机都会为其分配一块栈内存。</p>
+<ul>
+<li>每个栈由多个栈帧Frame组成，对应着每次方法调用时所占用的内存</li>
+<li>每个线程只能有一个活动栈帧，对应着当前正在执行的那个方法</li>
+</ul>
+<h5 id="线程上下文切换">线程上下文切换</h5>
+<p>Thread Context Switch，因为以下一些原因导致CPU不再执行当前的线程，转而执行另一个线程的代码：</p>
+<ul>
+<li>线程的CPU时间片用完</li>
+<li>垃圾回收</li>
+<li>有更高优先级的线程需要运行</li>
+<li>线程自己调用了sleep、yield、wait、join、park、synchronized、lock等方法</li>
+</ul>
+<p>当线程上下文切换发生时，需要由当前操作系统保存当前线程的状态，并恢复另一个线程的状态，Java中对应的概念就是程序计数器，它的作用是记住下一条JVM指令的执行地址，是线程私有的。</p>
+<ul>
+<li>状态包括程序计数器、虚拟机栈中每个栈帧的信息，如局部变量、操作数栈、返回地址等</li>
+<li>频繁发生上下文切换会影响性能</li>
+</ul>
+<h4 id="线程常见方法">线程常见方法</h4>
+<p>地方</p>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/offersolu/" data-toggle="tooltip" data-placement="top" title="剑指Offer 解题报告">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/jvmmemo/" data-toggle="tooltip" data-placement="top" title="JVM: 内存模型">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#准备依赖"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x51C6;&#x5907;&#x4F9D;&#x8D56;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程与线程"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x4E0E;&#x7EBF;&#x7A0B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#进程"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#二者对比"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x4E8C;&#x8005;&#x5BF9;&#x6BD4;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#并行和并发"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">&#x5E76;&#x884C;&#x548C;&#x5E76;&#x53D1;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#应用"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">&#x5E94;&#x7528;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#异步调用"><span class="toc-nav-number">2.5.1.</span> <span class="toc-nav-text">&#x5F02;&#x6B65;&#x8C03;&#x7528;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#提高效率"><span class="toc-nav-number">2.5.2.</span> <span class="toc-nav-text">&#x63D0;&#x9AD8;&#x6548;&#x7387;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#java线程"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Java&#x7EBF;&#x7A0B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#创建和运行线程"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x521B;&#x5EFA;&#x548C;&#x8FD0;&#x884C;&#x7EBF;&#x7A0B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#1-直接使用thread"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">1. &#x76F4;&#x63A5;&#x4F7F;&#x7528;Thread</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#2-使用runnable配合thread"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">2. &#x4F7F;&#x7528;Runnable&#x914D;&#x5408;Thread</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#3-futuretask配合thread"><span class="toc-nav-number">3.1.3.</span> <span class="toc-nav-text">3. FutureTask&#x914D;&#x5408;Thread</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#查看进程线程"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x67E5;&#x770B;&#x8FDB;&#x7A0B;&#x7EBF;&#x7A0B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#1-windows"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">1. Windows</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#2-linux"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">2. Linux</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#3-java"><span class="toc-nav-number">3.2.3.</span> <span class="toc-nav-text">3. Java</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程运行原理"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x8FD0;&#x884C;&#x539F;&#x7406;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#栈与栈帧"><span class="toc-nav-number">3.3.1.</span> <span class="toc-nav-text">&#x6808;&#x4E0E;&#x6808;&#x5E27;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#线程上下文切换"><span class="toc-nav-number">3.3.2.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x4E0A;&#x4E0B;&#x6587;&#x5207;&#x6362;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程常见方法"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x5E38;&#x89C1;&#x65B9;&#x6CD5;</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">标签</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+				<!--
+                
+                <hr>
+                <h5>朋友们</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://felon03.github.io/" target="_blank">Freedomly</a></li>
+                    
+                        <li><a href="https://jlwang1996.github.io/" target="_blank">jlwang1996</a></li>
+                    
+                        <li><a href="http://siwenzheng.github.io/" target="_blank">SiwenZheng</a></li>
+                    
+                        <li><a href="https://loststartvt.github.io/" target="_blank">LostStarTvT</a></li>
+                    
+                </ul>
+                
+				-->
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-tian-yu-65-49">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://space.bilibili.com/38534865">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>B</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/100011805250413">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ztygalaxy">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 张天宇 2020 
+                    <br>
+                    Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
+                    re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
+					
+					<br>
+                    <a href="http://www.beian.miit.gov.cn/" style="color: gray">浙 ICP备19045818号</a>
+					<br>
+					<!-- <p class="copyright text-muted" style="margin-top: 5px"> -->
+						<img src="../../img/备案图标.png"/>
+						<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011802001883" style="color: gray">浙公网安备 33011802001883号</a>
+					<!-- </p> -->
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("tyzhang.top/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="tyzhang.top/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
