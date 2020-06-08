@@ -9,7 +9,39 @@
 
     <url>
         <loc>tyzhang.top/article/thread/</loc>
-        <lastmod>2020-06-01T14:25:43.123Z</lastmod>
+        <lastmod>2020-06-08T14:31:12.298Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/algo/</loc>
+        <lastmod>2020-06-07T14:09:38.801Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/offersolu/</loc>
+        <lastmod>2020-06-04T07:19:41.333Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/jvmmemo/</loc>
+        <lastmod>2020-06-04T00:56:03.102Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/classloader/</loc>
+        <lastmod>2020-06-04T00:55:45.165Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -24,32 +56,8 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/offersolu/</loc>
-        <lastmod>2020-05-30T13:32:47.685Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/jvmmemo/</loc>
-        <lastmod>2020-05-29T13:36:34.468Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>tyzhang.top/article/leetcodesolu/</loc>
         <lastmod>2020-05-27T12:44:09.833Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/classloader/</loc>
-        <lastmod>2020-05-27T11:45:22.755Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -74,14 +82,6 @@
     <url>
         <loc>tyzhang.top/article/zhengze/</loc>
         <lastmod>2020-05-22T08:07:13.355Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/algo/</loc>
-        <lastmod>2020-05-17T08:53:24.094Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
