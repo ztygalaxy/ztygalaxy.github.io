@@ -8,8 +8,24 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/talk_is_cheap/</loc>
+        <lastmod>2020-06-09T07:21:09.606Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/jvmmemo/</loc>
+        <lastmod>2020-06-09T02:50:58.634Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/thread/</loc>
-        <lastmod>2020-06-09T01:01:32.876Z</lastmod>
+        <lastmod>2020-06-09T01:57:49.618Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -26,14 +42,6 @@
     <url>
         <loc>tyzhang.top/article/offersolu/</loc>
         <lastmod>2020-06-04T07:19:41.333Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/jvmmemo/</loc>
-        <lastmod>2020-06-04T00:56:03.102Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -496,7 +504,7 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/How%20to%20implement%20an%20algorithm%20from%20a%20scientific%20paper/</loc>
+        <loc>tyzhang.top/article/how-to-implement-an-algorithm-from-a-scientific-paper/</loc>
         <lastmod>2019-10-24T11:44:38.061Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>

@@ -15,11 +15,11 @@
 	<script src="//code.tidio.co/5b6vgmp0rn1xxl0xfqtpstex0m46ttic.js" async></script>
     <title>
         
-          红包算法的分析与实现 - 张天宇的博客 | ztygalaxy Blog
+          不懂技术的人不要对懂技术的人说这很容易实现 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
-    <link rel="canonical" href="tyzhang.top/article/lishi/">
+    <link rel="canonical" href="tyzhang.top/article/talk_is_cheap/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -90,14 +90,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                              <a class="tag" href="/tags/#他山之玉" title="他山之玉">他山之玉</a>
                             
                         </div>
-                        <h1>红包算法的分析与实现</h1>
+                        <h1>不懂技术的人不要对懂技术的人说这很容易实现</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2020-04-14
+                            2020-06-09
                         </span>
                     </div>
                 
@@ -226,47 +226,25 @@
 
 				
                 <blockquote>
-<p>最近在知乎看到关于抢红包分配方式的讨论，炒个冷饭，整理了一下高赞解决方案。</p>
+<p>偶然看到一篇文章，记录分享之。</p>
 </blockquote>
-<h3 id="抢红包规则">抢红包规则</h3>
+<p>​	“这个网站相当简单，所有你需要做的就是完成X，Y，Z。你看起来应该是技术很好，所以，我相信，你不需要花费太多时间就能把它搭建起来。”</p>
+<p>​	我时不时的就会收到这样的Email。写这些邮件的人几乎都是跟技术不沾边的人，或正在研究他们的第一个产品。起初，当听到人们这样的话，我总是十分的恼怒。他们在跟谁辩论软件开发所需要的时间？但后来我意识到，即使<em>我自己</em>对<em>自己的</em>项目预测要花去多少开发时间,我也是一筹莫展。如果连我自己都做不好，我何必对那些人恼怒呢？</p>
+<p>​	真正让我郁闷的不是他们预估的错误。问题在于他们竟然认为自己可以做出正确的估计。作为开发人员，我们经常会发现，在软件开发的问题上，一个外行人会很自然的把复杂的事情估计的很简单。</p>
+<p>​	这并不是为我们的愤怒找借口。但这引起了另外一个有趣的问题：<em>为什么</em>我们天生的预测复杂性的能力在遇到编程问题时会失灵？</p>
+<p>​	为了回答这个问题，让我们来认识一下我们的大脑如何估计事情的。有些事情对于一些没有经验的人也很容易预估正确，但有些事情则不然。</p>
+<p>​	我们来想想观看一个人弹吉他。即使你从来没有弹过吉他，在观看了一场弹奏《玛丽有只小羊羔(Mary had a Little Lamb)》的吉他表演后，你也能大概推测出这很简单，一个人不需要太高的技术就能演奏出来。同样，当观看了有人演奏D大调的《卡农(Pachabel’s Canon)》后，你也很容易推测出，这很复杂，需要很长时间的练习才能演奏的出来。</p>
+<p>​	为什么我们能够很迅速准确的预估这两首曲子的复杂性呢？这是跟我们用来判断一个事情简单和还是复杂的方法有关的。我们的大脑有一些现成的模式来完成这些事情，首先一个就是根据速度。这种情况下，大脑会辨别每秒钟演奏的东西。根据每秒钟演奏了多少东西，我们很容易有一个直观的判断曲子的复杂度。因为用吉他演奏一首歌是一种物理过程，一种感官上的活动，我们的大脑很容易依此来推测速度，继而转换成复杂度。</p>
+<p>​	我们还有另外一个天生的推测依据：体积。想想把一个帐篷和一栋公寓放在一起对比。即使一个人从来没有学过建筑学，他也能告诉你通常设计和建造一个帐篷会比设计和建造一栋公寓要简单。为什么？因为我们天生的会使用物理体积作为事物复杂性的一个指标。</p>
+<p>​	当然。上面说的这两种逻辑分析并不是总是100%的有效。但大多数情况下，人们就是这样干，而且很成功。大多数情况中，我们在对物理过程评估时，我们的大脑会对物理事物进行有效的关联，不需要依赖之前的经验。</p>
+<p>​	现在让我们来谈谈软件。当一个不懂技术的人试图对软件开发时间进行评估时，有两个很基本的直观指标在辅助他们：以体积为指标的复杂度和以速度为指标的复杂度。但他们没有意识到，软件跟他们想象的不一样。软件本质上不是有形物质。没有体积和速度。它的极小的组成部分可能会时不时的在电脑屏幕上闪现。正因为如此，当面对开发一个web应用时(或任何类型的软件)，我们的基本直观感觉失效了。</p>
+<p>​	这第一点，速度，很显然根本不可能被外行人拿来对软件进行评估。于是很自然的，他们倾向于使用体积指标进行评估。要么是根据描述文档的页数，要么是根据软件的功能用例数或特征数。</p>
+<p>​	有时候，这种评估手段确实有效！当面对一个静态网站，没有特别的设计要求，外行人很容易用这种方法估计出开发时间。但是，通常情况下，对于软件开发，体积并不能真实有效的反映复杂度。</p>
+<p>​	不幸的是，对于软件的复杂度，唯一有效的推测方法是依据<em>经验</em>。而且还不是时时都好用。作为一个程序员，我知道，根据我之前开发过的相似的功能特征，我可以估计出现在的这些功能特征各自要多少开发时间。然后，我把总时间加起来，这就得到了完成整个项目需要的大致时间。然而，事实情况中，每个项目在开发过程中都遇到二、三个瓶颈。这些瓶颈会肆意的消耗程序员的大量时间，你在遇到它们之前根本不会有所预见。它们会拖住整个项目，致使工期延后数周甚至数月。</p>
+<p>​	这些是没有经验的人在评估复杂度时不会理解的。他们不明白在其他事情上都很灵的方法，为什么放到软件开发上就不灵了。所以，下一次当你听到有人说“我想你几天时间就能把它开发出来”时，不管是谁说的，都不要懊恼。深呼吸一下，告诉他这篇文章的地址，自己该干什么还干什么。</p>
 <ul>
-<li>
-<p>抢到红包的所有人抢到的金额之和必须等于红包金额。</p>
-</li>
-<li>
-<p>2.每个抢到的人至少分得一分钱。</p>
-</li>
-<li>
-<p>3.所有人抢到金额的概率相等。</p>
-</li>
-</ul>
-<h3 id="普通思路">普通思路</h3>
-<h4 id="方法">方法</h4>
-<p>每次拆开红包，抢到的金额=（0，剩余金额）内的随机数。</p>
-<h4 id="问题">问题</h4>
-<p>以这种方式分配，即以剩下金额随机的期望作为抢到金额。先抢到的人会有很大的优势，越往后的人抢到的金额越少，不满足条件3。例如：一个10个人共100元的红包，第一个人的随机区间为（0，100），他的红包期望是50。如果他真的抢到了50，第二个人的随机区间变为（0，50），他的红包期望为25。以此类推，后面的人抢到的金额会逐渐减少。</p>
-<h3 id="思路一二倍均值法">思路一	二倍均值法</h3>
-<h4 id="方法">方法</h4>
-<p>假设剩余红包金额为M，剩余人数为N，每次抢到的金额 = 随机区间 （0， M / N X 2）。</p>
-<p>这个公式，保证了<strong>每次随机金额的平均值是相等的</strong>，不会因为抢红包的先后顺序而造成不公平。</p>
-<h4 id="实现">实现</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Integer&gt; <span class="title">divideRedPackage</span><span class="params">(Integer totalAmount, Integer totalPeopleNum)</span> </span>&#123;</span><br><span class="line">	List&lt;Integer&gt; amountList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">	<span class="comment">// 精确到小数点后两位</span></span><br><span class="line">	Integer restAmount = totalAmount * <span class="number">100</span>;</span><br><span class="line">	Integer restPeopleNum = totalPeopleNum;</span><br><span class="line">	Random random = <span class="keyword">new</span> Random();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; totalPeopleNum - <span class="number">1</span>; i++) &#123;</span><br><span class="line">     	<span class="comment">// 随机范围：[1，剩余人均金额的两倍)，左闭右开</span></span><br><span class="line">     	<span class="keyword">int</span> amount = random.nextInt(restAmount / restPeopleNum * <span class="number">2</span> - <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">		restAmount -= amount;</span><br><span class="line">		restPeopleNum--;</span><br><span class="line">		amountList.add(amount);</span><br><span class="line">	&#125;</span><br><span class="line">	amountList.add(restAmount);</span><br><span class="line">	<span class="keyword">return</span> amountList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="问题">问题</h4>
-<p>除了最后一次，任何一次抢到的金额都不会超过人均金额的两倍，并不是任意的随机。</p>
-<h3 id="思路二线段切割法">思路二	线段切割法</h3>
-<h4 id="方法">方法</h4>
-<p>当N个人一起抢总金额为M的红包时，我们需要做N-1次随机运算，以此确定N-1个切割点。</p>
-<p>随机的范围区间是[1，100* M）。当所有切割点确定以后，子线段的长度也随之确定。这样每个人来抢红包的时候，只需要顺次领取与子线段长度等价的红包金额即可。</p>
-<h4 id="实现">实现</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;Integer&gt; <span class="title">divide</span><span class="params">(<span class="keyword">double</span> money, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="comment">//验证参数合理校验</span></span><br><span class="line">	<span class="comment">//为了使用random.nextInt(Integer)方法不得不先把红包金额放大100倍，最后在main函数里面再除以100</span></span><br><span class="line">	<span class="comment">//这样就可以保证每个人抢到的金额都可以精确到小数点后两位</span></span><br><span class="line">	<span class="keyword">int</span> fen = (<span class="keyword">int</span>) (money * <span class="number">100</span>);</span><br><span class="line">	<span class="keyword">if</span> (fen &lt; n || n &lt; <span class="number">1</span>) &#123;</span><br><span class="line">		System.out.println(<span class="string">"红包个数必须大于0，并且最小红包不少于1分"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	List&lt;Integer&gt; boards = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	boards.add(<span class="number">0</span>);</span><br><span class="line">	boards.add(fen);</span><br><span class="line">	<span class="comment">//红包个数和板砖个数的关系</span></span><br><span class="line">	<span class="keyword">while</span> (boards.size() &lt;= n) &#123;</span><br><span class="line">		<span class="keyword">int</span> index = <span class="keyword">new</span> Random().nextInt(fen - <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (boards.contains(index)) &#123;</span><br><span class="line">			<span class="comment">//保证板子的位置不相同</span></span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		boards.add(index);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//计算每个红包的金额，将两个板子之间的钱加起来</span></span><br><span class="line">	Collections.sort(boards);</span><br><span class="line">	List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; boards.size() - <span class="number">1</span>; i++) &#123;</span><br><span class="line">		Integer e = boards.get(i + <span class="number">1</span>) - boards.get(i);</span><br><span class="line">		list.add(e);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="问题">问题</h4>
-<ul>
-<li>
-<p>当随机切割点出现重复，如何处理。</p>
-</li>
-<li>
-<p>如何尽可能降低时间复杂度和空间复杂度。</p>
-</li>
+<li><a href="http://www.aqee.net/post/im-sure-it-will-only-take-you-a-few-days-to-code.html" target="_blank" rel="noopener">原文地址</a></li>
+<li><a href="http://danshipper.com/non-technical-people-cant-estimate-developmen" target="_blank" rel="noopener">英文原文</a></li>
 </ul>
 
                 
@@ -274,13 +252,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/springmvcsec/" data-toggle="tooltip" data-placement="top" title="SpringMVC: Second">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/springmvc/" data-toggle="tooltip" data-placement="top" title="SpringMVC: First">下一篇 &rarr;</a>
+                            <a href="/article/thread/" data-toggle="tooltip" data-placement="top" title="Java并发编程: 进程与线程">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -316,7 +290,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#抢红包规则"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x62A2;&#x7EA2;&#x5305;&#x89C4;&#x5219;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#普通思路"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x666E;&#x901A;&#x601D;&#x8DEF;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#方法"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#问题"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x95EE;&#x9898;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#思路一二倍均值法"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x601D;&#x8DEF;&#x4E00;	&#x4E8C;&#x500D;&#x5747;&#x503C;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#方法"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#实现"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x5B9E;&#x73B0;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#问题"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x95EE;&#x9898;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#思路二线段切割法"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x601D;&#x8DEF;&#x4E8C;	&#x7EBF;&#x6BB5;&#x5207;&#x5272;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#方法"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#实现"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">&#x5B9E;&#x73B0;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#问题"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">&#x95EE;&#x9898;</span></a></li></ol></li></ol>
+          <ol class="nav">none</ol>
         
         </div>
       </aside>
@@ -336,7 +310,7 @@
                     <h5><a href="/tags/">标签</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                          <a class="tag" href="/tags/#他山之玉" title="他山之玉">他山之玉</a>
                         
                     </div>
                 </section>

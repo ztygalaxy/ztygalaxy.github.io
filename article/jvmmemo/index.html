@@ -156,13 +156,13 @@
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -257,9 +257,9 @@
 </li>
 <li>
 <p>1秒后，main线程修改了run的值，并同步至主存，而t是从自己的工作内存中的高速缓存中读取这个变量的值，结果永远是旧值。</p>
-<h4 id="解决办法">解决办法</h4>
 </li>
 </ul>
+<h4 id="解决办法">解决办法</h4>
 <p>volatile，易变关键字。它可以用来修饰成员变量和静态成员变量，他可以避免线程从自己的工作缓存中查找变量的值，必须要主存中获取它的值，线程操作volatile变量都是直接操作主存。体现可见性，不保证原子性，仅用在一个写线程、多个读线程的情况。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">static</span> <span class="keyword">boolean</span> run = <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure>
 <h4 id="比较">比较</h4>
@@ -333,8 +333,7 @@
 <h4 id="51-cas">5.1 CAS</h4>
 <p>CAS，Compare and Swap，它体现的是一种乐观锁的思想，比如多个线程要对一个共享的整形变量执行+1操作：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 需要不断尝试</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> 旧值 = 共享变量 ; <span class="comment">// 比如拿到了当前值 0</span></span><br><span class="line">    <span class="keyword">int</span> 结果 = 旧值 + <span class="number">1</span>; <span class="comment">// 在旧值 0 的基础上增加 1 ，正确结果是 1</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">  这时候如果别的线程把共享变量改成了 5，本线程的正确结果 1 就作废了，这时候</span></span><br><span class="line"><span class="comment">  compareAndSwap 返回 false，重新尝试，直到：</span></span><br><span class="line"><span class="comment">  compareAndSwap 返回 true，表示我本线程做修改的同时，别的线程没有干扰</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">    <span class="keyword">if</span>( compareAndSwap ( 旧值, 结果 )) &#123;	<span class="comment">// 在将结果写入共享变量时，检查旧值和共享变量还是否一致</span></span><br><span class="line">        <span class="comment">// 成功，退出循环</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>获取共享变量时，为了保证该变量的可见性，需要使用 volatile 修饰，拿到最新的。结合 CAS 和 volatile 可以实现无<br>
-锁并发，适用于竞争不激烈、多核 CPU 的场景下</p>
+<p>获取共享变量时，为了保证该变量的可见性，需要使用 volatile 修饰，拿到最新的。结合 CAS 和 volatile 可以实现无锁并发，适用于竞争不激烈、多核 CPU 的场景下</p>
 <ul>
 <li>因为没有使用 synchronized，所以线程不会陷入阻塞，这是效率提升的因素之一</li>
 <li>但如果竞争激烈，可以想到重试必然频繁发生，反而效率会受影响</li>
