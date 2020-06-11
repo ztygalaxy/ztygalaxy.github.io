@@ -8,6 +8,38 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/sharedmemo/</loc>
+        <lastmod>2020-06-11T11:52:37.581Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/offersolu/</loc>
+        <lastmod>2020-06-11T08:45:06.208Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/thread/</loc>
+        <lastmod>2020-06-09T11:53:29.053Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/thread1/</loc>
+        <lastmod>2020-06-09T11:52:33.999Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/talk_is_cheap/</loc>
         <lastmod>2020-06-09T07:21:09.606Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -24,24 +56,8 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/thread/</loc>
-        <lastmod>2020-06-09T01:57:49.618Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>tyzhang.top/article/algo/</loc>
         <lastmod>2020-06-07T14:09:38.801Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/offersolu/</loc>
-        <lastmod>2020-06-04T07:19:41.333Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
