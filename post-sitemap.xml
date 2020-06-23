@@ -8,16 +8,24 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/offersolu/</loc>
-        <lastmod>2020-06-17T14:16:30.561Z</lastmod>
+        <loc>tyzhang.top/article/sharedmemo/</loc>
+        <lastmod>2020-06-23T14:34:11.670Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>tyzhang.top/article/sharedmemo/</loc>
-        <lastmod>2020-06-16T14:07:02.645Z</lastmod>
+        <loc>tyzhang.top/article/algo/</loc>
+        <lastmod>2020-06-23T09:14:56.444Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/offersolu/</loc>
+        <lastmod>2020-06-18T13:06:23.114Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -26,14 +34,6 @@
     <url>
         <loc>tyzhang.top/article/javaknow/</loc>
         <lastmod>2020-06-15T06:59:49.493Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/algo/</loc>
-        <lastmod>2020-06-15T06:41:06.026Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
