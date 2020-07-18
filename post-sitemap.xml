@@ -8,8 +8,16 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/spring/</loc>
-        <lastmod>2020-07-16T14:18:59.290Z</lastmod>
+        <loc>tyzhang.top/article/leetcodesolu/</loc>
+        <lastmod>2020-07-18T14:50:32.522Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/arts/</loc>
+        <lastmod>2020-07-17T14:33:27.751Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +25,15 @@
 
     <url>
         <loc>tyzhang.top/article/mysql/</loc>
-        <lastmod>2020-07-14T14:03:52.130Z</lastmod>
+        <lastmod>2020-07-17T13:33:41.459Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/spring/</loc>
+        <lastmod>2020-07-16T14:18:59.290Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -50,14 +66,6 @@
     <url>
         <loc>tyzhang.top/article/network/</loc>
         <lastmod>2020-07-07T01:07:41.488Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/leetcodesolu/</loc>
-        <lastmod>2020-07-06T07:43:02.049Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
