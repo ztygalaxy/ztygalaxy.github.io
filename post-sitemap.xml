@@ -9,7 +9,63 @@
 
     <url>
         <loc>tyzhang.top/article/leetcodesolu/</loc>
-        <lastmod>2020-07-28T14:48:11.228Z</lastmod>
+        <lastmod>2020-07-31T14:46:03.468Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/thread/</loc>
+        <lastmod>2020-07-31T07:55:22.074Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/network/</loc>
+        <lastmod>2020-07-31T07:31:15.799Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/arts/</loc>
+        <lastmod>2020-07-31T07:28:17.621Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/thread1/</loc>
+        <lastmod>2020-07-31T06:37:56.381Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/proxy/</loc>
+        <lastmod>2020-07-31T01:20:04.609Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/model/</loc>
+        <lastmod>2020-07-30T14:08:55.129Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/find123/</loc>
+        <lastmod>2020-07-30T07:36:58.859Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -24,32 +80,8 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/arts/</loc>
-        <lastmod>2020-07-28T02:34:56.450Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/model/</loc>
-        <lastmod>2020-07-28T02:34:16.825Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>tyzhang.top/article/jvmgc/</loc>
         <lastmod>2020-07-27T12:24:27.803Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/network/</loc>
-        <lastmod>2020-07-21T06:27:34.980Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -80,14 +112,6 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/proxy/</loc>
-        <lastmod>2020-07-10T12:14:07.691Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>tyzhang.top/article/juc/</loc>
         <lastmod>2020-07-08T12:08:34.596Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -98,22 +122,6 @@
     <url>
         <loc>tyzhang.top/article/sharedmemo/</loc>
         <lastmod>2020-07-02T01:51:38.068Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/thread1/</loc>
-        <lastmod>2020-07-01T13:28:57.133Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/thread/</loc>
-        <lastmod>2020-07-01T01:04:36.146Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
