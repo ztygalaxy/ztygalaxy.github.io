@@ -154,13 +154,13 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -271,6 +271,16 @@
 <p>先判断是否被实例化，如果没有被实例化，那么才对实例化语句进行加锁。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 使用volatile</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getUniqueInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (uniqueInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (uniqueInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> uniqueInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><a href="https://www.cnblogs.com/whalefalles/p/11264439.html" target="_blank" rel="noopener">Volatile 的作用</a></p>
+<p><strong>如果两个线程都执行了 if 语句，那么两个线程都会进入 if 语句块内。虽然在 if 语句块内有加锁操作，但是两个线程都会执行i<code>nstance = new Singleton();</code> 这条语句，只是先后的问题，那么就会进行两次实例化。因此必须使用双重校验锁，也就是需要使用两个 if 语句。</strong></p>
+<p>volatile的作用是 <strong>1.内存可见性: 所有线程都能看到共享内存的最新状态 2.防止指令重排。 （volatile修饰的变量并不是原子变量。只是变量的读和写变成了原子操作）</strong></p>
+<p>uniqueInstance = new Singleton(); 这段代码其实是分为三步执行：</p>
+<ol>
+<li>为 instance 分配内存空间</li>
+<li>初始化 instance</li>
+<li>将 instance 指向分配的内存地址</li>
+</ol>
+<p>但是由于 JVM 具有指令重排的特性，执行顺序有可能变成 1&gt;3&gt;2。指令重排在单线程环境下不会出现问题，但是在多线程环境下会导致一个线程获得还没有初始化的实例。例如，线程 T1 执行了 1 和 3，此时 T2 调用 getInstance() 后发现 instance 不为空，因此返回 instance ，但此时 instance 还未被初始化。</p>
+<p><strong>使用 volatile 可以禁止 JVM 的指令重排，保证在多线程环境下也能正常运行。</strong></p>
 <h4 id="e-静态内部类实现">e. 静态内部类实现</h4>
 <p>当 Singleton 类被加载时，静态内部类 SingletonHolder 没有被加载进内存。只有当调用 <code>getUniqueInstance()</code> 方法从而触发 <code>SingletonHolder.INSTANCE</code> 时 SingletonHolder 才会被加载，此时初始化 INSTANCE 实例，并且 JVM 能确保 INSTANCE 只被实例化一次。</p>
 <p>这种方式不仅具有延迟初始化的好处，而且由 JVM 提供了对线程安全的支持。</p>

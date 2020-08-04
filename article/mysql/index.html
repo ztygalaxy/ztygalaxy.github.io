@@ -154,13 +154,13 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -486,6 +486,7 @@
 </ul>
 <h4 id="mvcc-和事务隔离级别">MVCC 和事务隔离级别</h4>
 <h5 id="mvcc">MVCC</h5>
+<p><a href="https://blog.csdn.net/DILIGENT203/article/details/100751755" target="_blank" rel="noopener">参考资料</a></p>
 <p>MVCC(Multi-Version Concurrency Control) 多版本并发控制，可以简单地认为：<strong>MVCC 就是行级锁的一个变种(升级版)</strong>。</p>
 <p>事务的隔离级别就是<strong>通过锁的机制来实现</strong>，只不过<strong>隐藏了加锁细节</strong>。</p>
 <p>在<strong>表锁中我们读写是阻塞</strong>的，基于提升并发性能的考虑，<strong>MVCC一般读写是不阻塞的</strong>(所以说MVCC很多情况下避免了加锁的操作)</p>

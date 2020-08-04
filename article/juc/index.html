@@ -154,13 +154,13 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -233,16 +233,16 @@
 <ul>
 <li>用state属性来表示资源的状态(分独占模式和共享模式)，子类需要定义如何维护这个状态，控制如何获取锁和释放锁
 <ul>
-<li>getState - 获取state状态</li>
-<li>setState - 设置state状态</li>
-<li>compareAndSetState - cas机制设置state状态</li>
+<li>getState - 获取 state 状态</li>
+<li>setState - 设置 state 状态</li>
+<li>compareAndSetState - cas 机制设置 state 状态</li>
 <li>独占模式是只有一个线程能够访问资源，而共享模式可以允许多个线程访问资源</li>
 </ul>
 </li>
-<li>提供了基于FIFO的等待队列，类似于Monitor的EntryList</li>
-<li>条件变量来实现等待唤醒机制，支持多个条件变量，类似于Monitor的WaitSet</li>
+<li>提供了基于 FIFO 的等待队列，类似于 Monitor 的 EntryList</li>
+<li>条件变量来实现等待唤醒机制，支持多个条件变量，类似于 Monitor 的 WaitSet</li>
 </ul>
-<p>子类主要实现一些方法(默认抛出UnsupportedOperationException)：</p>
+<p>子类主要实现一些方法(默认抛出 UnsupportedOperationException)：</p>
 <ul>
 <li>tryAcquire</li>
 <li>tryRelease</li>
@@ -291,9 +291,9 @@
 <img src="https://pic.tyzhang.top/images/2020/07/03/sadsdasada.jpg" style="zoom:50%;">
 <p>当前线程进入acquireQueued逻辑</p>
 <ol>
-<li>acquireQueued会在一个死循环中不断尝试获得锁，失败后进入park阻塞</li>
-<li>如果自己是紧邻着head（排第二位），那么再次tryAcquire尝试获取锁，当然这时state仍为1，失败</li>
-<li>进入shouldParkAfterFailedAcquire逻辑，将前驱node，即head的waitStatus改为-1，表示它有责任唤醒它的后继节点（Thread-1长期未获得锁应该进入阻塞，所以需要有一个结点唤醒，由前驱唤醒），这次返回false</li>
+<li>acquireQueued 会在一个死循环中不断尝试获得锁，失败后进入park阻塞</li>
+<li>如果自己是紧邻着 head（排第二位），那么再次 tryAcquire 尝试获取锁，当然这时 state 仍为1，失败</li>
+<li>进入shouldParkAfterFailedAcquire逻辑，将前驱 node，即head的waitStatus改为-1，表示它有责任唤醒它的后继节点（Thread-1长期未获得锁应该进入阻塞，所以需要有一个结点唤醒，由前驱唤醒），这次返回false</li>
 <li>shouldParkAfterFailedAcquire执行完毕后再次进入循环，再次tryAcquire尝试获取锁，这时候state仍为1，失败</li>
 <li>当再次进入shouldParkAfterFailedAcquire时候，这时候因为前驱node的waitStatus已经是-1，这次返回true</li>
 <li>进入parkAndCheckInterupt，Thread-1 park，灰色表示</li>
@@ -395,7 +395,9 @@
 </li>
 </ul>
 <h3 id="countdownlatch">CountDownLatch</h3>
-<p>倒计时锁，用来进行线程同步协作，等待所有线程完成倒计时。其中构造参数用来初始化等待数值，await()用来等待计数器归零，countDown()用来让计数器减一。</p>
+<p>CountDownLatch 在多线程并发编程中充当一个计时器的功能，并且维护一个 count 的变量，并且其操作都是原子操作，该类主要通过 countDown() 和 await() 两个方法实现功能的，首先通过建立 CountDownLatch 对象，并且传入参数即为 count 初始值。如果一个线程调用了 await() 方法，那么这个线程便进入阻塞状态，并进入阻塞队列。如果一个线程调用了 countDown() 方法，则会使 count-1；当 count 的值为 0 时，这时候阻塞队列中调用 await() 方法的线程便会逐个被唤醒，从而进入后续的操作。</p>
+<p>Thread 对象的 join 方法可以实现相同的功能，但是特别地，当使用了线程池时，则 join() 方法便无法实现。但 CountDownLatch 依然可以实现功能。</p>
+<p>CountDownLatch 类主要使用的场景有明显的顺序要求：比如所有英雄都加载完之后才能进图游戏等等，因此 CountDownLatch 完善的是某种逻辑上的功能，使得线程按照正确的逻辑进行。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(<span class="number">3</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            log.debug(<span class="string">"start..."</span>);</span><br><span class="line">            sleep(<span class="number">1</span>);</span><br><span class="line">            countDownLatch.countDown();</span><br><span class="line">            log.debug(<span class="string">"end..."</span>);</span><br><span class="line">        &#125;).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            log.debug(<span class="string">"start..."</span>);</span><br><span class="line">            sleep(<span class="number">2</span>);</span><br><span class="line">            countDownLatch.countDown();</span><br><span class="line">            log.debug(<span class="string">"end..."</span>);</span><br><span class="line">        &#125;).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            log.debug(<span class="string">"start..."</span>);</span><br><span class="line">            sleep(<span class="number">3</span>);</span><br><span class="line">            countDownLatch.countDown();</span><br><span class="line">            log.debug(<span class="string">"end..."</span>);</span><br><span class="line">        &#125;).start();</span><br><span class="line">        log.debug(<span class="string">"main thread start,,,"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            countDownLatch.await();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        log.debug(<span class="string">"main thread end,,,"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">(<span class="keyword">int</span> timeout)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(timeout * <span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">2020-07-06 19:46:06.721 [Thread-3] DEBUG Test - start...</span></span><br><span class="line"><span class="comment">2020-07-06 19:46:06.721 [Thread-2] DEBUG Test - start...</span></span><br><span class="line"><span class="comment">2020-07-06 19:46:06.721 [main] DEBUG Test - main thread start,,,</span></span><br><span class="line"><span class="comment">2020-07-06 19:46:06.721 [Thread-1] DEBUG Test - start...</span></span><br><span class="line"><span class="comment">2020-07-06 19:46:07.726 [Thread-1] DEBUG Test - end...</span></span><br><span class="line"><span class="comment">2020-07-06 19:46:08.727 [Thread-2] DEBUG Test - end...</span></span><br><span class="line"><span class="comment">2020-07-06 19:46:09.725 [Thread-3] DEBUG Test - end...</span></span><br><span class="line"><span class="comment">2020-07-06 19:46:09.725 [main] DEBUG Test - main thread end,,,</span></span><br><span class="line"><span class="comment">**/</span></span><br></pre></td></tr></table></figure>
 <p>线程池改进：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">CountDownLatch latch = <span class="keyword">new</span> CountDownLatch(<span class="number">2</span>);</span><br><span class="line">ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">3</span>);</span><br><span class="line">executorService.submit(() -&gt; &#123;</span><br><span class="line">    log.debug(<span class="string">"begin..."</span>);</span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">    latch.countDown();</span><br><span class="line">    log.debug(<span class="string">"end...&#123;&#125;"</span>, latch.getCount());</span><br><span class="line">&#125;);</span><br><span class="line">executorService.submit(() -&gt; &#123;</span><br><span class="line">    log.debug(<span class="string">"begin..."</span>);</span><br><span class="line">    sleep(<span class="number">2</span>);</span><br><span class="line">    latch.countDown();</span><br><span class="line">    log.debug(<span class="string">"end...&#123;&#125;"</span>, latch.getCount());</span><br><span class="line">&#125;);</span><br><span class="line">executorService.submit(() -&gt; &#123;</span><br><span class="line">    log.debug(<span class="string">"waiting..."</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        latch.await();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    log.debug(<span class="string">"waiting end...&#123;&#125;"</span>, latch.getCount());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
