@@ -8,8 +8,8 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/nextgreater/</loc>
-        <lastmod>2020-08-04T12:27:37.293Z</lastmod>
+        <loc>tyzhang.top/article/OS/</loc>
+        <lastmod>2020-08-04T13:18:05.330Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +17,15 @@
 
     <url>
         <loc>tyzhang.top/article/leetcodesolu/</loc>
-        <lastmod>2020-08-04T07:14:41.929Z</lastmod>
+        <lastmod>2020-08-04T13:10:47.611Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/nextgreater/</loc>
+        <lastmod>2020-08-04T12:27:37.293Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
