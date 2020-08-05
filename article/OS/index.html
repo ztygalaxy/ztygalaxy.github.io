@@ -154,13 +154,13 @@
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -331,6 +331,18 @@
 <li>进程只能在一个时间干一件事，如果想同时干两件事或多件事，进程就无能为力了。</li>
 <li>进程在执行的过程中如果阻塞，例如等待输入，整个进程就会挂起，即使进程中有些工作不依赖于输入的数据，也将无法执行。</li>
 </ul>
+<h4 id="线程和进程切换的开销">线程和进程切换的开销</h4>
+<p>进程切换开销：</p>
+<ol>
+<li>切换虚拟地址空间</li>
+<li>切换CPU上下文</li>
+<li>切换内核栈</li>
+</ol>
+<p>线程切换开销：</p>
+<ol>
+<li>切换CPU上下文</li>
+<li>切换内核栈</li>
+</ol>
 <h4 id="线程之间的共享资源和独占资源">线程之间的共享资源和独占资源</h4>
 <p>共享资源</p>
 <ul>
@@ -473,7 +485,13 @@
 </li>
 </ol>
 <h2 id="死锁">死锁</h2>
+<p>锁是多用户环境中对数据访问的控制。</p>
 <p>指两个或两个以上的进程在执行过程中,因争夺资源而造成的一种互相等待的现象,若无外力作用,它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁,这些永远在互相等待的进程称为死锁进程。</p>
+<h3 id="客情占资源">客情占资源</h3>
+<ol>
+<li>可抢占资源：可以从拥有它的进程中抢占而不会产生任何副作用。</li>
+<li>不可抢占资源：在不引起相关的计算失败的情况下，无法把它从占有它进程处抢占过来。</li>
+</ol>
 <h3 id="必要条件">必要条件</h3>
 <ul>
 <li>互斥：每个资源要么已经分配给了一个进程，要么就是可用的。</li>
@@ -546,6 +564,7 @@
 <ul>
 <li>虚拟地址是由程序产生的由段选择符和段内偏移地址组成的地址。这两部分组成的地址并没有直接访问物理内存，而是要通过分段地址的变换处理后才会对应到相应的物理内存地址。</li>
 <li>逻辑地址指由程序产生的段内偏移地址。有时把逻辑地址当成虚拟地址，两者并没有明确的界限。</li>
+<li>线性地址是逻辑地址到物理地址变换之间的中间层。程序代码会产生逻辑地址，或者说是段中的偏移地址，加上相应段的基地址就生成了一个线性地址。</li>
 <li>物理地址是指现在 CPU 外部地址总线上的寻址物理内存的地址信号，是地址变换的最终结果。</li>
 </ul>
 <h3 id="页面置换算法">页面置换算法</h3>
@@ -565,11 +584,15 @@
 <p>第二次机会算法可视为一个环形队列。用一个指针指示哪一页是下面要淘汰的。当需要一个存储块时，指针就前进，直至找到访问位是0的页。随着指针的前进，把访问位就清为0。在最坏的情况下，所有的访问位都是1，指针要通过整个队列一周，每个页都给第二次机会。这时就退化成FIFO算法了。</p>
 </li>
 </ol>
+<h4 id="分页储存管理方式">分页储存管理方式</h4>
+<p>在该方式中，将用户程序地址空间分为若干固定大小的区域，称为“页”或“页面”。典型的页面大小为1KB。相应的，也将内存空间分为若干个物理块或页框（frame），页和块的大小相同。这样可将用户程序的任一页放入任一物理块中，实现了离散分配。</p>
+<h4 id="分段储存管理方式">分段储存管理方式</h4>
+<p>这是为了满足用户要求而形成的一种储存管理方式。它把用户程序的地址空间分为若干个大小不同的段，每段可定义一组相对完整的信息。在储存器分配时，以段为单位，这些段在内存中可以不相邻接，所以也同样实现了离散分配。</p>
 <h3 id="分段">分段</h3>
 <p>虚拟内存采用的是分页技术，也就是将地址空间划分成固定大小的页，每一页再与内存进行映射。</p>
 <p>分段的做法是把每个表分成段，一个段构成一个独立的地址空间。每个段的长度可以不同，并且可以动态增长。</p>
 <h3 id="段页式">段页式</h3>
-<p>程序的地址空间划分成多个拥有独立地址空间的段，每个段上的地址空间划分成大小相同的页。这样既拥有分段系统的共享和保护，又拥有分页系统的虚拟内存功能。</p>
+<p>这是分页和分段两种储存管理方式相结合的产物。程序的地址空间划分为多个拥有独立地址空间的段，每个段上的地址空间划分为大小相同的页。这样既拥有分段系统的共享保护，又拥有分页系统的虚拟内存功能。它兼具两者的优点，是目前应用较为广泛的一种储存管理方式。</p>
 <h3 id="分页和分段">分页和分段</h3>
 <ul>
 <li>对程序员的透明性：分页透明，但是分段需要程序员显式划分每个段。</li>
@@ -617,9 +640,13 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
+                        <li class="previous">
+                            <a href="/article/per/" data-toggle="tooltip" data-placement="top" title="异位词系列">&larr; 上一篇</a>
+                        </li>
+                    
                     
                         <li class="next">
-                            <a href="/article/producer/" data-toggle="tooltip" data-placement="top" title="几种生产者-消费者模型">下一篇 &rarr;</a>
+                            <a href="/article/nextgreater/" data-toggle="tooltip" data-placement="top" title="Next Greater Element 系列">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -655,7 +682,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#概述"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x6982;&#x8FF0;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基本特征"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x57FA;&#x672C;&#x7279;&#x5F81;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基本功能"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x57FA;&#x672C;&#x529F;&#x80FD;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#大内核和微内核"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x5927;&#x5185;&#x6838;&#x548C;&#x5FAE;&#x5185;&#x6838;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#中断分类"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x4E2D;&#x65AD;&#x5206;&#x7C7B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#进程管理"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x7BA1;&#x7406;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程和线程"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x548C;&#x7EBF;&#x7A0B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程之间的共享资源和独占资源"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x4E4B;&#x95F4;&#x7684;&#x5171;&#x4EAB;&#x8D44;&#x6E90;&#x548C;&#x72EC;&#x5360;&#x8D44;&#x6E90;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程状态切换"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x72B6;&#x6001;&#x5207;&#x6362;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程调度算法"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x8C03;&#x5EA6;&#x7B97;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程同步"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x540C;&#x6B65;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#进程通信"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x901A;&#x4FE1;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#死锁"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x6B7B;&#x9501;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#必要条件"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">&#x5FC5;&#x8981;&#x6761;&#x4EF6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#处理方法"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">&#x5904;&#x7406;&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#鸵鸟策略"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">&#x9E35;&#x9E1F;&#x7B56;&#x7565;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#死锁恢复"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">&#x6B7B;&#x9501;&#x6062;&#x590D;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#死锁预防"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">&#x6B7B;&#x9501;&#x9884;&#x9632;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#死锁避免"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">&#x6B7B;&#x9501;&#x907F;&#x514D;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#内存管理"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x5185;&#x5B58;&#x7BA1;&#x7406;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#虚拟内存"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5185;&#x5B58;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#虚拟内存-共享内存和常驻内存"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5185;&#x5B58;&#x3001;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x548C;&#x5E38;&#x9A7B;&#x5185;&#x5B58;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#虚拟地址-逻辑地址和物理地址"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5730;&#x5740;&#x3001;&#x903B;&#x8F91;&#x5730;&#x5740;&#x548C;&#x7269;&#x7406;&#x5730;&#x5740;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#页面置换算法"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">&#x9875;&#x9762;&#x7F6E;&#x6362;&#x7B97;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分段"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">&#x5206;&#x6BB5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#段页式"><span class="toc-nav-number">5.6.</span> <span class="toc-nav-text">&#x6BB5;&#x9875;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分页和分段"><span class="toc-nav-number">5.7.</span> <span class="toc-nav-text">&#x5206;&#x9875;&#x548C;&#x5206;&#x6BB5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#设备管理"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x8BBE;&#x5907;&#x7BA1;&#x7406;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#磁盘调度算法"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">&#x78C1;&#x76D8;&#x8C03;&#x5EA6;&#x7B97;&#x6CD5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#场景"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">&#x573A;&#x666F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#遍历二维数组按行遍历和按列遍历效率是否不同"><span class="toc-nav-number">7.1.</span> <span class="toc-nav-text">&#x904D;&#x5386;&#x4E8C;&#x7EF4;&#x6570;&#x7EC4;&#xFF0C;&#x6309;&#x884C;&#x904D;&#x5386;&#x548C;&#x6309;&#x5217;&#x904D;&#x5386;&#x6548;&#x7387;&#x662F;&#x5426;&#x4E0D;&#x540C;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#概述"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x6982;&#x8FF0;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基本特征"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x57FA;&#x672C;&#x7279;&#x5F81;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基本功能"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x57FA;&#x672C;&#x529F;&#x80FD;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#大内核和微内核"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x5927;&#x5185;&#x6838;&#x548C;&#x5FAE;&#x5185;&#x6838;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#中断分类"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x4E2D;&#x65AD;&#x5206;&#x7C7B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#进程管理"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x7BA1;&#x7406;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程和线程"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x548C;&#x7EBF;&#x7A0B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程和进程切换的开销"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x548C;&#x8FDB;&#x7A0B;&#x5207;&#x6362;&#x7684;&#x5F00;&#x9500;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#线程之间的共享资源和独占资源"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x4E4B;&#x95F4;&#x7684;&#x5171;&#x4EAB;&#x8D44;&#x6E90;&#x548C;&#x72EC;&#x5360;&#x8D44;&#x6E90;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程状态切换"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x72B6;&#x6001;&#x5207;&#x6362;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程调度算法"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x8C03;&#x5EA6;&#x7B97;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程同步"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x540C;&#x6B65;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#进程通信"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x8FDB;&#x7A0B;&#x901A;&#x4FE1;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#死锁"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x6B7B;&#x9501;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#客情占资源"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">&#x5BA2;&#x60C5;&#x5360;&#x8D44;&#x6E90;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#必要条件"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">&#x5FC5;&#x8981;&#x6761;&#x4EF6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#处理方法"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">&#x5904;&#x7406;&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#鸵鸟策略"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">&#x9E35;&#x9E1F;&#x7B56;&#x7565;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#死锁恢复"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">&#x6B7B;&#x9501;&#x6062;&#x590D;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#死锁预防"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">&#x6B7B;&#x9501;&#x9884;&#x9632;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#死锁避免"><span class="toc-nav-number">4.7.</span> <span class="toc-nav-text">&#x6B7B;&#x9501;&#x907F;&#x514D;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#内存管理"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x5185;&#x5B58;&#x7BA1;&#x7406;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#虚拟内存"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5185;&#x5B58;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#虚拟内存-共享内存和常驻内存"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5185;&#x5B58;&#x3001;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x548C;&#x5E38;&#x9A7B;&#x5185;&#x5B58;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#虚拟地址-逻辑地址和物理地址"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">&#x865A;&#x62DF;&#x5730;&#x5740;&#x3001;&#x903B;&#x8F91;&#x5730;&#x5740;&#x548C;&#x7269;&#x7406;&#x5730;&#x5740;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#页面置换算法"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">&#x9875;&#x9762;&#x7F6E;&#x6362;&#x7B97;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#分页储存管理方式"><span class="toc-nav-number">5.4.1.</span> <span class="toc-nav-text">&#x5206;&#x9875;&#x50A8;&#x5B58;&#x7BA1;&#x7406;&#x65B9;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#分段储存管理方式"><span class="toc-nav-number">5.4.2.</span> <span class="toc-nav-text">&#x5206;&#x6BB5;&#x50A8;&#x5B58;&#x7BA1;&#x7406;&#x65B9;&#x5F0F;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分段"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">&#x5206;&#x6BB5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#段页式"><span class="toc-nav-number">5.6.</span> <span class="toc-nav-text">&#x6BB5;&#x9875;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分页和分段"><span class="toc-nav-number">5.7.</span> <span class="toc-nav-text">&#x5206;&#x9875;&#x548C;&#x5206;&#x6BB5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#设备管理"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x8BBE;&#x5907;&#x7BA1;&#x7406;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#磁盘调度算法"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">&#x78C1;&#x76D8;&#x8C03;&#x5EA6;&#x7B97;&#x6CD5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#场景"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">&#x573A;&#x666F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#遍历二维数组按行遍历和按列遍历效率是否不同"><span class="toc-nav-number">7.1.</span> <span class="toc-nav-text">&#x904D;&#x5386;&#x4E8C;&#x7EF4;&#x6570;&#x7EC4;&#xFF0C;&#x6309;&#x884C;&#x904D;&#x5386;&#x548C;&#x6309;&#x5217;&#x904D;&#x5386;&#x6548;&#x7387;&#x662F;&#x5426;&#x4E0D;&#x540C;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
