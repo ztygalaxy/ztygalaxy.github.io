@@ -8,8 +8,32 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/leetcodesolu/</loc>
+        <lastmod>2020-08-11T11:29:26.608Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/OS/</loc>
+        <lastmod>2020-08-11T06:54:57.130Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/mysql/</loc>
-        <lastmod>2020-08-10T14:21:53.566Z</lastmod>
+        <lastmod>2020-08-11T06:33:56.987Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/arts/</loc>
+        <lastmod>2020-08-11T02:44:11.994Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -40,14 +64,6 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/leetcodesolu/</loc>
-        <lastmod>2020-08-10T08:10:48.547Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>tyzhang.top/article/sort/</loc>
         <lastmod>2020-08-10T02:55:09.597Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -72,14 +88,6 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/arts/</loc>
-        <lastmod>2020-08-07T14:26:24.532Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>tyzhang.top/article/jvmmemo/</loc>
         <lastmod>2020-08-07T12:30:49.895Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -98,14 +106,6 @@
     <url>
         <loc>tyzhang.top/article/per/</loc>
         <lastmod>2020-08-05T15:00:38.941Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/OS/</loc>
-        <lastmod>2020-08-05T01:28:12.962Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
