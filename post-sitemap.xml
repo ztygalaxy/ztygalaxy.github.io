@@ -9,7 +9,7 @@
 
     <url>
         <loc>tyzhang.top/article/leetcodesolu/</loc>
-        <lastmod>2020-08-11T11:29:26.608Z</lastmod>
+        <lastmod>2020-08-11T14:15:08.338Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +17,23 @@
 
     <url>
         <loc>tyzhang.top/article/OS/</loc>
-        <lastmod>2020-08-11T06:54:57.130Z</lastmod>
+        <lastmod>2020-08-11T13:01:23.993Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/arts/</loc>
+        <lastmod>2020-08-11T12:41:15.142Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/network/</loc>
+        <lastmod>2020-08-11T11:50:24.729Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -26,22 +42,6 @@
     <url>
         <loc>tyzhang.top/article/mysql/</loc>
         <lastmod>2020-08-11T06:33:56.987Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/arts/</loc>
-        <lastmod>2020-08-11T02:44:11.994Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/network/</loc>
-        <lastmod>2020-08-10T12:39:10.486Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
