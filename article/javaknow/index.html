@@ -15,7 +15,7 @@
 	<script src="//code.tidio.co/5b6vgmp0rn1xxl0xfqtpstex0m46ttic.js" async></script>
     <title>
         
-          牛客拾遗 - 张天宇的博客 | ztygalaxy Blog
+          拾遗 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
@@ -93,7 +93,7 @@
                               <a class="tag" href="/tags/#基础知识" title="基础知识">基础知识</a>
                             
                         </div>
-                        <h1>牛客拾遗</h1>
+                        <h1>拾遗</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
@@ -154,13 +154,13 @@
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -224,584 +224,83 @@
 
 				
                 <blockquote>
-<p>这篇主要记录了牛客上遇到的理论知识点。</p>
+<p>一些不知道该总结到哪里的 Java 零碎知识点。</p>
 </blockquote>
-<h1 id="java">JAVA</h1>
-<h2 id="servlet生命周期">Servlet生命周期</h2>
-<img src="https://pic.tyzhang.top/images/2019/11/14/Servlet.png" alt="生命周期" style="zoom:80%;">
-<p>Servlet的生命周期分为5个阶段：加载、创建、初始化、处理客户请求、卸载。</p>
+<h2 id="泛型">泛型</h2>
+<p>泛型提供了编译时类型安全检测机制，该机制允许程序员在编译时检测到非法的类型。泛型的本质是参数化类型，也就是说所操作的数据类型被指定为一个参数。比如我们要写一个排序方法，能够对整型数组、字符串数组甚至其他任何类型的数组进行排序，我们就可以使用 Java 泛型。</p>
 <ol>
 <li>
-<p>加载：容器通过类加载器使用servlet类对应的文件加载servlet</p>
+<p>泛型类和泛型方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">        System.out.println(t);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">        System.out.println(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Test&lt;String&gt; d = <span class="keyword">new</span> Test&lt;String&gt;();</span><br><span class="line">    d.show(<span class="string">"java"</span>);</span><br><span class="line">    d.print(<span class="string">"Object-C"</span>);</span><br><span class="line"></span><br><span class="line">    Test&lt;Integer&gt; e = <span class="keyword">new</span> Test&lt;Integer&gt;();</span><br><span class="line">    e.show(<span class="number">2</span>);</span><br><span class="line">    e.print(<span class="keyword">new</span> Integer(<span class="number">5</span>));	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>泛型类定义的类型，在整个类中有效，如果被方法使用，那么泛型类的对象明确要操作的具体类型后，所有操作的类型就已经固定了。例如上面的 d 只能操作 String。定义到方法上就可以解决这个问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt;  <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">        System.out.println(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">        System.out.println(t);</span><br><span class="line">    &#125;	</span><br><span class="line">    <span class="keyword">public</span> &lt;U,T&gt; <span class="function"><span class="keyword">void</span> <span class="title">sum</span><span class="params">(U u,T t)</span></span>&#123;</span><br><span class="line">        System.out.println(u+<span class="string">" version is "</span>+t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Test d = <span class="keyword">new</span> Test();</span><br><span class="line">    d.show(<span class="string">"java"</span>);</span><br><span class="line">    d.print(<span class="number">5</span>);</span><br><span class="line">    d.sum(<span class="string">"java"</span>, <span class="keyword">new</span> Double(<span class="number">8</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p>创建：通过调用servlet构造函数创建一个servlet对象</p>
-</li>
-<li>
-<p>初始化：调用init方法初始化</p>
-</li>
-<li>
-<p>处理客户请求：每当有一个客户请求，容器会创建一个线程来处理客户请求</p>
-</li>
-<li>
-<p>卸载：调用destroy方法让servlet自己释放其占用的资源</p>
-</li>
+<p>泛型方法的好处</p>
+<ol>
+<li>泛型方法可以让不同方法操作不同类型，且类型还不确定。</li>
+<li>与泛型类不同，泛型方法的类型参数只能在它锁修饰的泛型方法中使用。</li>
 </ol>
-<h2 id="applet">Applet</h2>
-<p>Applet 类是浏览器类库中最为重要的类，同时也是所有 JAVA 小应用程序的基本类。 一个 Applet 应用程序从开始运行到结束时所经历的过程被称为 Applet 的生命周期。 Applet 的生命周期涉及 init() 、 start() 、 stop() 和 destroy() 四种方法，这 4 种方法都是 Applet 类的成员，可以继承这些方法，也可以重写这些方法，覆盖原来定义的这些方法。除此之外，为了在 Applet 程序中实现输出功能，每个 Applet 程序中还需要重载 paint() 方法：</p>
+</li>
+<li>
+<p>创建一个泛型方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">访问修饰符 [<span class="keyword">static</span>][<span class="keyword">final</span>] &lt;类型参数列表&gt; 返回值类型 方法名([形式参数列表])</span><br><span class="line">    <span class="comment">// [] 表示可有可无</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>泛型接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> 接口名&lt;类型参数表&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">showInterface</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 实现类型确定</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShowClass</span> <span class="keyword">implements</span> <span class="title">showInterface</span>&lt;<span class="title">String</span>&gt;</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">(String t)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"show:"</span>+t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 实现类型不确定</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShowClass</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">showInterface</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"show:"</span>+t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ShowClass&lt;Integer&gt; obj = <span class="keyword">new</span> ShowClass&lt;Integer&gt;();</span><br><span class="line">    obj.show(<span class="number">6</span>);</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">		ShowClass obj = new ShowClass();</span></span><br><span class="line"><span class="comment">		obj.show("java");</span></span><br><span class="line"><span class="comment">	    */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>泛型通配符</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ArrayList&lt;String&gt; a1 = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">    a1.add(<span class="string">"a"</span>);</span><br><span class="line">    a1.add(<span class="string">"b"</span>);</span><br><span class="line">    a1.add(<span class="string">"c"</span>);</span><br><span class="line"></span><br><span class="line">    ArrayList&lt;Integer&gt; a2 = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">    a2.add(<span class="number">1</span>);</span><br><span class="line">    a2.add(<span class="number">2</span>);</span><br><span class="line">    a2.add(<span class="number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>进一步修改，定义一个泛型方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt;<span class="function"><span class="keyword">void</span> <span class="title">vistor</span><span class="params">(ArrayList&lt;T&gt; a)</span></span>&#123;</span><br><span class="line">    Iterator&lt;T&gt; iterator = a.iterator();</span><br><span class="line">    <span class="keyword">while</span>(iterator.hasNext())&#123;</span><br><span class="line">        T t = iterator.next(); </span><br><span class="line">        System.out.println(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是泛型类，是不允许泛型定义在 static 上面的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//占位符，也称为通配符。表示元素类型可以匹配任意类型</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sop</span><span class="params">(ArrayList&lt;?&gt; a)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(Iterator&lt;?&gt; it = a.iterator();it.hasNext();)&#123;</span><br><span class="line">        System.out.println(it.next());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li>
-<p>public void init()</p>
-<p>init()方法是 Applet 运行的起点。当启动 Applet 程序时，系统首先调用此方法，以执行初始化任务。</p>
+<p>类型通配符上限定(? extends T)，可以接受 T 和 T 的子类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printMethod</span><span class="params">(ArrayList&lt;? extends Person&gt; a1)</span></span>&#123;</span><br><span class="line">    Iterator&lt;? extends Person&gt; it = a1.iterator();</span><br><span class="line">    <span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">        System.out.println(it.next().getNmae());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p>public void start()</p>
-<p>start()方法是表明 Applet 程序开始执行的方法。当含有此 Applet 程序的 Web 页被再次访问时调用此方法。因此，如果每次访问 Web 页都需要执行一些操作的话，就需要在 Applet 程序中重载该方法。在 Applet 程序中，系统总是先调用 init() 方法，后调用 start() 方法。</p>
-</li>
-<li>
-<p>public void stop()</p>
-<p>stop()方法使 Applet 停止执行，当含有该 Applet 的 Web 页被其他页代替时也要调用该方法。</p>
-</li>
-<li>
-<p>public void destroy()</p>
-<p>destroy()方法收回 Applet 程序的所有资源，即释放已分配给它的所有资源。在 Applet 程序中，系统总是先调用 stop() 方法，后调用 destroy() 方法。</p>
-</li>
-<li>
-<p>paint(Graphics g)</p>
-<p>paint(Graphics g)方法可以使 Applet 程序在屏幕上显示某些信息，如文字、色彩、背景或图像等。参数 g 是 Graphics 类的一个对象实例，实际上可以把 g 理解为一个画笔。对象 g 中包含了许多绘制方法，如 drawstring() 方法就是输出字符串。</p>
+<p>类型通配符下限定(? super T)，接受 T 类型或者 T 的父类型</p>
 </li>
 </ol>
-<p>Applet显示相关的方法主要有3个：</p>
-<ol>
-<li>
-<p>paint(Graphicsg)方法，具体执行Applet的绘制。</p>
-</li>
-<li>
-<p>update(Graphicsg)()方法，主要用于更新Applet的显示。</p>
-</li>
-<li>
-<p>repaint()方法，主要用于Applet的重新显示，它调用update()方法实现对Applet的更新。</p>
 </li>
 </ol>
-<h2 id="访问修饰符">访问修饰符</h2>
-<table>
-<thead>
-<tr>
-<th><strong>修饰符</strong></th>
-<th><strong>类</strong></th>
-<th><strong>成员访求</strong></th>
-<th><strong>构造方法</strong></th>
-<th><strong>成员变量</strong></th>
-<th><strong>局部变量</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>abstract（抽象的）</td>
-<td>√</td>
-<td>√</td>
-<td>－</td>
-<td>－</td>
-<td>－</td>
-</tr>
-<tr>
-<td>static （静态的）</td>
-<td>－</td>
-<td>√</td>
-<td>－</td>
-<td>√</td>
-<td>－</td>
-</tr>
-<tr>
-<td>public（公共的）</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>－</td>
-</tr>
-<tr>
-<td>protected（受保护的）</td>
-<td></td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>－</td>
-</tr>
-<tr>
-<td>private（私有的）</td>
-<td>－</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>－</td>
-</tr>
-<tr>
-<td>synchronized（同步的）</td>
-<td>－</td>
-<td>√</td>
-<td>－</td>
-<td>－</td>
-<td>－</td>
-</tr>
-<tr>
-<td>native（本地的）</td>
-<td>－</td>
-<td>√</td>
-<td>－</td>
-<td>－</td>
-<td>－</td>
-</tr>
-<tr>
-<td>transient（暂时的）</td>
-<td>－</td>
-<td>－</td>
-<td>－</td>
-<td>√</td>
-<td>－</td>
-</tr>
-<tr>
-<td>volatie（易失的）</td>
-<td>－</td>
-<td>－</td>
-<td>－</td>
-<td>√</td>
-<td>－</td>
-</tr>
-<tr>
-<td>final（不要改变的）</td>
-<td>√</td>
-<td>√</td>
-<td>－</td>
-<td>√</td>
-<td>√</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th><strong>类 修饰符</strong></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Public</td>
-<td>可以从其他类中访问</td>
-</tr>
-<tr>
-<td>Abstract</td>
-<td>本类不能被实例化</td>
-</tr>
-<tr>
-<td>Final</td>
-<td>不能再声明子类</td>
-</tr>
-<tr>
-<td><strong>构造函数修饰符</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>Public</td>
-<td>可以从所有的类中访问</td>
-</tr>
-<tr>
-<td>Protected</td>
-<td>只能从自己的类和它的子类中访问</td>
-</tr>
-<tr>
-<td>Private</td>
-<td>只能在本类中访问</td>
-</tr>
-<tr>
-<td><strong>域/成员变量修饰符</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>Public</td>
-<td>可以从所有的类中访问</td>
-</tr>
-<tr>
-<td>Protected</td>
-<td>只能从本类和它的子类中访问</td>
-</tr>
-<tr>
-<td>Private</td>
-<td>只能从本类中访问它</td>
-</tr>
-<tr>
-<td>Static</td>
-<td>对该类的所有实例只能有一个域值存在</td>
-</tr>
-<tr>
-<td>transient</td>
-<td>不是一个对象持久状态的一部份</td>
-</tr>
-<tr>
-<td>Volatile</td>
-<td>可以被异步的线程所修改</td>
-</tr>
-<tr>
-<td>final</td>
-<td>必须对它赋予初值并且不能修改它</td>
-</tr>
-<tr>
-<td><strong>局部变量 修饰符</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>final</td>
-<td>必须对它赋予初值并且不能修改它</td>
-</tr>
-<tr>
-<td><strong>方法修饰符</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>Public</td>
-<td>可以从所有的类中访问它</td>
-</tr>
-<tr>
-<td>Protected</td>
-<td>只能从本类及其子类中访问它</td>
-</tr>
-<tr>
-<td>Private</td>
-<td>只能从本类中访问它</td>
-</tr>
-<tr>
-<td>abstract</td>
-<td>没有方法体，属于一个抽象类</td>
-</tr>
-<tr>
-<td>final</td>
-<td>子类不能覆盖它</td>
-</tr>
-<tr>
-<td>static</td>
-<td>被绑定于类本身而不是类的实例</td>
-</tr>
-<tr>
-<td>native</td>
-<td>该方法由其他编程语言实现</td>
-</tr>
-<tr>
-<td>asnchronized</td>
-<td>在一个线程调用它之前必须先给它加</td>
-</tr>
-</tbody>
-</table>
-<p><strong>类的修饰符整合</strong></p>
-<p><strong>一．类</strong></p>
-<p><strong>类的修饰符：</strong></p>
-<p><strong>Public</strong>:可以在其他任何类中使用，默认为统一包下的任意类。</p>
-<p><strong>Abstract:抽象类</strong>，不能被实例化，可以包含抽象方法，抽象方法没有被实现，无具体功能，只能衍生子类。</p>
-<p><strong>Final</strong>:不能被继承。</p>
-<p><strong>二．变量</strong></p>
-<p>变量修饰符：</p>
-<p>一个类的成员变量的声明必须在类体中，而不能在方法中，方法中声明的是<strong>局部变量</strong>。</p>
-<ol>
-<li>
-<p>可访问修饰符：</p>
-</li>
-<li>
-<p><strong>static</strong>：<strong>类变量</strong>：一个类所拥有的变量，不是类的每个实例有的变量。类变量是指不管类创建了多少对象，系统仅在第一次调用类的时候为类变量分配内存，所有对象共享该类的类变量，因此可以通过类本身或者某个对象来访问类变量。</p>
-</li>
-<li>
-<p><strong>final</strong>：<strong>常量</strong>。</p>
-</li>
-<li>
-<p><strong>volatile</strong>：声明一个可能同时被并存运行的几个线程所控制和修改的变量。</p>
-</li>
-</ol>
-<p><strong>实例变量</strong>：和类变量对应，即每个对象都拥有各自独立的实例变量。</p>
-<p><strong>三．方法：</strong>（和变量对象分为实例方法和类方法，并用有无static修饰区别）</p>
-<p><strong>类方法</strong>：使用static关键字说明的方法</p>
-<ol>
-<li>
-<p>第一次调用含类方法的类是，系统只为该类创建一个版本，这个版本被该类和该类的所有实例共享。</p>
-</li>
-<li>
-<p>类方法只能操作类变量，不能访问实例变量。类方法可以在类中被调用，不必创建实例来调用，当然也可以通过对象来调用。</p>
-</li>
-</ol>
-<p><strong>实例方法</strong>：实例方法可以对当前对象的实例变量操作，而且可以访问类变量。</p>
-<p>方法可以<strong>重载</strong>，要求：方法名相同，但是参数必须有区别。（参数不同可以使类型不同，顺序不同，个数不同）</p>
-<p>方法的返回类型：若无返回类型，则声明为void.</p>
-<p>方法中的变量作用域：</p>
-<ol>
-<li>
-<p>成员变量：整个类。</p>
-</li>
-<li>
-<p>局部变量：定义起到方法块结束为止。</p>
-</li>
-<li>
-<p>方法参数：整个方法或者构造方法。</p>
-</li>
-<li>
-<p>异常处理参数：参数传递给异常处理方法。</p>
-</li>
-</ol>
-<p><strong>构造方法</strong>：和类同名的方法。为新建对象开辟内存空间后，用于初始化新建的对象。不能用对象显式的调用。</p>
-<p><strong>静态初始化器</strong>：格式：static{&lt;赋值语句组&gt;}</p>
-<p>静态初始化器与构造方法的区别：</p>
-<table>
-<thead>
-<tr>
-<th>静态初始化器</th>
-<th>构造方法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>对类的静态域初始化</td>
-<td>对新建的对象初始化</td>
-</tr>
-<tr>
-<td>类进入内存后，系统调用执行</td>
-<td>执行new后自动执行</td>
-</tr>
-<tr>
-<td>属特殊语句（仅执行一次）</td>
-<td>属特殊方法</td>
-</tr>
-</tbody>
-</table>
-<p><strong>方法的修饰符：</strong></p>
-<p>**抽象方法：**用abstract修饰，只有声明部分，方法体为空，具体在子类中完成。</p>
-<p>**类方法：**静态方法，用static修饰，</p>
-<ol>
-<li>
-<p>调用时，使用类名作为前缀，而不是类的某个实例对象名</p>
-</li>
-<li>
-<p>不能被单独对象拥有，属于整个类共享。</p>
-</li>
-<li>
-<p>不能处理成员变量。</p>
-</li>
-</ol>
-<p><strong>最终方法</strong>：用final修饰，不能被子类重新定义的方法。</p>
-<p><strong>本地方法</strong>：用native修饰的方法，表示用其他语言书写的特殊方法，包括C，C++，FORTRAN，汇编语言等。</p>
-<p><strong>四．类成员的访问控制符</strong>：</p>
-<p>即类的方法和成员变量的访问控制符，一个类作为整体对象不可见，并不代表他的所有域和方法也对程序其他部分不可见，需要有他们的访问修饰符判断。</p>
-<p>权限如下：</p>
-<table>
-<thead>
-<tr>
-<th>访问修饰符</th>
-<th>同一个类</th>
-<th>同包</th>
-<th>不同包，子类</th>
-<th>不同包，非子类</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>private</td>
-<td>√</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>protected</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td></td>
-</tr>
-<tr>
-<td>public</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr>
-<td>默认</td>
-<td>√</td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">不能用来修饰<span class="class"><span class="keyword">interface</span>的有（<span class="title">private</span>、<span class="title">protected</span>、<span class="title">static</span>）。</span></span><br><span class="line"><span class="class">子类重写父类方法时，方法的访问权限不能小于原访问权限。</span></span><br></pre></td></tr></table></figure>
-<h2 id="hash冲突">Hash冲突</h2>
-<h3 id="概述">概述</h3>
-<p>对象Hash的前提是实现equals()和hashCode()两个方法，HashCode()的作用就是保证对象返回唯一hash值，但当两个对象计算值一样时，这就发生了碰撞冲突。如下将介绍如何处理冲突，当然其前提是一致性hash。</p>
-<h3 id="1-开放地址法">1. 开放地址法</h3>
-<p>开放地执法有一个公式:Hi=(H(key)+di) MOD m i=1,2,…,k(k&lt;=m-1)。其中，m为哈希表的表长。di 是产生冲突的时候的增量序列。如果di值可能为1,2,3,…m-1，称线性探测再散列。如果di取1，则每次冲突之后，向后移动1个位置.如果di取值可能为1,-1,2,-2,4,-4,9,-9,16,-16,…k<em>k,-k</em>k(k&lt;=m/2)，称二次探测再散列。如果di取值可能为伪随机数列。称伪随机探测再散列。</p>
-<h3 id="2-再哈希法">2. 再哈希法</h3>
-<p>当发生冲突时，使用第二个、第三个哈希函数计算地址，直到无冲突时。</p>
-<p>缺点：计算时间增加。</p>
-<p>比如第一次按照姓首字母进行哈希，如果产生冲突可以按照姓字母首字母第二位进行哈希，再冲突，第三位，直到不冲突为止。</p>
-<h3 id="3-链地址法拉链法">3. 链地址法(拉链法)</h3>
-<p>将所有关键字为同义词的记录存储在同一线性链表中。  近似的认为是筒子里面套筒子 。</p>
-<img src="https://pic.tyzhang.top/images/2019/11/14/hash.png" alt="链地址法" style="zoom: 80%;">
-<p>与开放定址法相比，拉链法有如下几个优点：</p>
-<ol>
-<li>拉链法处理冲突简单，且无堆积现象，即非同义词决不会发生冲突，因此平均查找长度较短；</li>
-<li>由于拉链法中各链表上的结点空间是动态申请的，故它更适合于造表前无法确定表长的情况；</li>
-<li>开放定址法为减少冲突，要求装填因子α较小，故当结点规模较大时会浪费很多空间。而拉链法中可取α≥1，且结点较大时，拉链法中增加的指针域可忽略不计，因此节省空间；</li>
-<li>在用拉链法构造的散列表中，删除结点的操作易于实现。只要简单地删去链表上相应的结点即可。而对开放地址法构造的散列表，删除结点不能简单地将被删结点的空间置为空，否则将截断在它之后填人散列表的同义词结点的查找路径。这是因为各种开放地址法中，空地址单元(即开放地址)都是查找失败的条件。因此在用开放地址法处理冲突的散列表上执行删除操作，只能在被删结点上做删除标记，而不能真正删除结点。</li>
-</ol>
-<h2 id="基本数据类型">基本数据类型</h2>
-<h3 id="1-精度问题">1. 精度问题</h3>
-<p><strong>精度丢失只会发生在从大范围到小范围的转换</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">byte	1字节 </span><br><span class="line">char	2字节 </span><br><span class="line">short	2字节 </span><br><span class="line">int		4字节 </span><br><span class="line">float	4字节 </span><br><span class="line">long	8字节 </span><br><span class="line">double	8字节 </span><br><span class="line">boolean	没有</span><br></pre></td></tr></table></figure>
-<h2 id="线程操作">线程操作</h2>
-<h3 id="1-同步">1. 同步</h3>
-<p>同步是害怕在操作过程的时候被其他线程也进行读取操作，一旦是原子性的操作就不会发生这种情况。因为一步到位的操作，其他线程不可能在中间干涉。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例题： 以下多线程对int型变量x的操作,哪个不需要进行同步() </span><br><span class="line">A. ++x	B. x=y	C. x++	D. x=1</span><br><span class="line">解析：ABC不是原子性操作，都需要先读取再操作。例如想x++，先获取x的值，自增一，然后再把值赋给x，三步，中间任何一步执行时都可能被其他线程访问或者修改。所以需要同步。</span><br></pre></td></tr></table></figure>
-<h2 id="b树">B树</h2>
-<h2 id="hash表">Hash表</h2>
-<h3 id="1-构造方法">1. 构造方法</h3>
-<ol>
-<li>数字分析法：事先知道关键字的集合，且每个关键字的位数比哈希表的地址码位数多时，可以从关键字中选出分布比较均匀的若干位，构成哈希地址。</li>
-<li>平方取中法：当无法确定关键字中哪几位分布比较均匀时，可以先求出关键字的平方值的中间几位作为哈希地址</li>
-<li>分段叠加法：按哈希表的地址位数将关键字分成位数相等的几部分（最后一部分较短），然后将这几部分相加，舍弃最高位后的结果就是该关键字的哈希地址。</li>
-<li>除留余数法：假设哈希表长为 m,p为小于等于 m 的 最大数数，则哈希 函数为 H(k) = k%p</li>
-<li>伪随机数为：采用一个伪随机函数作为哈希函数，即 H(key) = random(key)</li>
-</ol>
-<h3 id="2-处理冲突">2. 处理冲突</h3>
-<ol>
-<li>开放定址法</li>
-<li>再哈希法</li>
-<li>链地址法</li>
-<li>建立公共溢出区</li>
-</ol>
-<h3 id="3-性能分析">3. 性能分析</h3>
-<p>​        哈希法中影响关键字比较次数的因素有三个：哈希函数，处理冲突的方法，哈希表的装填因子。装填因子 a 的定义如下：     a = 哈希表中元素的个数 / 哈希表的长度      a 可描述哈希表的装满程度。a 越小，发生冲突的可能性越小； a 越大 ，发生冲突的可能性越大。</p>
-<h2 id="hashtable和hashmap">HashTable和HashMap</h2>
-<p><a href="https://blog.csdn.net/fujiakai/article/details/51585767" target="_blank" rel="noopener">https://blog.csdn.net/fujiakai/article/details/51585767</a></p>
-<h2 id="抽象类和接口">抽象类和接口</h2>
-<ol>
-<li>一个子类只能继承一个抽象类,但能实现多个接口</li>
-<li>抽象类可以有构造方法,接口没有构造方法</li>
-<li>抽象类可以有普通成员变量,接口没有普通成员变量</li>
-<li>抽象类和接口都可有静态成员变量,抽象类中静态成员变量访问类型任意,接口只能public static final(默认)</li>
-<li>抽象类可以没有抽象方法,抽象类可以有普通方法,接口中都是抽象方</li>
-<li>抽象类可以有静态方法,接口不能有静态方法</li>
-<li>抽象类中的方法可以是public、protected;接口方法只有public</li>
-</ol>
-<h2 id="map-collection和collections">Map、Collection和Collections</h2>
-<p><img src="https://uploadfiles.nowcoder.com/images/20170304/837161_1488616442711_250E74268F38A4202D8C30E4329DEBCC" alt=""></p>
-<p><img src="http://uploadfiles.nowcoder.com/images/20150904/458054_1441352361202_2B9A4774B9C5C489A9E9564854FFCD6C" alt=""></p>
-<p><img src="http://uploadfiles.nowcoder.com/images/20150928/458054_1443399626006_AA40C8919CE65157D5F251E7622A75FB" alt=""></p>
-<h2 id="四大域">四大域</h2>
-<p>方法区在JVM中也是一个非常重要的区域，它与堆一样，是被 <strong>线程共享</strong> 的区域。 在方法区中，存储了每个类的信息（包括类的名称、方法信息、字段信息）、静态变量、常量以及编译器编译后的代码等.</p>
-<p>程序计数器是一个比较小的内存区域，用于指示当前线程所执行的字节码执行到了第几行，是线程隔离的。</p>
-<p>虚拟机栈描述的是Java方法执行的内存模型，用于存储局部变量，操作数栈，动态链接，方法出口等信息，是线程隔离的。</p>
-<p>原则上讲，所有的对象都在堆区上分配内存，是线程之间共享的。</p>
-<h2 id="synchronized和volatile">synchronized和volatile</h2>
+<h2 id="序列化">序列化</h2>
 <ul>
-<li>volatile关键字是线程同步的轻量级实现，所以volatile性能肯定比synchronized关键字要好。但是volatile关键字只能用于变量而synchronized关键字可以修饰方法以及代码块。synchronized关键字在JavaSE1.6之后进行了主要包括为了减少获得锁和释放锁带来的性能消耗而引入的偏向锁和轻量级锁以及其它各种优化之后执行效率有了显著提升，实际开发中使用 synchronized 关键字的场景还是更多一些。</li>
-<li>多线程访问volatile关键字不会发生阻塞，而synchronized关键字可能会发生阻塞</li>
-<li>volatile关键字能保证数据的可见性，但不能保证数据的原子性。synchronized关键字两者都能保证。</li>
-<li>volatile关键字主要用于解决变量在多个线程之间的可见性，而 synchronized关键字解决的是多个线程之间访问资源的同步性。</li>
+<li>
+<p>保存(持久化)对象及其状态到内存或者硬盘</p>
+</li>
+<li>
+<p>序列化以字节数组保存，静态成员不保存。对象序列化保存的是对象的”状态”，即它的成员变量。由此可知，对象序列化不会关注类中的静态变量。</p>
+</li>
+<li>
+<p>要想将父类对象也序列化，就要让父类也实现 Serializable 接口。</p>
+</li>
 </ul>
-<h2 id="httpservlet容器响应web客户请求流程">HttpServlet容器响应Web客户请求流程</h2>
-<p>1）Web客户向Servlet容器发出Http请求；</p>
-<p>2）Servlet容器解析Web客户的Http请求；</p>
-<p>3）Servlet容器创建一个HttpRequest对象，在这个对象中封装Http请求信息；</p>
-<p>4）Servlet容器创建一个HttpResponse对象；</p>
-<p>5）Servlet容器调用HttpServlet的service方法，这个方法中会根据request的Method来判断具体是执行doGet还是doPost，把HttpRequest和HttpResponse对象作为service方法的参数传给HttpServlet对象；</p>
-<p>6）HttpServlet调用HttpRequest的有关方法，获取HTTP请求信息；</p>
-<p>7）HttpServlet调用HttpResponse的有关方法，生成响应数据；</p>
-<p>8）Servlet容器把HttpServlet的响应结果传给Web客户。</p>
-<p>doGet() 或 doPost() 是创建HttpServlet时需要覆盖的方法.</p>
-<h1 id="数据库">数据库</h1>
-<h2 id="关系运算">关系运算</h2>
-<p>关系运算包括:传统的集合运算（交，并，差），选择运算，投影运算，连接运算，除法运算，外连接运算。</p>
-<h2 id="完整性约束">完整性约束</h2>
-<p>为了保证数据库满足业务规则，关系模型定义了：</p>
-<ol>
-<li>
-<p>实体完整性约束，指使用主键约束且主键不能为空值；</p>
-</li>
-<li>
-<p>参照完整性约束，指不允许关系引用不存在的元组，外键要么是实际存在的元组，要么就为空。</p>
-</li>
-<li>
-<p>用户定义的完整性约束，指在具体应用所涉及的数据必须满足的语义要求。</p>
-</li>
-</ol>
-<h2 id="statement对象">Statement对象</h2>
-<p>Statement 对象用于将 SQL 语句发送到数据库中。实际上有三种 Statement 对象：</p>
-<ol>
-<li><strong>Statement</strong> 对象用于执行不带参数的简单 SQL 语句;</li>
-<li><strong>PreparedStatement</strong> 对象用于执行带或不带 IN 参数的预编译 SQL 语句;</li>
-<li><strong>CallableStatement</strong> 对象用于执行对数据库已存在的存储过程的调用。</li>
-</ol>
-<p>BatchedStatement用于批量操作数据库，BatchedStatement不是标准的Statement类</p>
-<h1 id="零碎知识点">零碎知识点</h1>
-<h2 id="编译相关">编译相关</h2>
-<p>java文件中只能包含一个由public修饰的 与文件名称相同的类。 一个以”.java”为后缀的源文件只能有一个文件名相同的类，可以包含其他类。</p>
-<h2 id="正则表达式">正则表达式</h2>
-   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\d      匹配一个数字字符。等价于 [0-9]。</span><br><span class="line">\D     匹配一个非数字字符。等价于 [^0-9]。</span><br><span class="line">\f       匹配一个换页符。等价于 \x0c 和 \cL。</span><br><span class="line">\n      匹配一个换行符。等价于 \x0a 和 \cJ。</span><br><span class="line">\r       匹配一个回车符。等价于 \x0d 和 \cM。</span><br><span class="line">\s      匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [ \f\n\r\t\v]。</span><br><span class="line">\S      匹配任何非空白字符。等价于 [^ \f\n\r\t\v]。</span><br><span class="line">\t       匹配一个制表符。等价于 \x09 和 \cI。</span><br><span class="line">\v      匹配一个垂直制表符。等价于 \x0b 和 \cK。</span><br><span class="line">\w     匹配字母、数字、下划线。等价于&apos;[A-Za-z0-9_]&apos;。</span><br><span class="line">\W    匹配非字母、数字、下划线。等价于 &apos;[^A-Za-z0-9_]&apos;。</span><br></pre></td></tr></table></figure>
-<h2 id="形参的修改">形参的修改</h2>
-   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下参数的修改</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassTest</span></span>&#123;</span><br><span class="line">     String str = <span class="keyword">new</span> String(<span class="string">"hello"</span>);</span><br><span class="line">     <span class="keyword">char</span>[] ch = &#123;<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>&#125;;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">(String str, <span class="keyword">char</span> ch[])</span></span>&#123;</span><br><span class="line">     str=<span class="string">"world"</span>;</span><br><span class="line">     ch[<span class="number">0</span>]=<span class="string">'d'</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">     ClassTest test1 = <span class="keyword">new</span> ClassTest();</span><br><span class="line">     test1.fun(test1.str,test1.ch);</span><br><span class="line">     System.out.print(test1.str + <span class="string">" and "</span>);</span><br><span class="line">     System.out.print(test1.ch);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>Java只有值转递没有引用传递。</p>
-   <img src="https://uploadfiles.nowcoder.com/images/20171205/5600283_1512458079962_0426C2E93E9C117364CC25A474513D98" style="zoom: 25%;">
-<p><a href="https://www.nowcoder.com/questionTerminal/ea753f170fff4b9f8e242458b2fc5a6d" target="_blank" rel="noopener">https://www.nowcoder.com/questionTerminal/ea753f170fff4b9f8e242458b2fc5a6d</a></p>
-<h2 id="二叉树公式总结">二叉树公式总结</h2>
-<ol>
-<li>n个节点的二叉树一共有((2n)!)/(n! * (n+1)!)种</li>
-<li>n层二叉树的第n层最多为2^(n-1)个</li>
-<li>二叉树节点计算公式 N = n0+n1+n2，度为0的叶子节点比度为2的节点数多一个。N=1<em>n1+2</em>n2+1</li>
-<li>对任何一棵二叉树T，如果其终端节点数为n0，度为2的节点数为n2，则n0=n2+1</li>
-<li>具有n个节点的完全二叉树的深度为log2(n) + 1</li>
-<li>B-树，除叶子与根节点以外的任意结点的分支数介于<a href="%E5%8F%96%E4%B8%8A%E6%95%B4">m/2，m</a></li>
-<li>具有n 个结点的完全二叉树的深度为[log2n]+1</li>
-<li>树的高度：从根节点到所有叶节点中最大的边的数目。树的深度：从根节点到所有叶节点中最多的节点数目。</li>
-</ol>
-<h2 id="javalang包含">java.lang包含</h2>
+<h3 id="实现方式">实现方式</h3>
 <ul>
-<li>包装类</li>
-<li>String 类</li>
-<li>Math 类   ——  包含函数</li>
-<li>Class 类</li>
-<li>Object 类</li>
+<li>Serializable 实现序列化</li>
+<li>ObjectOutputStream 和 ObjectInputStream 对对象进行序列化和反序列化</li>
+<li>在类中增加 writeObject 和 readObject 方法实现自定义序列化策略</li>
 </ul>
-<h2 id="继承执行顺序">继承执行顺序</h2>
-<ol>
-<li>执行父类的静态代码块</li>
-<li>执行子类的静态代码块</li>
-<li>执行父类的构造代码块</li>
-<li>执行父类的构造函数</li>
-<li>执行子类的构造代码块</li>
-<li>执行子类的构造函数</li>
-</ol>
-<h2 id="内存与磁盘查找性能">内存与磁盘查找性能</h2>
-<ol>
-<li>Hash操作能根据散列值直接定位数据的存储地址，设计良好的hash表能在常数级时间下找到需要的数据，但是更适合于内存中的查找。</li>
-<li>B+树是一种是一种树状的数据结构，适合做索引，对磁盘数据来说，索引查找是比较高效的</li>
-<li>STL_Map的内部实现是一颗红黑树，但是只是一颗在内存中建立二叉树树，不能用于磁盘操作，而其内存查找性能也比不上Hash查找。</li>
-</ol>
-<h2 id="广义表">广义表</h2>
-<p>长度为无穷大的广义表不能在计算机中实现，但是<strong>无限递归的广义表即深度无限大</strong>可以在计算机中实现。</p>
-<h2 id="算法复杂度">算法复杂度</h2>
-<p><img src="http://uploadfiles.nowcoder.com/images/20150727/557336_1437989619493_UHCPSAO9URHE18RCEXV.png" alt="img"></p>
-<h2 id="四种引用类型">四种引用类型</h2>
-<p><strong>四种引用类型</strong></p>
-<p>JDK1.2 之前，一个对象只有“已被引用”和&quot;未被引用&quot;两种状态，这将无法描述某些特殊情况下的对象，比如，当内存充足时需要保留，而内存紧张时才需要被抛弃的一类对象。</p>
-<p>所以在 JDK.1.2 之后，Java 对引用的概念进行了扩充，将引用分为了：强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）、虚引用（Phantom Reference）4 种，这 4 种引用的强度依次减弱。</p>
-<p><strong>一，强引用</strong></p>
-<p>Object obj = new Object(); //只要obj还指向Object对象，Object对象就不会被回收 obj = null; //手动置null</p>
-<p>只要强引用存在，垃圾回收器将永远不会回收被引用的对象，哪怕内存不足时，JVM也会直接抛出OutOfMemoryError，不会去回收。如果想中断强引用与对象之间的联系，可以显示的将强引用赋值为null，这样一来，JVM就可以适时的回收对象了</p>
-<p><strong>二，软引用</strong></p>
-<p>软引用是用来描述一些非必需但仍有用的对象。<strong>在内存足够的时候，软引用对象不会被回收，只有在内存不足时，系统则会回收软引用对象，如果回收了软引用对象之后仍然没有足够的内存，才会抛出内存溢出异常</strong>。这种特性常常被用来实现缓存技术，比如网页缓存，图片缓存等。</p>
-<p>在 JDK1.2 之后，用java.lang.ref.SoftReference类来表示软引用。</p>
-<p><strong>三，弱引用</strong></p>
-<p>弱引用的引用强度比软引用要更弱一些，<strong>无论内存是否足够，只要 JVM 开始进行垃圾回收，那些被弱引用关联的对象都会被回收</strong>。在 JDK1.2 之后，用 java.lang.ref.WeakReference 来表示弱引用。</p>
-<p><strong>四，虚引用</strong></p>
-<p>虚引用是最弱的一种引用关系，如果一个对象仅持有虚引用，那么它就和没有任何引用一样，它随时可能会被回收，在 JDK1.2 之后，用 PhantomReference 类来表示，通过查看这个类的源码，发现它只有一个构造函数和一个 get() 方法，而且它的 get() 方法仅仅是返回一个null，也就是说将永远无法通过虚引用来获取对象，虚引用必须要和 ReferenceQueue 引用队列一起使用。</p>
-<h2 id="重载与重写">重载与重写</h2>
-<p>方法的重载和重写都是实现多态的方式，区别在于前者实现的是编译时的多态性，而后者实现的是运行时的多态性。重载发生在一个类中，同名的方法如果有不同的参数列表（参数类型不同、参数个数不同或者二者都不同）则视为重载；重写发生在子类与父类之间，重写要求子类被重写方法与父类被重写方法有相同的参数列表，有兼容的返回类型，比父类被重写方法更好访问，不能比父类被重写方法声明更多的异常（里氏代换原则）。重载对返回类型没有特殊的要求，不能根据返回类型进行区分。</p>
+<h3 id="阻止序列化">阻止序列化</h3>
+<ul>
+<li>在变量声明前加上 Transient 关键字，可以阻止该变量被序列化到文件中，在被反序列化后，transient 变量的值被设为初始值，如 int 型的是 0，对象型的是 null。</li>
+<li>服务器端给客户端发送序列化对象数据，对象中有一些数据是敏感的，比如密码字符串等，希望对该密码字段在序列化时，进行加密，而客户端如果拥有解密的密钥，只有在客户端进行反序列化时，才可以对密码进行读取，这样可以一定程度保证序列化对象的数据安全。</li>
+</ul>
+<h2 id="深拷贝和浅拷贝">深拷贝和浅拷贝</h2>
+<h3 id="直接赋值复制">直接赋值复制</h3>
+<p><code>A a1 = a2;</code>这实际上复制的是引用，也就是说 a1 和 a2 指向的是同一个对象，所以 a1 变化的时候，a2 实际也在发生变化。</p>
+<h3 id="浅拷贝">浅拷贝</h3>
+<p>创建一个新对象，然后将当前对象的非静态字段复制到该新对象，如果字段是值类型的，那么对该字段执行复制；如果该字段是引用类型的话，则复制引用但不复制引用的对象。因此，原始对象及其副本引用同一个对象。</p>
+<h3 id="深拷贝">深拷贝</h3>
+<p>深拷贝不仅复制对象本身，而且复制对象包含的引用指向的所有对象。</p>
+<h3 id="序列化">序列化</h3>
+<p>在 Java 语言里深复制一个对象，常常可以先使对象实现 Serializable 接口，然后把对象（实际上只是对象的一个拷贝）写到一个流里，再从流里读出来，便可以重建对象。</p>
 
                 
                 <hr>
@@ -850,7 +349,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#java"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">JAVA</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#servlet生命周期"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Servlet&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#applet"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Applet</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#访问修饰符"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x8BBF;&#x95EE;&#x4FEE;&#x9970;&#x7B26;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hash冲突"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Hash&#x51B2;&#x7A81;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概述"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">&#x6982;&#x8FF0;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-开放地址法"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">1. &#x5F00;&#x653E;&#x5730;&#x5740;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-再哈希法"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">2. &#x518D;&#x54C8;&#x5E0C;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-链地址法拉链法"><span class="toc-nav-number">1.4.4.</span> <span class="toc-nav-text">3. &#x94FE;&#x5730;&#x5740;&#x6CD5;(&#x62C9;&#x94FE;&#x6CD5;)</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#基本数据类型"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">&#x57FA;&#x672C;&#x6570;&#x636E;&#x7C7B;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-精度问题"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">1. &#x7CBE;&#x5EA6;&#x95EE;&#x9898;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#线程操作"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">&#x7EBF;&#x7A0B;&#x64CD;&#x4F5C;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-同步"><span class="toc-nav-number">1.6.1.</span> <span class="toc-nav-text">1. &#x540C;&#x6B65;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#b树"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">B&#x6811;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hash表"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">Hash&#x8868;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-构造方法"><span class="toc-nav-number">1.8.1.</span> <span class="toc-nav-text">1. &#x6784;&#x9020;&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-处理冲突"><span class="toc-nav-number">1.8.2.</span> <span class="toc-nav-text">2. &#x5904;&#x7406;&#x51B2;&#x7A81;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-性能分析"><span class="toc-nav-number">1.8.3.</span> <span class="toc-nav-text">3. &#x6027;&#x80FD;&#x5206;&#x6790;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hashtable和hashmap"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">HashTable&#x548C;HashMap</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#抽象类和接口"><span class="toc-nav-number">1.10.</span> <span class="toc-nav-text">&#x62BD;&#x8C61;&#x7C7B;&#x548C;&#x63A5;&#x53E3;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#map-collection和collections"><span class="toc-nav-number">1.11.</span> <span class="toc-nav-text">Map&#x3001;Collection&#x548C;Collections</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#四大域"><span class="toc-nav-number">1.12.</span> <span class="toc-nav-text">&#x56DB;&#x5927;&#x57DF;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#synchronized和volatile"><span class="toc-nav-number">1.13.</span> <span class="toc-nav-text">synchronized&#x548C;volatile</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#httpservlet容器响应web客户请求流程"><span class="toc-nav-number">1.14.</span> <span class="toc-nav-text">HttpServlet&#x5BB9;&#x5668;&#x54CD;&#x5E94;Web&#x5BA2;&#x6237;&#x8BF7;&#x6C42;&#x6D41;&#x7A0B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#数据库"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x6570;&#x636E;&#x5E93;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#关系运算"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5173;&#x7CFB;&#x8FD0;&#x7B97;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#完整性约束"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x5B8C;&#x6574;&#x6027;&#x7EA6;&#x675F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#statement对象"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">Statement&#x5BF9;&#x8C61;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#零碎知识点"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x96F6;&#x788E;&#x77E5;&#x8BC6;&#x70B9;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#编译相关"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x7F16;&#x8BD1;&#x76F8;&#x5173;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#正则表达式"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#形参的修改"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x5F62;&#x53C2;&#x7684;&#x4FEE;&#x6539;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#二叉树公式总结"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">&#x4E8C;&#x53C9;&#x6811;&#x516C;&#x5F0F;&#x603B;&#x7ED3;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#javalang包含"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">java.lang&#x5305;&#x542B;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#继承执行顺序"><span class="toc-nav-number">3.6.</span> <span class="toc-nav-text">&#x7EE7;&#x627F;&#x6267;&#x884C;&#x987A;&#x5E8F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#内存与磁盘查找性能"><span class="toc-nav-number">3.7.</span> <span class="toc-nav-text">&#x5185;&#x5B58;&#x4E0E;&#x78C1;&#x76D8;&#x67E5;&#x627E;&#x6027;&#x80FD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#广义表"><span class="toc-nav-number">3.8.</span> <span class="toc-nav-text">&#x5E7F;&#x4E49;&#x8868;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#算法复杂度"><span class="toc-nav-number">3.9.</span> <span class="toc-nav-text">&#x7B97;&#x6CD5;&#x590D;&#x6742;&#x5EA6;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#四种引用类型"><span class="toc-nav-number">3.10.</span> <span class="toc-nav-text">&#x56DB;&#x79CD;&#x5F15;&#x7528;&#x7C7B;&#x578B;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#重载与重写"><span class="toc-nav-number">3.11.</span> <span class="toc-nav-text">&#x91CD;&#x8F7D;&#x4E0E;&#x91CD;&#x5199;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#泛型"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x6CDB;&#x578B;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#序列化"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5E8F;&#x5217;&#x5316;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#实现方式"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#阻止序列化"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x963B;&#x6B62;&#x5E8F;&#x5217;&#x5316;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#深拷贝和浅拷贝"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x6DF1;&#x62F7;&#x8D1D;&#x548C;&#x6D45;&#x62F7;&#x8D1D;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#直接赋值复制"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x76F4;&#x63A5;&#x8D4B;&#x503C;&#x590D;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#浅拷贝"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x6D45;&#x62F7;&#x8D1D;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#深拷贝"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x6DF1;&#x62F7;&#x8D1D;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#序列化"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">&#x5E8F;&#x5217;&#x5316;</span></a></li></ol></li></ol>
         
         </div>
       </aside>

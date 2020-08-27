@@ -154,13 +154,13 @@
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -224,7 +224,7 @@
 
 				
                 <blockquote>
-<p>Spring相关的一些理论整理。</p>
+<p>Spring 相关的一些理论整理，夹杂了一些 MyBatis。</p>
 </blockquote>
 <h2 id="spring-概述">Spring 概述</h2>
 <p>Spring 是一个轻量级的开源应用框架，降低应用程序开发难度。</p>
@@ -245,6 +245,8 @@
 </ul>
 <h3 id="autowired-原理">Autowired 原理</h3>
 <p>@Autowired 注解可以被标注在构造函数、属性、setter 方法或配置方法上，用于实现依赖自动注入。</p>
+<h4 id="和-resource-区别">和 @Resource 区别</h4>
+<p>前者属于 Spring 的，后者属于 JDK 的。前者按类型装配，后者按名称装配。</p>
 <h4 id="定义">定义</h4>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE&#125;)	<span class="comment">// 表示注解是作用在方法上、类上、还是参数上</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)	<span class="comment">// 注解的生命周期</span></span><br><span class="line"><span class="meta">@Documented</span>	<span class="comment">// 注解的作用及Javadoc文档生成工具的使用</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Autowired &#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">required</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>预解析类<code>AutowiredAnnotationBeanPostProcessor</code>实现了接口<code>MergedBeanDefinitionPostProcessor</code></p>
@@ -353,8 +355,33 @@
 <li>策略：Spring 中在实例化对象的时候用到 Strategy 模式。</li>
 <li>模板：JdbcTemplate</li>
 </ul>
+<h3 id="检测循环依赖">检测循环依赖</h3>
+<p>先让最底层对象完成初始化，通过三级缓存与二级缓存提前曝光创建中的 Bean，让其他 Bean 率先完成初始化。</p>
+<p>检测循环依赖的过程如下：</p>
+<ul>
+<li>
+<p>A 创建过程中需要 B，于是 A 将自己放到三级缓里面 ，去实例化 B</p>
+</li>
+<li>
+<p>B 实例化的时候发现需要 A，于是 B 先查一级缓存，没有，再查二级缓存，还是没有，再查三级缓存，找到了！</p>
+<ul>
+<li>
+<p>然后把三级缓存里面的这个 A 放到二级缓存里面，并删除三级缓存里面的 A</p>
+</li>
+<li>
+<p>B 顺利初始化完毕，将自己放到一级缓存里面（此时B里面的A依然是创建中状<br>
+态）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>然后回来接着创建 A，此时 B 已经创建结束，直接从一级缓存里面拿到 B ，然后完成创建，将自己放到一级缓存里面</p>
+</li>
+</ul>
+<p>使用构造器注入其他 Bean 的实例，这个就没办法了。要手动改代码。</p>
 <h2 id="ioc-和-di">IOC 和 DI</h2>
 <h3 id="概念">概念</h3>
+<p><strong>Spring 通过一个配置文件描述 Bean 和 Bean 之间的依赖关系，利用 Java 语言的反射功能实例化 Bean 并建立 Bean 之间的依赖关系，Spring IOC 容器在完成这些底层工作的基础上，还提供了 Bean 实例缓存、生命周期管理、 Bean 实例代理、事件发布、资源装载等高级服务。</strong></p>
 <p>IOC 指控制反转，是 Spring 中的一种设计思想以及重要特性。</p>
 <p>IOC 意味着将设计好的类交给容器控制，而不是在对象内部控制。</p>
 <p>控制，指的是容器控制对象，在传统的开发中，我们通过在对象内部通过new进行对象创建，而在IOC中专门有一个容器用来创建对象。</p>
@@ -410,6 +437,16 @@
 <p>Spring 中 AOP 的实现依赖于动态代理的实现。动态代理主要有两种实现，分别是 JDK 动态代理和 cglib 代理。采用 JDK 动态代理，目标类必须实现某个接口，否则不可用；而 CGLIB 底层是通过使用一个小而块的字节码处理框架 ASM 来转换字节码并生成新的类，覆盖或添加类中的方法。从上述描述中不难看出，cglib 类中方法类型不能设置为 final。在执行效率上，早期的 JDK 动态代理效率远低于 cglib，而随着 JDK 版本的更新，现在 JDK 动态代理的效率已经和 cglib 不相伯仲。</p>
 <h2 id="bean">Bean</h2>
 <p>在 Spring 中，Bean 是组成应用程序的主体及由 SpringIoC 容器所管理的对象，被称之为 bean 。简单地讲，Bean 就是由 IoC 容器初始化、装配及管理的对象，除此之外，bean 就与应用程序中的其他对象没有什么区别了。而 Bean 的定义以及 Bean 相互间的依赖关系将通过配置元数据来描述。</p>
+<h3 id="bean-存在哪里怎么存的">Bean 存在哪里，怎么存的</h3>
+<p>在类：FactoryBeanRegistrySupport 里面有一个 Map 叫：factoryBeanObjectCache，单例<br>
+的bean就放在这里，是一个 ConcurrentHashMap。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Cache of singleton objects created by FactoryBeans: FactoryBean name</span></span><br><span class="line"><span class="comment">--&gt; object */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; factoryBeanObjectCache = <span class="keyword">new</span></span><br><span class="line">ConcurrentHashMap&lt;&gt;(<span class="number">16</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="spring-如何管理-bean-的">Spring 如何管理 Bean 的</h3>
+<ul>
+<li>通过读取 xml 文件，反射实例化对象，放在 ConcurrentHashMap 里面保存起来。</li>
+<li>通过 BeanFactory 实例化的 Bean 会在第一次真正使用的时候才初始化。</li>
+<li>通过 ApplicationContext 实例化的 Bean 会在创建的时候就初始化了。</li>
+</ul>
 <h3 id="bean-的作用域">Bean 的作用域</h3>
 <ul>
 <li>singleton</li>
@@ -454,12 +491,60 @@
 </ul>
 <h3 id="spring中beanfactory-与-applicationcontext-的区别">Spring中BeanFactory 与 ApplicationContext 的区别</h3>
 <ul>
-<li>BeanFactroy 采用的是延迟加载形式来注入 Bean 的，即只有在使用到某个 Bean 时(调用 getBean())，才对该 Bean 进行加载实例化，这样，我们就不能发现一些存在的 Spring 的配置问题。而 ApplicationContext 则相反，它是在容器启动时，一次性创建了所有的 Bean。这样，在容器启动时，我们就可以发现 Spring 中存在的配置错误</li>
+<li>BeanFactroy 采用的是<strong>延迟加载</strong>形式来注入 Bean 的，即只有在使用到某个 Bean 时(调用 getBean())，才对该 Bean 进行加载实例化，这样，我们就不能发现一些存在的 Spring 的配置问题。而 ApplicationContext 则相反，<strong>它是在容器启动时，一次性创建了所有的 Bean</strong>。这样，在容器启动时，我们就可以发现 Spring 中存在的配置错误</li>
 <li>BeanFactory 和 ApplicationContext 都支持 BeanPostProcessor、BeanFactoryPostProcessor 的使用，但两者之间的区别是： BeanFactory 需要手动注册，而 ApplicationContext 则是自动注册</li>
 <li>ApplicationContext 包还提供了以下的功能：资源访问，如 URL 和文件；事件传播；载入多个（有继承关系）上下文；MessageSource, 提供国际化的消息访问</li>
 <li>前者不支持依赖注解，后者支持</li>
 </ul>
+<p>BeanFactory</p>
+<ul>
+<li>采用了工厂模式</li>
+<li>负责读取 bean 配置文档</li>
+<li>管理 bean 的加载，实例化，维护 bean 之间的依赖关系，负责 bean 的生命周期</li>
+</ul>
+<p>ApplicationContext</p>
+<ul>
+<li>除了提供上述 BeanFactory 所能提供的功能之外，还提供了更完整的框架功能：国际化支持、aop、事务等</li>
+<li>BeanFactory 在解析配置文件时并不会初始化对象，只有在使用对象 getBean() 才会对该对象进行初始化</li>
+<li>ApplicationContext 在解析配置文件时对配置文件中的所有对象都初始化了</li>
+</ul>
 <h2 id="mvc">MVC</h2>
+<h3 id="spring-mvc">Spring MVC</h3>
+<p>是用 Java 实现的 MVC web 框架，将 model、view、controller 分层，简化开发，使得项目结构更加清晰。</p>
+<ul>
+<li>支持各种视图，而非 jsp</li>
+</ul>
+<ol start="2">
+<li>完美融合 Spring</li>
+<li>处理流程清晰</li>
+</ol>
+<p>重要组件：</p>
+<ul>
+<li>DispatcherServlet（请求分发）</li>
+</ul>
+<ol start="2">
+<li>HandlerMapping（根据请求的URL来查找Handler）</li>
+<li>HandlerAdapter（适配一个 Handler）</li>
+<li>Handler（就是 controller）</li>
+<li>ViewResolver</li>
+<li>View（就是 jsp 这些视图）</li>
+</ol>
+<p>异常处理：</p>
+<ul>
+<li>遇到异常统一往上一层抛，在 controller 层统一捕获处理</li>
+</ul>
+<ol start="2">
+<li>交给 Spring 管理：@ResponseStatus</li>
+<li>自定义全局异常（使用增强处理器）</li>
+</ol>
+<p>Controller 是单例模式么：</p>
+<ul>
+<li>是，多线程访问时候有线程安全问题，不要出现共享变量即可。</li>
+</ul>
+<p>@RequestMapping 注解的作用</p>
+<ul>
+<li>用来映射一个 URL 到一个类或者一个特定的处理方法上。</li>
+</ul>
 <h3 id="执行流程">执行流程</h3>
 <ul>
 <li>用户请求发送至 DispatcherServlet 类进行处理。</li>
@@ -475,6 +560,14 @@
 <li>DispatcherServlet 类进行视图 View 的渲染，填充 Model。</li>
 <li>DispatcherServlet 类向用户返回响应。</li>
 </ul>
+<h3 id="spring-mvc-只使用一个-dispatcherservlet-来处理所有请求">Spring MVC 只使用一个 DispatcherServlet 来处理所有请求</h3>
+<p>Spring中只使用到了一个DispatcherServlet主要是因为Spring MVC采用的是J2EE设计模式-前端控制模式。</p>
+<p>前端控制器模式主要用来集中处理请求，这样所有的请求都只经过一个处理器处理。这个处理器可以集中处理授权，日志，跟踪请求等。主要用于集中统一化对外的请求接口，便于更好的封装内部逻辑。可以配置两个DispatcherServlet，但是 url-pattern 要有所区分。</p>
+<h3 id="spring为什么要结合使用handlermapping以及handleradapter来处理handler">Spring为什么要结合使用HandlerMapping以及HandlerAdapter来处理Handler</h3>
+<p>Spring 的特点就是父类提供步骤，子类提供实现。符合面向对象中的单一职责原则，代码架构清晰，便于维护，最重要的是代码可复用性高。如 HandlerAdapter 可能会被用于处理多种 Handler。</p>
+<h3 id="controller-和-requestmapping-如何对应">Controller 和 RequestMapping 如何对应</h3>
+<p>Spring MVC 怎么找到 Controller的</p>
+<p>Spring MVC 初始化的时候，会对所有的 Bean 扫描，添加了 @Controler 注解以及@RequestMapping 注解的 Bean 添加到 Map 里面，他是一个 LinkedHashMap。key 是 url ，value 是 RequestMappingInfo</p>
 <h3 id="分层">分层</h3>
 <img src="https://pic.tyzhang.top/images/2020/07/16/005L0VzSly1fz0ddni132j30fv0cz74f.jpg" style="zoom:50%;">
 <p>Dao 层主要做数据持久层的工作，负责与数据库进行联络的一些任务皆封装于此。首先设计 Dao 层的接口，然后在 Spring 的配置文件中定义此接口的实现类，随后在模块中调用此接口来进行数据业务的处理，而不用关心此接口的具体实现类是哪个类，这样结构变得非常清晰。</p>
@@ -501,6 +594,13 @@
 <li>权限检查，如检测请求是否具有登录权限，如果没有直接返回到登陆页面</li>
 <li>性能监控，用请求处理前和请求处理后的时间差计算整个请求响应完成所消耗的时间</li>
 <li>日志记录，可以记录请求信息的日志，以便进行信息监控、信息统计等</li>
+</ul>
+<p>需要实现 HandlerInterceptor 接口，并重写三个方法：preHandle、postHandle、afterCompletion。</p>
+<p>执行顺序：preHandle &gt; postHandle &gt; afterCompletion</p>
+<ul>
+<li>preHandle 按拦截器定义顺序调用</li>
+<li>postHandler 按拦截器定义逆序调用</li>
+<li>afterCompletion 按拦截器定义逆序调用</li>
 </ul>
 <h2 id="servlet">Servlet</h2>
 <p>Servlet，是用 Java 编写的服务器端程序,其主要功能在于交互式地浏览和修改数据，生成动态 Web 内容。狭义的 Servlet 是指 Java 语言实现的一个接口，广义的 Servlet 是指任何实现了这个 Servlet 接口的类。从实现上讲，Servlet 可以响应任何类型的请求，但绝大多数情况下 Servlet 只用来扩展基于 HTTP 协议的 Web 服务器。</p>
@@ -673,6 +773,54 @@
 </tr>
 </tbody>
 </table>
+<h2 id="mybatis">MyBatis</h2>
+<h3 id="和-的区别">#{} 和 ${} 的区别</h3>
+<ul>
+<li>都是用来传递参数的</li>
+<li>#{} 会为参数加上引号</li>
+<li>${} 就是个占位符，不会对参数做任何处理，参数直接参与编译，引发 SQL 注入问题</li>
+</ul>
+<h3 id="如何生成实现类">如何生成实现类</h3>
+<p>通过动态代理</p>
+<ul>
+<li>当调用 Dao接口的某方法() 时，会进入到 MapperProxy 中，执行 invoke() 方法（因为这个Dao 被注入的时候就是一个 MapperProxy 了）</li>
+<li>然后在 invoke() 里面获取一个 MapperMethod，执行他的 execute 方法</li>
+<li>execute 通过调用 sqlSession 的增删改查方法传入参数（会将参数解析为完整的 sql 语句）</li>
+<li>在 JDBC 层面操作数据库，拿到返回值</li>
+</ul>
+<p>虽然没有给 Mapper 写实现类，但是在获取 Mapper 的时候会触发 MapperProxyFactory 的 newInstance 方法，它通过 JDK 动态代理，传入这个 MapperProxy 作为要回调的 handler</p>
+<h3 id="如果有两个-xml-文件和这个dao-建立关系岂不是冲突了">如果有两个 XML 文件和这个Dao 建立关系，岂不是冲突了？</h3>
+<p>不管有几个 XML 和 Dao 建立关系，只要保证 namespace + id 唯一即可。</p>
+<h3 id="dao-接口里面的方法可以重载吗">Dao 接口里面的方法可以重载吗？</h3>
+<p>不可以！因为 mapper 文件里面的每一个 sql 都是通过 namespace + 方法名 来唯一确定的，一旦重载就打破了此约定。</p>
+<h3 id="几种方式绑定接口">几种方式绑定接口</h3>
+<ul>
+<li>注解：直接在接口上写 sql</li>
+</ul>
+<ol start="2">
+<li>mapper文件</li>
+</ol>
+<h3 id="二级缓存">二级缓存</h3>
+<p><img src="https://pic.tyzhang.top/images/2020/08/18/image.png" alt="二级缓存"></p>
+<ul>
+<li>一级缓存属于单个 sqlSession 的，默认开启
+<ul>
+<li>工作方式：第一次 select 查询缓存，为空，查数据库，写回缓存。第二次查询相同数据直接从缓存返回，若发生 commit 则一级缓存会被清空。</li>
+</ul>
+</li>
+<li>二级缓存属于多个 sqlSession 共享的，默认开启
+<ul>
+<li>工作方式：每一个 namespace 的 mapper 都有一个二缓存区域。不同的 namespace 的缓存互不影响<br>
+无缓存时：sqlSession 通过 Executor 访问 DB 有二级缓存时：sqlSession 通过 Executor 的 装饰者：CachingExecutor 先查一遍缓存，有就直接 返回，没有再查数据库。</li>
+</ul>
+</li>
+</ul>
+<p>SqlSession commit 或 close 之后，二级缓存才会生效，因为 commit、close 之后，缓存才会被写入 HashMap。不仅仅要在配置文件里面开启二级缓存，在 《select》标签里面要显示指明使用缓存《select useCache=true》。</p>
+<p><strong>先查二级缓存再查一级缓存</strong>。</p>
+<p>查缓存是用的同一个 Executor ，先查二级再查一级。</p>
+<p>缓存可以使用 mybatis 提供的，也可以自定义，还可以使用第三方缓存库Redis等。</p>
+<p>并且提供大量cache扩展以及淘汰算法。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/08/18/image3f1095fa06b59330.png" alt="先二级再一级"></p>
 
                 
                 <hr>
@@ -721,7 +869,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#spring-概述"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Spring &#x6982;&#x8FF0;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#特性"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x7279;&#x6027;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#涉及组件"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x6D89;&#x53CA;&#x7EC4;&#x4EF6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#autowired-原理"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Autowired &#x539F;&#x7406;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#定义"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x5B9A;&#x4E49;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#类型"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">&#x7C7B;&#x578B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-中依赖注入的方式"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Spring &#x4E2D;&#x4F9D;&#x8D56;&#x6CE8;&#x5165;&#x7684;&#x65B9;&#x5F0F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#自动装配的限制"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">&#x81EA;&#x52A8;&#x88C5;&#x914D;&#x7684;&#x9650;&#x5236;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-中的事务"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Spring &#x4E2D;&#x7684;&#x4E8B;&#x52A1;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#事务回滚"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x56DE;&#x6EDA;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#编程式事务"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">&#x7F16;&#x7A0B;&#x5F0F;&#x4E8B;&#x52A1;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#声明式事务"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">&#x58F0;&#x660E;&#x5F0F;&#x4E8B;&#x52A1;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#事务传播"><span class="toc-nav-number">1.5.4.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x4F20;&#x64AD;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-中的线程安全"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">Spring &#x4E2D;&#x7684;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#threadlocal和线程同步机制相比有什么优势"><span class="toc-nav-number">1.6.1.</span> <span class="toc-nav-text">ThreadLocal&#x548C;&#x7EBF;&#x7A0B;&#x540C;&#x6B65;&#x673A;&#x5236;&#x76F8;&#x6BD4;&#x6709;&#x4EC0;&#x4E48;&#x4F18;&#x52BF;?</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-中的设计模式"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">Spring &#x4E2D;&#x7684;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ioc-和-di"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">IOC &#x548C; DI</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概念"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x6982;&#x5FF5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ioc-大体流程"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">IOC &#x5927;&#x4F53;&#x6D41;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#依赖注入的时机"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x4F9D;&#x8D56;&#x6CE8;&#x5165;&#x7684;&#x65F6;&#x673A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ioc-中的预实例化"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">IOC &#x4E2D;&#x7684;&#x9884;&#x5B9E;&#x4F8B;&#x5316;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#beanpostprocessor-后置处理器的实现"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">BeanPostProcessor &#x540E;&#x7F6E;&#x5904;&#x7406;&#x5668;&#x7684;&#x5B9E;&#x73B0;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#aop"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">AOP</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概念"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x6982;&#x5FF5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#几种方式"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x51E0;&#x79CD;&#x65B9;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#实现原理"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x5B9E;&#x73B0;&#x539F;&#x7406;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#动态代理在-spring"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x5728; Spring</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#bean"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Bean</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#bean-的作用域"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Bean &#x7684;&#x4F5C;&#x7528;&#x57DF;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#bean-的生命周期-获得-bean-的步骤"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">Bean &#x7684;&#x751F;&#x547D;&#x5468;&#x671F; / &#x83B7;&#x5F97; Bean &#x7684;&#x6B65;&#x9AA4;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#beanfactory"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">BeanFactory</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#factorybean"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">FactoryBean</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#beandefinition"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">BeanDefinition</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#context"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">Context</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring中beanfactory-与-applicationcontext-的区别"><span class="toc-nav-number">4.7.</span> <span class="toc-nav-text">Spring&#x4E2D;BeanFactory &#x4E0E; ApplicationContext &#x7684;&#x533A;&#x522B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#mvc"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">MVC</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#执行流程"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">&#x6267;&#x884C;&#x6D41;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分层"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">&#x5206;&#x5C42;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring中分层领域模型规约"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">Spring&#x4E2D;&#x5206;&#x5C42;&#x9886;&#x57DF;&#x6A21;&#x578B;&#x89C4;&#x7EA6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#handlermapping"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">HandlerMapping</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#拦截器"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">&#x62E6;&#x622A;&#x5668;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#servlet"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Servlet</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#工作流程"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#工作原理"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">&#x5DE5;&#x4F5C;&#x539F;&#x7406;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#servlet-与-tomcat-的关系"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">Servlet &#x4E0E; Tomcat &#x7684;&#x5173;&#x7CFB;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#servlet的生命周期"><span class="toc-nav-number">6.4.</span> <span class="toc-nav-text">Servlet&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#请求转发和重定向的区别"><span class="toc-nav-number">6.5.</span> <span class="toc-nav-text">&#x8BF7;&#x6C42;&#x8F6C;&#x53D1;&#x548C;&#x91CD;&#x5B9A;&#x5411;&#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#servlet-中的异步机制"><span class="toc-nav-number">6.6.</span> <span class="toc-nav-text">Servlet &#x4E2D;&#x7684;&#x5F02;&#x6B65;&#x673A;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#servlet中的线程安全问题"><span class="toc-nav-number">6.7.</span> <span class="toc-nav-text">Servlet&#x4E2D;&#x7684;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x95EE;&#x9898;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#servlet-中为什么重写-doget-以及-dopost-而不是-service-方法"><span class="toc-nav-number">6.7.1.</span> <span class="toc-nav-text">Servlet &#x4E2D;&#x4E3A;&#x4EC0;&#x4E48;&#x91CD;&#x5199; doGet &#x4EE5;&#x53CA; doPost &#x800C;&#x4E0D;&#x662F; service &#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#request-对象中-getattribute-方法与-getparameter-方法的区别"><span class="toc-nav-number">6.8.</span> <span class="toc-nav-text">Request &#x5BF9;&#x8C61;&#x4E2D; getAttribute &#x65B9;&#x6CD5;&#x4E0E; getParameter &#x65B9;&#x6CD5;&#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jsp-的九大内置对象"><span class="toc-nav-number">6.9.</span> <span class="toc-nav-text">JSP &#x7684;&#x4E5D;&#x5927;&#x5185;&#x7F6E;&#x5BF9;&#x8C61;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#四种会话跟踪技术及其作用域"><span class="toc-nav-number">6.10.</span> <span class="toc-nav-text">&#x56DB;&#x79CD;&#x4F1A;&#x8BDD;&#x8DDF;&#x8E2A;&#x6280;&#x672F;&#x53CA;&#x5176;&#x4F5C;&#x7528;&#x57DF;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#cookie-和-session"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Cookie &#x548C; Session</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#cookie"><span class="toc-nav-number">7.1.</span> <span class="toc-nav-text">Cookie</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#运行机制"><span class="toc-nav-number">7.1.1.</span> <span class="toc-nav-text">&#x8FD0;&#x884C;&#x673A;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#不可跨域名性"><span class="toc-nav-number">7.1.2.</span> <span class="toc-nav-text">&#x4E0D;&#x53EF;&#x8DE8;&#x57DF;&#x540D;&#x6027;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#应用场景"><span class="toc-nav-number">7.1.3.</span> <span class="toc-nav-text">&#x5E94;&#x7528;&#x573A;&#x666F;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#session"><span class="toc-nav-number">7.2.</span> <span class="toc-nav-text">Session</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#运行机制"><span class="toc-nav-number">7.2.1.</span> <span class="toc-nav-text">&#x8FD0;&#x884C;&#x673A;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#生命周期"><span class="toc-nav-number">7.2.2.</span> <span class="toc-nav-text">&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#如何传递id值"><span class="toc-nav-number">7.2.3.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x4F20;&#x9012;ID&#x503C;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#cookie-和-session"><span class="toc-nav-number">7.3.</span> <span class="toc-nav-text">Cookie &#x548C; Session</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#spring-概述"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Spring &#x6982;&#x8FF0;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#特性"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x7279;&#x6027;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#涉及组件"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x6D89;&#x53CA;&#x7EC4;&#x4EF6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#autowired-原理"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Autowired &#x539F;&#x7406;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#和-resource-区别"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x548C; @Resource &#x533A;&#x522B;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#定义"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">&#x5B9A;&#x4E49;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#类型"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">&#x7C7B;&#x578B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-中依赖注入的方式"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Spring &#x4E2D;&#x4F9D;&#x8D56;&#x6CE8;&#x5165;&#x7684;&#x65B9;&#x5F0F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#自动装配的限制"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">&#x81EA;&#x52A8;&#x88C5;&#x914D;&#x7684;&#x9650;&#x5236;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-中的事务"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Spring &#x4E2D;&#x7684;&#x4E8B;&#x52A1;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#事务回滚"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x56DE;&#x6EDA;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#编程式事务"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">&#x7F16;&#x7A0B;&#x5F0F;&#x4E8B;&#x52A1;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#声明式事务"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">&#x58F0;&#x660E;&#x5F0F;&#x4E8B;&#x52A1;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#事务传播"><span class="toc-nav-number">1.5.4.</span> <span class="toc-nav-text">&#x4E8B;&#x52A1;&#x4F20;&#x64AD;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-中的线程安全"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">Spring &#x4E2D;&#x7684;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#threadlocal和线程同步机制相比有什么优势"><span class="toc-nav-number">1.6.1.</span> <span class="toc-nav-text">ThreadLocal&#x548C;&#x7EBF;&#x7A0B;&#x540C;&#x6B65;&#x673A;&#x5236;&#x76F8;&#x6BD4;&#x6709;&#x4EC0;&#x4E48;&#x4F18;&#x52BF;?</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-中的设计模式"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">Spring &#x4E2D;&#x7684;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#检测循环依赖"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">&#x68C0;&#x6D4B;&#x5FAA;&#x73AF;&#x4F9D;&#x8D56;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ioc-和-di"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">IOC &#x548C; DI</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概念"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x6982;&#x5FF5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ioc-大体流程"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">IOC &#x5927;&#x4F53;&#x6D41;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#依赖注入的时机"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x4F9D;&#x8D56;&#x6CE8;&#x5165;&#x7684;&#x65F6;&#x673A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ioc-中的预实例化"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">IOC &#x4E2D;&#x7684;&#x9884;&#x5B9E;&#x4F8B;&#x5316;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#beanpostprocessor-后置处理器的实现"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">BeanPostProcessor &#x540E;&#x7F6E;&#x5904;&#x7406;&#x5668;&#x7684;&#x5B9E;&#x73B0;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#aop"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">AOP</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概念"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x6982;&#x5FF5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#几种方式"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x51E0;&#x79CD;&#x65B9;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#实现原理"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">&#x5B9E;&#x73B0;&#x539F;&#x7406;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#动态代理在-spring"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x5728; Spring</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#bean"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Bean</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#bean-存在哪里怎么存的"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Bean &#x5B58;&#x5728;&#x54EA;&#x91CC;&#xFF0C;&#x600E;&#x4E48;&#x5B58;&#x7684;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-如何管理-bean-的"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">Spring &#x5982;&#x4F55;&#x7BA1;&#x7406; Bean &#x7684;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#bean-的作用域"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">Bean &#x7684;&#x4F5C;&#x7528;&#x57DF;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#bean-的生命周期-获得-bean-的步骤"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">Bean &#x7684;&#x751F;&#x547D;&#x5468;&#x671F; / &#x83B7;&#x5F97; Bean &#x7684;&#x6B65;&#x9AA4;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#beanfactory"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">BeanFactory</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#factorybean"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">FactoryBean</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#beandefinition"><span class="toc-nav-number">4.7.</span> <span class="toc-nav-text">BeanDefinition</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#context"><span class="toc-nav-number">4.8.</span> <span class="toc-nav-text">Context</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring中beanfactory-与-applicationcontext-的区别"><span class="toc-nav-number">4.9.</span> <span class="toc-nav-text">Spring&#x4E2D;BeanFactory &#x4E0E; ApplicationContext &#x7684;&#x533A;&#x522B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#mvc"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">MVC</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-mvc"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">Spring MVC</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#执行流程"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">&#x6267;&#x884C;&#x6D41;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-mvc-只使用一个-dispatcherservlet-来处理所有请求"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">Spring MVC &#x53EA;&#x4F7F;&#x7528;&#x4E00;&#x4E2A; DispatcherServlet &#x6765;&#x5904;&#x7406;&#x6240;&#x6709;&#x8BF7;&#x6C42;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring为什么要结合使用handlermapping以及handleradapter来处理handler"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">Spring&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x7ED3;&#x5408;&#x4F7F;&#x7528;HandlerMapping&#x4EE5;&#x53CA;HandlerAdapter&#x6765;&#x5904;&#x7406;Handler</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#controller-和-requestmapping-如何对应"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">Controller &#x548C; RequestMapping &#x5982;&#x4F55;&#x5BF9;&#x5E94;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分层"><span class="toc-nav-number">5.6.</span> <span class="toc-nav-text">&#x5206;&#x5C42;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring中分层领域模型规约"><span class="toc-nav-number">5.7.</span> <span class="toc-nav-text">Spring&#x4E2D;&#x5206;&#x5C42;&#x9886;&#x57DF;&#x6A21;&#x578B;&#x89C4;&#x7EA6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#handlermapping"><span class="toc-nav-number">5.8.</span> <span class="toc-nav-text">HandlerMapping</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#拦截器"><span class="toc-nav-number">5.9.</span> <span class="toc-nav-text">&#x62E6;&#x622A;&#x5668;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#servlet"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Servlet</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#工作流程"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#工作原理"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">&#x5DE5;&#x4F5C;&#x539F;&#x7406;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#servlet-与-tomcat-的关系"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">Servlet &#x4E0E; Tomcat &#x7684;&#x5173;&#x7CFB;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#servlet的生命周期"><span class="toc-nav-number">6.4.</span> <span class="toc-nav-text">Servlet&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#请求转发和重定向的区别"><span class="toc-nav-number">6.5.</span> <span class="toc-nav-text">&#x8BF7;&#x6C42;&#x8F6C;&#x53D1;&#x548C;&#x91CD;&#x5B9A;&#x5411;&#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#servlet-中的异步机制"><span class="toc-nav-number">6.6.</span> <span class="toc-nav-text">Servlet &#x4E2D;&#x7684;&#x5F02;&#x6B65;&#x673A;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#servlet中的线程安全问题"><span class="toc-nav-number">6.7.</span> <span class="toc-nav-text">Servlet&#x4E2D;&#x7684;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x95EE;&#x9898;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#servlet-中为什么重写-doget-以及-dopost-而不是-service-方法"><span class="toc-nav-number">6.7.1.</span> <span class="toc-nav-text">Servlet &#x4E2D;&#x4E3A;&#x4EC0;&#x4E48;&#x91CD;&#x5199; doGet &#x4EE5;&#x53CA; doPost &#x800C;&#x4E0D;&#x662F; service &#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#request-对象中-getattribute-方法与-getparameter-方法的区别"><span class="toc-nav-number">6.8.</span> <span class="toc-nav-text">Request &#x5BF9;&#x8C61;&#x4E2D; getAttribute &#x65B9;&#x6CD5;&#x4E0E; getParameter &#x65B9;&#x6CD5;&#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jsp-的九大内置对象"><span class="toc-nav-number">6.9.</span> <span class="toc-nav-text">JSP &#x7684;&#x4E5D;&#x5927;&#x5185;&#x7F6E;&#x5BF9;&#x8C61;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#四种会话跟踪技术及其作用域"><span class="toc-nav-number">6.10.</span> <span class="toc-nav-text">&#x56DB;&#x79CD;&#x4F1A;&#x8BDD;&#x8DDF;&#x8E2A;&#x6280;&#x672F;&#x53CA;&#x5176;&#x4F5C;&#x7528;&#x57DF;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#cookie-和-session"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Cookie &#x548C; Session</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#cookie"><span class="toc-nav-number">7.1.</span> <span class="toc-nav-text">Cookie</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#运行机制"><span class="toc-nav-number">7.1.1.</span> <span class="toc-nav-text">&#x8FD0;&#x884C;&#x673A;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#不可跨域名性"><span class="toc-nav-number">7.1.2.</span> <span class="toc-nav-text">&#x4E0D;&#x53EF;&#x8DE8;&#x57DF;&#x540D;&#x6027;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#应用场景"><span class="toc-nav-number">7.1.3.</span> <span class="toc-nav-text">&#x5E94;&#x7528;&#x573A;&#x666F;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#session"><span class="toc-nav-number">7.2.</span> <span class="toc-nav-text">Session</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#运行机制"><span class="toc-nav-number">7.2.1.</span> <span class="toc-nav-text">&#x8FD0;&#x884C;&#x673A;&#x5236;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#生命周期"><span class="toc-nav-number">7.2.2.</span> <span class="toc-nav-text">&#x751F;&#x547D;&#x5468;&#x671F;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#如何传递id值"><span class="toc-nav-number">7.2.3.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x4F20;&#x9012;ID&#x503C;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#cookie-和-session"><span class="toc-nav-number">7.3.</span> <span class="toc-nav-text">Cookie &#x548C; Session</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#mybatis"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">MyBatis</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#和-的区别"><span class="toc-nav-number">8.1.</span> <span class="toc-nav-text">#{} &#x548C; ${} &#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#如何生成实现类"><span class="toc-nav-number">8.2.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x751F;&#x6210;&#x5B9E;&#x73B0;&#x7C7B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#如果有两个-xml-文件和这个dao-建立关系岂不是冲突了"><span class="toc-nav-number">8.3.</span> <span class="toc-nav-text">&#x5982;&#x679C;&#x6709;&#x4E24;&#x4E2A; XML &#x6587;&#x4EF6;&#x548C;&#x8FD9;&#x4E2A;Dao &#x5EFA;&#x7ACB;&#x5173;&#x7CFB;&#xFF0C;&#x5C82;&#x4E0D;&#x662F;&#x51B2;&#x7A81;&#x4E86;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#dao-接口里面的方法可以重载吗"><span class="toc-nav-number">8.4.</span> <span class="toc-nav-text">Dao &#x63A5;&#x53E3;&#x91CC;&#x9762;&#x7684;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x91CD;&#x8F7D;&#x5417;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#几种方式绑定接口"><span class="toc-nav-number">8.5.</span> <span class="toc-nav-text">&#x51E0;&#x79CD;&#x65B9;&#x5F0F;&#x7ED1;&#x5B9A;&#x63A5;&#x53E3;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#二级缓存"><span class="toc-nav-number">8.6.</span> <span class="toc-nav-text">&#x4E8C;&#x7EA7;&#x7F13;&#x5B58;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
