@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/leetcodesolu/</loc>
+        <lastmod>2020-08-27T14:41:37.937Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/OS/</loc>
         <lastmod>2020-08-27T02:51:33.750Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -18,14 +26,6 @@
     <url>
         <loc>tyzhang.top/article/clone/</loc>
         <lastmod>2020-08-27T02:50:26.822Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/leetcodesolu/</loc>
-        <lastmod>2020-08-26T13:35:25.317Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
