@@ -15,11 +15,11 @@
 	<script src="//code.tidio.co/5b6vgmp0rn1xxl0xfqtpstex0m46ttic.js" async></script>
     <title>
         
-          LRU 算法的两种实现方式 - 张天宇的博客 | ztygalaxy Blog
+          也谈 URL 访问流程 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
-    <link rel="canonical" href="tyzhang.top/article/lrucache/">
+    <link rel="canonical" href="tyzhang.top/article/url_road/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -93,11 +93,11 @@
                               <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
                             
                         </div>
-                        <h1>LRU 算法的两种实现方式</h1>
+                        <h1>也谈 URL 访问流程</h1>
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2020-08-17
+                            2020-09-10
                         </span>
                     </div>
                 
@@ -224,25 +224,129 @@
 
 				
                 <blockquote>
-<p>LRUCache 的两种实现方式，借助和不借助 LinkedHashMap。</p>
+<p>当一个 URL 被敲进浏览器地址栏，会发生什么？这个问题回答起来不难，但是想讲清楚却不容易。</p>
 </blockquote>
-<h3 id="hashmap-linkedlist">HashMap + LinkedList</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LRUCache</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">        <span class="comment">// 缓冲容量</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> cacheSize;</span><br><span class="line">        <span class="comment">// 双向链表，存储缓存</span></span><br><span class="line">        <span class="keyword">private</span> LinkedList&lt;K&gt; cacheList = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 储存缓存的key，用来计算是否命中，命中率则遍历链表</span></span><br><span class="line">        <span class="keyword">private</span> HashMap&lt;K, V&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">LRUCache</span><span class="params">(<span class="keyword">int</span> cacheSize)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.cacheSize = cacheSize;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(K key, V val)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 未命中</span></span><br><span class="line">            <span class="keyword">if</span> (!map.containsKey(key)) &#123;</span><br><span class="line">                <span class="comment">// 如果超过了缓存，将最少访问的移除</span></span><br><span class="line">                <span class="keyword">if</span> (map.size() &gt;= cacheSize) &#123;</span><br><span class="line">                    map.remove(cacheList.removeLast());</span><br><span class="line">                &#125;</span><br><span class="line">                cacheList.addFirst(key);</span><br><span class="line">                map.put(key, val);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 命中，将链表元素往前移动，更新map</span></span><br><span class="line">                moveToFirst(key);</span><br><span class="line">                map.put(key, val);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 是否命中</span></span><br><span class="line">            <span class="keyword">if</span> (!map.containsKey(key)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 移动到前面来</span></span><br><span class="line">            moveToFirst(key);</span><br><span class="line">            <span class="keyword">return</span> map.get(key);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 移动到双链表前面</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">moveToFirst</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">            cacheList.remove(key);</span><br><span class="line">            cacheList.addFirst(key);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> cacheList.toString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        LRUCache&lt;String, String&gt; lruCache = <span class="keyword">new</span> LRUCache&lt;String, String&gt;(<span class="number">4</span>);</span><br><span class="line">        lruCache.put(<span class="string">"C"</span>, <span class="keyword">null</span>);</span><br><span class="line">        lruCache.put(<span class="string">"A"</span>, <span class="keyword">null</span>);</span><br><span class="line">        lruCache.put(<span class="string">"D"</span>, <span class="keyword">null</span>);</span><br><span class="line">        lruCache.put(<span class="string">"B"</span>, <span class="keyword">null</span>);</span><br><span class="line">        lruCache.put(<span class="string">"E"</span>, <span class="keyword">null</span>);</span><br><span class="line">        lruCache.put(<span class="string">"B"</span>, <span class="keyword">null</span>);</span><br><span class="line">        lruCache.put(<span class="string">"A"</span>, <span class="keyword">null</span>);</span><br><span class="line">        lruCache.put(<span class="string">"B"</span>, <span class="keyword">null</span>);</span><br><span class="line">        lruCache.put(<span class="string">"C"</span>, <span class="keyword">null</span>);</span><br><span class="line">        lruCache.put(<span class="string">"D"</span>, <span class="keyword">null</span>);</span><br><span class="line">        System.out.println(lruCache);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">[D, C, B, A]</span></span><br><span class="line"><span class="comment">**/</span></span><br></pre></td></tr></table></figure>
-<h3 id="linkedhashmap">LinkedHashMap</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LRUCache</span> <span class="keyword">extends</span> <span class="title">LinkedHashMap</span>&lt;<span class="title">Integer</span>, <span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> capacity;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LRUCache</span><span class="params">(<span class="keyword">int</span> capacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(capacity, <span class="number">0.75f</span>, <span class="keyword">true</span>);</span><br><span class="line">        <span class="keyword">this</span>.capacity = capacity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getOrDefault(key, -<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.put(key, val);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">removeEldestEntry</span><span class="params">(Map.Entry&lt;Integer, Integer&gt; eldest)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size() &gt; capacity;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="引子">引子</h3>
+<p>当一个 URL 被敲进浏览器地址栏，会发生什么？这个问题回答起来不难，但是想讲清楚却不容易。</p>
+<p>最近面试的时候也有很多次被问到，总结一下，当然下文中也不是很全面，其中提到的一些知识点，还需要诸君自己探索。</p>
+<p>很多时候被问问题不管什么问题，都有人觉得这玩意没什么讲的，这也需要讲？简简单单讲完了，自以为讲明白了。这里面一个很大的逻辑问题就是，你默认自己讲的就是标准答案了所以看到别人的面经会产生上边的疑问，实际上尽可能得多讲都不一定达到面试官想要的效果。笔者虽然面试经历不是很多，但大多数面试官对基础表示认可，有时间会写写自以为的面试经验。</p>
+<h3 id="流程">流程</h3>
+<p>在打开网页过程中，较为简单的网页会直接发起请求并加载，有些较为复杂或者做过优化的网页，可能会有两种情况：</p>
+<ul>
+<li>HTML 页面加载</li>
+<li>网页静态资源的加载</li>
+</ul>
+<p>下面是结合了一些博客之后总结下来的。</p>
+<h4 id="1-大概流程">1. 大概流程</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: 开始</span><br><span class="line">end=&gt;end: 结束</span><br><span class="line">s1=&gt;operation: DNS 解析</span><br><span class="line">s2=&gt;operation: 负载均衡</span><br><span class="line">s3=&gt;operation: TCP 连接</span><br><span class="line">s4=&gt;operation: 发送 HTTP 请求</span><br><span class="line">s5=&gt;operation: Web 服务器处理请求</span><br><span class="line">s6=&gt;operation: 返回报文</span><br><span class="line">s7=&gt;operation: 浏览器渲染</span><br><span class="line">s8=&gt;operation: TCP 断开连接</span><br><span class="line">st-&gt;s1-&gt;s2-&gt;s3-&gt;s4-&gt;s5-&gt;s6-&gt;s7-&gt;s8-&gt;end</span><br></pre></td></tr></table></figure>
+<h4 id="2-页面加载具体分析">2. 页面加载具体分析</h4>
+<h5 id="21-dns-解析">2.1 DNS 解析</h5>
+<p>输入 URL 之后，通常浏览器会进行 URL 解析，URL，例如 <code>https://tyzhang.top/posts/</code>一般包括几大部分：</p>
+<ul>
+<li>Protocol：协议头，例如，HTTP、HTTPS、FTP 等。</li>
+<li>Host：主机域名或者直接是 IP 地址。</li>
+<li>Port：端口号，一般都省略了，比如 80、8080、443。</li>
+<li>Path：要访问的目录在网站的路径。</li>
+</ul>
+<p>解析完成后就要去进行 DNS 解析。何为 DNS 解析，网络中的主机都是使用 IP 地址来标识的，即 IP 地址才是主机在网络中的位置。域名只是为了方便记忆使用的。比如，我们访问 <a href="http://taobao.com" target="_blank" rel="noopener">taobao.com</a>，要比访问它的 IP 地址容易得多，毕竟我们根本记不住那么多的 IP 地址。这也是为什么较短的域名比较值钱的原因。像早先罗永浩的锤子手机因为 LOGO 是个锤子 T 所以注册了 <code>t.tt</code>。我们接着看 DNS 的解析，解析遵循先己后他，由近到远的原则进行：</p>
+<ol>
+<li>
+<p>浏览器拿到地址会首先搜索浏览器自身缓存的 DNS 记录，例如 Chrome 可以通过 <code>chrome://net-internals/#dns</code> 查看。</p>
+</li>
+<li>
+<p>如果浏览器缓存中没有找到，则去查看 HOSTS 文件和操作系统的缓存。</p>
+<ul>
+<li>操作系统缓存，Windows 下可以使用 <code>ipconfig /displaydns</code> 查看。</li>
+<li>其次在系统的指定位置，可以查看 HOSTS 文件，里面记录了域名和 IP 的对应结果。我们可以通过修改此文件的内容，更改映射关系，从而科学上网。</li>
+</ul>
+</li>
+<li>
+<p>如果 2 中的操作没有找到，就向域名服务器发送请求。</p>
+<p>当前两步都没有命中的时候，开始向 DNS 服务器发送请求，即平时设置中填写的那个 DNS 服务器。这时候才算真正意义上的解析流程开始。一般用户都会去使用附近的域名解析服务器。</p>
+</li>
+<li>
+<p>如果域名服务器也没有记录，开始递归 + 迭代解析。</p>
+<p>先看一个架构图：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">top(根域服务器) --- l11(.com 域服务器)</span><br><span class="line">top(根域服务器) --- l13(...)</span><br><span class="line">top(根域服务器) --- l12(.cn 域服务器)</span><br><span class="line">l11(.com域服务器) --- l21(google.com 服务器)</span><br><span class="line">l11(.com域服务器) --- l22(...)</span><br><span class="line">l21(google.com 服务器) --- l31(mail.google.com 服务器)</span><br><span class="line">l21(google.com 服务器) --- l32(...)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>首先我们的域名解析服务器会向根域服务器（全球只有 13 台）发出请求。显然，仅凭 13 台服务器不可能把全球所有IP都记录下来。所以根域服务器记录的是 com 域服务器的 IP、cn 域服务器的 IP、org 域服务器的 IP。如果我们要查找 .com 结尾的域名，那么我们可以到 com 域服务器去进一步解析。所以其实这部分的域名解析过程是一个树形的搜索过程。</p>
+</li>
+<li>
+<p>根域服务器告诉我们 com 域服务器的 IP。接着我们的域名解析服务器会向 com 域服务器发出请求。<a href="http://xn--mail-u29f53r7ycxzupysbb86y50s.google.com" target="_blank" rel="noopener">根域服务器并没有mail.google.com</a> 的 IP，但是却有 <a href="http://google.com" target="_blank" rel="noopener">google.com</a> 域服务器的 IP。接着我们的域名解析服务器会向 <a href="http://google.com" target="_blank" rel="noopener">google.com</a> 域服务器发出请求。如此重复，直到获得 <a href="http://mail.google.com" target="_blank" rel="noopener">mail.google.com</a> 的 IP 地址。</p>
+<p>为什么是递归：问题由一开始的本机要解析 <a href="http://mail.google.com" target="_blank" rel="noopener">mail.google.com</a> 变成域名解析服务器要解析 <a href="http://mail.google.com" target="_blank" rel="noopener">mail.google.com</a>，这是递归。</p>
+<p>为什么是迭代：问题由向根域服务器发出请求变成向 com 域服务器发出请求再变成向 <a href="http://google.com" target="_blank" rel="noopener">google.com</a> 域发出请求，这是迭代。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>获取域名对应的 IP 后，一步步向上返回，直到返回给浏览器。</p>
+</li>
+</ol>
+<h5 id="22-发起-tcp-请求">2.2 发起 TCP 请求</h5>
+<p>浏览器会选择一个大于1024的本机端口向目标 IP 地址的 80 端口发起 TCP 连接请求。经过标准的 TCP 握手流程，建立 TCP 连接。这一部分就不再赘述，大家都是老建立链接了。</p>
+<h5 id="23-发起-http-请求">2.3 发起 HTTP 请求</h5>
+<p><strong>流程：请求 -&gt; 请求报文 -&gt; 响应报文 -&gt; HTML 解析，构建 DOM 树 -&gt; 静态资源加载</strong></p>
+<p>构建 HTTP 请求报文并通过 TCP 协议发送到服务器指定端口。</p>
+<p>HTTP 请求报文是由三部分组成的，请求行、请求报头和请求正文。</p>
+<p>请求行：常用方法有 GET, POST, PUT, DELETE, OPTIONS, HEAD。</p>
+<p><strong>补充：POST 和 GET 的区别。</strong></p>
+<p>请求报头：允许客户端向服务器传递请求的附加信息和客户端自身的信息。</p>
+<p>请求正文：当使用 POST, PUT 等方法时，通常需要客户端向服务器传递数据。这些数据就储存在请求正文中。在请求包头中有一些与请求正文相关的信息，例如: 现在的 Web 应用通常采用 Rest 架构，请求的数据格式一般为 json。这时就需要设置 Content-Type: application/json。</p>
+<p>服务器处理请求并返回 HTTP 报文。HTTP 响应报文也是由三部分组成：状态码,、响应报头和响应报文。</p>
+<p><strong>状态码</strong></p>
+<ul>
+<li>1xx 【消息】服务器收到请求，需要请求者继续执行操作</li>
+<li>2xx 【成功】请求已成功被服务器接收、理解、并接受。</li>
+<li>3xx 【重定向】客户端需要采取进一步的操作以完成请求</li>
+<li>4xx 【客户端请求错误】客户端错误，请求包含语法错误或无法完成请求</li>
+<li>5xx 【服务器错误】服务器在处理请求的过程中发生了错误</li>
+</ul>
+<p><strong>HTTPS</strong></p>
+<p>这里面会牵扯一些诸如 HTTP 和 HTTPS，HTTP 各个版本的差异，这里简单写一下。</p>
+<p>简单来讲，HTTPS 和 HTTP 区别就是 HTTPS 会建立 SSL 链接，保证接下来的通信都是加密的，无法被截取分析。下面简述一下 SSL 握手过程。</p>
+<ol>
+<li>浏览器请求建立 SSL 链接，并向服务端发送一个随机数 A 和客户端支持的加密方法，比如 RSA 加密，此时是明文传输。</li>
+<li>服务器从中选出一组加密算法和 Hash 算法，回复一个随机数 B，并将自己的身份信息以证书的形式发回给浏览器。证书中包含了网站地址、非对称加密公钥以及证书颁发机构等信息。</li>
+<li>浏览器收到服务器的证书之后：
+<ol>
+<li>验证证书的合法性。</li>
+<li>用户接收证书之后，浏览器会产生新的随机数 C，然后使用证书中的公钥以及指定的加密方法加密 C 发给服务器。</li>
+<li>利用 ABC 通过一定的算法生成 HTTP 链接数据传输的对称加密 Key。</li>
+<li>使用约定好的 Hash 算法计算握手信息，并且使用生成的 Key 对消息进行加密，最后将之前生成的所有信息发送给服务端。</li>
+</ol>
+</li>
+<li>服务器端操作：
+<ol>
+<li>利用已知加解密方式与自己的私钥进行解密，获取 C。</li>
+<li>和浏览器相同规则生成 Key。</li>
+<li>使用 Key 解密浏览器握手消息，并验证 Hash 是否一致。</li>
+<li>使用 Key 加密一段握手消息发送给浏览器。</li>
+</ol>
+</li>
+<li>浏览器节米并计算握手消息的 Hash 值，如果和服务器发来的 Hash 值一致，握手结束。</li>
+<li>此后都使用 Key 进行对称加密。</li>
+</ol>
+<p><strong>请求到请求被服务器接收</strong></p>
+<ul>
+<li>在<strong>应用层</strong>发送http请求；DNS 解析 IP 发送 HTTP 请求</li>
+<li>到<strong>传输层</strong>通过三次握手建立 TCP/IP 连接；UDP</li>
+<li>到<strong>网络层</strong>的IP寻址；IP 和 ARP</li>
+<li>到<strong>数据链路层</strong>的封装成帧；</li>
+<li>到<strong>物理层</strong>的利用物理介质传输；</li>
+</ul>
+<h5 id="24-四次挥手结束">2.4 四次挥手结束</h5>
+<h3 id="3-静态资源加载">3. 静态资源加载</h3>
+<p>什么是 CDN？如果我在山东访问杭州的淘宝网，跨省的通信必然造成延迟。如果淘宝网能在广东建立一个服务器，静态资源我可以直接从就近的广东服务器获取，必然能提高整个网站的打开速度，这就是 CDN。CDN 叫内容分发网络，是依靠部署在各地的边缘服务器，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度。</p>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/clone/" data-toggle="tooltip" data-placement="top" title="深拷贝和浅拷贝">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/per/" data-toggle="tooltip" data-placement="top" title="异位词系列">下一篇 &rarr;</a>
+                            <a href="/article/algo/" data-toggle="tooltip" data-placement="top" title="算法解题报告 2020">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -265,24 +369,6 @@
             
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
-
-  
-    <style>
-      span.toc-nav-number{
-        display: none
-      }
-    </style>
-  
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">目录</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hashmap-linkedlist"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HashMap + LinkedList</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#linkedhashmap"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">LinkedHashMap</span></a></li></ol>
-        
-        </div>
-      </aside>
-    
 
                 
             <!-- Sidebar Container -->
