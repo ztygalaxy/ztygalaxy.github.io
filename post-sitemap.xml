@@ -8,8 +8,16 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/algo/</loc>
+        <lastmod>2020-09-14T12:27:08.541Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/leetcodesolu/</loc>
-        <lastmod>2020-09-13T14:25:56.952Z</lastmod>
+        <lastmod>2020-09-14T11:59:39.491Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -34,14 +42,6 @@
     <url>
         <loc>tyzhang.top/article/url_road/</loc>
         <lastmod>2020-09-09T07:19:46.549Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/algo/</loc>
-        <lastmod>2020-09-09T01:44:27.696Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
