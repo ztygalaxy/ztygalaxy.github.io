@@ -210,7 +210,7 @@
                 
                     <a href="#少年游" title="少年游" rel="16">少年游</a>
                 
-                    <a href="#笔记" title="笔记" rel="44">笔记</a>
+                    <a href="#笔记" title="笔记" rel="42">笔记</a>
                 
                     <a href="#他山之玉" title="他山之玉" rel="7">他山之玉</a>
                 
@@ -493,6 +493,10 @@
                             2020 秋招笔记资料整理
                         </h2>
                         
+                            <h3 class="post-subtitle">
+                                这篇文章主要整理一下个人秋招过程中复习到的用到的资料、知识点。
+                            </h3>
+                        
                     </a>
                     <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
                 </div>
@@ -548,21 +552,6 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/article/per/">
-                        <h2 class="post-title">
-                            异位词系列
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
                      <a href="/article/OS/">
                         <h2 class="post-title">
                             操作系统相关
@@ -581,21 +570,6 @@
                      <a href="/article/producer/">
                         <h2 class="post-title">
                             几种生产者-消费者模型
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/article/find123/">
-                        <h2 class="post-title">
-                            12 和 123 数对问题
                         </h2>
                         
                     </a>
@@ -1945,6 +1919,22 @@
 <img src="tyzhang.top/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 
 </html>
