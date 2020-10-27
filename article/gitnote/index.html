@@ -15,11 +15,11 @@
 	<script src="//code.tidio.co/5b6vgmp0rn1xxl0xfqtpstex0m46ttic.js" async></script>
     <title>
         
-          十 - 张天宇的博客 | ztygalaxy Blog
+          Git 学习笔记 - 张天宇的博客 | ztygalaxy Blog
         
     </title>
 
-    <link rel="canonical" href="tyzhang.top/article/birth/">
+    <link rel="canonical" href="tyzhang.top/article/gitnote/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -90,14 +90,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#少年游" title="少年游">少年游</a>
+                              <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
                             
                         </div>
-                        <h1>十</h1>
-                        <!-- <h2 class="subheading"></h2> -->
+                        <h1>Git 学习笔记</h1>
+                        <!-- <h2 class="subheading">整理一下 Git 的深入用法，备查</h2> -->
                         <span class="meta">
                             张天宇 on
-                            2019-10-08
+                            2020-10-27
                         </span>
                     </div>
                 
@@ -223,30 +223,87 @@
                 post-container">
 
 				
-                <p>二十二，二十三。</p>
-<p>我其实并没有什么好写的，既然已经成为了习惯，就应该坚持下去。生活已经很难了，还是要有一些仪式感。</p>
-<p>其实这篇起意是很久的事情了，恰巧生日那几天非常忙，也没有写。</p>
-<p>十一假期见到了七八年没见的初中同桌。我阿黄圈圈总算是凑到了一起。圈圈估计是坐火箭了，长这么高，大概应该都应该归功于当初我亲手喂的那一抔粉笔末吧。一起聊聊上学时候的傻事情，还能被逗得哈哈笑。送回圈圈我和阿黄又去沂河边聊了一阵。这好像是假期我唯一一次和别人出门，可能大家都比较忙。不过还是真好。</p>
-<p>回学校的最后一天，我无意间向爸妈说我现在的境地，我说等我毕业以后会细细道来。爸妈觉察这里面有些事情便追问我，还是像以前那样疏导我。我说我不怎么提就是不想让你们担心，这些问题我都可以自己处理自我消化。最后妈妈发现这次我遇到的问题确实不是简简单单就能说服的。爸爸认为我可以坚持自己的想法，但是要注意方式方法。临走前，妈妈说，我们和你姥姥不一样，正在出力的时候，有什么问题可以直接和我们说，我们肯定会支持你的。还没成家立业，我和爸妈就已经开始习惯向对方隐瞒自己生活的难处、报喜不报忧了。</p>
-<p>// 下面一段是吐槽，可自动忽略。</p>
-<p>我是一个很佛系的人。不感兴趣的事争一争抢一抢，可以，但没必要。现在都讲生态，办公室讲生态，官场讲生态，学习讲生态。最近我发现，打破生态的往往是最先主张生态的那一个。我又开始讲大道理了，碎碎叨叨，但我希望看到这的人明白，有些东西，就像蔬菜，开始坏了就收不住了，大家都看在眼里，那个人所说的一切也就都成了笑谈。你以为自己吃掉了别人的一头马，根本没意识到自己是别人的車；你知道自己是个車了，別人却开始玩起了丢車保帅，大家都是一颗棋子。</p>
-<p>最近我老感觉心里有什么东西死了，我也不知道是什么。人是恒温动物，秋天来了，心却越来越冷了。我处在一个不能过多解释自己处境的时期，不过即使随便讲，或好或坏，我也没有太多好说的。</p>
-<p>今年要特别感谢的对象有些特殊，我的电脑依旧给力，很多时候都是它陪我，在无数个日夜亮着。最近我为它贴了一张漫威的贴纸，不大，我很喜欢。</p>
-<p>二十二，二十三。</p>
-<p>迷失的岁月，贫瘠的未来，时间啊，理想啊，你等等我。</p>
+                <blockquote>
+<p>看了小甲鱼的视频，总结一下 Git 的深入用法，做个笔记备查。</p>
+</blockquote>
+<h3 id="常用命令">常用命令</h3>
+<ol>
+<li>
+<p>初始化命令。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将需要进行版本管理的文件放入暂存区域。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add xxx.xxx</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将暂存区域的文件。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">"add a file"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="历史">历史</h3>
+<ol>
+<li>
+<p>查看状态，包含未跟踪、未暂存的文件。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status //如果出现红色文件 代表此文件没有加入到缓存去  可用 git add XX.js 加入缓存区，加入后就会变成绿色了</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将最后提交的代码恢复回暂存区域。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD &lt;file&gt;  //不写 &lt;file&gt;将回滚最后一次提交的所有文件，如果指定了 &lt;file&gt; 将只回滚选中的文件</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>删除暂存的更改。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;file&gt; // //不写 &lt;file&gt; 将回滚所有更改文件，如果指定了 &lt;file&gt; 将只回滚选中的更改文件</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查看历史提交记录。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log   //进入查看 log 后 可用 q 退出</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="回滚">回滚</h3>
+<ol>
+<li>
+<p>回滚最后一次提交的记录到暂存区域。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD~   //～后面可加数字,如:(git reset HEAD~<span class="number">3</span>),代表回滚最近<span class="number">3</span>次的提交。本次命令写全是(git reset --mixed HEAD~)，执行后 再用 git log 也看不到回滚的提交记录了</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>回滚到指定位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset bc124d4a1ca // 'bc124d4a1ca' 是git log 后显示的黄色提交序号,不需要写全,但是要保证写的快照ID是唯一，如果提交记录多避免重复，建议写全,</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>往前滚。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard 3ac08fd9985e75</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="找不同">找不同</h3>
+<ol>
+<li>
+<p>比较暂存区域与工作目录不同的地方，也就是所更改的地方。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>比较两个快照。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff 快照1ID 快照2ID</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>比较当前工作目录和 Git 仓库中的快照(还没有 git add 前的)。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git diff 要对比的快照ID //因为当前工作目录的更改还没有提交，所以没有快照ID，故只需要写要对比的快照ID就可</span><br><span class="line">git diff HEAD //比较当前工作目录和最新提交的快照</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>比较暂存目录和Git仓库中的快照。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git diff --cached //比较的是暂存区域和最新提交的快照</span><br><span class="line">git diff --cached 要对比的快照ID //暂存目前和指定的Git仓库中的快照的对比</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>未完。。。</p>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/algorithm0/" data-toggle="tooltip" data-placement="top" title="C++中的零碎">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/xu/" data-toggle="tooltip" data-placement="top" title="序">下一篇 &rarr;</a>
+                            <a href="/article/notebook/" data-toggle="tooltip" data-placement="top" title="2020 秋招笔记资料整理">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -284,7 +341,7 @@
                     <h5><a href="/tags/">标签</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#少年游" title="少年游">少年游</a>
+                          <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
                         
                     </div>
                 </section>
