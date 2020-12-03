@@ -226,7 +226,7 @@
                 <blockquote>
 <p>Typora 配合 PicGo 自动上传图片到自己搭建的 Chevereto 图床指定的用户的相册下。</p>
 </blockquote>
-<p>看见刁总给我发的 PicGo + Aliyun 的图床解决方案，本来想着转移到他这个解决方案算了，想了想自己搭的图床，再折腾折腾吧。</p>
+<p>看见刁总写的 <a href="http://diaowenjie.cn/2020/12/02/pictureGo.html" target="_blank" rel="noopener">PicGo + Aliyun 的图床解决方案</a>，本来想着转移到他这个解决方案算了，想了想自己搭的图床，再折腾折腾吧。</p>
 <p>在查找方案的时候，发现现行方案大多不如意，诸如只能上传到访客网络，下面的方案将解决这个问题，将图片上传至指定用户下的指定相册。分两部分介绍，一适用于仅自己使用的图床，图片将上传至访客相册，二是使用了别人搭建的图床并拥有帐号新建了相册，如果搭建者希望可以按照相册分门别类或者图床可以对所有用户 PicGo 有效，可直接参看二。</p>
 <h3 id="1-环境要求">1. 环境要求</h3>
 <ul>
@@ -247,7 +247,7 @@
 <p>对应的参数为，以 Chevereto 为例，API Key 在管理员控制台仪表盘设置中可以看到：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">API 地址: http://your-site/api/1/upload</span><br><span class="line">POST 参数名: source</span><br><span class="line">JSON 路径: image.url</span><br><span class="line">自定义 Body: &#123;&quot;key&quot;:&quot;API Key&quot;&#125;</span><br></pre></td></tr></table></figure>
 <p>chevereto 设置如下：</p>
-<img src="https://pic.tyzhang.top/images/2020/12/03/image-20201203103226898.png" alt="image-20201203103226898" style="zoom:50%;">
+<img src="https://pic.tyzhang.top/images/2020/12/03/20201203143210.png" alt="image-20201203143210682" style="zoom:50%;">
 </li>
 <li>
 <p>修改 Typora 偏好设置中的图像设置，使用 PicGo 自动上传。</p>
@@ -286,6 +286,7 @@
 <ul>
 <li><a href="https://blog.frytea.com/archives/459/" target="_blank" rel="noopener">https://blog.frytea.com/archives/459/</a></li>
 <li><a href="https://blog.csdn.net/qq_19564393/article/details/108506062" target="_blank" rel="noopener">https://blog.csdn.net/qq_19564393/article/details/108506062</a></li>
+<li>使用其他载体图床可参考：<a href="http://diaowenjie.cn/2020/12/02/pictureGo.html" target="_blank" rel="noopener">http://diaowenjie.cn/2020/12/02/pictureGo.html</a></li>
 </ul>
 
                 
