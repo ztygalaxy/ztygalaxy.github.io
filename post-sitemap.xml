@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/notebook/</loc>
+        <lastmod>2020-12-06T13:37:38.704Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/clashforwin/</loc>
         <lastmod>2020-12-04T06:55:40.989Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -26,14 +34,6 @@
     <url>
         <loc>tyzhang.top/article/popmail/</loc>
         <lastmod>2020-11-18T10:07:52.662Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/notebook/</loc>
-        <lastmod>2020-10-26T14:03:36.935Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
