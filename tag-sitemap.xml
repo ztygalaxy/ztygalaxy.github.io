@@ -3,15 +3,22 @@
 
 
     <url>
-        <loc>tyzhang.top/tags/%E7%AC%94%E8%AE%B0/</loc>
-        <lastmod>2020-12-06T13:37:38.704Z</lastmod>
+        <loc>tyzhang.top/tags/%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/</loc>
+        <lastmod>2020-12-26T13:05:10.818Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>tyzhang.top/tags/%E8%A7%A3%E9%A2%98%E6%8A%A5%E5%91%8A/</loc>
-        <lastmod>2020-09-20T13:21:34.673Z</lastmod>
+        <loc>tyzhang.top/tags/%E7%AC%94%E8%AE%B0/</loc>
+        <lastmod>2020-12-24T07:50:40.742Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>tyzhang.top/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/</loc>
+        <lastmod>2020-12-14T07:42:21.439Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -40,13 +47,6 @@
     <url>
         <loc>tyzhang.top/tags/JVM/</loc>
         <lastmod>2020-08-07T12:30:49.895Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>tyzhang.top/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/</loc>
-        <lastmod>2020-06-25T07:45:04.768Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
