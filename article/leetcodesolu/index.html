@@ -97,7 +97,7 @@
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2020-12-24
+                            2021-01-05
                         </span>
                     </div>
                 
@@ -154,13 +154,13 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -1209,9 +1209,20 @@ $$</p>
 <h4 id="题目大意">题目大意</h4>
 <p>flowerbed 数组中 1 表示已经种下了花朵。花朵之间至少需要一个单位的间隔，求解是否能种下 n 朵花。</p>
 <h4 id="解题思路">解题思路</h4>
+<ol>
+<li>
 <p>贪心，计算出能放花的个数，如果&gt;=n，OK。以中间位为基准，设置前后位来检查。</p>
+</li>
+<li>
+<p>贪心，题目要求是否能在不打破规则的情况下插入n朵花，与直接计算不同，采用“跳格子”的解法只需遍历不到一遍数组，处理以下两种不同的情况即可：</p>
+<p>【1】当遍历到index遇到1时，说明这个位置有花，那必然从index+2的位置才有可能种花，因此当碰到1时直接跳过下一格。<br>
+【2】当遍历到index遇到0时，由于每次碰到1都是跳两格，因此前一格必定是0，此时只需要判断下一格是不是1即可得出index这一格能不能种花，如果能种则令n减一，然后这个位置就按照遇到1时处理，即跳两格；如果index的后一格是1，说明这个位置不能种花且之后两格也不可能种花（参照【1】），直接跳过3格。</p>
+<p>当n减为0时，说明可以种入n朵花，则可以直接退出遍历返回true；如果遍历结束n没有减到0，说明最多种入的花的数量小于n，则返回false。</p>
+</li>
+</ol>
 <h4 id="代码">代码</h4>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canPlaceFlowers</span><span class="params">(<span class="keyword">int</span>[] flowerbed, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; flowerbed.length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (flowerbed[i] == <span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> pre = i == <span class="number">0</span> ? <span class="number">0</span> : flowerbed[i - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> next = flowerbed[i + <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (pre == <span class="number">0</span> &amp;&amp; next == <span class="number">0</span>)&#123;</span><br><span class="line">                count ++;</span><br><span class="line">                flowerbed[i] = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count &gt;= n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canPlaceFlowers</span><span class="params">(<span class="keyword">int</span>[] flowerbed, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (index &lt; flowerbed.length) &#123;</span><br><span class="line">            <span class="keyword">if</span> (flowerbed[index] == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// 防溢出，也是将flowerbed.length看作没有花</span></span><br><span class="line">                <span class="keyword">if</span> (index == flowerbed.length - <span class="number">1</span> || flowerbed[index + <span class="number">1</span>] == <span class="number">0</span>) &#123;</span><br><span class="line">                    n--;</span><br><span class="line">                    index += <span class="number">2</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    index += <span class="number">3</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                index += <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n &lt;= <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="647-palindromic-substrings">647 Palindromic Substrings</h3>
 <h4 id="题目大意">题目大意</h4>
 <p>给定义一个字符串，计算有多少个回文子串。</p>
@@ -1279,6 +1290,14 @@ $$</p>
 <p>扫一遍串，lock 住 start 指针，更新即将被分割子串最大的last值，当 last == i， 则找到一个被分割子串。</p>
 <h4 id="代码">代码</h4>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">partitionLabels</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.length() == <span class="number">0</span>) <span class="keyword">return</span> result;</span><br><span class="line">        Map&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++)&#123;</span><br><span class="line">            map.put(s.charAt(i), i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">0</span>, last = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++)&#123;</span><br><span class="line">            last = Math.max(last, map.get(s.charAt(i)));</span><br><span class="line">            <span class="keyword">if</span> (last == i)&#123;</span><br><span class="line">                result.add(last - start + <span class="number">1</span>);</span><br><span class="line">                start = i + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="830-较大分组的位置">830 较大分组的位置</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>将字符串中所有包含大于等于三个连续字符的分组的位置坐标按照起始位置坐标递增排序后返回结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;abbxxxxzzy&quot;</span><br><span class="line">输出：[[3,6]]</span><br><span class="line">解释：&quot;xxxx&quot; 是一个起始于 3 且终止于 6 的较大分组。</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路">解题思路</h4>
+<p>我们可以遍历该序列，并记录当前分组的长度。如果下一个字符与当前字符不同，或者已经枚举到字符串尾部，就说明当前字符为当前分组的尾部。每次找到当前分组的尾部时，如果该分组长度达到 33，我们就将其加入答案。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; largeGroupPositions(String s) &#123;</span><br><span class="line">        <span class="keyword">int</span> head = <span class="number">0</span>, tail = <span class="number">1</span>;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; resu = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span> (tail &lt; s.length()) &#123;</span><br><span class="line">            <span class="keyword">while</span> (tail &lt; s.length() &amp;&amp; s.charAt(tail) == s.charAt(head)) &#123;</span><br><span class="line">                tail++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (tail - head &gt;= <span class="number">3</span>) &#123;</span><br><span class="line">                List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">                list.add(head);</span><br><span class="line">                list.add(tail - <span class="number">1</span>);</span><br><span class="line">                resu.add(list);</span><br><span class="line">            &#125;</span><br><span class="line">            head = tail++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resu;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="877-stone-game">877 Stone Game</h3>
 <h4 id="题目大意">题目大意</h4>
 <p>亚历克斯和李用几堆石子在做游戏。偶数堆石子排成一行，每堆都有正整数颗石子 piles[i] 。</p>
@@ -1322,6 +1341,26 @@ $$</p>
 </ul>
 <h4 id="代码">代码</h4>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">divisorGame</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> N % <span class="number">2</span> == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1046-最后一块石头的重量">1046 最后一块石头的重量</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>有一堆石头，每块石头的重量都是正整数。每一回合，从中选出两块最重的石头，然后将它们一起粉碎。假设石头的重量分别为 x 和 y，且 x &lt;= y。那么粉碎的可能结果如下：</p>
+<ul>
+<li>
+<p>如果 x == y，那么两块石头都会被完全粉碎；</p>
+</li>
+<li>
+<p>如果 x != y，那么重量为 x 的石头将会完全粉碎，而重量为 y 的石头新重量为 y-x。</p>
+</li>
+</ul>
+<p>最后，最多只会剩下一块石头。返回此石头的重量。如果没有石头剩下，就返回 0。</p>
+<h4 id="解题思路">解题思路</h4>
+<ol>
+<li>递归，处理到仅剩两块石头时候结束递归。</li>
+<li>使用大顶堆模拟操作。</li>
+</ol>
+<h4 id="代码">代码</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lastStoneWeight</span><span class="params">(<span class="keyword">int</span>[] stones)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (stones.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (stones.length == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> stones[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (stones.length == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Math.abs(stones[<span class="number">0</span>] - stones[<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        Arrays.sort(stones);</span><br><span class="line">        <span class="keyword">if</span> (stones[stones.length - <span class="number">3</span>] == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> stones[stones.length - <span class="number">1</span>] - stones[stones.length - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        stones[stones.length - <span class="number">2</span>] = stones[stones.length - <span class="number">1</span>] - stones[stones.length - <span class="number">2</span>];</span><br><span class="line">        stones[stones.length - <span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> lastStoneWeight(stones);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lastStoneWeight</span><span class="params">(<span class="keyword">int</span>[] stones)</span> </span>&#123;</span><br><span class="line">        PriorityQueue&lt;Integer&gt; priorityQueue = <span class="keyword">new</span> PriorityQueue&lt;&gt;(Collections.reverseOrder());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> s : stones) &#123;</span><br><span class="line">            priorityQueue.offer(s);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (priorityQueue.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> top = priorityQueue.poll();</span><br><span class="line">            <span class="keyword">int</span> sec = priorityQueue.poll();</span><br><span class="line">            <span class="keyword">if</span> (top &gt; sec) &#123;</span><br><span class="line">                priorityQueue.offer(top - sec);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> priorityQueue.size() == <span class="number">1</span> ? priorityQueue.peek() : <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="1047-remove-all-adjacent-duplicates-in-string">1047 Remove All Adjacent Duplicates In String</h3>
 <h4 id="题目大意">题目大意</h4>
 <p>删除字符串中相邻重复的字符，包括删除后新组成的字符串中重复的。例如“abbaca”删除后“ca”。</p>
@@ -1388,13 +1427,9 @@ $$</p>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/notebook/" data-toggle="tooltip" data-placement="top" title="2020 秋招笔记资料整理">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/clashforwin/" data-toggle="tooltip" data-placement="top" title="Clash 设置订阅转换分流">下一篇 &rarr;</a>
+                            <a href="/article/notebook/" data-toggle="tooltip" data-placement="top" title="2020 秋招笔记资料整理">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -1588,7 +1623,7 @@ $$</p>
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; 张天宇 2020 
+                    Copyright &copy; 张天宇 2021 
                     <br>
                     Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
                     re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
