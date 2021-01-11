@@ -97,7 +97,7 @@
                         <!-- <h2 class="subheading"></h2> -->
                         <span class="meta">
                             张天宇 on
-                            2021-01-07
+                            2021-01-08
                         </span>
                     </div>
                 
@@ -154,13 +154,13 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -869,6 +869,13 @@ $$<br>
 <p>和123差不多的思路，因为一笔交易要买卖两次，所以当k大到一定程度时候，可以直接采用贪心，因为此时限制的就是天数了。</p>
 <h4 id="代码">代码</h4>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span>[] prices)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (k &gt;= prices.length / <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; prices.length; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (prices[i] &gt; prices[i - <span class="number">1</span>]) &#123;</span><br><span class="line">                    res += prices[i] - prices[i - <span class="number">1</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] buy = <span class="keyword">new</span> <span class="keyword">int</span>[k + <span class="number">1</span>];</span><br><span class="line">        Arrays.fill(buy, -prices[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">int</span>[] sell = <span class="keyword">new</span> <span class="keyword">int</span>[k + <span class="number">1</span>];</span><br><span class="line">        Arrays.fill(sell, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prices.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= k; j++) &#123;</span><br><span class="line">                buy[j] = Math.max(buy[j], sell[j - <span class="number">1</span>] - prices[i]);</span><br><span class="line">                sell[j] = Math.max(sell[j], buy[j] + prices[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        Arrays.sort(sell);</span><br><span class="line">        <span class="keyword">return</span> sell[sell.length - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="189-旋转数组">189 旋转数组</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>给定一个数组，将数组中的元素向右移动 <em>k</em> 个位置，其中 <em>k</em> 是非负数。</p>
+<h4 id="解题思路">解题思路</h4>
+<p>将数组从中间切割，分别转置，然后从头到尾转置。这里要注意当 k 大于数组长度时候的处理。否则会发生数组越界，k 的大小大于数组长度时候，前边的一部分是会移动回原地的，所以进行取模。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        k %= nums.length;</span><br><span class="line">        swap(nums, <span class="number">0</span>, nums.length - k - <span class="number">1</span>);</span><br><span class="line">        swap(nums, nums.length - k, nums.length -<span class="number">1</span>);</span><br><span class="line">        swap(nums, <span class="number">0</span>, nums.length-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="keyword">int</span> tmp = nums[left];</span><br><span class="line">            nums[left] = nums[right];</span><br><span class="line">            nums[right] = tmp;</span><br><span class="line">            left++;</span><br><span class="line">            right--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="204-count-primes">204 Count Primes</h3>
 <h4 id="题目大意">题目大意</h4>
 <p>计算小于 n 的素数的个数。</p>
@@ -1440,6 +1447,10 @@ $$</p>
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/visioinword/" data-toggle="tooltip" data-placement="top" title="Word 中无法插入/打开 Visio 的解决">&larr; 上一篇</a>
+                        </li>
                     
                     
                         <li class="next">
