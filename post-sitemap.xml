@@ -8,6 +8,30 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/seven/</loc>
+        <lastmod>2021-01-22T08:48:14.279Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/nian/</loc>
+        <lastmod>2021-01-22T08:46:31.144Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>tyzhang.top/article/notebook/</loc>
+        <lastmod>2021-01-22T08:46:03.615Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/five/</loc>
         <lastmod>2021-01-18T13:37:15.744Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -106,14 +130,6 @@
     <url>
         <loc>tyzhang.top/article/think-about-count/</loc>
         <lastmod>2021-01-18T13:34:35.014Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/seven/</loc>
-        <lastmod>2021-01-18T13:34:03.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -680,24 +696,8 @@
     </url>
 
     <url>
-        <loc>tyzhang.top/article/notebook/</loc>
-        <lastmod>2020-12-24T07:50:40.742Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>tyzhang.top/article/buy/</loc>
         <lastmod>2020-03-04T07:11:38.768Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/nian/</loc>
-        <lastmod>2020-03-03T11:38:09.468Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
