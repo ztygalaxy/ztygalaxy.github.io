@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>tyzhang.top/article/endnote/</loc>
+        <lastmod>2021-03-18T10:48:15.754Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>tyzhang.top/article/notebook/</loc>
         <lastmod>2021-03-17T11:31:13.324Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -18,14 +26,6 @@
     <url>
         <loc>tyzhang.top/article/childhome/</loc>
         <lastmod>2021-03-17T10:19:39.962Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>tyzhang.top/article/endnote/</loc>
-        <lastmod>2021-03-15T13:44:11.461Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
