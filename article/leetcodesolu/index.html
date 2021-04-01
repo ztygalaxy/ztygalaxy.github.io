@@ -150,10 +150,10 @@
                             
                         </div>
                         <h1>LeetCode 解题报告</h1>
-                        <!-- <h2 class="subheading">LeetCode解题报告，记录不太顺利或者有其他巧妙思路的题目。</h2> -->
+                        <!-- <h2 class="subheading">LeetCode 解题报告与每日打卡记录，顺便记录不太顺利或者有其他巧妙思路的题目。题目较多，渲染可能比较缓慢。</h2> -->
                         <span class="meta">
                             张天宇 on
-                            2021-03-31
+                            2021-04-01
                         </span>
                     </div>
                 
@@ -280,8 +280,23 @@
 
 				
                 <blockquote>
-<p>LeetCode解题报告，记录不太顺利或者有其他巧妙思路的题目。</p>
+<p>LeetCode 解题报告与每日打卡记录，顺便记录不太顺利或者有其他巧妙思路的题目。题目较多，渲染可能比较缓慢。<font id="qusnum"></font></p>
 </blockquote>
+<script src="/js/jquery.min.js"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+    var i=$('h3').size();
+    var years = {};
+	var myDate = new Date(); 
+	var year = myDate.getFullYear();
+	var month = myDate.getMonth()+1;
+	var day = myDate.getDate();
+	var newDay = year + "年" + month + "月" + day + "日";
+    var str = '截至' + newDay +  '，已收录' + i + '道题目。';
+    document.getElementById('qusnum').innerHTML = str;
+});
+</script>
+<!-- <font id="qusnum" style="font-size:20px; font-weight: bold;"></font> -->
 <h3 id="2-add-two-numbers">2 Add Two Numbers</h3>
 <h4 id="题目大意">题目大意</h4>
 <p>多位整数每位按照倒序排列放入链表，使用链表求和并返回。</p>
@@ -1418,7 +1433,17 @@ $$</p>
 如果李拿走后 5 颗，那么剩下的是 [3,4]，亚历克斯拿走后 4 颗赢得 9 分。<br>
 这表明，取前 5 颗石子对亚历克斯来说是一个胜利的举动，所以我们返回 true 。</p>
 <h4 id="解题思路">解题思路</h4>
+<p>这道题直接返回了 true 竟然就通过了。。。。</p>
 <h4 id="代码">代码</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">stoneGame</span><span class="params">(<span class="keyword">int</span>[] piles)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1006-笨阶乘">1006 笨阶乘</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>我们以一个固定顺序的操作符序列来依次替换原有的乘法操作符：乘法(*)，除法(/)，加法(+)和减法(-)。</p>
+<p>例如，clumsy(10) = 10 * 9 / 8 + 7 - 6 * 5 / 4 + 3 - 2 * 1。</p>
+<h4 id="解题思路">解题思路</h4>
+<p>将多项式转化为多项和，即((10*9/8)+7+(-6*5/4)，显然可以通过栈解决。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clumsy</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">        Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        stack.push(N);</span><br><span class="line">        N--;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (N &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (index % <span class="number">4</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                stack.push(stack.pop() * N);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (index % <span class="number">4</span> == <span class="number">1</span>) &#123;</span><br><span class="line">                stack.push(stack.pop() / N);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (index % <span class="number">4</span> == <span class="number">2</span>) &#123;</span><br><span class="line">                stack.push(N);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                stack.push(-N);</span><br><span class="line">            &#125;</span><br><span class="line">            index++;</span><br><span class="line">            N--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> resu = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            resu += stack.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resu;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="1025-divisor-game">1025  Divisor Game</h3>
 <h4 id="题目大意">题目大意</h4>
 <p>有数字N，对于两个游戏玩家轮流做以下动作：</p>
