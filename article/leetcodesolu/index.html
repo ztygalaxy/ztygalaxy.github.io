@@ -153,7 +153,7 @@
                         <!-- <h2 class="subheading">LeetCode 解题报告与每日打卡记录，顺便记录不太顺利或者有其他巧妙思路的题目。题目较多，渲染可能比较缓慢。</h2> -->
                         <span class="meta">
                             张天宇 on
-                            2021-04-01
+                            2021-04-07
                         </span>
                     </div>
                 
@@ -210,13 +210,13 @@
                     
                         
                         <li>
-                            <a href="/about/">关于</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/about/">关于</a>
                         </li>
                         
                     
@@ -732,6 +732,13 @@ $$<br>
 <p>每个元素都有取或者不取两种选择，从空集开始逐个增加。也可以参考重复元素的子集Ⅱ题目代码。</p>
 <h4 id="代码">代码</h4>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; subsets(<span class="keyword">int</span>[] array) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; resu = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        resu.add(<span class="keyword">new</span> ArrayList&lt;&gt;());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> size = resu.size();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; size; j++) &#123;</span><br><span class="line">                <span class="comment">// 注意 Java 传值问题</span></span><br><span class="line">                List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;&gt;(resu.get(j));</span><br><span class="line">                tmp.add(array[i]);</span><br><span class="line">                resu.add(<span class="keyword">new</span> ArrayList&lt;&gt;(tmp));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resu;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="80-删除有序数组中的重复项-ii">80 删除有序数组中的重复项 Ⅱ</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>给定有序数组，原地删除重复出现元素，使得每个元素最多出现两次，返回删除后数组的长度。需要原地修改数组并使用O(1)额外空间的条件下完成。</p>
+<h4 id="解题思路">解题思路</h4>
+<p>快慢指针，快指针表示遍历到的元素，慢指针表示当前要放的位置，使用index-2检查重复了几项。与之类似的还有26题。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (index &lt; <span class="number">2</span> || nums[index - <span class="number">2</span>] &lt; num) &#123;</span><br><span class="line">                nums[index] = num;</span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> index;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="82-remove-duplicates-from-sorted-list-ii">82 Remove Duplicates from Sorted List II</h3>
 <h4 id="题目大意">题目大意</h4>
 <p>删除所有重复的节点，使得重复出现的节点一个不剩。</p>
@@ -1068,6 +1075,14 @@ $$<br>
 <p>这样一直循环下去，我们发现只要踩到 4 的倍数，就落入了圈套，永远逃不出 4 的倍数，而且一定会输。</p>
 <h4 id="代码">代码</h4>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">   <span class="function">bool <span class="title">canWinNim</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果上来就踩到 4 的倍数，那就认输吧</span></span><br><span class="line">    <span class="comment">// 否则，可以把对方控制在 4 的倍数，必胜</span></span><br><span class="line">    <span class="keyword">return</span> n % <span class="number">4</span> != <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="300-最长递增子序列">300 最长递增子序列</h3>
+<h4 id="题目大意">题目大意</h4>
+<p>给你一个整数数组 <code>nums</code> ，找到其中最长严格递增子序列的长度。</p>
+<h4 id="解题思路">解题思路</h4>
+<p>注意这里数组可能不连续。</p>
+<p>动态规划，以当前元素为结尾的数组长度等于前面最长的长度+1，或者当前元素不取，具体看代码内注释。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> nums.length;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// dpi表示以i为结尾的最长长度</span></span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="comment">// 当前位置初始化</span></span><br><span class="line">            dp[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="comment">// 过往长度 + 1，从低往高算</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[i] &gt; nums[j]) &#123;</span><br><span class="line">                    dp[i] = Math.max(dp[i], dp[j] + <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 更新每一位结果</span></span><br><span class="line">            result = Math.max(result, dp[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="319-bulb-switcher">319 Bulb Switcher</h3>
 <h4 id="题目大意">题目大意</h4>
 <p>一开始有n个灯泡是关着的。首先打开所有的灯泡。第二轮，每隔一秒就关掉一个灯泡。在第三轮游戏中，每隔3个灯泡就切换一次(如果灯泡是关的，就打开;如果灯泡是开的，就关闭)。第i轮，你按下了所有的i灯泡。对于第n轮，您只切换最后一个灯泡。找出n轮后有多少灯泡是亮着的。</p>
