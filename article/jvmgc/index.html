@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张天宇的文字自留地">
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/logo.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          JVM: 垃圾回收 - 张天宇的博客 | ztygalaxy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="tyzhang.top/article/jvmgc/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script>
+	</script>
+	<style>
+	* {
+            box-sizing: border-box;
+        }
+
+        form {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        input, button {
+            border: none;
+            outline: none;
+        }
+
+        input {
+            width: 100%;
+            height: 42px;
+            padding-left: 13px;
+        }
+
+        button {
+            height: 42px;
+            width: 42px;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        /*搜索框1*/
+        .bar1 {
+			background: #FFF;
+			max-width: 200px;
+		}
+        .bar1 input {
+			max-height: 30px;
+            border: 2px solid #BFBFBF;
+            border-radius: 5px;
+            background: #FFFFFF;
+            color: #BFBFBF;
+			-webkit-text-fill-color: #BFBFBF;
+        }
+        .bar1 button {
+			max-height: 30px;
+            top: 0;
+            right: 0;
+            background: #BFBFBF;
+            border-radius: 0 5px 5px 0;
+        }
+        .bar1 button:before {
+            content: "\f002";
+            font-family: FontAwesome;
+            font-size: 16px;
+            color: #F9F0DA;
+        }
+		</style>
+<link rel="alternate" href="/atom.xml" title="张天宇的博客" type="application/atom+xml">
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('https://api.dujin.org/bing/1920.php')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
+                            
+                        </div>
+                        <h1>JVM: 垃圾回收</h1>
+                        <!-- <h2 class="subheading">JVM第二篇，JVM的垃圾回收。</h2> -->
+                        <span class="meta">
+                            张天宇 on
+                            2020-05-23
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">主页</a>
+                    </li>
+					<li>
+                        <a href="/archive/">归档</a>
+                    </li>
+					<li>
+                        <a href="/tags/">标签</a>
+                    </li>
+					<li>
+                        <a href="/about/">关于</a>
+                    </li>
+					<!--
+					修改about在前面的问题
+                    
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    -->
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				
+                <blockquote>
+<p>JVM第二篇，JVM的垃圾回收。</p>
+</blockquote>
+<h3 id="1-如何判断对象可以回收">1. 如何判断对象可以回收</h3>
+<h4 id="引用计数法">引用计数法</h4>
+<p>它实际上是通过在对象头中分配一个空间来保存该对象被引用的次数。如果该对象被其它对象引用，则它的引用计数加一，如果删除对该对象的引用，那么它的引用计数就减一，当该对象的引用计数为0时，那么该对象就会被回收。</p>
+<p>判定效率高，但两个对象相互引用会导致内存泄漏，环形数据。</p>
+<h4 id="可达性分析算法">可达性分析算法</h4>
+<p>通过一系列的GC Roots的对象作为起始点，从这些根节点开始向下搜索，搜索所走过的路径称为引用链（Reference Chain），当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。连在葡萄根上的就是不能回收的，掉在盘子里的果是可以被回收的。</p>
+<p>GCRoot 为：</p>
+<ul>
+<li>虚拟机栈(栈帧中的局部变量区,也叫局部变量表)中引用的对象</li>
+<li>方法区中静态类属性引用的对象(使用static修饰的对象)</li>
+<li>方法区常量引用的对象.(使用final修饰的对象)</li>
+<li>本地方法栈中JNI(Native方法)引用的对象. (使用Native修饰的方法, 线程中用的多.)</li>
+</ul>
+<p>Memory Analyzer(MAT)由Eclipse提供的java堆分析工具。</p>
+<h4 id="五种引用">五种引用</h4>
+<ol>
+<li>
+<p>强引用</p>
+<p>只有所有GC Roots对象都不通过强引用引用该对象，该对象才能被垃圾回收。</p>
+</li>
+<li>
+<p>软引用</p>
+<ul>
+<li>
+<p>仅有软引用引用该对象时，在垃圾回收后，内存仍不足时会再次触发垃圾回收，回收软引用对象。</p>
+</li>
+<li>
+<p>可以配合引用队列来释放软引用自身。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-Xmx20m -XX:+PrintGCDetails -verbose:gc*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1_1</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _4MB = <span class="number">4</span> * <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">soft</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;SoftReference&lt;<span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            SoftReference&lt;<span class="keyword">byte</span>[]&gt; ref = <span class="keyword">new</span> SoftReference&lt;&gt;(<span class="keyword">new</span> <span class="keyword">byte</span>[_4MB]);</span><br><span class="line">            System.out.println(ref.get());</span><br><span class="line">            list.add(ref);</span><br><span class="line">            System.out.println(list.size());</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"循环结束"</span> + list.size());</span><br><span class="line">        <span class="keyword">for</span> (SoftReference&lt;<span class="keyword">byte</span>[]&gt; ref : list) &#123;</span><br><span class="line">            System.out.println(ref.get());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        soft();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第三次循环后GC一次，第四次仍然不够，触发一次新的GC，回收软引用。</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">循环结束5</span></span><br><span class="line"><span class="comment">null</span></span><br><span class="line"><span class="comment">null</span></span><br><span class="line"><span class="comment">null</span></span><br><span class="line"><span class="comment">null</span></span><br><span class="line"><span class="comment">[B@677327b6</span></span><br><span class="line"><span class="comment">**/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-Xmx20m -XX:+PrintGCDetails -verbose:gc*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1_1</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _4MB = <span class="number">4</span> * <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">soft</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;SoftReference&lt;<span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 引用队列</span></span><br><span class="line">        ReferenceQueue&lt;<span class="keyword">byte</span>[]&gt; queue = <span class="keyword">new</span> ReferenceQueue&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            <span class="comment">// 关联了引用队列，当软引用所关联的byte[]被回收时，软引用自己会加入到queue中去s</span></span><br><span class="line">            SoftReference&lt;<span class="keyword">byte</span>[]&gt; ref = <span class="keyword">new</span> SoftReference&lt;&gt;(<span class="keyword">new</span> <span class="keyword">byte</span>[_4MB], queue);</span><br><span class="line">            System.out.println(ref.get());</span><br><span class="line">            list.add(ref);</span><br><span class="line">            System.out.println(list.size());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 从队列中获取无用的软引用对象，并移除</span></span><br><span class="line">        Reference&lt;? extends <span class="keyword">byte</span>[]&gt; poll = queue.poll();</span><br><span class="line">        <span class="keyword">while</span> (poll != <span class="keyword">null</span>) &#123;</span><br><span class="line">            list.remove(poll);</span><br><span class="line">            poll = queue.poll();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"循环结束"</span> + list.size());</span><br><span class="line">        <span class="keyword">for</span> (SoftReference&lt;<span class="keyword">byte</span>[]&gt; ref : list) &#123;</span><br><span class="line">            System.out.println(ref.get());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        soft();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">5</span></span><br><span class="line"><span class="comment">循环结束1</span></span><br><span class="line"><span class="comment">[B@677327b6</span></span><br><span class="line"><span class="comment">**/</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>弱引用</p>
+<ul>
+<li>
+<p>仅有弱引用引用该对象时，在垃圾回收时，无论内存是否充足，都会回收弱引用对象。</p>
+</li>
+<li>
+<p>可以配合引用队列来释放弱引用自身。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-Xmx20m -XX:+PrintGCDetails -verbose:gc*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1_1</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _4MB = <span class="number">4</span> * <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;WeakReference&lt;<span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            WeakReference&lt;<span class="keyword">byte</span>[]&gt; ref = <span class="keyword">new</span> WeakReference&lt;&gt;(<span class="keyword">new</span> <span class="keyword">byte</span>[_4MB]);</span><br><span class="line">            list.add(ref);</span><br><span class="line">            <span class="keyword">for</span> (WeakReference&lt;<span class="keyword">byte</span>[]&gt; w : list) &#123;</span><br><span class="line">                System.out.print(w.get() + <span class="string">" "</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"循环结束"</span> + list.size());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">[B@1b6d3586 </span></span><br><span class="line"><span class="comment">[B@1b6d3586 [B@4554617c </span></span><br><span class="line"><span class="comment">[B@1b6d3586 [B@4554617c [B@74a14482 </span></span><br><span class="line"><span class="comment">[GC (Allocation Failure) [PSYoungGen: 2077K-&gt;488K(6144K)] 14365K-&gt;12968K(19968K), 0.0016495 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] </span></span><br><span class="line"><span class="comment">[B@1b6d3586 [B@4554617c [B@74a14482 [B@1540e19d </span></span><br><span class="line"><span class="comment">[GC (Allocation Failure) [PSYoungGen: 4696K-&gt;504K(6144K)] 17176K-&gt;12992K(19968K), 0.0008483 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] </span></span><br><span class="line"><span class="comment">[B@1b6d3586 [B@4554617c [B@74a14482 null [B@677327b6 </span></span><br><span class="line"><span class="comment">循环结束5</span></span><br><span class="line"><span class="comment">**/</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>虚引用</p>
+<ul>
+<li>必须配合引用队列使用，主要配合ByteBuffer使用，被引用对象回收时，会将虚引用入队，由Reference Handler线程调用虚引用相关方法释放直接内存。</li>
+</ul>
+</li>
+<li>
+<p>终结器引用</p>
+<ul>
+<li>无需手动编码，但其内部配合引用队列使用，在垃圾回收时，终结器引用入队（被引用对象暂时没有被回收），再由Finalizer线程通过终结器引用找到被引用对象并调用它的finalize方法，第二次GC时才能回收被引用对象。</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-垃圾回收算法">2. 垃圾回收算法</h3>
+<h4 id="标记清除">标记清除</h4>
+<p>首先标记出所需回收的对象，在标记完成后统一回收掉所有被标记的对象，<strong>它的标记过程其实就是前面的可达性分析算法中判定垃圾对象的标记过程</strong>。</p>
+<ul>
+<li>标记和清除过程的<strong>效率都不高</strong></li>
+<li>标记清除后会产生大量不连续的<strong>内存碎片</strong>，空间碎片太多可能会导致，<strong>当程序在以后的运行过程中需要分配较大对象时无法找到足够的连续内存而不得不触发另一次垃圾收集动作</strong></li>
+</ul>
+<h4 id="标记整理">标记整理</h4>
+<p>复制算法比较适合于新生代，在老年代中，对象存活率比较高，如果执行较多的复制操作，效率将会变低，所以老年代一般会选用其他算法，如标记—整理算法。该算法标记的过程与标记—清除算法中的标记过程一样，但对标记后出的垃圾对象的处理情况有所不同，它不是直接对可回收对象进行清理，<strong>而是让所有的对象都向一端移动，然后直接清理掉端边界以外的内存</strong>。</p>
+<ul>
+<li>没有内存碎片，但是速度比较慢。</li>
+</ul>
+<h4 id="复制">复制</h4>
+<p>复制算法是针对标记—清除算法的缺点，在其基础上进行改进而得到的，它将可用内存按容量分为大小相等的两块，每次只使用其中的一块，<strong>当这一块的内存用完了，就将还存活着的对象复制到另外一块内存上面，然后再把已使用过的内存空间一次清理掉</strong>。复制算法有如下优点：</p>
+<ul>
+<li>每次只对一块内存进行回收，运行高效</li>
+<li>只需移动栈顶指针，按顺序分配内存即可，实现简单</li>
+<li>内存回收时不用考虑内存碎片的出现</li>
+</ul>
+<p>它的缺点是：可一次性分配的<strong>最大内存缩小了一半</strong>。</p>
+<h3 id="3-分代垃圾回收">3. 分代垃圾回收</h3>
+<h4 id="新生代">新生代</h4>
+<p>主要是用来存放新生的对象。一般占据堆的1/3空间。由于频繁创建对象，所以新生代会频繁触发MinorGC进行垃圾回收。</p>
+<ol>
+<li>伊甸园（Eden）</li>
+<li>幸存区From（ServivorFrom）</li>
+<li>幸存区To（ServivorTo）</li>
+</ol>
+<p>默认比例8：1：1，可以修改。对象首先分配在伊甸园区，当新生代空间不足时，出发Minor GC，将伊甸园区和幸存区From区存活的对象使用复制算法复制到To中，然后让存活的对象年龄+1，并且交换From和To。当对象年龄达到某个年龄（默认值、最大值为15(4bit )）时，就会把它们晋升到老年代中。在新生代中进行GC时，有可能遇到另外一块Survivor空间没有足够空间存放上一次新生代收集下来的存活对象，这些对象将直接通过分配担保机制进入老年代。当老年代空间不足，先尝试Minor GC，如果还不足触发Full GC，引发Stop the world并且时间较长。</p>
+<p>Minor GC会引发Stop the world，暂停其他用户线程，防止其他线程根据原来地址找不到对象，访问混乱。</p>
+<h4 id="老年代">老年代</h4>
+<h4 id="相关虚拟机参数">相关虚拟机参数</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">含义</th>
+<th style="text-align:left">参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">堆初始大小</td>
+<td style="text-align:left">-Xms</td>
+</tr>
+<tr>
+<td style="text-align:left">堆最大大小</td>
+<td style="text-align:left">-Xmx或者-XX:MaxHeapSize=size</td>
+</tr>
+<tr>
+<td style="text-align:left">新生代大小</td>
+<td style="text-align:left">-Xmn或（-XX:NewSize=size+XX:MaxNewSize=size）</td>
+</tr>
+<tr>
+<td style="text-align:left">幸存区比例(动态)</td>
+<td style="text-align:left">-XX:InitialSurvivorRadio=radio和-XX:+UserAdaptiveSizePolicy</td>
+</tr>
+<tr>
+<td style="text-align:left">幸存区比例</td>
+<td style="text-align:left">-XX:SurvivorRadio=radio</td>
+</tr>
+<tr>
+<td style="text-align:left">晋升阈值</td>
+<td style="text-align:left">-XX:MaxTenuringThreshold=threshold</td>
+</tr>
+<tr>
+<td style="text-align:left">晋升详情</td>
+<td style="text-align:left">-XX:+PrintTenuringDistribution</td>
+</tr>
+<tr>
+<td style="text-align:left">GC详情</td>
+<td style="text-align:left">-XX:+PrintGCDetails -verbose:gc</td>
+</tr>
+<tr>
+<td style="text-align:left">Full GC前MinorGC</td>
+<td style="text-align:left">-XX:+ScavengeBeforeFullGC</td>
+</tr>
+</tbody>
+</table>
+<p>一个线程内的OOM不会导致整个Java的线程结束。OOM会清空线程占用的堆内存。</p>
+<h3 id="4-垃圾回收器">4. 垃圾回收器</h3>
+<h4 id="串行">串行</h4>
+<ul>
+<li>单线程垃圾回收器</li>
+<li>适合堆内存较小时候，个人电脑</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UserSerialGC=Serial+SerialOld</span><br><span class="line"><span class="meta">#</span><span class="bash"> Serial 复制算法</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> SerialOld 工作在老年代</span></span><br></pre></td></tr></table></figure>
+<p>其他用户线程都将阻塞等待垃圾回收线程结束。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/6f0ab42c8c4849554cb168dffdd89fd5.jpg" alt=""></p>
+<h4 id="吞吐量优先">吞吐量优先</h4>
+<ul>
+<li>多线程</li>
+<li>堆内存较大，多核CPU支持</li>
+<li>让单位时间内，STW时间最短</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseParallelGC ~ -XX:+UseParallelOldGC</span><br><span class="line">-XX:+UseAdaptiveSizePolicy # 采用自适应新生代大小调整策略</span><br><span class="line">-XX:GCTimeRatio=ratio	# 调整吞吐量目标（垃圾回收时间与总时间占比，1/（1+radio）），一般设置为19</span><br><span class="line">-XX:MaxGCPauseMillis=ms	# 最大暂停毫秒数，默认是200，与上一个参数是冲突的</span><br><span class="line">-XX:ParallelGCThreads=n	# 控制运行时线程数</span><br></pre></td></tr></table></figure>
+<p>垃圾回收器会开启多个线程，线程数量和CPU核数相关。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/7ccf586effa4c3f82a3a2195eb97a415.jpg" alt=""></p>
+<h4 id="响应时间优先">响应时间优先</h4>
+<ul>
+<li>多线程</li>
+<li>堆内存较大，多核CPU支持</li>
+<li>尽可能让STW单次时间最短</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseConcMarkSweepGC ~ -XX:+UseParNewGC ~ SerialOld</span><br><span class="line">-XX:ParallelGCThreads=n ~ -XX:ConcGCThreads=threads	# 一般设置为并行线程数量的1/4</span><br><span class="line">-XX:CMSInitiatingOccupancyFraction=percent	# 执行CMS垃圾回收的内存占比，预留空间给浮动垃圾（在垃圾回收过程中其他用户线程产生的新垃圾）</span><br><span class="line">-XX:+CMSScavengeBeforeRemark	# 在重新标记之前对新生代垃圾做一次回收工作，将来扫描对象就少，减轻回收压力</span><br></pre></td></tr></table></figure>
+<p>只有在初始标记核重新标记时候才会STW。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/e73f87d4078a624723a1e8add0ee5285.jpg" alt=""></p>
+<h4 id="g1">G1</h4>
+<p>Garbage First(Garbage one)</p>
+<h5 id="使用场景">使用场景</h5>
+<ul>
+<li>同时注重吞吐量和低延迟，默认暂停目标是200ms。</li>
+<li>超大堆内存，会将堆划分为多个大小相等的Region。</li>
+<li>整体上是标记+整理算法，两个区域之间是复制算法。</li>
+</ul>
+<h5 id="相关jvm参数">相关JVM参数</h5>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseG1GC</span><br><span class="line">-XX:G1HeapRegionSize=size</span><br><span class="line">-XX:MacGCPauseMills=time</span><br></pre></td></tr></table></figure>
+<h5 id="垃圾回收阶段">垃圾回收阶段</h5>
+<p>三个阶段循环</p>
+<ol>
+<li>
+<p>Young Collection</p>
+<ul>
+<li>会STW</li>
+</ul>
+</li>
+<li>
+<p>Young Collection+Concurrent Mark</p>
+<ul>
+<li>
+<p>在Young GC时会进行GCRoot的初始标记</p>
+</li>
+<li>
+<p>老年代占用堆空间比例达到阈值时，进行并发标记（不会STW），由下面的JVM参数决定</p>
+</li>
+<li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:InitiatingHeapOccupancyPercent=percent(默认45%)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>Mixed Collection、</p>
+<p>会对伊甸园区、幸存区、老年代进行全面回收</p>
+<ul>
+<li>
+<p>最终标记会STW</p>
+</li>
+<li>
+<p>拷贝存活会STW</p>
+</li>
+<li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:MaxGCPauseMilklis=ms</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>FullGC</p>
+<ul>
+<li>
+<p>SerialGC</p>
+<ul>
+<li>新生代内存不足发生的垃圾收集 - MinorGC</li>
+<li>老年代内存不足发生的垃圾收集 - FullGC</li>
+</ul>
+</li>
+<li>
+<p>ParallelGC</p>
+<ul>
+<li>新生代内存不足发生的垃圾收集 - Minor GC</li>
+<li>老年代内存不足发生的垃圾收集 - Full GC</li>
+</ul>
+</li>
+<li>
+<p>CMS</p>
+<ul>
+<li>新生代内存不足发生的垃圾收集 - Minor GC</li>
+<li>老年代内存不足</li>
+</ul>
+</li>
+<li>
+<p>G1</p>
+<ul>
+<li>新生代内存不足发生的垃圾收集 - Minor GC</li>
+<li>老年代内存不足</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Young Collection跨代引用</p>
+<ul>
+<li>卡表与Remembered Set</li>
+<li>在引用变更时通过post-write barrier+dirty card queue</li>
+<li>concurrent refinement threads更新Remembered Set</li>
+</ul>
+</li>
+<li>
+<p>Remark</p>
+</li>
+</ol>
+<ul>
+<li>pre-write barrier+satb_mark_queue</li>
+</ul>
+<ol start="7">
+<li>
+<p>JDK 8u20字符串去重</p>
+<ul>
+<li>优点：节省大量内存</li>
+<li>缺点：略微多占用了CPU时间，新生代回收时间略微增加</li>
+<li>-XX:+UseStringDeduplication，默认打开</li>
+<li>将所有新分配的字符串放入一个队列</li>
+<li>当新生代回收时，G1并发检查是否有字符串重复</li>
+<li>如果它们值一样，让他们引用同一个char[]</li>
+<li>注意，他和String.intern()不一样
+<ul>
+<li>String.intern()关注的是字符串对象</li>
+<li>而字符串去重关注的是char[]</li>
+<li>在JVM内部，使用了不同的字符串表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>JDK 8u40并发标记类卸载</p>
+<ul>
+<li>所有对象都经过并发标记后，就能知道哪些类不再被使用，当一个类加载器的所有类都不再使用，则卸载它所加载的所有类</li>
+<li>-XX:+ClassUnloadingWithConcurrentMark，默认启用</li>
+</ul>
+</li>
+<li>
+<p>JDK 8u60回收巨型对象</p>
+<ul>
+<li>一个对象大于region的一半时，称之为巨型对象</li>
+<li>G1不会对巨型对象进行拷贝</li>
+<li>回收时优先被考虑</li>
+<li>G1会跟踪老年代所有incoming引用，这样老年代incoming引用为0的巨型对象就可以在新生代垃圾回收时处理掉</li>
+</ul>
+</li>
+<li>
+<p>JDK 9并发标记起始时间的调整</p>
+<ul>
+<li>并发标记必须在堆空间占满之前完成，否则退化为Full GC</li>
+<li>JDK 9之前需要使用-XX:InitiatingHeapOccupanyPercent</li>
+<li>JDK 9可以动态调整
+<ul>
+<li>-XX:InitiatingHeapOccupancyPercent用来设置初始值</li>
+<li>进行数据采样并动态调整</li>
+<li>总会添加一个安全的空档空间</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-垃圾回收调优">5. 垃圾回收调优</h3>
+<p>显示所有参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -XX:PrintFlagsFinal -version | findstr <span class="string">"GC"</span></span><br></pre></td></tr></table></figure>
+<h4 id="调优领域">调优领域</h4>
+<ul>
+<li>内存</li>
+<li>锁竞争</li>
+<li>CPU占用</li>
+<li>IO</li>
+</ul>
+<h4 id="确定目标">确定目标</h4>
+<ul>
+<li>低延迟还是高吞吐量，选择合适的回收器</li>
+<li>低延迟：CMS，G1，ZGC</li>
+<li>高吞吐量：Parallel GC</li>
+</ul>
+<h4 id="最快的gc是不发生gc">最快的GC是不发生GC</h4>
+<p>查看FullGC前后的内存占用，考虑下面几个问题：</p>
+<ul>
+<li>数据是不是太多</li>
+<li>数据表示是否太臃肿
+<ul>
+<li>对象图</li>
+<li>对象大小</li>
+</ul>
+</li>
+<li>是否存在内存泄漏</li>
+</ul>
+<h4 id="新生代调优">新生代调优</h4>
+<ol>
+<li>
+<p>新生代的特点</p>
+<ul>
+<li>所有的new操作的内存分配非常廉价
+<ul>
+<li>TLAB thread-local allocation buffer</li>
+</ul>
+</li>
+<li>死亡对象的回收代价是零</li>
+<li>大部分对象用过即死</li>
+<li>Minor GC的时间远远低于Full GC</li>
+</ul>
+</li>
+<li>
+<p>理想大小</p>
+<ul>
+<li>
+<p>新生代能容纳所有【并发量*(请求相应)】的数据</p>
+</li>
+<li>
+<p>幸存区大到能保留当前活跃对象+需要晋升对象</p>
+</li>
+<li>
+<p>晋升阈值配置得当，让长时间存活的对象尽快晋升</p>
+<ul>
+<li>-XX:MaxTenuringThreshold=threshold</li>
+<li>-XX:+PrintTenuringDistribution</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="老年代调优">老年代调优</h4>
+<p>以CMS为例</p>
+<ul>
+<li>CMS的老年代内存设置的越大越好</li>
+<li>先尝试不做调优，如果没有FullGC，那么说明老年代空间很充裕，否则先尝试调优新生代</li>
+<li>观察发生FullGC时老年代内存占用，将老年代内存预设调大1/4~1/3
+<ul>
+<li>-XX:CMSInitiatingOccupanyFraction=percent</li>
+</ul>
+</li>
+</ul>
+<h4 id="案例">案例</h4>
+<ol>
+<li>
+<p>Full GC和Minor GC频繁</p>
+<p>GC频繁说明空间紧张。如果是新生代紧张，被塞满，幸存区空间紧张，导致空间晋升阈值降低，老年代存了很多生存周期短的对象，进而触发了Full GC。先试着增大新生代内存，增大幸存区空间和晋升阈值。</p>
+</li>
+<li>
+<p>请求高峰期发生Full GC，单次暂停时间特别长(CMS)</p>
+<p>因为业务需求需要低延迟，所以选择了CMS。查看GC日志CMS的哪个阶段较长。比较慢的一般在重新标记阶段，耗时比较长，因为CMS要扫描整个堆内存。在重新标记前先做一次新生代回收。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+CMSScavengeBeforeRemark</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>老年代充裕情况下，发生Full GC(CMS JDK1.7)</p>
+<p>1.7及以前使用永久代作为方法区，1.8使用元空间。永久代空间不足也会导致Full GC，所以扩大永久代空间。</p>
+</li>
+</ol>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/gracandy/" data-toggle="tooltip" data-placement="top" title="请给我一颗语法糖">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/zhengze/" data-toggle="tooltip" data-placement="top" title="正则表达式相关">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-如何判断对象可以回收"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. 如何判断对象可以回收</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#引用计数法"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">引用计数法</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#可达性分析算法"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">可达性分析算法</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#五种引用"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">五种引用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-垃圾回收算法"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. 垃圾回收算法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#标记清除"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">标记清除</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#标记整理"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">标记整理</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#复制"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">复制</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-分代垃圾回收"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. 分代垃圾回收</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#新生代"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">新生代</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#老年代"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">老年代</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#相关虚拟机参数"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">相关虚拟机参数</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-垃圾回收器"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4. 垃圾回收器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#串行"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">串行</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#吞吐量优先"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">吞吐量优先</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#响应时间优先"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">响应时间优先</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#g1"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">G1</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#使用场景"><span class="toc-nav-number">4.4.1.</span> <span class="toc-nav-text">使用场景</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#相关jvm参数"><span class="toc-nav-number">4.4.2.</span> <span class="toc-nav-text">相关JVM参数</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#垃圾回收阶段"><span class="toc-nav-number">4.4.3.</span> <span class="toc-nav-text">垃圾回收阶段</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-垃圾回收调优"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5. 垃圾回收调优</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#调优领域"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">调优领域</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#确定目标"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">确定目标</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#最快的gc是不发生gc"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">最快的GC是不发生GC</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#新生代调优"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">新生代调优</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#老年代调优"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">老年代调优</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#案例"><span class="toc-nav-number">5.6.</span> <span class="toc-nav-text">案例</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">标签</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+				<!--
+                
+                <hr>
+                <h5>朋友们</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://www.freedomly.tk/" target="_blank">Freedomly</a></li>
+                    
+                        <li><a href="https://jlwang1996.github.io/" target="_blank">jlwang1996</a></li>
+                    
+                        <li><a href="http://siwenzheng.github.io/" target="_blank">SiwenZheng</a></li>
+                    
+                        <li><a href="https://loststartvt.github.io/" target="_blank">LostStarTvT</a></li>
+                    
+                        <li><a href="https://zbsong.top/" target="_blank">songzblink</a></li>
+                    
+                        <li><a href="https://dolnw.github.io/" target="_blank">JCWang</a></li>
+                    
+                </ul>
+                
+				-->
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-tian-yu-65-49">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://space.bilibili.com/38534865">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>B</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://m.okjike.com/users/28c5ee85-832c-4a04-ab73-788a507d2bd8">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>J</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ztygalaxy">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 张天宇 2023 
+                    <br>
+                    Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
+                    re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
+					
+					<br>
+                    <a href="http://beian.miit.gov.cn/" style="color: gray">浙 ICP备19045818号</a>
+					<br>
+					<!-- <p class="copyright text-muted" style="margin-top: 5px"> -->
+						<img src="../../img/备案图标.png"/>
+						<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011802001883" style="color: gray">浙公网安备 33011802001883号</a>
+					<!-- </p> -->
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("tyzhang.top/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="tyzhang.top/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

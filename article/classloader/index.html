@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张天宇的文字自留地">
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/logo.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          JVM: 类加载及字节码技术 - 张天宇的博客 | ztygalaxy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="tyzhang.top/article/classloader/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script>
+	</script>
+	<style>
+	* {
+            box-sizing: border-box;
+        }
+
+        form {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        input, button {
+            border: none;
+            outline: none;
+        }
+
+        input {
+            width: 100%;
+            height: 42px;
+            padding-left: 13px;
+        }
+
+        button {
+            height: 42px;
+            width: 42px;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        /*搜索框1*/
+        .bar1 {
+			background: #FFF;
+			max-width: 200px;
+		}
+        .bar1 input {
+			max-height: 30px;
+            border: 2px solid #BFBFBF;
+            border-radius: 5px;
+            background: #FFFFFF;
+            color: #BFBFBF;
+			-webkit-text-fill-color: #BFBFBF;
+        }
+        .bar1 button {
+			max-height: 30px;
+            top: 0;
+            right: 0;
+            background: #BFBFBF;
+            border-radius: 0 5px 5px 0;
+        }
+        .bar1 button:before {
+            content: "\f002";
+            font-family: FontAwesome;
+            font-size: 16px;
+            color: #F9F0DA;
+        }
+		</style>
+<link rel="alternate" href="/atom.xml" title="张天宇的博客" type="application/atom+xml">
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('https://api.dujin.org/bing/1920.php')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
+                            
+                        </div>
+                        <h1>JVM: 类加载及字节码技术</h1>
+                        <!-- <h2 class="subheading">JVM第三篇，类加载。</h2> -->
+                        <span class="meta">
+                            张天宇 on
+                            2020-05-27
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">主页</a>
+                    </li>
+					<li>
+                        <a href="/archive/">归档</a>
+                    </li>
+					<li>
+                        <a href="/tags/">标签</a>
+                    </li>
+					<li>
+                        <a href="/about/">关于</a>
+                    </li>
+					<!--
+					修改about在前面的问题
+                    
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    -->
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				
+                <blockquote>
+<p>JVM第三篇，类加载。</p>
+</blockquote>
+<h3 id="1-类文件结构">1. 类文件结构</h3>
+<p>这一节真的很硬核，很枯燥，( ఠൠఠ )ﾉ。</p>
+<p>以简单的HelloWorld.java为例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	System.out.println(<span class="string">"hello world"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac -parameters -d . HelloWorld.java # 编译为字节码文件</span><br></pre></td></tr></table></figure>
+<p>编译字节码文件</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/class.jpg" alt=""></p>
+<p>根据JVM规范，类文件结构如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ClassFile&#123;</span><br><span class="line">	u4		magic;</span><br><span class="line">	u2       minor_version;</span><br><span class="line">	u2       major_version;</span><br><span class="line">	u2       constant_pool_count;</span><br><span class="line">	cp_info    constant_pool[constant_pool_count-<span class="number">1</span>];</span><br><span class="line">	u2       access_flags;</span><br><span class="line">	u2       this_class;</span><br><span class="line">	u2       super_class;</span><br><span class="line">	u2       interfaces_count;</span><br><span class="line">	u2       interfaces[interfaces_count];</span><br><span class="line">	u2       fields_count;</span><br><span class="line">	field_info   fields[fields_count];</span><br><span class="line">	u2       methods_count;</span><br><span class="line">	method_info  methods[methods_count];</span><br><span class="line">	u2       attributes_count;</span><br><span class="line">	attribute_info attributes[attributes_count];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="11-魔数">1.1 魔数</h4>
+<p>0-3字节，表示它是否是class类型的文件。</p>
+<p>0000000 <strong>ca fe ba be</strong> 00 00 00 34 00 23 0a 00 06 00 15 09</p>
+<h4 id="12-版本">1.2 版本</h4>
+<p>4-7字节，表示类的版本，00 34(十六进制，转换十进制为52)表示是Java 8。</p>
+<p>0000000 ca fe ba be <strong>00 00 00 34</strong> 00 23 0a 00 06 00 15 09</p>
+<h4 id="13-常量池">1.3 常量池</h4>
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/5cb6dcdb1a0f266e963ffa9659c24d18.jpg" alt=""></p>
+<p>8-9字节，表示常量池长度，00 23(35)表示常量池中有#1-#34项，#0不计入也没有值。</p>
+<p>0000000 ca fe ba be 00 00 00 34 <strong>00 23</strong> 0a 00 06 00 15 09</p>
+<p>第#1项0a表示一个Method信息(由上表查询可知Methoddef)，00 06和00 15(21)表示它引用了常量池中#6和#21项来获取这个方法的所属类和方法名。</p>
+<p>0000000 ca fe ba be 00 00 00 34 00 23 <strong>0a 00 06 00 15</strong> 09</p>
+<p>第#2项 09 表示一个 Field 信息，00 16(22)和 00 17(23)表示它引用了常量池中 #22 和 # 23 项<br>
+来获得这个成员变量的所属类和成员变量名。</p>
+<p>0000000 ca fe ba be 00 00 00 34 00 23 0a 00 06 00 15 <strong>09</strong><br>
+0000020 <strong>00 16 00 17</strong> 08 00 18 0a 00 19 00 1a 07 00 1b 07</p>
+<h4 id="14-访问标识与继承信息">1.4 访问标识与继承信息</h4>
+<p>21 表示该 class 是一个类，公共的</p>
+<p>0000660 29 56 <strong>00 21</strong> 00 05 00 06 00 00 00 00 00 02 00 01</p>
+<p>05 表示根据常量池中 #5 找到本类全限定名</p>
+<p>0000660 29 56 00 21 <strong>00 05</strong> 00 06 00 00 00 00 00 02 00 01</p>
+<p>06 表示根据常量池中 #6 找到父类全限定名</p>
+<p>0000660 29 56 00 21 00 05 <strong>00 06</strong> 00 00 00 00 00 02 00 01</p>
+<p>0 表示接口的数量，本类为 0</p>
+<p>0000660 29 56 00 21 00 05 00 06 <strong>00 00</strong> 00 00 00 02 00 01</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/2a2b0a3eb168cd7000a6f943b64808ad.jpg" alt=""></p>
+<h4 id="15-field信息">1.5 Field信息</h4>
+<p>0 表示成员变量数量，本类为0</p>
+<p>0000660 29 56 00 21 00 05 00 06 00 00 00 00 00 02 00 01</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/field.jpg" alt=""></p>
+<h4 id="16-method信息">1.6 Method信息</h4>
+<p>0002表示方法数量，本类为2</p>
+<p>0000660 29 56 00 21 00 05 00 06 00 00 00 00 00 02 00 01</p>
+<p>一个方法由 访问修饰符，名称，参数描述，方法属性数量，方法属性组成。</p>
+<h4 id="17-附加属性">1.7 附加属性</h4>
+<ul>
+<li>00 01 表示附加属性数量</li>
+<li>00 13 表示引用了常量池 #19 项，即【SourceFile】</li>
+<li>00 00 00 02 表示此属性的长度</li>
+<li>00 14 表示引用了常量池 #20 项，即【HelloWorld.java】</li>
+</ul>
+<p>0001100 00 12 00 00 00 05 01 00 10 00 00 00 01 00 13 00<br>
+0001120 00 00 02 00 14</p>
+<p>参考<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html" target="_blank" rel="noopener">文献</a></p>
+<h3 id="2-字节码指令">2. 字节码指令</h3>
+<h4 id="21-入门">2.1 入门</h4>
+<p>上一节中构造方法的字节码指令</p>
+<p>2a b7 00 01 b1</p>
+<p>通过查询上方参考文献，知：</p>
+<ol>
+<li>2a =&gt; aload_0 加载 slot 0 的局部变量，即 this，做为下面的 invokespecial 构造方法调用的参数</li>
+<li>b7 =&gt; invokespecial 预备调用构造方法，哪个方法呢？</li>
+<li>00 01 引用常量池中 #1 项，即【 Method java/lang/Object.&quot;<init>&quot;:()V 】</init></li>
+<li>b1 表示返回</li>
+</ol>
+<p>主方法的字节码指令</p>
+<p>b2 00 02 12 03 b6 00 04 b1</p>
+<ol>
+<li>b2 =&gt; getstatic 用来加载静态变量，哪个静态变量呢？</li>
+<li>00 02 引用常量池中 #2 项，即【Field java/lang/System.out:Ljava/io/PrintStream;】</li>
+<li>12 =&gt; ldc 加载参数，哪个参数呢？</li>
+<li>03 引用常量池中 #3 项，即 【String hello world】</li>
+<li>b6 =&gt; invokevirtual 预备调用成员方法，哪个方法呢？</li>
+<li>00 04 引用常量池中 #4 项，即【Method java/io/PrintStream.println:(Ljava/lang/String;)V】</li>
+<li>b1 表示返回</li>
+</ol>
+<h4 id="22-javap工具">2.2 javap工具</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javap -v HelloWorld.class</span><br></pre></td></tr></table></figure>
+<h4 id="23-图解过程">2.3 图解过程</h4>
+<p>琐碎，P108-128。</p>
+<h3 id="3-编译期处理">3. 编译期处理</h3>
+<p>语法糖，就是java编译器把java文件编译为class字节码的过程中，自动生成和转换的一些代码，主要是为了减轻程序员的负担。</p>
+<p>参见<a href="">请给我一颗语法糖</a></p>
+<h3 id="4-类加载阶段">4. 类加载阶段</h3>
+<h4 id="41-加载">4.1 加载</h4>
+<p>将类的字节码加载到方法区中。内部采用C++的instanceKLass描述Java类，他重要的field有：</p>
+<ul>
+<li>_java_mirror即java的类镜像，例如对String来说，就是String.class，作用是把kclass暴露给java使用。</li>
+<li>_super即父类</li>
+<li>_fields即成员变量</li>
+<li>_methods即方法</li>
+<li>_constants即常量池</li>
+<li>_class_loader即类加载器</li>
+<li>_vtable虚方法表</li>
+<li>_itable接口方法表</li>
+</ul>
+<p>如果这个类还有父类没有加载，先加载父类。</p>
+<p>加载和链接可能是交替运行的。</p>
+<p>instanceKlass这样的元数据是存储在方法区(1.8后的元空间内)，但_java_mirror是存储在堆内的。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/24/person_yuan.jpg" alt=""></p>
+<h4 id="42-链接">4.2 链接</h4>
+<h5 id="验证">验证</h5>
+<p>验证类是否符合JVM规范，安全性检查。</p>
+<p>用UE等支持二进制的编辑器修改HelloWord.class的魔数，控制台报错ClassFormatError。</p>
+<h5 id="准备">准备</h5>
+<p>为jstatic变量分配空间，设置默认值。</p>
+<ul>
+<li>static变量在JDK7之前存储于instanceKlass末尾，从JDK7开始，存储于_java_mirror末尾。</li>
+<li>static变量分配空间和赋值是两个步骤，分配空间在准备阶段完成，赋值在初始化阶段(构造方法)完成。</li>
+<li>如果static变量是final的基本类型，那么编译阶段值就确定了，赋值在准备阶段完成。</li>
+<li>如果static变量是final的，但属于引用类型，那么赋值也会在初始化阶段完成。</li>
+</ul>
+<h5 id="解析">解析</h5>
+<p>将常量池中的符号引用解析为直接引用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Load</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, IOException</span>&#123;</span><br><span class="line">        ClassLoader classloader = Load2<span class="class">.<span class="keyword">class</span>.<span class="title">getClassLoader</span>()</span>;</span><br><span class="line">        <span class="comment">// loadClass方法不会导致类的解析和初始化</span></span><br><span class="line">        Class&lt;?&gt; c = classloader.loadClass(<span class="string">"类全限定类名.C"</span>);</span><br><span class="line">        <span class="comment">// new C();会</span></span><br><span class="line">        <span class="keyword">new</span> C();</span><br><span class="line">        System.in.read();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span>&#123;</span><br><span class="line">    D d = <span class="keyword">new</span> D();</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="43-初始化">4.3 初始化</h4>
+<h5 id="ltcinitgtv方法">&lt;cinit&gt;()V方法</h5>
+<p>初始化即调用&lt;cinit&gt;()V，虚拟机会保证这个类的构造方法的线程安全。</p>
+<h5 id="发生的时机">发生的时机</h5>
+<p>概括的说，类的初始化是懒惰的。</p>
+<ul>
+<li>main方法所在的类，总会被首先初始化。</li>
+<li>首次访问这个类的静态变量或静态方法时</li>
+<li>子类初始化，如果父类还没初始化，会引发</li>
+<li>子类访问父类的静态变量，只会触发父类的初始化</li>
+<li>Class.forName</li>
+<li>new会导致初始化</li>
+</ul>
+<p>不会导致类初始化的情况</p>
+<ul>
+<li>访问类的static final的静态常量(基本类型和字符串)不会触发初始化，在链接时候就完成了</li>
+<li>访问类对象.class不会触发初始化</li>
+<li>创建该类的数组不会触发初始化</li>
+<li>类加载器的loadClass方法</li>
+<li>Class.forName的参数2为false时</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Load</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"main init"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">        <span class="comment">// 1. 静态变量不会初始化</span></span><br><span class="line">        System.out.println();</span><br><span class="line">        <span class="comment">// 2. 类对象.class不会触发初始化</span></span><br><span class="line">        System.out.println(B<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        <span class="comment">// 3. 创建该类的数组不会触发初始化</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> B[<span class="number">0</span>]);</span><br><span class="line">        <span class="comment">// 4. 不会初始化类B，但是会加载B、A</span></span><br><span class="line">        ClassLoader c1 = Thread.currentThread().getContextClassLoader();</span><br><span class="line">        c1.loadClass(<span class="string">"java.Load.B"</span>);</span><br><span class="line">        <span class="comment">// 5. 不会初始化类B，但会加载B、A</span></span><br><span class="line">        ClassLoader c2 = Thread.currentThread().getContextClassLoader();</span><br><span class="line">        Class.forName(<span class="string">"java.Load.B"</span>, <span class="keyword">false</span>, c2);</span><br><span class="line">        <span class="comment">// 1. 首次访问这个类的静态变量或静态方法时</span></span><br><span class="line">        System.out.println(A.a);</span><br><span class="line">        <span class="comment">// 2. 子类初始化，如果父类还没初始化会引发</span></span><br><span class="line">        System.out.println(B.c);</span><br><span class="line">        <span class="comment">// 3. 子类访问父类静态变量，只触发父类初始化</span></span><br><span class="line">        System.out.println(B.a);</span><br><span class="line">        <span class="comment">// 4. 会初始化类B，并先初始化类A</span></span><br><span class="line">        Class.forName(<span class="string">"java.Load.B"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"a init"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">double</span> b = <span class="number">5.0</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">boolean</span> c = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"b init"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="44-练习">4.4 练习</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Load</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        System.out.println(E.a);	<span class="comment">// 不会初始化，访问类的static final的静态常量(基本类型和字符串)不会触发初始化，在链接时候就完成了</span></span><br><span class="line">        System.out.println(E.b);	<span class="comment">// 不会初始化</span></span><br><span class="line">        System.out.println(E.c);	<span class="comment">// 初始化</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">E</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String b = <span class="string">"hello"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Integer c = <span class="number">20</span>;	<span class="comment">// Integer.valueOf(20)</span></span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"init E"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 懒惰实例化，懒惰单例模式</span></span><br><span class="line"><span class="comment">// 初始化时的线程安全是有保障的</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Load</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Singleton.test();	<span class="comment">// test，未导致初始化</span></span><br><span class="line">        Singleton.getInstance();	<span class="comment">//lazy holder init，导致初始化</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"test"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyHolder</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line">        <span class="keyword">static</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"lazy hoder init"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> LazyHolder.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-类加载器">5. 类加载器</h3>
+<p>以JDK8为例</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>加载哪的类</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bootstrap ClassLoader 启动类加载器</td>
+<td>JAVA_HOME/jre/lib</td>
+<td>无法直接访问</td>
+</tr>
+<tr>
+<td>Extension ClassLoader 扩展类加载器</td>
+<td>JAVA_HOME/jre/lib/ext</td>
+<td>上级为 Bootstrap，显示为 null</td>
+</tr>
+<tr>
+<td>Application ClassLoader 应用程序类加载器</td>
+<td>classpath</td>
+<td>上级为 Extension</td>
+</tr>
+<tr>
+<td>自定义类加载器</td>
+<td>自定义</td>
+<td>上级为 Application</td>
+</tr>
+</tbody>
+</table>
+<p>先层级问上级是否加载过，都没有加载过才轮到自己加载。</p>
+<h4 id="51-启动类加载器">5.1 启动类加载器</h4>
+<p>用Bootstrap类加载器加载类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">F</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">"bootstrap F init"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Load</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">		Class&lt;?&gt; aClass = Class.forName(<span class="string">"cn.itcast.jvm.t3.load.F"</span>);</span><br><span class="line">		System.out.println(aClass.getClassLoader());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>控制台编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java -Xbootclasspath/a:. top.tyzhang.Load # /a:.表示将当前目录追加到bootclasspath后</span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用该方法替代核心类</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> java -Xbootclasspath:&lt;new bootclasspath&gt;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> java -Xbootclasspath/a:&lt;追加路径&gt;	后追加</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> java -Xbootclasspath/p:&lt;追加路径&gt;	前追加</span></span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">null</span><br></pre></td></tr></table></figure>
+<h4 id="52-扩展类加载器">5.2 扩展类加载器</h4>
+<p>类加载规则验证</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">G</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">"classpath G init"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Load</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">		Class&lt;?&gt; aClass = Class.forName(<span class="string">"cn.itcast.jvm.t3.load.G"</span>);</span><br><span class="line">		System.out.println(aClass.getClassLoader());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="comment">// classpath G init</span></span><br><span class="line"><span class="comment">// sun.misc.Launcher$AppClassLoader@18b4aac2</span></span><br></pre></td></tr></table></figure>
+<p>写一个同名类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">G</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">"ext G init"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打个jar包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar -cvf my.jar top/tyzhang/G.class</span><br></pre></td></tr></table></figure>
+<p>拷贝到JAVA_HOME/jre/lib/ext，重新执行 Load5_2</p>
+<p>重新执行Load</p>
+<p>输出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ext G init</span><br><span class="line">sun.misc.Launcher$ExtClassLoader@29453f44</span><br></pre></td></tr></table></figure>
+<h4 id="53-双亲委派模式">5.3 双亲委派模式</h4>
+<p>所谓的双亲委派，就是指调用类加载器的loadClass方法时，查找类的规则。这里的双亲翻译为上级更合适，因为他们没有继承关系。</p>
+<p>源代码。</p>
+<h4 id="54-线程上下文类加载器">5.4 线程上下文类加载器</h4>
+<p>打破双亲委派机制，实现逆向调用类加载器来加载当前线程中类加载器加载不到的类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);			</span><br><span class="line">con=DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/tsetjdbc"</span>,</span><br><span class="line">					 <span class="string">"root"</span>, <span class="string">"123456"</span>);</span><br></pre></td></tr></table></figure>
+<p>其实没有第一句，也能正常运行，就是因为线程上下文类加载器。在DriverManager.getConnection()中，调用类的静态方法会初始化该类，进而执行该类的静态代码块，DriverManager的静态代码块：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DriverManager</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 注册驱动的集合</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> CopyOnWriteArrayList&lt;DriverInfo&gt; registeredDrivers = <span class="keyword">new</span> CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">	<span class="comment">// 初始化驱动</span></span><br><span class="line">	<span class="keyword">static</span> &#123;</span><br><span class="line">		loadInitialDrivers();</span><br><span class="line">	println(<span class="string">"JDBC DriverManager initialized"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印DriverManager的类加载器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(DriverManager<span class="class">.<span class="keyword">class</span>.<span class="title">getClassLoader</span>())</span>;	<span class="comment">// null</span></span><br></pre></td></tr></table></figure>
+<p>表示它的类加载器是Bootstrap ClassLoader，回到JAVA_HOME/jre/lib下搜索类，但是该目录下显然并没有mysql的jar包，继续查看loadInitialDriver()方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loadInitialDrivers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String drivers;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="comment">// 1 先读取系统属性</span></span><br><span class="line">		drivers = AccessController.doPrivileged(<span class="keyword">new</span> PrivilegedAction&lt;String&gt;() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> String <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> System.getProperty(<span class="string">"jdbc.drivers"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">        drivers = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 2 通过SPI加载驱动类</span></span><br><span class="line">    AccessController.doPrivileged(<span class="keyword">new</span> PrivilegedAction&lt;Void&gt;() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> Void <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">            Iterator&lt;Driver&gt; driversIterator = loadedDrivers.iterator();</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                <span class="keyword">while</span>(driversIterator.hasNext()) &#123;</span><br><span class="line">                    driversIterator.next();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span>(Throwable t) &#123;</span><br><span class="line">                <span class="comment">// Do nothing</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 3 使用jdbc.drivers定义的驱动名加载驱动</span></span><br><span class="line">    <span class="keyword">if</span> (drivers == <span class="keyword">null</span> || drivers.equals(<span class="string">""</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    String[] driversList = drivers.split(<span class="string">":"</span>);</span><br><span class="line">    println(<span class="string">"number of Drivers:"</span> + driversList.length);</span><br><span class="line">    <span class="keyword">for</span> (String aDriver : driversList) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            println(<span class="string">"DriverManager.Initialize: loading "</span> + aDriver);</span><br><span class="line">            <span class="comment">// 使用AppClassloader加载</span></span><br><span class="line">            Class.forName(aDriver, <span class="keyword">true</span>,</span><br><span class="line">                    ClassLoader.getSystemClassLoader());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">            println(<span class="string">"DriverManager.Initialize: load failed: "</span> + ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先看3说明最后使用的是Class.forName完成类的加载和初始化，关联的是应用程序类加载器，因此可以顺利完成类加载。</p>
+<p>1就是Service Provider Interface(SPI)，约定如下，在jar包中的META-INF/services包下，以接口全限定名为文件，文件内容是实现类名称。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/05/27/spi.jpg" alt=""></p>
+<p>这样就可以使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ServiceLoader&lt;接口类型&gt; allImpls = ServiceLoader.load(接口类型<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">Iterator&lt;接口类型&gt; iter = a;;Impls.iterator();</span><br><span class="line"><span class="keyword">while</span> (iter.hasNext())&#123;</span><br><span class="line">    iter.next();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>来得到实现类，体现的是面向接口编程+解耦的思想，在以下框架中都运用了此思想：</p>
+<ul>
+<li>JDBC</li>
+<li>Servlet初始化器</li>
+<li>Spring容器</li>
+<li>Dubbo(对SPI进行了扩展)</li>
+</ul>
+<p>继续看上述代码中的ServiceLoad.load方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;S&gt; <span class="function">ServiceLoader&lt;S&gt; <span class="title">load</span><span class="params">(Class&lt;S&gt; service)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 获取线程上下文类加载器</span></span><br><span class="line">  ClassLoader cl = Thread.currentThread().getContextClassLoader();</span><br><span class="line">  <span class="keyword">return</span> ServiceLoader.load(service, cl);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>线程上下文类加载器是当前线程使用的类加载器，默认是应用程序类加载器，它的内部又是由CLass.forName调用了线程上下文类加载器完成类加载。具体代码在ServiceLoader的内部类LazyIterator中。</p>
+<p>适用场景：</p>
+<ul>
+<li>当高层提供了统一接口让低层去实现，同时又要是在高层加载（或实例化）低层的类时，必须通过线程上下文类加载器来帮助高层的ClassLoader找到并加载该类。</li>
+<li>当使用本类托管类加载，然而加载本类的ClassLoader未知时，为了隔离不同的调用者，可以取调用者各自的线程上下文类加载器代为托管。</li>
+</ul>
+<h4 id="55-自定义类加载器">5.5 自定义类加载器</h4>
+<h5 id="应用场景">应用场景</h5>
+<ul>
+<li>想加载非classpath随意路径中的类文件</li>
+<li>都是通过接口来实现，希望解耦时，常用在框架设计</li>
+<li>这些类希望予以隔离，不同应用的同名类都可以加载，不冲突，常见于tomcat容器</li>
+</ul>
+<h5 id="步骤">步骤</h5>
+<ol>
+<li>继承ClassLoader父类</li>
+<li>要遵从双亲委派机制，重写findClass方法
+<ul>
+<li>不是重写loadClass方法，否则不会走双亲委派机制</li>
+</ul>
+</li>
+<li>读取类文件的字节码</li>
+<li>调用父类的defineClass方法来加载类</li>
+<li>使用者调用该类加载器的loadClass方法</li>
+</ol>
+<h5 id="例子">例子</h5>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException&#123;</span><br><span class="line">        String path = <span class="string">"e:\\myclasspath\\"</span> + name + <span class="string">".class"</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ByteArrayOutputStream os = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">            Files.copy(Paths.get(path), os);</span><br><span class="line">            <span class="comment">// 得到字节数组</span></span><br><span class="line">            <span class="keyword">byte</span>[] bytes = os.tobyteArray();</span><br><span class="line">            <span class="comment">// byte[]转化为*.class</span></span><br><span class="line">            <span class="keyword">return</span> defineClass(name, bytes, <span class="number">0</span>, bytes.length);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(<span class="string">"类文件未找到"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">MyClassLoader classLoader = <span class="keyword">new</span> MyClassLoader();</span><br><span class="line">Class&lt;?&gt; c1 = classLoader.loadClass(<span class="string">"name1"</span>);</span><br><span class="line">Class&lt;?&gt; c2 = classLoader.loadClass(<span class="string">"name1"</span>);</span><br><span class="line">System.out.println(c1 == c2);	<span class="comment">// true</span></span><br><span class="line">MyClassLoader classLoader2 = <span class="keyword">new</span> MyClassLoader();</span><br><span class="line">Class&lt;?&gt; c3 = classLoader.loadClass(<span class="string">"name1"</span>);</span><br><span class="line">System.out.println(c1 == c3);	<span class="comment">// false，同一个类加载器为true</span></span><br><span class="line"></span><br><span class="line">c1.newInstance();	<span class="comment">// 实例化一个name1对象</span></span><br></pre></td></tr></table></figure>
+<h3 id="6-运行期优化">6. 运行期优化</h3>
+<h4 id="61-即时编译">6.1 即时编译</h4>
+<h5 id="分层编译">分层编译</h5>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JIT1</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">200</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">long</span> start = System.nanoTime();</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">1000</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">new</span> Object();</span><br><span class="line">     &#125;</span><br><span class="line">      <span class="keyword">long</span> end = System.nanoTime();</span><br><span class="line">      System.out.printf(<span class="string">"%d\t%d\n"</span>,i,(end - start));</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125; <span class="comment">// 结果分几个阶段下降明显</span></span><br></pre></td></tr></table></figure>
+<p>JVM 将执行状态分成了 5 个层次：-</p>
+<ul>
+<li>0 层，解释执行（Interpreter）</li>
+<li>1 层，使用 C1 即时编译器编译执行（不带 profiling）</li>
+<li>2 层，使用 C1 即时编译器编译执行（带基本的 profiling）</li>
+<li>3 层，使用 C1 即时编译器编译执行（带完全的 profiling）</li>
+<li>4 层，使用 C2 即时编译器编译执行<br>
+profiling 是指在运行过程中收集一些程序执行状态的数据，例如【方法的调用次数】，【循环的<br>
+回边次数】等</li>
+</ul>
+<p><strong>即时编译器（JIT）与解释器的区别</strong></p>
+<p>解释器是将字节码解释为机器码，下次即使遇到相同的字节码，仍会执行重复的解释。JIT 是将一些字节码编译为机器码，并存入 Code Cache，下次遇到相同的代码，直接执行，无需再编译。解释器是将字节码解释为针对所有平台都通用的机器码。JIT 会根据平台类型，生成平台特定的机器码。对于占据大部分的不常用的代码，我们无需耗费时间将其编译成机器码，而是采取解释执行的方式运行；另一方面，对于仅占据小部分的热点代码，我们则可以将其编译成机器码，以达到理想的运行速度。 执行效率上简单比较一下 Interpreter &lt; C1(提升5倍) &lt; C2(提升10-100倍)，总的目标是发现热点代码（hotspot名称的由来），优化之。</p>
+<p>可以使用 <code>-XX:-DoEscapeAnalysis</code> 关闭逃逸分析。通过逃逸分析后的对象，可将这些对象直接在栈上进行分配，而非堆上。极大的降低了GC次数，从而提升了程序整体的执行效率。</p>
+<h5 id="方法内联">方法内联</h5>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">square</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> i * i;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(square(<span class="number">9</span>));</span><br></pre></td></tr></table></figure>
+<p>如果发现 square 是热点方法，并且长度不太长时，会进行内联，所谓的内联就是把方法内代码拷贝、<br>
+粘贴到调用者的位置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="number">9</span> * <span class="number">9</span>);</span><br></pre></td></tr></table></figure>
+<p>例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JIT2</span> </span>&#123;</span><br><span class="line">    	<span class="comment">// -XX:+UnlockDiagnosticVMOptions -XX:+PrintInlining （解锁隐藏参数）打印inlining 信息</span></span><br><span class="line">        <span class="comment">// -XX:CompileCommand=dontinline,*JIT2.square 禁止某个如square方法 inlining</span></span><br><span class="line">        <span class="comment">// -XX:+PrintCompilation 打印编译信息</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">500</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">long</span> start = System.nanoTime();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">1000</span>; j++) &#123;</span><br><span class="line">                x = square(<span class="number">9</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">long</span> end = System.nanoTime();</span><br><span class="line">            System.out.printf(<span class="string">"%d\t%d\t%d\n"</span>,i,x,(end - start));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">square</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> i * i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="字段优化">字段优化</h5>
+<p>读取优化：</p>
+<ul>
+<li>即时编译器会优化 实例字段 和 静态字段 的访问，以 减少总的内存访问次数</li>
+<li>即时编译器将 沿着控制流 ，缓存各个字段 存储节点 将要存储的值，或者字段 读取节点 所得到的值</li>
+<li>当即时编译器 遇到对同一字段的读取节点 时，如果缓存值还没有失效，那么将读取节点 替换 为该缓存值</li>
+<li>当即时编译器 遇到对同一字段的存储节点 时，会 更新 所缓存的值</li>
+<li>当即时编译器遇到 可能更新 字段的节点时，它会采取 保守 的策略， 舍弃所有的缓存值</li>
+<li>方法调用节点 ：在即时编译器看来，方法调用会执行 未知代码</li>
+<li>内存屏障节点 ：其他线程可能异步更新了字段</li>
+</ul>
+<p>存储优化：</p>
+<ul>
+<li>如果一个字段先后被存储了两次，而且这 两次存储之间没有对第一次存储内容读取 ，那么即时编译器将 消除 第一个字段存储</li>
+</ul>
+<h5 id="实例">实例</h5>
+<p>JMH 基准测试依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.openjdk.jmh<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jmh-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;jmh.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.openjdk.jmh<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jmh-generator-annprocess<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;jmh.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>基准测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Warmup</span>(iterations = <span class="number">2</span>, time = <span class="number">1</span>)</span><br><span class="line"><span class="meta">@Measurement</span>(iterations = <span class="number">5</span>, time = <span class="number">1</span>)</span><br><span class="line"><span class="meta">@State</span>(Scope.Benchmark)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Benchmark1</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span>[] elements = randomInts(<span class="number">1_000</span>);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[] randomInts(<span class="keyword">int</span> size) &#123;</span><br><span class="line">    Random random = ThreadLocalRandom.current();</span><br><span class="line">    <span class="keyword">int</span>[] values = <span class="keyword">new</span> <span class="keyword">int</span>[size];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">      values[i] = random.nextInt();</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="keyword">return</span> values;</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="meta">@Benchmark</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; elements.length; i++) &#123;</span><br><span class="line">      doSum(elements[i]);</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="meta">@Benchmark</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] local = <span class="keyword">this</span>.elements;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; local.length; i++) &#123;</span><br><span class="line">      doSum(local[i]);</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="meta">@Benchmark</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> element : elements) &#123;</span><br><span class="line">      doSum(element);</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="meta">@CompilerControl</span>(CompilerControl.Mode.INLINE)</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">doSum</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    sum += x;</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> RunnerException </span>&#123;</span><br><span class="line">    Options opt = <span class="keyword">new</span> OptionsBuilder()</span><br><span class="line">       .include(Benchmark1<span class="class">.<span class="keyword">class</span>.<span class="title">getSimpleName</span>())</span></span><br><span class="line"><span class="class">       .<span class="title">forks</span>(1)</span></span><br><span class="line"><span class="class">       .<span class="title">build</span>()</span>;</span><br><span class="line">    <span class="keyword">new</span> Runner(opt).run();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先启用 doSum 的方法内联，测试结果如下（每秒吞吐量，分数越高的更好）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Benchmark       Mode Samples    Score Score error Units</span><br><span class="line">t.Benchmark1.test1  thrpt    5 2420286.539  390747.467 ops/s</span><br><span class="line">t.Benchmark1.test2  thrpt    5 2544313.594  91304.136 ops/s</span><br><span class="line">t.Benchmark1.test3  thrpt    5 2469176.697  450570.647 ops/s</span><br></pre></td></tr></table></figure>
+<p>接下来禁用 doSum 方法内联</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CompilerControl</span>(CompilerControl.Mode.DONT_INLINE)</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">doSum</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  sum += x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Benchmark       Mode Samples    Score Score error Units</span><br><span class="line">t.Benchmark1.test1  thrpt    5 296141.478  63649.220 ops/s</span><br><span class="line">t.Benchmark1.test2  thrpt    5 371262.351  83890.984 ops/s</span><br><span class="line">t.Benchmark1.test3  thrpt    5 368960.847  60163.391 ops/s</span><br></pre></td></tr></table></figure>
+<p>分析：<br>
+在刚才的示例中，doSum 方法是否内联会影响 elements 成员变量读取的优化：<br>
+如果 doSum 方法内联了，刚才的 test1 方法会被优化成下面的样子（伪代码）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Benchmark</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// elements.length 首次读取会缓存起来 -&gt; int[] local</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; elements.length; i++) &#123; <span class="comment">// 后续 999 次 求长度 &lt;- local</span></span><br><span class="line">    sum += elements[i]; <span class="comment">// 1000 次取下标 i 的元素 &lt;- local</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以节省 1999 次 Field 读取操作<br>
+但如果 doSum 方法没有内联，则不会进行上面的优化</p>
+<h3 id="62-反射优化">6.2 反射优化</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Reflect1</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"foo..."</span>);</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Method foo = Reflect1.class.getMethod("foo");</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">16</span>; i++) &#123;</span><br><span class="line">      System.out.printf(<span class="string">"%d\t"</span>, i);</span><br><span class="line">      foo.invoke(<span class="keyword">null</span>);</span><br><span class="line">   &#125;</span><br><span class="line">    System.in.read();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>foo.invoke 前面 0 ~ 15 次调用使用的是 MethodAccessor 的 NativeMethodAccessorImpl 实现</p>
+<p>当调用到第 16 次（从0开始算）时，会采用运行时生成的类代替掉最初的实现，可以通过 debug 得到<br>
+类名为 sun.reflect.GeneratedMethodAccessor1。由于ASM生成新的类要花比较长的时间，比直接native调用要长3倍左右的时间。但是生成类以后，native调用就会比ASM调用花的时间长20倍。</p>
+<p>注意<br>
+通过查看 ReflectionFactory 源码可知</p>
+<ul>
+<li>sun.reflect.noInflation 可以用来禁用膨胀（直接生成 GeneratedMethodAccessor1，但首<br>
+次生成比较耗时，如果仅反射调用一次，不划算）</li>
+<li>sun.reflect.inflationThreshold 可以修改膨胀阈值</li>
+</ul>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/jvmmemo/" data-toggle="tooltip" data-placement="top" title="JVM: 内存模型">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/gracandy/" data-toggle="tooltip" data-placement="top" title="请给我一颗语法糖">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-类文件结构"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. 类文件结构</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#11-魔数"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1.1 魔数</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#12-版本"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">1.2 版本</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#13-常量池"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">1.3 常量池</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#14-访问标识与继承信息"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">1.4 访问标识与继承信息</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#15-field信息"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">1.5 Field信息</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#16-method信息"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">1.6 Method信息</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#17-附加属性"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">1.7 附加属性</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-字节码指令"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. 字节码指令</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#21-入门"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">2.1 入门</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#22-javap工具"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2.2 javap工具</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#23-图解过程"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">2.3 图解过程</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-编译期处理"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. 编译期处理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-类加载阶段"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4. 类加载阶段</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#41-加载"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">4.1 加载</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#42-链接"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">4.2 链接</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#验证"><span class="toc-nav-number">4.2.1.</span> <span class="toc-nav-text">验证</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#准备"><span class="toc-nav-number">4.2.2.</span> <span class="toc-nav-text">准备</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#解析"><span class="toc-nav-number">4.2.3.</span> <span class="toc-nav-text">解析</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#43-初始化"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">4.3 初始化</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#ltcinitgtv方法"><span class="toc-nav-number">4.3.1.</span> <span class="toc-nav-text">&lt;cinit&gt;()V方法</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#发生的时机"><span class="toc-nav-number">4.3.2.</span> <span class="toc-nav-text">发生的时机</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#44-练习"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">4.4 练习</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-类加载器"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5. 类加载器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#51-启动类加载器"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">5.1 启动类加载器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#52-扩展类加载器"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">5.2 扩展类加载器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#53-双亲委派模式"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">5.3 双亲委派模式</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#54-线程上下文类加载器"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">5.4 线程上下文类加载器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#55-自定义类加载器"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">5.5 自定义类加载器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#应用场景"><span class="toc-nav-number">5.5.1.</span> <span class="toc-nav-text">应用场景</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#步骤"><span class="toc-nav-number">5.5.2.</span> <span class="toc-nav-text">步骤</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#例子"><span class="toc-nav-number">5.5.3.</span> <span class="toc-nav-text">例子</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-运行期优化"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">6. 运行期优化</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#61-即时编译"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">6.1 即时编译</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#分层编译"><span class="toc-nav-number">6.1.1.</span> <span class="toc-nav-text">分层编译</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#方法内联"><span class="toc-nav-number">6.1.2.</span> <span class="toc-nav-text">方法内联</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#字段优化"><span class="toc-nav-number">6.1.3.</span> <span class="toc-nav-text">字段优化</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#实例"><span class="toc-nav-number">6.1.4.</span> <span class="toc-nav-text">实例</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#62-反射优化"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">6.2 反射优化</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">标签</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+				<!--
+                
+                <hr>
+                <h5>朋友们</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://www.freedomly.tk/" target="_blank">Freedomly</a></li>
+                    
+                        <li><a href="https://jlwang1996.github.io/" target="_blank">jlwang1996</a></li>
+                    
+                        <li><a href="http://siwenzheng.github.io/" target="_blank">SiwenZheng</a></li>
+                    
+                        <li><a href="https://loststartvt.github.io/" target="_blank">LostStarTvT</a></li>
+                    
+                        <li><a href="https://zbsong.top/" target="_blank">songzblink</a></li>
+                    
+                        <li><a href="https://dolnw.github.io/" target="_blank">JCWang</a></li>
+                    
+                </ul>
+                
+				-->
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-tian-yu-65-49">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://space.bilibili.com/38534865">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>B</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://m.okjike.com/users/28c5ee85-832c-4a04-ab73-788a507d2bd8">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>J</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ztygalaxy">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 张天宇 2023 
+                    <br>
+                    Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
+                    re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
+					
+					<br>
+                    <a href="http://beian.miit.gov.cn/" style="color: gray">浙 ICP备19045818号</a>
+					<br>
+					<!-- <p class="copyright text-muted" style="margin-top: 5px"> -->
+						<img src="../../img/备案图标.png"/>
+						<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011802001883" style="color: gray">浙公网安备 33011802001883号</a>
+					<!-- </p> -->
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("tyzhang.top/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="tyzhang.top/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>
