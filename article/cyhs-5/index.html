@@ -297,12 +297,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/cyhs-6/" data-toggle="tooltip" data-placement="top" title="次元画社(六)，版本迭代的实现">&larr; 上一篇</a>
+                            <a href="/article/think-about-count/" data-toggle="tooltip" data-placement="top" title="关于圆滑物体计数的一点思考">&larr; 上一篇</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/cyhs-4/" data-toggle="tooltip" data-placement="top" title="次元画社(四)，与服务器聊聊天">下一篇 &rarr;</a>
+                            <a href="/article/cyhs-6/" data-toggle="tooltip" data-placement="top" title="次元画社(六)，版本迭代的实现">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -646,6 +646,22 @@
 <img src="tyzhang.top/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 
 </html>

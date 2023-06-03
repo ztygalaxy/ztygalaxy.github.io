@@ -302,7 +302,7 @@
                     <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                     <a href="/article/suzhou/" style="color: #0085a1">
                         <span>
-                            [施工中] 苏州计划
+                            终于去了苏州
                         </span>
                     </a>
                     <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
@@ -1770,9 +1770,9 @@
                  <li >
                     03-15
                     <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/article/cyhs-5/" style="color: #0085a1">
+                    <a href="/article/cyhs-6/" style="color: #0085a1">
                         <span>
-                            次元画社(五)，图片云中来
+                            次元画社(六)，版本迭代的实现
                         </span>
                     </a>
                     <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
@@ -1785,9 +1785,9 @@
                  <li >
                     03-15
                     <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/article/cyhs-6/" style="color: #0085a1">
+                    <a href="/article/cyhs-5/" style="color: #0085a1">
                         <span>
-                            次元画社(六)，版本迭代的实现
+                            次元画社(五)，图片云中来
                         </span>
                     </a>
                     <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
@@ -2367,6 +2367,22 @@
 <img src="tyzhang.top/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 
 </html>
