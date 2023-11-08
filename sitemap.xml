@@ -93,13 +93,6 @@
   </url>
   
   <url>
-    <loc>tyzhang.top/article/suzhou/</loc>
-    
-    <lastmod>2023-06-06</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>tyzhang.top/article/new-year/</loc>
     
     <lastmod>2022-12-31</lastmod>
@@ -887,13 +880,6 @@
   
   <url>
     <loc>tyzhang.top/tags/%E8%AF%BB%E4%B9%A6/</loc>
-    <lastmod>2023-11-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>tyzhang.top/tags/%E7%8E%A9/</loc>
     <lastmod>2023-11-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
