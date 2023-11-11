@@ -210,7 +210,7 @@
                     
                         
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -222,7 +222,7 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/tags/">标签</a>
                         </li>
                         
                     
@@ -282,24 +282,18 @@
                 <blockquote>
 <p>RPC简单学习，Demo。</p>
 </blockquote>
-<h3 id="什么是rpc">什么是RPC</h3>
-<p>RPC，Remote Procedure Call，远程过程调用。服务器告诉远程机器调用函数体。也有称藕式调用。</p>
-<h4 id="本地过程调用">本地过程调用</h4>
-<p>进程内部的调用，比如main函数调用fun函数。</p>
+<h3 id="什么是rpc"><a href="#什么是RPC" class="headerlink" title="什么是RPC"></a>什么是RPC</h3><p>RPC，Remote Procedure Call，远程过程调用。服务器告诉远程机器调用函数体。也有称藕式调用。</p>
+<h4 id="本地过程调用"><a href="#本地过程调用" class="headerlink" title="本地过程调用"></a>本地过程调用</h4><p>进程内部的调用，比如main函数调用fun函数。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> resu = add(a + b);</span><br></pre></td></tr></table></figure>
-<h4 id="远程过程调用">远程过程调用</h4>
-<p>进程间的通信（同机或者异机）可以理解为远程调用。从字面意思来理解，远程调用就是客户端（调用的模块）和服务端（被调用的模块）“不在一起”，“相隔很远”；本地调用就是客户端（调用的模块）和服务端（被调用的模块）“在一起”，“相隔很近”。实质就是，客户端与服务端的EJB对象不在同一个JVM进程中，就是远程调用；客户端与服务端的EJB对象在同一个JVM进程中，就是本地调用。</p>
-<h5 id="问题">问题</h5>
-<ol>
+<h4 id="远程过程调用"><a href="#远程过程调用" class="headerlink" title="远程过程调用"></a>远程过程调用</h4><p>进程间的通信（同机或者异机）可以理解为远程调用。从字面意思来理解，远程调用就是客户端（调用的模块）和服务端（被调用的模块）“不在一起”，“相隔很远”；本地调用就是客户端（调用的模块）和服务端（被调用的模块）“在一起”，“相隔很近”。实质就是，客户端与服务端的EJB对象不在同一个JVM进程中，就是远程调用；客户端与服务端的EJB对象在同一个JVM进程中，就是本地调用。</p>
+<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><ol>
 <li><strong>Call ID映射</strong>：在本地调用中，函数体是直接通过函数指针来指定的，比如调用add()，编译器会自动调用它相应的函数指针。但是在远程调用中，函数指针显然是不行的，因为两个进程的地址空间是完全不一样的。所以在RPC中，所有的函数都必须有一个自己的ID。这个ID在所有的进程中都是唯一确定的。客户端在做远程调用时，必须附上这个ID。此外还要再客户端和服务端分别维护<code>函数-CallID</code>的表。两者的表不一定要完全相同，但相同的函数对应的CallID必须相同。当客户端需要进行远程调用时，他就查一下这个表，找出相应的CallID，然后把它传给服务端，服务端也通过查表，来确定用户调用的函数，然后执行相应函数的代码。</li>
 <li><strong>序列化和反序列化</strong>：在本地调用中，我们只需要把参数压到栈里，然后让函数自己去栈里读就行。但是在远程过程调用时，客户端跟服务端是不同的进程，不能通过内存来传递参数。甚至有时候客户端和服务端使用的都不是同一种语言（比如服务端用C++，客户端用Java或者Python）。这时候就需要客户端把参数先转成一个字节流，传给服务端后，再把字节流转成自己能读取的格式。这个过程叫序列化和反序列化。同理，从服务端返回的值也需要序列化反序列化的过程。</li>
 <li><strong>网络传输</strong>。远程调用往往用在网络上，客户端和服务端是通过网络连接的。所有的数据都需要通过网络传输，因此就需要有一个网络传输层。网络传输层需要把Call ID和序列化后的参数字节流传给服务端，然后再把序列化后的调用结果传回客户端。只要能完成这两者的，都可以作为传输层使用。因此，它所使用的协议其实是不限的，能完成传输就行。尽管大部分RPC框架都使用TCP协议，但其实UDP也可以，而gRPC干脆就用了HTTP2。</li>
 </ol>
-<h3 id="怎么rpc">怎么RPC</h3>
-<p><img src="https://pic.tyzhang.top/images/2020/05/16/7632302-ca0ba3118f4ef4fb.png" alt=""></p>
+<h3 id="怎么rpc"><a href="#怎么RPC" class="headerlink" title="怎么RPC"></a>怎么RPC</h3><p><img src="https://pic.tyzhang.top/images/2020/05/16/7632302-ca0ba3118f4ef4fb.png" alt=""></p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Client端 </span></span><br><span class="line"><span class="comment">// Student student = Call(ServerAddr, addAge, student)</span></span><br><span class="line"><span class="number">1.</span> 将这个调用映射为Call ID。</span><br><span class="line"><span class="number">2.</span> 将Call ID，student（<span class="keyword">params</span>）序列化，以二进制形式打包</span><br><span class="line"><span class="number">3.</span> 把<span class="number">2</span>中得到的数据包发送给ServerAddr，这需要使用网络传输层</span><br><span class="line"><span class="number">4.</span> 等待服务器返回结果</span><br><span class="line"><span class="number">5.</span> 如果服务器调用成功，那么就将结果反序列化，并赋给student，年龄更新</span><br><span class="line"></span><br><span class="line"><span class="comment">// Server端</span></span><br><span class="line"><span class="number">1.</span> 在本地维护一个Call ID到函数指针的映射call_id_map，可以用Map&lt;String, Method&gt; callIdMap</span><br><span class="line"><span class="number">2.</span> 等待服务端请求</span><br><span class="line"><span class="number">3.</span> 得到一个请求后，将其数据包反序列化，得到Call ID</span><br><span class="line"><span class="number">4.</span> 通过在callIdMap中查找，得到相应的函数指针</span><br><span class="line"><span class="number">5.</span> 将student（<span class="keyword">params</span>）反序列化后，在本地调用addAge()函数，得到结果</span><br><span class="line"><span class="number">6.</span> 将student结果序列化后通过网络返回给Client</span><br><span class="line"></span><br><span class="line"><span class="comment">//其中</span></span><br><span class="line"><span class="number">1.</span> Call ID映射可以直接使用函数字符串，也可以使用整数ID。映射表一般就是一个哈希表。</span><br><span class="line"><span class="number">2.</span> 序列化反序列化可以自己写，也可以使用Protobuf或者FlatBuffers之类的。</span><br><span class="line"><span class="number">3.</span> 网络传输库可以自己写socket，或者用asio，ZeroMQ，Netty之类。</span><br></pre></td></tr></table></figure>
-<h3 id="实现rpc">实现RPC</h3>
-<p>// 待补录</p>
+<h3 id="实现rpc"><a href="#实现RPC" class="headerlink" title="实现RPC"></a>实现RPC</h3><p>// 待补录</p>
 
                 
                 <hr>

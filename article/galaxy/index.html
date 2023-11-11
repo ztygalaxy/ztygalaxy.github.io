@@ -210,7 +210,7 @@
                     
                         
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -222,7 +222,7 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/tags/">标签</a>
                         </li>
                         
                     
@@ -286,54 +286,39 @@
 <p>之所以还建一个私有云，一是OneDrive的异地登陆还是有一点点吃力，特别是对我这个记不住密码的脑子。脱离了谷Chrome和iOS的钥匙串，我恐怕只能记住12306的密码了；二就是涉及到一些实验代码等等本机保存之后云在哪都不放心，偷偷找个地方藏起来。关键是够快、够方便，高度自定义，Geek！</p>
 <p>本文使用的是NextCloud的云盘框架。之前用的可道云，功能很丰富，在线编辑、离线下载等等，但是受限太多处处掣肘。正好我对功能多少也没什么要求，主要是想能够随时随地记点东西还有就是代码备份，电脑上的所有文档已经用了OneDrive不担心。所以从可道云切换到了NextCloud。</p>
 <p>Talk is cheap, show my code.</p>
-<h3 id="一-准备">一、准备</h3>
-<p>装有CentOS的阿里云服务器一台（学生机）</p>
-<h3 id="二-宝塔linux控制面板">二、宝塔Linux控制面板</h3>
-<p>宝塔是一个Linux下的环境配置、状态监控的控制面板，通过它你可以安装常用编程环境、开发插件，还可以监控服务器的运行情况。</p>
+<h3 id="一-准备"><a href="#一、准备" class="headerlink" title="一、准备"></a>一、准备</h3><p>装有CentOS的阿里云服务器一台（学生机）</p>
+<h3 id="二-宝塔linux控制面板"><a href="#二、宝塔Linux控制面板" class="headerlink" title="二、宝塔Linux控制面板"></a>二、宝塔Linux控制面板</h3><p>宝塔是一个Linux下的环境配置、状态监控的控制面板，通过它你可以安装常用编程环境、开发插件，还可以监控服务器的运行情况。</p>
 <p>如果你对Linux系统下的各项配置十分熟悉的话，或者你的服务器已经有了下面提到的环境，可以跳过这一步。</p>
-<h4 id="1宝塔的安装">1.宝塔的安装</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; bash install.sh</span><br></pre></td></tr></table></figure>
+<h4 id="1宝塔的安装"><a href="#1-宝塔的安装" class="headerlink" title="1.宝塔的安装"></a>1.宝塔的安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; bash install.sh</span><br></pre></td></tr></table></figure>
 <p>对宝塔的基本操作，可参考<a href="https://www.laoyangblog.com/86.html" target="_blank" rel="noopener">宝塔面板安装和使用图文教程</a>。</p>
 <p>可以使用putty进行远程连接执行命令行。</p>
-<h4 id="2环境搭建">2.环境搭建</h4>
-<p>进入宝塔后，可安装其推荐环境LNMP（NextCloud最新版本的要求PHP要选择7），如下：</p>
+<h4 id="2环境搭建"><a href="#2-环境搭建" class="headerlink" title="2.环境搭建"></a>2.环境搭建</h4><p>进入宝塔后，可安装其推荐环境LNMP（NextCloud最新版本的要求PHP要选择7），如下：</p>
 <p>这里建议选择编译安装，时间较长，不过胜在环境稳定。</p>
 <p><img src="/img/article/nextcloud_0.png" alt="环境配置"></p>
 <p>这样的话，基本生产环境就搭建完毕了。下面进入NextCloud操作。</p>
-<h3 id="三-next-cloud安装与配置">三、Next Cloud安装与配置</h3>
-<h4 id="1设置网站入口">1.设置网站入口</h4>
-<p><img src="/img/article/nextcloud_1.jpg" alt=""></p>
-<h4 id="2远程下载nextcloud">2.远程下载NextCloud</h4>
-<p>在宝塔面板里，选择文件，在合适的目录下远程下载，贴入修改后的下面的地址。</p>
+<h3 id="三-next-cloud安装与配置"><a href="#三、Next-Cloud安装与配置" class="headerlink" title="三、Next Cloud安装与配置"></a>三、Next Cloud安装与配置</h3><h4 id="1设置网站入口"><a href="#1-设置网站入口" class="headerlink" title="1.设置网站入口"></a>1.设置网站入口</h4><p><img src="/img/article/nextcloud_1.jpg" alt=""></p>
+<h4 id="2远程下载nextcloud"><a href="#2-远程下载NextCloud" class="headerlink" title="2.远程下载NextCloud"></a>2.远程下载NextCloud</h4><p>在宝塔面板里，选择文件，在合适的目录下远程下载，贴入修改后的下面的地址。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//download.nextcloud.com/server/releases/nextcloud-*.*.*.zip //前往官网替换为最新版本</span></span><br></pre></td></tr></table></figure>
 <p><img src="img/nextcloud_2.jpg" alt=""></p>
 <p>下载完成后点击安装包右侧的解压操作，解压到随便一个文件夹，将里面所有内容都复制到之前填写的网站文件夹，并将文件夹权限改成755。</p>
-<h4 id="3网站设置">3.网站设置</h4>
-<p>输入开头填写的网站，大概是你的IP，数据路类型选择MySQL，剩下的自己客制化。</p>
+<h4 id="3网站设置"><a href="#3-网站设置" class="headerlink" title="3.网站设置"></a>3.网站设置</h4><p>输入开头填写的网站，大概是你的IP，数据路类型选择MySQL，剩下的自己客制化。</p>
 <p><img src="/img/article/nextcloud_3.png" alt=""></p>
 <p>点击“安装完成”，进入首页，注意此时还是存在一些问题的，点设置可以看到，需要手动设置一下环境。</p>
 <p>前往网站栏中将网站模式从纯静态改为你的PHP版本。</p>
-<h4 id="4环境修改">4.环境修改</h4>
-<p>在宝塔，PHP环境配置页面，修改上传允许最大大小和时间限制等细节参数。</p>
+<h4 id="4环境修改"><a href="#4-环境修改" class="headerlink" title="4.环境修改"></a>4.环境修改</h4><p>在宝塔，PHP环境配置页面，修改上传允许最大大小和时间限制等细节参数。</p>
 <p>关于设置中的报错，查看<a href="https://blog.csdn.net/u014654707/article/details/88033491" target="_blank" rel="noopener">宝塔面板部署NextCloud-安全及设置警告解决</a>系列博文设置解决。</p>
-<h4 id="效果地址">效果：<a href="http://101.37.79.145/index.php" target="_blank" rel="noopener">地址</a></h4>
-<p><img src="/img/article/nextcloud_4.jpg" alt=""></p>
-<h3 id="四-一些碎片">四、一些碎片</h3>
-<ol>
-<li>
-<p>当在页面使用更新器更新时，极大可能会出现更新失败且无法再次更新的问题。且此时再访问网站出现维护提示。需要进入Config文件夹下的Config.php，将以下设置修改为False。并将data文件夹下的data-###删除。</p>
+<h4 id="效果地址"><a href="#效果：地址" class="headerlink" title="效果：地址"></a>效果：<a href="http://101.37.79.145/index.php" target="_blank" rel="noopener">地址</a></h4><p><img src="/img/article/nextcloud_4.jpg" alt=""></p>
+<h3 id="四-一些碎片"><a href="#四、一些碎片" class="headerlink" title="四、一些碎片"></a>四、一些碎片</h3><ol>
+<li><p>当在页面使用更新器更新时，极大可能会出现更新失败且无法再次更新的问题。且此时再访问网站出现维护提示。需要进入Config文件夹下的Config.php，将以下设置修改为False。并将data文件夹下的data-###删除。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'maintenance'</span> =&gt; <span class="keyword">false</span>,</span><br></pre></td></tr></table></figure>
 <p>推荐在终端使用命令行更新：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u www-data php occ upgrade</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>最新版本的NextCloud中的好多应用暂未适配，仅Note等简单应用可用。</p>
+<li><p>最新版本的NextCloud中的好多应用暂未适配，仅Note等简单应用可用。</p>
 </li>
-<li>
-<p>NextCloud同时配有PC、Android、iOS客户端，填写自己的服务器地址登录即可使用。</p>
+<li><p>NextCloud同时配有PC、Android、iOS客户端，填写自己的服务器地址登录即可使用。</p>
 </li>
-<li>
-<p>限于阿里云的下行网速，该网盘的下载速度并不是很快，建议有条件的朋友升级带宽或使用自己的服务器。</p>
+<li><p>限于阿里云的下行网速，该网盘的下载速度并不是很快，建议有条件的朋友升级带宽或使用自己的服务器。</p>
 </li>
 </ol>
 

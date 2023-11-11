@@ -210,7 +210,7 @@
                     
                         
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -222,7 +222,7 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/tags/">标签</a>
                         </li>
                         
                     
@@ -284,85 +284,68 @@
 </blockquote>
 <p>看见刁总写的 <a href="http://diaowenjie.cn/2020/12/02/pictureGo.html" target="_blank" rel="noopener">PicGo + Aliyun 的图床解决方案</a>，本来想着转移到他这个解决方案算了，想了想自己搭的图床，再折腾折腾吧。</p>
 <p>在查找方案的时候，发现现行方案大多不如意，诸如只能上传到访客网络，下面的方案将解决这个问题，将图片上传至指定用户下的指定相册。分两部分介绍，一适用于仅自己使用的图床，图片将上传至访客相册，二是使用了别人搭建的图床并拥有帐号新建了相册，如果搭建者希望可以按照相册分门别类或者图床可以对所有用户 PicGo 有效，可直接参看二。</p>
-<h3 id="1-环境要求">1. 环境要求</h3>
-<ul>
+<h3 id="1-环境要求"><a href="#1-环境要求" class="headerlink" title="1. 环境要求"></a>1. 环境要求</h3><ul>
 <li>Node.js</li>
 <li>Chevereto 图床</li>
 <li><a href="https://github.com/Molunerfinn/PicGo/releases" target="_blank" rel="noopener">PicGo</a></li>
 <li>Markdown 编辑工具 Typora</li>
 </ul>
-<h3 id="2-自己搭建简略版">2.  自己搭建(简略版)</h3>
-<ol>
-<li>
-<p>在 GUI 页面中安装 PicGo 插件支持第三方 API  <a href="https://github.com/yuki-xin/picgo-plugin-web-uploader" target="_blank" rel="noopener">picgo-plugin-web-uploader</a>，或者 chevereto。</p>
-<img src="https://pic.tyzhang.top/images/2020/12/03/20201203105931.png" alt="image-20201203105931412" style="zoom:50%;">
+<h3 id="2-自己搭建简略版"><a href="#2-自己搭建-简略版" class="headerlink" title="2.  自己搭建(简略版)"></a>2.  自己搭建(简略版)</h3><ol>
+<li><p>在 GUI 页面中安装 PicGo 插件支持第三方 API  <a href="https://github.com/yuki-xin/picgo-plugin-web-uploader" target="_blank" rel="noopener">picgo-plugin-web-uploader</a>，或者 chevereto。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/12/03/20201203105931.png" alt="image-20201203105931412" style="zoom:50%;"></p>
 </li>
-<li>
-<p>在自定义插件区设置自己使用的图床参数：</p>
-<img src="https://pic.tyzhang.top/images/2020/12/02/image-20201202212549939.png" alt="image-20201202212549939" style="zoom:50%;">
+<li><p>在自定义插件区设置自己使用的图床参数：</p>
+<p><img src="https://pic.tyzhang.top/images/2020/12/02/image-20201202212549939.png" alt="image-20201202212549939" style="zoom:50%;"></p>
 <p>对应的参数为，以 Chevereto 为例，API Key 在管理员控制台仪表盘设置中可以看到：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">API</span> <span class="string">地址: https://your-site/api/1/upload</span></span><br><span class="line"><span class="attr">POST</span> <span class="string">参数名: source</span></span><br><span class="line"><span class="attr">JSON</span> <span class="string">路径: image.url</span></span><br><span class="line"><span class="meta">自定义</span> <span class="string">Body: &#123;"key":"API Key"&#125;</span></span><br></pre></td></tr></table></figure>
 <p>chevereto 设置如下：</p>
-<img src="https://pic.tyzhang.top/images/2020/12/03/20201203143210.png" alt="image-20201203143210682" style="zoom:50%;">
+<p><img src="https://pic.tyzhang.top/images/2020/12/03/20201203143210.png" alt="image-20201203143210682" style="zoom:50%;"></p>
 </li>
-<li>
-<p>修改 Typora 偏好设置中的图像设置，使用 PicGo 自动上传。</p>
-<img src="https://pic.tyzhang.top/images/2020/12/02/image-20201202213328066.png" alt="image-20201202213328066" style="zoom:50%;">
+<li><p>修改 Typora 偏好设置中的图像设置，使用 PicGo 自动上传。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/12/02/image-20201202213328066.png" alt="image-20201202213328066" style="zoom:50%;"></p>
 </li>
 </ol>
-<h3 id="3-使用不属于自己搭建的图床">3. 使用不属于自己搭建的图床</h3>
-<p>本节介绍当你使用了别人搭建的图床，如果想将图片上传至自己的账号下，详细设置方法。也可以作为搭建者，完善图床代码供所有用户使用 PicGo 方便上传。</p>
+<h3 id="3-使用不属于自己搭建的图床"><a href="#3-使用不属于自己搭建的图床" class="headerlink" title="3. 使用不属于自己搭建的图床"></a>3. 使用不属于自己搭建的图床</h3><p>本节介绍当你使用了别人搭建的图床，如果想将图片上传至自己的账号下，详细设置方法。也可以作为搭建者，完善图床代码供所有用户使用 PicGo 方便上传。</p>
 <ol>
-<li>
-<p>搭建者修改 Chevereto 源代码。</p>
+<li><p>搭建者修改 Chevereto 源代码。</p>
 <p>将网站根目录下<code>/app/routes/route.api.php</code>复制到同目录下的<code>/overrides</code>文件夹。该步骤使得复制后的文件在不替换的情况下更新，既保存源文件，又使修改后的代码能在源代码保留的情况下运行。</p>
-<p>修改<code>/overrides/route.api.php</code>源代码如下，±对应新增删除代码，该步骤将接受来自客户端的用户名和相册 ID 参数，避免上传至访客相册：</p>
+<p>修改<code>/overrides/route.api.php</code>源代码如下，+-对应新增删除代码，该步骤将接受来自客户端的用户名和相册 ID 参数，避免上传至访客相册：</p>
 <p>网上大多解决方案写死了用户名和相册，这里修改为了可传参。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$version = $handler-&gt;request[<span class="number">0</span>];</span><br><span class="line">$action = $handler-&gt;request[<span class="number">1</span>];</span><br><span class="line">+ $user = $_REQUEST[<span class="string">'user'</span>];	<span class="comment">// 新增</span></span><br><span class="line">+ $album = $_REQUEST[<span class="string">'album'</span>];	<span class="comment">//新增</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// CHV\Image::uploadToWebsite($source, 'username', [params]) to inject API uploads to a given username</span></span><br><span class="line">- $uploaded_id = CHV\Image::uploadToWebsite($source);</span><br><span class="line">+ $uploaded_id = CHV\Image::uploadToWebsite($source, $user, <span class="keyword">array</span>(<span class="string">'album_id'</span>=&gt;$album));</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>使用者配置 PicGo。</p>
+<li><p>使用者配置 PicGo。</p>
 <ol>
-<li>
-<p>GUI版(Windows)</p>
+<li><p>GUI版(Windows)</p>
 <ol>
-<li>
-<p>下载安装 PicGo GUI 版，前往图床新建相册并获取相册 ID。</p>
-<img src="https://pic.tyzhang.top/images/2020/12/03/image-20201203104821061.png" alt="image-20201203104821061" style="zoom:50%;">
+<li><p>下载安装 PicGo GUI 版，前往图床新建相册并获取相册 ID。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/12/03/image-20201203104821061.png" alt="image-20201203104821061" style="zoom:50%;"></p>
 </li>
-<li>
-<p>在 <code>PicGo</code> 追加用户名和相册 ID，格式为<code>{&quot;key&quot;:&quot;your key&quot;, &quot;user&quot;:&quot;username&quot;, &quot;album&quot;:&quot;albumid&quot;}</code>。</p>
-<img src="https://pic.tyzhang.top/images/2020/12/03/20201203105104.png" alt="image-20201203105039996" style="zoom:50%;">
+<li><p>在 <code>PicGo</code> 追加用户名和相册 ID，格式为<code>{&quot;key&quot;:&quot;your key&quot;, &quot;user&quot;:&quot;username&quot;, &quot;album&quot;:&quot;albumid&quot;}</code>。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/12/03/20201203105104.png" alt="image-20201203105039996" style="zoom:50%;"></p>
 </li>
-<li>
-<p>在 <code>Typora</code> 偏好设置中测试。</p>
+<li><p>在 <code>Typora</code> 偏好设置中测试。</p>
 </li>
 </ol>
 </li>
-<li>
-<p>CLI 版(Windows &amp; macOS)</p>
+<li><p>CLI 版(Windows &amp; macOS)</p>
 <ol>
-<li>
-<p>在 Typora 安装 PicGo Core。</p>
-<img src="https://pic.tyzhang.top/images/2020/12/03/image-20201203201355355.png" alt="image-20201203201355355" style="zoom:67%;">
+<li><p>在 Typora 安装 PicGo Core。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/12/03/image-20201203201355355.png" alt="image-20201203201355355" style="zoom:67%;"></p>
 </li>
-<li>
-<p>修改配置文件如下，相应位置 key\user\album\url 也做替换。</p>
+<li><p>修改配置文件如下，相应位置 key\user\album\url 也做替换。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"picBed"</span>: &#123;</span><br><span class="line">    <span class="attr">"uploader"</span>: <span class="string">"web-uploader"</span>,</span><br><span class="line">    <span class="attr">"current"</span>: <span class="string">"web-uploader"</span>,</span><br><span class="line">    <span class="attr">"transformer"</span>: <span class="string">"path"</span>,</span><br><span class="line">    <span class="attr">"web-uploader"</span>: &#123;</span><br><span class="line">      <span class="attr">"customBody"</span>: <span class="string">"&#123;\"key\":\"your key\", \"user\":\"ztygalaxy\", \"album\":\"1\"&#125;"</span>,</span><br><span class="line">      <span class="attr">"customHeader"</span>: <span class="literal">null</span>,</span><br><span class="line">      <span class="attr">"jsonPath"</span>: <span class="string">"image.url"</span>,</span><br><span class="line">      <span class="attr">"paramName"</span>: <span class="string">"source"</span>,</span><br><span class="line">      <span class="attr">"url"</span>: <span class="string">"https://your-site/api/1/upload"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"picgoPlugins"</span>: &#123;</span><br><span class="line">    <span class="attr">"picgo-plugin-web-uploader"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>在 Windows 和 macOS 验证。</p>
-<img src="https://pic.tyzhang.top/images/2020/12/03/image-20201203201719058eb0be95a8bd7b6e4.png" alt="image-20201203201719058" style="zoom:50%;">
-<img src="https://pic.tyzhang.top/images/2020/12/03/B6060F5824921FE6B6C6DDC22EB12CCF.png" alt="img" style="zoom: 33%;">
+<li><p>在 Windows 和 macOS 验证。</p>
+<p><img src="https://pic.tyzhang.top/images/2020/12/03/image-20201203201719058eb0be95a8bd7b6e4.png" alt="image-20201203201719058" style="zoom:50%;"></p>
+<p><img src="https://pic.tyzhang.top/images/2020/12/03/B6060F5824921FE6B6C6DDC22EB12CCF.png" alt="img" style="zoom: 33%;"></p>
 </li>
 </ol>
 </li>
 </ol>
 </li>
 </ol>
-<h3 id="4-参考">4. 参考</h3>
-<ul>
+<h3 id="4-参考"><a href="#4-参考" class="headerlink" title="4. 参考"></a>4. 参考</h3><ul>
 <li><a href="https://blog.frytea.com/archives/459/" target="_blank" rel="noopener">https://blog.frytea.com/archives/459/</a></li>
 <li><a href="https://blog.csdn.net/qq_19564393/article/details/108506062" target="_blank" rel="noopener">https://blog.csdn.net/qq_19564393/article/details/108506062</a></li>
 <li>使用其他载体图床可参考：<a href="http://diaowenjie.cn/2020/12/02/pictureGo.html" target="_blank" rel="noopener">http://diaowenjie.cn/2020/12/02/pictureGo.html</a></li>

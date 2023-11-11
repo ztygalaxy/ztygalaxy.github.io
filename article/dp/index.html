@@ -210,7 +210,7 @@
                     
                         
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -222,7 +222,7 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/tags/">标签</a>
                         </li>
                         
                     
@@ -282,12 +282,10 @@
                 <blockquote>
 <p>本文主要记录了一些动态规划的做题技巧、解题步骤，结合LeetCode。</p>
 </blockquote>
-<h3 id="leetcode-198">LeetCode 198</h3>
-<p>小偷计划偷沿街房屋内的现金，相邻的房屋装有相互连通的防盗系统，如果相邻的房屋在同一个晚上被小偷闯入，系统会自动报警。</p>
+<h3 id="leetcode-198"><a href="#LeetCode-198" class="headerlink" title="LeetCode 198"></a>LeetCode 198</h3><p>小偷计划偷沿街房屋内的现金，相邻的房屋装有相互连通的防盗系统，如果相邻的房屋在同一个晚上被小偷闯入，系统会自动报警。</p>
 <p>给定一个代表每个房间金额的非负整数数组，计算在不触动报警装置的情况下，能够偷窃到的最高金额。</p>
 <p>示例：输入[1, 2, 3, 1]，输出4。偷了1，3。</p>
-<h3 id="解题思路">解题思路</h3>
-<p>动态规划四个解题步骤：</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>动态规划四个解题步骤：</p>
 <ul>
 <li>定义子问题</li>
 <li>写出子问题的递归关系</li>
@@ -295,15 +293,13 @@
 <li>空间优化(可选)</li>
 </ul>
 <p>代入上面的题目，来看一下运作机制。</p>
-<h4 id="定义子问题">定义子问题</h4>
-<p>子问题：子问题是和原问题相似，但规模较小的问题。例如这道题，从全部房子中能够偷到的最大金额，将问题规模缩小，子问题就是，从k个房子中能够偷到的最大金额，用$f(k)$表示。</p>
+<h4 id="定义子问题"><a href="#定义子问题" class="headerlink" title="定义子问题"></a>定义子问题</h4><p>子问题：子问题是和原问题相似，但规模较小的问题。例如这道题，从全部房子中能够偷到的最大金额，将问题规模缩小，子问题就是，从k个房子中能够偷到的最大金额，用$f(k)$表示。</p>
 <p>所以子问题其实就是将问题参数化。定义的子问题是k，假设有n个房子，就一共有n个问题。这要求子问题具备两个性质：</p>
 <ul>
 <li>原问题要能够由子问题表示。比如这道题，k=n的时候就是问题的解，不然的话子问题白解了。</li>
 <li>一个子问题的解要能够由其他子问题的解求出。也就是最优子结构，例如本题的解为$f(k)$可以由$f(k-2)$和$f(k-1)$组成。如果没有这个性质，可能没有办法使用动态规划来解。</li>
 </ul>
-<h4 id="写出子问题的递归关系">写出子问题的递归关系</h4>
-<p>一般来说，直接看当前子问题和前一个子问题的关系。一维问题就是看$f(i)$和$f(i-1)$的关系；如果是二维子问题，则要看$f(i,j)$和$f(i-1,j)$、$f(i-1,j-1)$、$f(i,j-1)$。</p>
+<h4 id="写出子问题的递归关系"><a href="#写出子问题的递归关系" class="headerlink" title="写出子问题的递归关系"></a>写出子问题的递归关系</h4><p>一般来说，直接看当前子问题和前一个子问题的关系。一维问题就是看$f(i)$和$f(i-1)$的关系；如果是二维子问题，则要看$f(i,j)$和$f(i-1,j)$、$f(i-1,j-1)$、$f(i,j-1)$。</p>
 <p>这道题中，一共有n个房子，每个房子金额为nums[0],nums[1],…,nums[n-1]，子问题$f(k)$表示偷前k个房子即nums[0],nums[1],…,nums[k-1]。那么偷k个房子其实有两种偷法：</p>
 <ul>
 <li>最后一个房子nums[k-1]不偷。那么问题就会变成偷前k-1个房子中偷到最大金额；</li>
@@ -315,115 +311,77 @@
 <li>当$k=0$时候，即没有房子可以偷，$f(0)=0$；</li>
 <li>当$k=1$时候，仅有一个房子，直接偷了这个房子，$f(1) = nums[0]$。</li>
 </ul>
-<h4 id="确定dp数组的计算顺序">确定DP数组的计算顺序</h4>
-<p>动态规划一般有两种计算顺序，自顶向下使用备忘录的递归方法；一种是自底向上使用DP数组的循环。</p>
+<h4 id="确定dp数组的计算顺序"><a href="#确定DP数组的计算顺序" class="headerlink" title="确定DP数组的计算顺序"></a>确定DP数组的计算顺序</h4><p>动态规划一般有两种计算顺序，自顶向下使用备忘录的递归方法；一种是自底向上使用DP数组的循环。</p>
 <p>由上边的递推式子可以看到，每个$f(k)$依赖$f(k-1)$和$f(k-2)$，也就是说在数组中，dp[k]依赖dp[k-1]和dp[k-2]。可以看到数组中的依赖方向是一致的，每一个元素都是靠左边的元素计算出来的。DP数组从左往右计算，这意味着我们在计算一个子问题的时候，她所依赖的子问题已经解出来了。</p>
 <p>事实上，这里应该要考虑一些DP数组的问题，将在下文1143题中给出。</p>
-<h4 id="代码">代码</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length+<span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        dp[<span class="number">1</span>] = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= nums.length; i++)&#123;</span><br><span class="line">            dp[i] = Math.max(dp[i - <span class="number">1</span>], dp[i-<span class="number">2</span>] + nums[i-<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[nums.length];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="空间优化">空间优化</h4>
-<p>这一步是为了减少空间复杂度，作为解题目的来说，可有可无。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length+<span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        dp[<span class="number">1</span>] = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= nums.length; i++)&#123;</span><br><span class="line">            dp[i] = Math.max(dp[i - <span class="number">1</span>], dp[i-<span class="number">2</span>] + nums[i-<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[nums.length];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="空间优化"><a href="#空间优化" class="headerlink" title="空间优化"></a>空间优化</h4><p>这一步是为了减少空间复杂度，作为解题目的来说，可有可无。</p>
 <p>空间优化的基本原理是，很多时候我们并不需要始终持有全部的DP数组。例如本题当中，我们实际上只用了前两个结果，再往前的结果我们已经用不到了。所以我们可以只用两个变量来保存子问题的结果。这样空间复杂度就从$O(n)$降到了$O(1)$。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> prev = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> curr = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 每次循环，计算「偷到当前房子为止的最大金额」</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i : nums) &#123;</span><br><span class="line">        <span class="comment">// 循环开始时，curr 表示 dp[k-1]，prev 表示 dp[k-2]</span></span><br><span class="line">        <span class="comment">// dp[k] = max&#123; dp[k-1], dp[k-2] + i &#125;</span></span><br><span class="line">        <span class="keyword">int</span> temp = Math.max(curr, prev + i);</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = temp;</span><br><span class="line">        <span class="comment">// 循环结束时，curr 表示 dp[k]，prev 表示 dp[k-1]</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> curr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="leetcode-1143">LeetCode 1143</h3>
-<h4 id="题目大意">题目大意</h4>
-<p>给定两个字符串 <code>s</code> 和 <code>t</code>，返回这两个字符串的最长公共子序列的长度。若这两个字符串没有公共子序列，则返回 0。</p>
-<p>一个字符串的子序列是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。例如，“ace” 是 “abcde” 的子序列。</p>
-<h4 id="解题步骤">解题步骤</h4>
-<h5 id="定义子问题">定义子问题</h5>
-<p>原问题是s和t的最长公共子序列。那么子问题可以缩小字符串s和t的规模，变成s的前i个字符和t的前j个字符的最长公共子序列，用$f(i,j)$来表示。</p>
-<h5 id="子问题的递推关系">子问题的递推关系</h5>
-<p>我们可以比较s和t的最后一个字符s[i-1]和t[j-1]。可能会有两种情况：</p>
+<h3 id="leetcode-1143"><a href="#LeetCode-1143" class="headerlink" title="LeetCode 1143"></a>LeetCode 1143</h3><h4 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h4><p>给定两个字符串 <code>s</code> 和 <code>t</code>，返回这两个字符串的最长公共子序列的长度。若这两个字符串没有公共子序列，则返回 0。</p>
+<p>一个字符串的子序列是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。例如，”ace” 是 “abcde” 的子序列。</p>
+<h4 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h4><h5 id="定义子问题"><a href="#定义子问题-1" class="headerlink" title="定义子问题"></a>定义子问题</h5><p>原问题是s和t的最长公共子序列。那么子问题可以缩小字符串s和t的规模，变成s的前i个字符和t的前j个字符的最长公共子序列，用$f(i,j)$来表示。</p>
+<h5 id="子问题的递推关系"><a href="#子问题的递推关系" class="headerlink" title="子问题的递推关系"></a>子问题的递推关系</h5><p>我们可以比较s和t的最后一个字符s[i-1]和t[j-1]。可能会有两种情况：</p>
 <ul>
 <li>如果两个字符相等即s[i-1]==t[j-1]，我们可以用这个字符作为最长公共子序列的最左字符，然后找s的前i-1和t的前j-1个字符的公共子序列；</li>
 <li>如果两个字符不相等，可以尝试删除s或者t末尾的一个字符，即s的前i-1和t的前i或者s的前i和t的前j-1。再从两种方案中选一个较长的公共子序列。</li>
 </ul>
-<p>可以得到子问题的递推关系为：<br>
-$$<br>
-f(i,j)=<br>
-\begin{cases}<br>
-f(i-1,j-1) + 1 &amp; if(s[i-1] = t[i-1]) \<br>
-max\begin{cases}<br>
-f(i-1, j)\<br>
-f(i, j-1)<br>
-\end{cases} &amp; other<br>
-\end{cases}<br>
-$$<br>
-基础解，当i=0时候，s为空，最长公共子序列为0；同理，j=0，结果也为0。</p>
-<h5 id="确定dp数组的计算顺序">确定DP数组的计算顺序</h5>
-<p>确定计算顺序是为了在计算子问题时候他所依赖的子问题已经计算好了。因此需要考虑三个问题：</p>
+<p>可以得到子问题的递推关系为：</p>
+<script type="math/tex; mode=display">
+f(i,j)=
+\begin{cases}
+f(i-1,j-1) + 1 & if(s[i-1] = t[i-1]) \\
+max\begin{cases}
+f(i-1, j)\\
+f(i, j-1)
+\end{cases} & other
+\end{cases}</script><p>基础解，当i=0时候，s为空，最长公共子序列为0；同理，j=0，结果也为0。</p>
+<h5 id="确定dp数组的计算顺序"><a href="#确定DP数组的计算顺序-1" class="headerlink" title="确定DP数组的计算顺序"></a>确定DP数组的计算顺序</h5><p>确定计算顺序是为了在计算子问题时候他所依赖的子问题已经计算好了。因此需要考虑三个问题：</p>
 <ul>
 <li>DP数组的有效范围是什么？</li>
 <li>基础解和原问题在DP数组中处于什么位置？</li>
 <li>DP数组的子问题依赖方向是什么？</li>
 </ul>
-<img src="https://pic.tyzhang.top/images/2020/06/27/_2020-06-27_16-05-30.jpg" style="zoom:50%;">
+<p><img src="https://pic.tyzhang.top/images/2020/06/27/_2020-06-27_16-05-30.jpg" style="zoom:50%;"></p>
 <p>我们发现，子问题的依赖方向是向右、向下的，因此 DP 数组的计算顺序也应该是从左到右、从上到下。也就是说我们应该以这样的顺序遍历 DP 数组。</p>
-<h4 id="代码">代码</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestCommonSubsequence</span><span class="params">(String text1, String text2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (text1.isEmpty() || text2.isEmpty()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> m = text1.length();</span><br><span class="line">        <span class="keyword">int</span> n = text2.length();</span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= m; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= n; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span> (i == <span class="number">0</span> || j == <span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j] = <span class="number">0</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (text1.charAt(i-<span class="number">1</span>) == text2.charAt(j-<span class="number">1</span>))&#123;</span><br><span class="line">                        dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>]+<span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> &#123;</span><br><span class="line">                        dp[i][j] = Math.max(dp[i-<span class="number">1</span>][j],dp[i][j-<span class="number">1</span>]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="leetcode-53">LeetCode 53</h3>
-<h4 id="题目大意">题目大意</h4>
-<p>给定一个整数数组 <code>nums</code> ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。</p>
-<p>输入： [-2,1,-3,4,-1,2,1,-5,4]，输出：6。<br>
-解释：连续子数组 [4,-1,2,1] 的和最大，为 6。</p>
-<h4 id="解题步骤">解题步骤</h4>
-<h5 id="定义子问题">定义子问题</h5>
-<p>为了让结果出现子问题特征，我们定义子问题为：$f(k)$表示前k个数中，以最后一个元素结尾的最大子数组和。当$f(4)=3$时，计算$f(5)$时候，直接将新元素4和前面最优解拼接即可，这满足了子问题特征。</p>
+<h4 id="代码"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestCommonSubsequence</span><span class="params">(String text1, String text2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (text1.isEmpty() || text2.isEmpty()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> m = text1.length();</span><br><span class="line">        <span class="keyword">int</span> n = text2.length();</span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= m; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= n; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span> (i == <span class="number">0</span> || j == <span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j] = <span class="number">0</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (text1.charAt(i-<span class="number">1</span>) == text2.charAt(j-<span class="number">1</span>))&#123;</span><br><span class="line">                        dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>]+<span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> &#123;</span><br><span class="line">                        dp[i][j] = Math.max(dp[i-<span class="number">1</span>][j],dp[i][j-<span class="number">1</span>]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="leetcode-53"><a href="#LeetCode-53" class="headerlink" title="LeetCode 53"></a>LeetCode 53</h3><h4 id="题目大意"><a href="#题目大意-1" class="headerlink" title="题目大意"></a>题目大意</h4><p>给定一个整数数组 <code>nums</code> ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。</p>
+<p>输入： [-2,1,-3,4,-1,2,1,-5,4]，输出：6。<br>解释：连续子数组 [4,-1,2,1] 的和最大，为 6。</p>
+<h4 id="解题步骤"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤</h4><h5 id="定义子问题"><a href="#定义子问题-2" class="headerlink" title="定义子问题"></a>定义子问题</h5><p>为了让结果出现子问题特征，我们定义子问题为：$f(k)$表示前k个数中，以最后一个元素结尾的最大子数组和。当$f(4)=3$时，计算$f(5)$时候，直接将新元素4和前面最优解拼接即可，这满足了子问题特征。</p>
 <p>注意，这里如果取了这种定义方式，那么最后结果就不能直接返回$f(k)$了，因为它仅代表以第k个数结尾的最大值。我们要取整个数组的最大值。</p>
-<h5 id="子问题的递推关系">子问题的递推关系</h5>
-<p>计算当前最优解，会出现几种情况：最优解+当前位置数字，或者当前数字。这取决于前面最优解是正负和当前位置的正负，对结果的影响。递推公式为：<br>
-$$<br>
-f(k)= max<br>
-\begin{cases}<br>
-f(k-1) + nums[k-1] \<br>
-nums[k-1]<br>
-\end{cases}<br>
-$$<br>
-简化一下：<br>
-$$<br>
-f(k) = max(f(k-1), 0) +nums[k-1]<br>
-$$</p>
-<h4 id="代码">代码</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> N = nums.length;</span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[N+<span class="number">1</span>];</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> res = Integer.MIN_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= N; k++) &#123;</span><br><span class="line">        dp[k] = Math.max(dp[k-<span class="number">1</span>], <span class="number">0</span>) + nums[k-<span class="number">1</span>];</span><br><span class="line">        res = Math.max(res, dp[k]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="leetcode-718">LeetCode 718</h3>
-<h4 id="题目大意">题目大意</h4>
-<p>给两个整数数组 <code>s</code> 和 <code>t</code> ，返回两个数组中公共的、长度最长的子数组的长度。例如：</p>
-<p>输入：s: [1, 2, 3, 2, 1, 5]，t: [6，3, 2, 1, 4, 7]<br>
-输出：3<br>
-解释：长度最长的公共子数组是 [3, 2, 1]。</p>
-<h4 id="解题思路">解题思路</h4>
-<ul>
+<h5 id="子问题的递推关系"><a href="#子问题的递推关系-1" class="headerlink" title="子问题的递推关系"></a>子问题的递推关系</h5><p>计算当前最优解，会出现几种情况：最优解+当前位置数字，或者当前数字。这取决于前面最优解是正负和当前位置的正负，对结果的影响。递推公式为：</p>
+<script type="math/tex; mode=display">
+f(k)= max
+\begin{cases}
+f(k-1) + nums[k-1] \\
+nums[k-1]
+\end{cases}</script><p>简化一下：</p>
+<script type="math/tex; mode=display">
+f(k) = max(f(k-1), 0) +nums[k-1]</script><h4 id="代码"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> N = nums.length;</span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[N+<span class="number">1</span>];</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> res = Integer.MIN_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= N; k++) &#123;</span><br><span class="line">        dp[k] = Math.max(dp[k-<span class="number">1</span>], <span class="number">0</span>) + nums[k-<span class="number">1</span>];</span><br><span class="line">        res = Math.max(res, dp[k]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="leetcode-718"><a href="#LeetCode-718" class="headerlink" title="LeetCode 718"></a>LeetCode 718</h3><h4 id="题目大意"><a href="#题目大意-2" class="headerlink" title="题目大意"></a>题目大意</h4><p>给两个整数数组 <code>s</code> 和 <code>t</code> ，返回两个数组中公共的、长度最长的子数组的长度。例如：</p>
+<p>输入：s: [1, 2, 3, 2, 1, 5]，t: [6，3, 2, 1, 4, 7]<br>输出：3<br>解释：长度最长的公共子数组是 [3, 2, 1]。</p>
+<h4 id="解题思路"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h4><ul>
 <li>子序列 (subsequence) 可以是不连续的。例如 “ACD” 是 “ABCDE” 的子序列；</li>
 <li>子数组 (subarray)、子串 (substring) 必须是连续的。例如 “BCD” 是 “ABCDE” 的子数组/子串。</li>
 </ul>
-<h5 id="定义子问题">定义子问题</h5>
-<p>根据上一个例子，依旧可以使用数组尾部的限制建立DP数组，将问题定义为，$f(i, j)$表示s[0…i)和t[0…j)中，以最后一个元素结尾的最长公共数组。<strong>以最后一个元素结尾</strong>指的是公共子数组既要包含 <code>s[0..i)</code> 的最后一个元素，也要包含 <code>t[0..j)</code> 的最后一个元素。也就是说从后往前看，两个数组中的最后几个元素是相同的。</p>
-<h5 id="子问题的递推关系">子问题的递推关系</h5>
-<ul>
-<li>如果s[i-1] == t[j-1]，那么已经有一个元素是相同的，接下来继续往前看s[0…i-1]和t[0…j-1]的最后几个元素是相同的。也就是$f(i,j)=f(i-1,j-1)+1$。</li>
+<h5 id="定义子问题"><a href="#定义子问题-3" class="headerlink" title="定义子问题"></a>定义子问题</h5><p>根据上一个例子，依旧可以使用数组尾部的限制建立DP数组，将问题定义为，$f(i, j)$表示s[0…i)和t[0..j)中，以最后一个元素结尾的最长公共数组。<strong>以最后一个元素结尾</strong>指的是公共子数组既要包含 <code>s[0..i)</code> 的最后一个元素，也要包含 <code>t[0..j)</code> 的最后一个元素。也就是说从后往前看，两个数组中的最后几个元素是相同的。</p>
+<h5 id="子问题的递推关系"><a href="#子问题的递推关系-2" class="headerlink" title="子问题的递推关系"></a>子问题的递推关系</h5><ul>
+<li>如果s[i-1] == t[j-1]，那么已经有一个元素是相同的，接下来继续往前看s[0..i-1]和t[0..j-1]的最后几个元素是相同的。也就是$f(i,j)=f(i-1,j-1)+1$。</li>
 <li>如果s[i-1] != t[j-1]，那么最后一个元素就不相同，前面就不用看了，$f(i,j) = 0$。</li>
 </ul>
-<p>可得递推式：<br>
-$$<br>
-f(i,j)=<br>
-\begin{cases}<br>
-f(i-1,j-1)+1 &amp; if s[i-1] = t[i-1] \<br>
-0 &amp; other<br>
-\end{cases}<br>
-$$</p>
-<h4 id="代码">代码</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findLength</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span>[] B)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = A.length;</span><br><span class="line">        <span class="keyword">int</span> n = B.length;</span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;=m; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= n; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span> (i==<span class="number">0</span>||j==<span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j] = <span class="number">0</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (A[i-<span class="number">1</span>]==B[j-<span class="number">1</span>])&#123;</span><br><span class="line">                        dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>]+<span class="number">1</span>;</span><br><span class="line">                    &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                        dp[i][j] =<span class="number">0</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                res = Math.max(res, dp[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="leetcode-120">LeetCode 120</h3>
-<h4 id="题目大意">题目大意</h4>
-<p>给出一个三角形，计算从三角形顶部到底部的最小路径和，每一步都可以移动到下面一行相邻的数字。</p>
+<p>可得递推式：</p>
+<script type="math/tex; mode=display">
+f(i,j)=
+\begin{cases}
+f(i-1,j-1)+1 & if s[i-1] = t[i-1] \\
+0 & other
+\end{cases}</script><h4 id="代码"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findLength</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span>[] B)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = A.length;</span><br><span class="line">        <span class="keyword">int</span> n = B.length;</span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;=m; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= n; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span> (i==<span class="number">0</span>||j==<span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j] = <span class="number">0</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (A[i-<span class="number">1</span>]==B[j-<span class="number">1</span>])&#123;</span><br><span class="line">                        dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>]+<span class="number">1</span>;</span><br><span class="line">                    &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                        dp[i][j] =<span class="number">0</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                res = Math.max(res, dp[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="leetcode-120"><a href="#LeetCode-120" class="headerlink" title="LeetCode 120"></a>LeetCode 120</h3><h4 id="题目大意"><a href="#题目大意-3" class="headerlink" title="题目大意"></a>题目大意</h4><p>给出一个三角形，计算从三角形顶部到底部的最小路径和，每一步都可以移动到下面一行相邻的数字。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[↵     [2],↵    [3,4],↵   [6,5,7],↵  [4,1,8,3]↵]</span><br></pre></td></tr></table></figure>
 <p>最小的从顶部到底部的路径和是2 + 3 + 5 + 1 = 11。</p>
-<h4 id="解题思路">解题思路</h4>
-<p>将问题定义为$f(j,j)$，表示以第i行第j个元素为结尾的三角形序列的最小值。利用上下层关系，从上往下从左往右计算即可。最后取最小值。</p>
-<h4 id="代码">代码</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; triangle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[triangle.size()+<span class="number">1</span>][triangle.get(triangle.size()-<span class="number">1</span>).size()+<span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = triangle.get(<span class="number">0</span>).get(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; triangle.size(); i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; triangle.get(i).size(); j++)&#123;</span><br><span class="line">                <span class="keyword">if</span> (j == <span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j] = dp[i-<span class="number">1</span>][<span class="number">0</span>] + triangle.get(i).get(j);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j == triangle.get(i).size()-<span class="number">1</span>)&#123;</span><br><span class="line">                    dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>] + triangle.get(i).get(j);</span><br><span class="line">                &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                    dp[i][j] = Math.min(dp[i-<span class="number">1</span>][j-<span class="number">1</span>], dp[i-<span class="number">1</span>][j]) + triangle.get(i).get(j);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res = Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; triangle.get(triangle.size()-<span class="number">1</span>).size(); i++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (dp[triangle.size()-<span class="number">1</span>][i] &lt; res) res = dp[triangle.size()-<span class="number">1</span>][i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="子问题拆分">子问题拆分</h3>
-<blockquote>
+<h4 id="解题思路"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h4><p>将问题定义为$f(j,j)$，表示以第i行第j个元素为结尾的三角形序列的最小值。利用上下层关系，从上往下从左往右计算即可。最后取最小值。</p>
+<h4 id="代码"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; triangle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[triangle.size()+<span class="number">1</span>][triangle.get(triangle.size()-<span class="number">1</span>).size()+<span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = triangle.get(<span class="number">0</span>).get(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; triangle.size(); i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; triangle.get(i).size(); j++)&#123;</span><br><span class="line">                <span class="keyword">if</span> (j == <span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j] = dp[i-<span class="number">1</span>][<span class="number">0</span>] + triangle.get(i).get(j);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j == triangle.get(i).size()-<span class="number">1</span>)&#123;</span><br><span class="line">                    dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>] + triangle.get(i).get(j);</span><br><span class="line">                &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                    dp[i][j] = Math.min(dp[i-<span class="number">1</span>][j-<span class="number">1</span>], dp[i-<span class="number">1</span>][j]) + triangle.get(i).get(j);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res = Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; triangle.get(triangle.size()-<span class="number">1</span>).size(); i++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (dp[triangle.size()-<span class="number">1</span>][i] &lt; res) res = dp[triangle.size()-<span class="number">1</span>][i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="子问题拆分"><a href="#子问题拆分" class="headerlink" title="子问题拆分"></a>子问题拆分</h3><blockquote>
 <p>参考</p>
 <p><a href="https://mp.weixin.qq.com/s/TE-p4WYQBBubhxmT137O9w" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/TE-p4WYQBBubhxmT137O9w</a></p>
 <p><a href="https://mp.weixin.qq.com/s/e6L2tvWOS_D0obHR_360Gw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/e6L2tvWOS_D0obHR_360Gw</a></p>

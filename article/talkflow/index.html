@@ -210,7 +210,7 @@
                     
                         
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -222,7 +222,7 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/tags/">标签</a>
                         </li>
                         
                     
@@ -310,8 +310,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对话框初始化</span></span><br><span class="line">adapter = <span class="keyword">new</span> MsgAdapter(MainActivity.<span class="keyword">this</span>, R.layout.msg_item, msgList);</span><br><span class="line">msgListView = (ListView) findViewById(R.id.msg_list_view);</span><br><span class="line">msgListView.setAdapter(adapter);</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String result,<span class="keyword">int</span> type)</span></span>&#123;</span><br><span class="line">    Msg msg = <span class="keyword">new</span> Msg(result, type);</span><br><span class="line">    msgList.add(msg);</span><br><span class="line">    adapter.notifyDataSetChanged(); </span><br><span class="line">    <span class="comment">// 当有新消息时，刷新ListView中的显示</span></span><br><span class="line">    msgListView.setSelection(msgList.size()); </span><br><span class="line">    <span class="comment">// 将ListView定位到最后一行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>终</strong></p>
-<p>到这里，一个简单的对话流布局就写完了，把他应用到App中，只需要将Msg设置好内容、状态，监听里调用msg就好了！</p>
-<p>一起来敲一个自己的语音助手吧。</p>
+<p>  到这里，一个简单的对话流布局就写完了，把他应用到App中，只需要将Msg设置好内容、状态，监听里调用msg就好了！</p>
+<p>  一起来敲一个自己的语音助手吧。</p>
 
                 
                 <hr>
