@@ -210,12 +210,6 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
-                        </li>
-                        
-                    
-                        
-                        <li>
                             <a href="/tags/">标签</a>
                         </li>
                         
@@ -223,6 +217,12 @@
                         
                         <li>
                             <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -279,11 +279,11 @@
                 post-container">
 
 				
-                <p>​    处理地图数据时，经常会遇到计算两个地理位置之间的距离或者范围标定。</p>
-<p>​    这篇文章解决了两个问题，两个GPS坐标之间的距离，距离指定点一定距离的GPS范围。</p>
-<p>​    1.给定两个坐标，计算其在地球表面的实际距离。</p>
+                <p>​	处理地图数据时，经常会遇到计算两个地理位置之间的距离或者范围标定。</p>
+<p>​	这篇文章解决了两个问题，两个GPS坐标之间的距离，距离指定点一定距离的GPS范围。</p>
+<p>​	1.给定两个坐标，计算其在地球表面的实际距离。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calDistance</span><span class="params">(lon1, lat1, lon2, lat2)</span>:</span></span><br><span class="line">    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])</span><br><span class="line">    <span class="comment"># haversine</span></span><br><span class="line">    dlon = lon2 - lon1</span><br><span class="line">    dlat = lat2 - lat1</span><br><span class="line">    a = sin(dlat / <span class="number">2</span>) ** <span class="number">2</span> + cos(lat1) * cos(lat2) * sin(dlon / <span class="number">2</span>) ** <span class="number">2</span></span><br><span class="line">    c = <span class="number">2</span> * asin(sqrt(a))</span><br><span class="line">    r = <span class="number">6371</span>  <span class="comment"># earth_radios</span></span><br><span class="line">    <span class="keyword">return</span> c * r * <span class="number">1000</span></span><br></pre></td></tr></table></figure>
-<p>​    2.给定坐标和范围大小，确定地理围栏。</p>
+<p>​	2.给定坐标和范围大小，确定地理围栏。</p>
 <p><img src="https://images2015.cnblogs.com/blog/1034021/201702/1034021-20170207133355432-51913608.png" alt="demo"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getArea</span><span class="params">(latitude, longitude, dis)</span>:</span></span><br><span class="line">    r = <span class="number">6371.137</span></span><br><span class="line">    dlng = <span class="number">2</span> * math.asin(math.sin(dis / (<span class="number">2</span> * r)) / math.cos(latitude * math.pi / <span class="number">180</span>))</span><br><span class="line">    dlng = dlng * <span class="number">180</span> / math.pi</span><br><span class="line">    dlat = dis / r</span><br><span class="line">    dlat = dlat * <span class="number">180</span> / math.pi</span><br><span class="line">    minlat = latitude - dlat</span><br><span class="line">    maxlat = latitude + dlat</span><br><span class="line">    minlng = longitude - dlng</span><br><span class="line">    maxlng = longitude + dlng</span><br><span class="line">    <span class="keyword">return</span> minlat, maxlat, minlng, maxlng</span><br></pre></td></tr></table></figure>
 

@@ -210,12 +210,6 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
-                        </li>
-                        
-                    
-                        
-                        <li>
                             <a href="/tags/">标签</a>
                         </li>
                         
@@ -223,6 +217,12 @@
                         
                         <li>
                             <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -280,18 +280,23 @@
 
 				
                 <p>​    使用LaTex的编辑器WinEdit的一些个性化配置备份。</p>
-<h3 id="一-安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h3><p>​    WinEdit下载地址：<a href="http://www.winedt.com/download.html" target="_blank" rel="noopener">http://www.winedt.com/download.html</a></p>
+<h3 id="一-安装">一、安装</h3>
+<p>​    WinEdit下载地址：<a href="http://www.winedt.com/download.html" target="_blank" rel="noopener">http://www.winedt.com/download.html</a></p>
 <p>​    激活信息：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Name:Cracker TeCHiScy</span><br><span class="line">Code:1130140925535334280</span><br><span class="line"><span class="comment"># 作为一个环境，自带收费编辑器，不知道开发商是怎么想的</span></span><br></pre></td></tr></table></figure>
-<h3 id="二-配置"><a href="#二、配置" class="headerlink" title="二、配置"></a>二、配置</h3><p>​    在工具栏空白处右键，选择Options Interface，注意观察页面左侧，选择Font打开Font.ini</p>
+<h3 id="二-配置">二、配置</h3>
+<p>​    在工具栏空白处右键，选择Options Interface，注意观察页面左侧，选择Font打开Font.ini</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">FONT_NAME</span>=<span class="string">"Consolas"</span>	//字体样式</span><br><span class="line"><span class="attr">FONT_SIZE</span>=<span class="number">12</span>			//字体大小</span><br><span class="line"><span class="attr">FONT_BOLD</span>=<span class="number">0</span>				//粗体</span><br><span class="line"><span class="attr">FONT_ITALIC</span>=<span class="number">0</span>   		//倾斜</span><br><span class="line"><span class="comment">#Extra Spacing 行间距相关</span></span><br><span class="line"><span class="attr">EXTRA_LINE_SPACING_ABOVE</span>=<span class="number">2</span></span><br><span class="line"><span class="attr">EXTRA_LINE_SPACING_BELOW</span>=<span class="number">2</span></span><br><span class="line"><span class="attr">EXTRA_CHAR_SPACING</span>=<span class="number">0</span></span><br></pre></td></tr></table></figure>
 <p>​    修改完毕后，右键Font.ini选择Load Script即刻生效。</p>
-<h3 id="三-双向跳转"><a href="#三、双向跳转" class="headerlink" title="三、双向跳转"></a>三、双向跳转</h3><p>​    实现TeX文档和PDF文件之间的正反向搜索，这里面有些不必要的坑，例如路径或文件名不能有中文或者空格。</p>
+<h3 id="三-双向跳转">三、双向跳转</h3>
+<p>​    实现TeX文档和PDF文件之间的正反向搜索，这里面有些不必要的坑，例如路径或文件名不能有中文或者空格。</p>
 <ol>
-<li><p>反向搜索：采用PDFLaTeX编译TeX文档后，点击PDF Preview即可查阅生成的PDF文件，在PDF页面上双击某行，即可跳转至TeX文档的对应源码处。</p>
+<li>
+<p>反向搜索：采用PDFLaTeX编译TeX文档后，点击PDF Preview即可查阅生成的PDF文件，在PDF页面上双击某行，即可跳转至TeX文档的对应源码处。</p>
 <p><img src="/img/article/zhengxiang.png" alt="正向"></p>
 </li>
-<li><p>正向搜索：将鼠标光标左击TeX文档的某源码处，然后在左击“PDF Search”按钮，即可跳转至PDF页面上对应的行处。</p>
+<li>
+<p>正向搜索：将鼠标光标左击TeX文档的某源码处，然后在左击“PDF Search”按钮，即可跳转至PDF页面上对应的行处。</p>
 <p><img src="/img/article/fanxiang.png" alt="反向"></p>
 </li>
 </ol>
@@ -300,8 +305,10 @@
 <li>点击Options -&gt; Configurations -&gt; 点MiKTex即可</li>
 <li>点击Options -&gt; Execution Modes -&gt;PDF Viewer -&gt;点击右侧的“Browse”按钮，在弹出窗口中选择SumatraPDF程序的路径，下面的Use syc一定要勾上。</li>
 </ol>
-<h3 id="四-常用快捷键"><a href="#四、常用快捷键" class="headerlink" title="四、常用快捷键"></a>四、常用快捷键</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">PDF编译:Ctrl+Shift+P</span><br><span class="line">自动换行:Ctrl+W</span><br><span class="line"><span class="comment">#【编辑】 </span></span><br><span class="line">Alt+C:在剪贴板原有复制文本后增加新的被选择的文本 </span><br><span class="line">Ctrl+Shift+Alt+Right/Left:对选中文本comment/uncomment </span><br><span class="line">Shift+Enter:对当前单词进行拼写检查 </span><br><span class="line">Alt+F12:对选中文本进行LaTeX语法检查（强烈推荐）。 </span><br><span class="line">Ctrl+Shift+F12:对选中文本进行括号匹配检查。 </span><br><span class="line">Ctrl+G:goto line </span><br><span class="line">Ctrl+Shift+Backspace/Delete:Moving Ring Backward/Forward。</span><br><span class="line">Left+Shift+Ctrl+Alt:选中整块添加注释</span><br><span class="line">Right+Shift+Ctrl+Alt:选中整块删除注释</span><br><span class="line"><span class="comment">#【自动补全】 </span></span><br><span class="line">Ctrl+Enter:补全LaTeX命令</span><br><span class="line"><span class="comment">#【查找】 </span></span><br><span class="line">Ctrl+F:查找</span><br><span class="line">Ctrl+I:incremental search </span><br><span class="line">Ctrl+R:替换 </span><br><span class="line"><span class="comment">#【编译预览】 </span></span><br><span class="line">Ctrl+Shift+X:Texify （生成DVI文件） </span><br><span class="line">Ctrl+Shift+L:LaTeX </span><br><span class="line">Ctrl+Shift+B:编译bib文件 </span><br><span class="line">Ctrl+Shift+C:编译选中的文本 </span><br><span class="line">Ctrl+Shift+D:DVI--&gt;PS </span><br><span class="line">Ctrl+Shift+V:DVI预览 </span><br><span class="line">Ctrl+Shift+G:GSView，查看PS文件</span><br><span class="line">Ctrl+Shift+P:PDF编译</span><br></pre></td></tr></table></figure>
-<h3 id="五-其他"><a href="#五、其他" class="headerlink" title="五、其他"></a>五、其他</h3><p><a href="http://blog.sciencenet.cn/blog-111625-844954.html" target="_blank" rel="noopener">LaTeX书写好习惯以及Latex WinEdt 9.0快捷键</a></p>
+<h3 id="四-常用快捷键">四、常用快捷键</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">PDF编译:Ctrl+Shift+P</span><br><span class="line">自动换行:Ctrl+W</span><br><span class="line"><span class="comment">#【编辑】 </span></span><br><span class="line">Alt+C:在剪贴板原有复制文本后增加新的被选择的文本 </span><br><span class="line">Ctrl+Shift+Alt+Right/Left:对选中文本comment/uncomment </span><br><span class="line">Shift+Enter:对当前单词进行拼写检查 </span><br><span class="line">Alt+F12:对选中文本进行LaTeX语法检查（强烈推荐）。 </span><br><span class="line">Ctrl+Shift+F12:对选中文本进行括号匹配检查。 </span><br><span class="line">Ctrl+G:goto line </span><br><span class="line">Ctrl+Shift+Backspace/Delete:Moving Ring Backward/Forward。</span><br><span class="line">Left+Shift+Ctrl+Alt:选中整块添加注释</span><br><span class="line">Right+Shift+Ctrl+Alt:选中整块删除注释</span><br><span class="line"><span class="comment">#【自动补全】 </span></span><br><span class="line">Ctrl+Enter:补全LaTeX命令</span><br><span class="line"><span class="comment">#【查找】 </span></span><br><span class="line">Ctrl+F:查找</span><br><span class="line">Ctrl+I:incremental search </span><br><span class="line">Ctrl+R:替换 </span><br><span class="line"><span class="comment">#【编译预览】 </span></span><br><span class="line">Ctrl+Shift+X:Texify （生成DVI文件） </span><br><span class="line">Ctrl+Shift+L:LaTeX </span><br><span class="line">Ctrl+Shift+B:编译bib文件 </span><br><span class="line">Ctrl+Shift+C:编译选中的文本 </span><br><span class="line">Ctrl+Shift+D:DVI--&gt;PS </span><br><span class="line">Ctrl+Shift+V:DVI预览 </span><br><span class="line">Ctrl+Shift+G:GSView，查看PS文件</span><br><span class="line">Ctrl+Shift+P:PDF编译</span><br></pre></td></tr></table></figure>
+<h3 id="五-其他">五、其他</h3>
+<p><a href="http://blog.sciencenet.cn/blog-111625-844954.html" target="_blank" rel="noopener">LaTeX书写好习惯以及Latex WinEdt 9.0快捷键</a></p>
 
                 
                 <hr>

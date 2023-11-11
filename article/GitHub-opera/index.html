@@ -210,12 +210,6 @@
                     
                         
                         <li>
-                            <a href="/archive/">归档</a>
-                        </li>
-                        
-                    
-                        
-                        <li>
                             <a href="/tags/">标签</a>
                         </li>
                         
@@ -223,6 +217,12 @@
                         
                         <li>
                             <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
@@ -280,20 +280,32 @@
 
 				
                 <blockquote>
-<p> 一些常用基本操作</p>
+<p>一些常用基本操作</p>
 </blockquote>
-<h4 id="创建空目录"><a href="#创建空目录" class="headerlink" title="创建空目录"></a>创建空目录</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir Test</span><br><span class="line">cd Test</span><br><span class="line">pwd <span class="comment">//显示当前目录</span></span><br></pre></td></tr></table></figure>
-<h4 id="将目录变成git仓库"><a href="#将目录变成git仓库" class="headerlink" title="将目录变成git仓库"></a>将目录变成git仓库</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-<h4 id="添加文件到仓库并提交"><a href="#添加文件到仓库并提交" class="headerlink" title="添加文件到仓库并提交"></a>添加文件到仓库并提交</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git add readme.txt / git add .</span><br><span class="line">git commit -m <span class="string">"first commit"</span></span><br><span class="line">git remote add origin https:<span class="comment">//gitee.com/ztygalaxy/Test.git</span></span><br><span class="line">git push -u origin master</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"second"</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
-<h4 id="克隆远程仓库"><a href="#克隆远程仓库" class="headerlink" title="克隆远程仓库"></a>克隆远程仓库</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git<span class="meta">@gitee</span>.com:ztygalaxy/DidiPython</span><br><span class="line">cd DidiPython</span><br><span class="line">ls</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"first commit"</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
-<h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><h4 id="创建dev分支"><a href="#创建dev分支" class="headerlink" title="创建dev分支"></a>创建dev分支</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch dev</span><br></pre></td></tr></table></figure>
-<h4 id="切换到dev分支"><a href="#切换到dev分支" class="headerlink" title="切换到dev分支"></a>切换到dev分支</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br></pre></td></tr></table></figure>
+<h4 id="创建空目录">创建空目录</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir Test</span><br><span class="line">cd Test</span><br><span class="line">pwd <span class="comment">//显示当前目录</span></span><br></pre></td></tr></table></figure>
+<h4 id="将目录变成git仓库">将目录变成git仓库</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<h4 id="添加文件到仓库并提交">添加文件到仓库并提交</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git add readme.txt / git add .</span><br><span class="line">git commit -m <span class="string">"first commit"</span></span><br><span class="line">git remote add origin https:<span class="comment">//gitee.com/ztygalaxy/Test.git</span></span><br><span class="line">git push -u origin master</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"second"</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h4 id="克隆远程仓库">克隆远程仓库</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git<span class="meta">@gitee</span>.com:ztygalaxy/DidiPython</span><br><span class="line">cd DidiPython</span><br><span class="line">ls</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"first commit"</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h3 id="分支管理">分支管理</h3>
+<h4 id="创建dev分支">创建dev分支</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch dev</span><br></pre></td></tr></table></figure>
+<h4 id="切换到dev分支">切换到dev分支</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev</span><br></pre></td></tr></table></figure>
-<h4 id="查看所有分支"><a href="#查看所有分支" class="headerlink" title="查看所有分支"></a>查看所有分支</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
-<h4 id="提交改动"><a href="#提交改动" class="headerlink" title="提交改动"></a>提交改动</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add readme.txt </span><br><span class="line">git commit -m <span class="string">"branch test"</span></span><br></pre></td></tr></table></figure>
-<h4 id="切换回master分支"><a href="#切换回master分支" class="headerlink" title="切换回master分支"></a>切换回master分支</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
-<h4 id="将dev分支合并到master分支"><a href="#将dev分支合并到master分支" class="headerlink" title="将dev分支合并到master分支"></a>将dev分支合并到master分支</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge dev</span><br></pre></td></tr></table></figure>
-<p> readme.txt | 1 +<br> 1 file changed, 1 insertion(+)</p>
+<h4 id="查看所有分支">查看所有分支</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
+<h4 id="提交改动">提交改动</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add readme.txt </span><br><span class="line">git commit -m <span class="string">"branch test"</span></span><br></pre></td></tr></table></figure>
+<h4 id="切换回master分支">切换回master分支</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+<h4 id="将dev分支合并到master分支">将dev分支合并到master分支</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge dev</span><br></pre></td></tr></table></figure>
+<p>readme.txt | 1 +<br>
+1 file changed, 1 insertion(+)</p>
 
                 
                 <hr>
