@@ -282,66 +282,85 @@
                 <blockquote>
 <p>Spring 相关的一些理论整理，夹杂了一些 MyBatis。</p>
 </blockquote>
-<h2 id="spring-概述"><a href="#Spring-概述" class="headerlink" title="Spring 概述"></a>Spring 概述</h2><p>Spring 是一个轻量级的开源应用框架，降低应用程序开发难度。</p>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<h2 id="spring-概述">Spring 概述</h2>
+<p>Spring 是一个轻量级的开源应用框架，降低应用程序开发难度。</p>
+<h3 id="特性">特性</h3>
+<ul>
 <li>IOC</li>
 <li>DI</li>
 <li>AOP</li>
 <li>事务</li>
 <li>低侵入性，即允许应用系统自由选择和组装Spring框架中的各个功能模块，而不要求应用必需对Spring中的某个类继承或实现，极大地提高一致性</li>
 </ul>
-<h3 id="涉及组件"><a href="#涉及组件" class="headerlink" title="涉及组件"></a>涉及组件</h3><ul>
+<h3 id="涉及组件">涉及组件</h3>
+<ul>
 <li>Data Access: JDBC; JMS; Transaction;</li>
 <li>Web: Web; Servlet; Porlet;</li>
 <li>AOP</li>
 <li>Core: Beans; Core; Context; Exception Language;</li>
 </ul>
-<h3 id="autowired-原理"><a href="#Autowired-原理" class="headerlink" title="Autowired 原理"></a>Autowired 原理</h3><p>@Autowired 注解可以被标注在构造函数、属性、setter 方法或配置方法上，用于实现依赖自动注入。</p>
-<h4 id="和-resource-区别"><a href="#和-Resource-区别" class="headerlink" title="和 @Resource 区别"></a>和 @Resource 区别</h4><p>前者属于 Spring 的，后者属于 JDK 的。前者按类型装配，后者按名称装配。</p>
-<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE&#125;)	<span class="comment">// 表示注解是作用在方法上、类上、还是参数上</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)	<span class="comment">// 注解的生命周期</span></span><br><span class="line"><span class="meta">@Documented</span>	<span class="comment">// 注解的作用及Javadoc文档生成工具的使用</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Autowired &#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">required</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="autowired-原理">Autowired 原理</h3>
+<p>@Autowired 注解可以被标注在构造函数、属性、setter 方法或配置方法上，用于实现依赖自动注入。</p>
+<h4 id="和-resource-区别">和 @Resource 区别</h4>
+<p>前者属于 Spring 的，后者属于 JDK 的。前者按类型装配，后者按名称装配。</p>
+<h4 id="定义">定义</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE&#125;)	<span class="comment">// 表示注解是作用在方法上、类上、还是参数上</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)	<span class="comment">// 注解的生命周期</span></span><br><span class="line"><span class="meta">@Documented</span>	<span class="comment">// 注解的作用及Javadoc文档生成工具的使用</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Autowired &#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">required</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>预解析类<code>AutowiredAnnotationBeanPostProcessor</code>实现了接口<code>MergedBeanDefinitionPostProcessor</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postProcessMergedBeanDefinition</span><span class="params">(RootBeanDefinition beanDefinition, Class&lt;?&gt; beanType, String beanName)</span> </span>&#123;</span><br><span class="line">    InjectionMetadata metadata = <span class="keyword">this</span>.findAutowiringMetadata(beanName, beanType, (PropertyValues)<span class="keyword">null</span>);</span><br><span class="line">    metadata.checkConfigMembers(beanDefinition);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>实例化一个 Bean 的调用链：</p>
 <ul>
-<li>DefaultListbleBeanFactory.getBean() </li>
+<li>DefaultListbleBeanFactory.getBean()</li>
 <li>——》AbstractBeanFactory.doGetBean()</li>
 <li>————》DefaultSingletonBeanRegistry.getSingleton()</li>
 <li>——————》AbstractAutowireCapableBeanFactory.createBean()</li>
 <li>————————》AbstractAutowireCapableBeanFactory.doCreateBean()</li>
 <li>——————————》AbstractAutowireCapableBeanFactory.createBeanInstance()</li>
-<li>————————————》AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors()<br>都在这个类里面完成的，省略</li>
+<li>————————————》AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors()<br>
+都在这个类里面完成的，省略</li>
 </ul>
-<h4 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h4><p>在使用 Autowired 时，可以配置在根标签下，表示对全局起作用，属性名为d efault-autowire；也可以配置在标签下，表示对当前起作用，属性名为 autowire。取值可以分为如下几种：</p>
+<h4 id="类型">类型</h4>
+<p>在使用 Autowired 时，可以配置在根标签下，表示对全局起作用，属性名为d efault-autowire；也可以配置在标签下，表示对当前起作用，属性名为 autowire。取值可以分为如下几种：</p>
 <ul>
 <li>no: 默认，即不进行自动装配，每一个对象的注入比如依赖一个标签</li>
 <li>byName: 按照 beanName 进行自动装配，使用 setter 注入，如果不匹配则报错</li>
 <li>byType: 按照 bean 类型进行自动装配，使用 setter 注入，当有多个相同类型时会报错，解决方法是将不需要的 bean 设置 autowire-candidate=false 或对优先需要进行装配的 bean 设置为 primary=true</li>
 <li>constructor:与 byType 差不多，不过最终属性通过构造函数进行注入</li>
 </ul>
-<h3 id="spring-中依赖注入的方式"><a href="#Spring-中依赖注入的方式" class="headerlink" title="Spring 中依赖注入的方式"></a>Spring 中依赖注入的方式</h3><ul>
+<h3 id="spring-中依赖注入的方式">Spring 中依赖注入的方式</h3>
+<ul>
 <li>构造函数注入</li>
 <li>Setter 注入</li>
 <li>接口注入</li>
 </ul>
-<h4 id="自动装配的限制"><a href="#自动装配的限制" class="headerlink" title="自动装配的限制"></a>自动装配的限制</h4><ul>
+<h4 id="自动装配的限制">自动装配的限制</h4>
+<ul>
 <li>如果使用了构造器注入或者setter注入，那么将覆盖自动装配的依赖关系</li>
 <li>基本数据类型的值、字符串字面量、类字面量无法使用自动装配来注入</li>
 <li>优先考虑使用显式的装配来进行更精确的依赖注入而不是使用自动装配</li>
 </ul>
-<h3 id="spring-中的事务"><a href="#Spring-中的事务" class="headerlink" title="Spring 中的事务"></a>Spring 中的事务</h3><p>Spring 的事务管理不需与任何特定的事务 API 耦合，并且其提供了两种事务管理方式：编程式事务管理和声明式事务管理。对不同的持久层访问技术，编程式事务提供一致的事务编程风格，通过模板化的操作一致性地管理事务；而声明式事务基于 Spring-AOP 实现，却并不需要程序开发者成为 AOP 专家，亦可轻易使用 Spring 的声明式事务管理。</p>
-<h4 id="事务回滚"><a href="#事务回滚" class="headerlink" title="事务回滚"></a>事务回滚</h4><ul>
+<h3 id="spring-中的事务">Spring 中的事务</h3>
+<p>Spring 的事务管理不需与任何特定的事务 API 耦合，并且其提供了两种事务管理方式：编程式事务管理和声明式事务管理。对不同的持久层访问技术，编程式事务提供一致的事务编程风格，通过模板化的操作一致性地管理事务；而声明式事务基于 Spring-AOP 实现，却并不需要程序开发者成为 AOP 专家，亦可轻易使用 Spring 的声明式事务管理。</p>
+<h4 id="事务回滚">事务回滚</h4>
+<ul>
 <li>如果不捕捉异常，就会回滚</li>
 <li>捕捉异常，但是没有向外抛出异常，或者没有手动回滚事务，则事务失效。</li>
 </ul>
 <p>Spring 事务失效需要考虑到异常的处理以及和 AOP 的关系：AOP 只能捕获显式的异常，如果不显式的抛出，则无法捕获，事务会失效。</p>
 <p>事务失效：</p>
 <ol>
-<li><p>使用默认处理方式处理异常<br><strong>@Transaction（）</strong><br>不加任何参数，当发生异常时，spring默认只有RuntimeException和Error才可以回滚，而其他的异常spring默认它们都已经处理，所以默认不回滚。可以添加<strong>rollbackfor=Exception.class</strong>来表示所有的Exception都回滚。包括其子类<br><strong>@Transaction（rollbackfor=Exception.class）</strong></p>
+<li>
+<p>使用默认处理方式处理异常<br>
+<strong>@Transaction（）</strong><br>
+不加任何参数，当发生异常时，spring默认只有RuntimeException和Error才可以回滚，而其他的异常spring默认它们都已经处理，所以默认不回滚。可以添加<strong>rollbackfor=Exception.class</strong>来表示所有的Exception都回滚。包括其子类<br>
+<strong>@Transaction（rollbackfor=Exception.class）</strong></p>
 </li>
-<li><p>内部调用<br>不带事务的方法调用该类中带事务的方法，不会回滚。因为spring的回滚是用过代理模式生成的，如果是一个不带事务的方法调用该类的带事务的方法，直接通过this.xxx()调用，而不生成代理事务，所以事务不起作用。</p>
+<li>
+<p>内部调用<br>
+不带事务的方法调用该类中带事务的方法，不会回滚。因为spring的回滚是用过代理模式生成的，如果是一个不带事务的方法调用该类的带事务的方法，<a href="http://xn--this-4u7hr20hbl0b7sa.xxx" target="_blank" rel="noopener">直接通过this.xxx</a>()调用，而不生成代理事务，所以事务不起作用。</p>
 </li>
 </ol>
-<h4 id="编程式事务"><a href="#编程式事务" class="headerlink" title="编程式事务"></a>编程式事务</h4><p>Spring 事务策略是通过 PlatformTransactionManager 接口体现的，该接口是 Spring 事务策略的核心。该接口有如下核心方法：</p>
+<h4 id="编程式事务">编程式事务</h4>
+<p>Spring 事务策略是通过 PlatformTransactionManager 接口体现的，该接口是 Spring 事务策略的核心。该接口有如下核心方法：</p>
 <ul>
 <li>getTransaction(TransactionDefinition definition)</li>
 <li>void commit(TransactionStatus status)</li>
@@ -361,9 +380,11 @@
 <li>void setRollbackOnly();</li>
 <li>boolean isRollbackOnly();</li>
 </ul>
-<h4 id="声明式事务"><a href="#声明式事务" class="headerlink" title="声明式事务"></a>声明式事务</h4><p>Spring 的声明式事务管理是建立在 Spring-AOP 机制之上的，其本质是对目标方法前后进行拦截，并在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中作相关的事务规则声明（或通过等价的基于标注的方式），便可以将事务规则应用到业务逻辑中。总的来说，声明式事务得益于 Spring-IoC 容器和 Spring-AOP 机制的支持：IoC 容器为声明式事务管理提供了基础设施，使得 Bean 对于 Spring 框架而言是可管理的；而由于事务管理本身就是一个典型的横切逻辑（正是 AOP 的用武之地），因此 Spring-AOP 机制是声明式事务管理的直接实现者。</p>
+<h4 id="声明式事务">声明式事务</h4>
+<p>Spring 的声明式事务管理是建立在 Spring-AOP 机制之上的，其本质是对目标方法前后进行拦截，并在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中作相关的事务规则声明（或通过等价的基于标注的方式），便可以将事务规则应用到业务逻辑中。总的来说，声明式事务得益于 Spring-IoC 容器和 Spring-AOP 机制的支持：IoC 容器为声明式事务管理提供了基础设施，使得 Bean 对于 Spring 框架而言是可管理的；而由于事务管理本身就是一个典型的横切逻辑（正是 AOP 的用武之地），因此 Spring-AOP 机制是声明式事务管理的直接实现者。</p>
 <p>除了基于命名空间的事务配置方式，Spring 还引入了基于 Annotation 的方式，具体主要涉及 @Transactional 标注。@Transactional 可以作用于接口、接口方法、类以及类方法上：当作用于类上时，该类的所有 public 方法将都具有该类型的事务属性；当作用于方法上时，该标注来覆盖类级别的定义。</p>
-<h4 id="事务传播"><a href="#事务传播" class="headerlink" title="事务传播"></a>事务传播</h4><ul>
+<h4 id="事务传播">事务传播</h4>
+<ul>
 <li>PROPAGATION_REQUIRED：支持当前事务，如果当前没有事务，则新建一个事务执行</li>
 <li>PROPAGATION_SUPPORTS：支持当前事务，如果没有当前事务，则以非事务的方式执行</li>
 <li>PROPAGATION_MANDATORY：支持当前事务，如果当前没有事务，则抛出异常</li>
@@ -373,10 +394,13 @@
 <li>PROPAGATION_NESTED：如果当前事务存在，则在嵌套事务中执行，否则行为类似于 PROPAGATION_REQUIRED。 EJB 中没有类似的功能。</li>
 </ul>
 <p><a href="https://www.jianshu.com/p/e1848e2aa7c3" target="_blank" rel="noopener">参考链接</a></p>
-<h3 id="spring-中的线程安全"><a href="#Spring-中的线程安全" class="headerlink" title="Spring 中的线程安全"></a>Spring 中的线程安全</h3><p>Spring 容器本身并没有提供 Bean 的线程安全策略，即 Bean 本身不具备线程安全的特性。对于单例 Bean，如果该 Bean 是无状态的 Bean，那么不存在多线程问题。对于有状态的 Bean，需要使用 ThreadLocal 解决多线程安全。使用 ThreadLocal 的好处是使得多线程场景下，多个线程对这个单例 Bean 的成员变量并不存在资源的竞争，因为 ThreadLocal 为每个线程保存线程私有的数据。这是一种以空间换时间的方式。当然也可以通过加锁的方法来解决线程安全，这种以时间换空间的场景在高并发场景下显然是不实际的。</p>
-<h4 id="threadlocal和线程同步机制相比有什么优势"><a href="#ThreadLocal和线程同步机制相比有什么优势" class="headerlink" title="ThreadLocal和线程同步机制相比有什么优势?"></a>ThreadLocal和线程同步机制相比有什么优势?</h4><p>ThreadLocal 和线程同步机制都是为了解决多线程中相同变量的访问冲突问题。在同步机制中，通过对象的锁机制保证同一时间只有一个线程访问变量。这时该变量是多个线程共享的，使用同步机制要求程序慎密地分析什么时候对变量进行读写，什么时候需要锁定某个对象，什么时候释放对象锁等繁杂的问题，程序设计和编写难度相对较大。而 ThreadLocal 则从另一个角度来解决多线程的并发访问。ThreadLocal 会为每一个线程提供一个独立的变量副本，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。ThreadLocal 提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进 ThreadLocal。</p>
+<h3 id="spring-中的线程安全">Spring 中的线程安全</h3>
+<p>Spring 容器本身并没有提供 Bean 的线程安全策略，即 Bean 本身不具备线程安全的特性。对于单例 Bean，如果该 Bean 是无状态的 Bean，那么不存在多线程问题。对于有状态的 Bean，需要使用 ThreadLocal 解决多线程安全。使用 ThreadLocal 的好处是使得多线程场景下，多个线程对这个单例 Bean 的成员变量并不存在资源的竞争，因为 ThreadLocal 为每个线程保存线程私有的数据。这是一种以空间换时间的方式。当然也可以通过加锁的方法来解决线程安全，这种以时间换空间的场景在高并发场景下显然是不实际的。</p>
+<h4 id="threadlocal和线程同步机制相比有什么优势">ThreadLocal和线程同步机制相比有什么优势?</h4>
+<p>ThreadLocal 和线程同步机制都是为了解决多线程中相同变量的访问冲突问题。在同步机制中，通过对象的锁机制保证同一时间只有一个线程访问变量。这时该变量是多个线程共享的，使用同步机制要求程序慎密地分析什么时候对变量进行读写，什么时候需要锁定某个对象，什么时候释放对象锁等繁杂的问题，程序设计和编写难度相对较大。而 ThreadLocal 则从另一个角度来解决多线程的并发访问。ThreadLocal 会为每一个线程提供一个独立的变量副本，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。ThreadLocal 提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进 ThreadLocal。</p>
 <p>概括起来说，对于多线程资源共享的问题，同步机制采用了“以时间换空间”的方式，而 ThreadLocal 采用了“以空间换时间”的方式。前者仅提供一份变量，让不同的线程排队访问，而后者为每一个线程都提供了一份变量，因此可以同时访问而互不影响。</p>
-<h3 id="spring-中的设计模式"><a href="#Spring-中的设计模式" class="headerlink" title="Spring 中的设计模式"></a>Spring 中的设计模式</h3><ul>
+<h3 id="spring-中的设计模式">Spring 中的设计模式</h3>
+<ul>
 <li>简单工厂：Spring 中的 BeanFactory 就是简单工厂模式的体现，根据传入一个唯一的标识来获得 Bean 对象，但是否是在传入参数后创建还是传入参数前创建这个要根据具体情况来定。</li>
 <li>工厂方法：Spring 中的 FactoryBean 就是典型的工厂方法模式。</li>
 <li>单例：Bean 的 Singleton</li>
@@ -387,24 +411,33 @@
 <li>策略：Spring 中在实例化对象的时候用到 Strategy 模式。</li>
 <li>模板：JdbcTemplate</li>
 </ul>
-<h3 id="检测循环依赖"><a href="#检测循环依赖" class="headerlink" title="检测循环依赖"></a>检测循环依赖</h3><p>先让最底层对象完成初始化，通过三级缓存与二级缓存提前曝光创建中的 Bean，让其他 Bean 率先完成初始化。</p>
+<h3 id="检测循环依赖">检测循环依赖</h3>
+<p>先让最底层对象完成初始化，通过三级缓存与二级缓存提前曝光创建中的 Bean，让其他 Bean 率先完成初始化。</p>
 <p>检测循环依赖的过程如下：</p>
 <ul>
-<li><p>A 创建过程中需要 B，于是 A 将自己放到三级缓里面 ，去实例化 B</p>
+<li>
+<p>A 创建过程中需要 B，于是 A 将自己放到三级缓里面 ，去实例化 B</p>
 </li>
-<li><p>B 实例化的时候发现需要 A，于是 B 先查一级缓存，没有，再查二级缓存，还是没有，再查三级缓存，找到了！</p>
+<li>
+<p>B 实例化的时候发现需要 A，于是 B 先查一级缓存，没有，再查二级缓存，还是没有，再查三级缓存，找到了！</p>
 <ul>
-<li><p>然后把三级缓存里面的这个 A 放到二级缓存里面，并删除三级缓存里面的 A</p>
+<li>
+<p>然后把三级缓存里面的这个 A 放到二级缓存里面，并删除三级缓存里面的 A</p>
 </li>
-<li><p>B 顺利初始化完毕，将自己放到一级缓存里面（此时B里面的A依然是创建中状<br>态）</p>
+<li>
+<p>B 顺利初始化完毕，将自己放到一级缓存里面（此时B里面的A依然是创建中状<br>
+态）</p>
 </li>
 </ul>
 </li>
-<li><p>然后回来接着创建 A，此时 B 已经创建结束，直接从一级缓存里面拿到 B ，然后完成创建，将自己放到一级缓存里面</p>
+<li>
+<p>然后回来接着创建 A，此时 B 已经创建结束，直接从一级缓存里面拿到 B ，然后完成创建，将自己放到一级缓存里面</p>
 </li>
 </ul>
 <p>使用构造器注入其他 Bean 的实例，这个就没办法了。要手动改代码。</p>
-<h2 id="ioc-和-di"><a href="#IOC-和-DI" class="headerlink" title="IOC 和 DI"></a>IOC 和 DI</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p><strong>Spring 通过一个配置文件描述 Bean 和 Bean 之间的依赖关系，利用 Java 语言的反射功能实例化 Bean 并建立 Bean 之间的依赖关系，Spring IOC 容器在完成这些底层工作的基础上，还提供了 Bean 实例缓存、生命周期管理、 Bean 实例代理、事件发布、资源装载等高级服务。</strong></p>
+<h2 id="ioc-和-di">IOC 和 DI</h2>
+<h3 id="概念">概念</h3>
+<p><strong>Spring 通过一个配置文件描述 Bean 和 Bean 之间的依赖关系，利用 Java 语言的反射功能实例化 Bean 并建立 Bean 之间的依赖关系，Spring IOC 容器在完成这些底层工作的基础上，还提供了 Bean 实例缓存、生命周期管理、 Bean 实例代理、事件发布、资源装载等高级服务。</strong></p>
 <p>IOC 指控制反转，是 Spring 中的一种设计思想以及重要特性。</p>
 <p>IOC 意味着将设计好的类交给容器控制，而不是在对象内部控制。</p>
 <p>控制，指的是容器控制对象，在传统的开发中，我们通过在对象内部通过new进行对象创建，而在IOC中专门有一个容器用来创建对象。</p>
@@ -415,7 +448,8 @@
 <p>依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。</p>
 <p><strong>依赖注入是从应用程序的角度在描述，可以把依赖注入描述完整点：应用程序依赖容器创建并注入它所需要的外部资源；而控制反转是从容器的角度在描述，描述完整点：容器控制应用程序，由容器反向的向应用程序注入应用程序所需要的外部资源。</strong></p>
 <p><a href="https://www.iteye.com/topic/692793" target="_blank" rel="noopener">参考资料</a></p>
-<h3 id="ioc-大体流程"><a href="#IOC-大体流程" class="headerlink" title="IOC 大体流程"></a>IOC 大体流程</h3><ol>
+<h3 id="ioc-大体流程">IOC 大体流程</h3>
+<ol>
 <li>设置容器的初始化状态，如：容器的启动时间，容器的激活状态</li>
 <li>解析 bean.xml 配置文件，将配置文件中的信息解析封装程 BeanDefinition 对象</li>
 <li>将 BeanDefinition 对象注册到 BeanFactory 容器中。此时还没有真正创建 bean 对象，只是解析封装 xml 配置文件的内容</li>
@@ -423,14 +457,19 @@
 <li>根据 BeanDefinition 对象真正创建bean对象， 此时创建的全是单例【singleton】，并且不是延迟加载【lazy-init】的对象</li>
 <li>最后一步广播事件，进行善后处理</li>
 </ol>
-<h3 id="依赖注入的时机"><a href="#依赖注入的时机" class="headerlink" title="依赖注入的时机"></a>依赖注入的时机</h3><ul>
+<h3 id="依赖注入的时机">依赖注入的时机</h3>
+<ul>
 <li>第一次通过 getBean 方法向 IOC 容器索要 Bean时候，IOC容器触发依赖注入</li>
 <li>在 Bean 定义资源中为元素配置了 lazy-int 属性，即让容器在解析注册 Bean 定义时进行预实例化，触发依赖注入</li>
 </ul>
-<h3 id="ioc-中的预实例化"><a href="#IOC-中的预实例化" class="headerlink" title="IOC 中的预实例化"></a>IOC 中的预实例化</h3><p>IoC 容器的初始化过程就是对 Bean 定义资源的定位、载入和注册，此时容器对 Bean 的依赖注入并没有发生，依赖注入主要是在应用程序第一次向容器索取 Bean 时，通过 getBean 方法的调用完成。当 Bean 定义资源的元素中配置了 lazy-init 属性时，容器将会在初始化的时候对所配置的 Bean 进行预实例化，Bean 的依赖注入在容器初始化的时候就已经完成。这样，当应用程序第一次向容器索取被管理的 Bean 时，就不用再初始化和对 Bean 进行依赖注入了，直接从容器中获取已经完成依赖注入的现成 Bean，可以提高应用第一次向容器获取 Bean 的性能。</p>
-<h3 id="beanpostprocessor-后置处理器的实现"><a href="#BeanPostProcessor-后置处理器的实现" class="headerlink" title="BeanPostProcessor 后置处理器的实现"></a>BeanPostProcessor 后置处理器的实现</h3><p>BeanPostProcessor 后置处理器是 Spring-IoC 容器经常使用到的一个特性，这个 Bean 后置处理器是一个监听器，可以监听容器触发的Bean声明周`期事件。后置处理器向容器注册以后，容器中管理的Bean就具备了接收IoC容器事件回调的能力。</p>
+<h3 id="ioc-中的预实例化">IOC 中的预实例化</h3>
+<p>IoC 容器的初始化过程就是对 Bean 定义资源的定位、载入和注册，此时容器对 Bean 的依赖注入并没有发生，依赖注入主要是在应用程序第一次向容器索取 Bean 时，通过 getBean 方法的调用完成。当 Bean 定义资源的元素中配置了 lazy-init 属性时，容器将会在初始化的时候对所配置的 Bean 进行预实例化，Bean 的依赖注入在容器初始化的时候就已经完成。这样，当应用程序第一次向容器索取被管理的 Bean 时，就不用再初始化和对 Bean 进行依赖注入了，直接从容器中获取已经完成依赖注入的现成 Bean，可以提高应用第一次向容器获取 Bean 的性能。</p>
+<h3 id="beanpostprocessor-后置处理器的实现">BeanPostProcessor 后置处理器的实现</h3>
+<p>BeanPostProcessor 后置处理器是 Spring-IoC 容器经常使用到的一个特性，这个 Bean 后置处理器是一个监听器，可以监听容器触发的Bean声明周`期事件。后置处理器向容器注册以后，容器中管理的Bean就具备了接收IoC容器事件回调的能力。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.beans.factory.config;  </span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.BeansException;  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BeanPostProcessor</span> </span>&#123;  </span><br><span class="line">    <span class="comment">//为在Bean的初始化前提供回调入口  </span></span><br><span class="line">    <span class="function">Object <span class="title">postProcessBeforeInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException</span>;  </span><br><span class="line">    <span class="comment">//为在Bean的初始化之后提供回调入口  </span></span><br><span class="line">    <span class="function">Object <span class="title">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="aop"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h2><h3 id="概念"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><p>AOP 指面向切面编程，通过预编译方式和运行期动态代理的一种技术。利用 AOP 可以对业务逻辑的各个部分进行隔离，从而降低业务逻辑各组件的耦合度，提高程序的可重用性，同时提高了开发的效率。</p>
+<h2 id="aop">AOP</h2>
+<h3 id="概念">概念</h3>
+<p>AOP 指面向切面编程，通过预编译方式和运行期动态代理的一种技术。利用 AOP 可以对业务逻辑的各个部分进行隔离，从而降低业务逻辑各组件的耦合度，提高程序的可重用性，同时提高了开发的效率。</p>
 <ul>
 <li>切面：一些 Pointcut 以及相应的 Advice 的集合</li>
 <li>连接点：表示在程序中明确定义的点，典型的包括方法调用，对类成员的访问以及异常处理程序块的执行等等，它自身还可以嵌套其它连接点</li>
@@ -440,24 +479,32 @@
 <li>织入：将切面和其他对象连接起来, 并创建增强的过程</li>
 </ul>
 <p>常用于：日志、安全控制、性能统计等场景。</p>
-<h3 id="几种方式"><a href="#几种方式" class="headerlink" title="几种方式"></a>几种方式</h3><ul>
+<h3 id="几种方式">几种方式</h3>
+<ul>
 <li>before：在切点前执行，除非 before 中发生异常，否则切点一定执行</li>
 <li>after：在一个切点正常执行后执行</li>
 <li>around：before+after</li>
 <li>final：无论是正常结束还是异常，都会执行</li>
 <li>after throwing：切点抛出异常后执行</li>
 </ul>
-<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>在AOP 的设计中，每个 Bean 都会被 JDK 或 cglib 代理并有多个方法拦截器。拦截器分为两层，外层由Spring内核控制，内层拦截器由用户设置。当代理方法被调用时，先经过外层拦截器，外层拦截器根据方法提供的信息判断哪些内层拦截器应该被执行，然后会创建并执行拦截器链，最后调用目标对象的方法。内层拦截器的设计采用了职责链的设计。</p>
-<h3 id="动态代理在-spring"><a href="#动态代理在-Spring" class="headerlink" title="动态代理在 Spring"></a>动态代理在 Spring</h3><p>Spring 中 AOP 的实现依赖于动态代理的实现。动态代理主要有两种实现，分别是 JDK 动态代理和 cglib 代理。采用 JDK 动态代理，目标类必须实现某个接口，否则不可用；而 CGLIB 底层是通过使用一个小而块的字节码处理框架 ASM 来转换字节码并生成新的类，覆盖或添加类中的方法。从上述描述中不难看出，cglib 类中方法类型不能设置为 final。在执行效率上，早期的 JDK 动态代理效率远低于 cglib，而随着 JDK 版本的更新，现在 JDK 动态代理的效率已经和 cglib 不相伯仲。</p>
-<h2 id="bean"><a href="#Bean" class="headerlink" title="Bean"></a>Bean</h2><p>在 Spring 中，Bean 是组成应用程序的主体及由 SpringIoC 容器所管理的对象，被称之为 bean 。简单地讲，Bean 就是由 IoC 容器初始化、装配及管理的对象，除此之外，bean 就与应用程序中的其他对象没有什么区别了。而 Bean 的定义以及 Bean 相互间的依赖关系将通过配置元数据来描述。</p>
-<h3 id="bean-存在哪里怎么存的"><a href="#Bean-存在哪里，怎么存的" class="headerlink" title="Bean 存在哪里，怎么存的"></a>Bean 存在哪里，怎么存的</h3><p>在类：FactoryBeanRegistrySupport 里面有一个 Map 叫：factoryBeanObjectCache，单例<br>的bean就放在这里，是一个 ConcurrentHashMap。</p>
+<h3 id="实现原理">实现原理</h3>
+<p>在AOP 的设计中，每个 Bean 都会被 JDK 或 cglib 代理并有多个方法拦截器。拦截器分为两层，外层由Spring内核控制，内层拦截器由用户设置。当代理方法被调用时，先经过外层拦截器，外层拦截器根据方法提供的信息判断哪些内层拦截器应该被执行，然后会创建并执行拦截器链，最后调用目标对象的方法。内层拦截器的设计采用了职责链的设计。</p>
+<h3 id="动态代理在-spring">动态代理在 Spring</h3>
+<p>Spring 中 AOP 的实现依赖于动态代理的实现。动态代理主要有两种实现，分别是 JDK 动态代理和 cglib 代理。采用 JDK 动态代理，目标类必须实现某个接口，否则不可用；而 CGLIB 底层是通过使用一个小而块的字节码处理框架 ASM 来转换字节码并生成新的类，覆盖或添加类中的方法。从上述描述中不难看出，cglib 类中方法类型不能设置为 final。在执行效率上，早期的 JDK 动态代理效率远低于 cglib，而随着 JDK 版本的更新，现在 JDK 动态代理的效率已经和 cglib 不相伯仲。</p>
+<h2 id="bean">Bean</h2>
+<p>在 Spring 中，Bean 是组成应用程序的主体及由 SpringIoC 容器所管理的对象，被称之为 bean 。简单地讲，Bean 就是由 IoC 容器初始化、装配及管理的对象，除此之外，bean 就与应用程序中的其他对象没有什么区别了。而 Bean 的定义以及 Bean 相互间的依赖关系将通过配置元数据来描述。</p>
+<h3 id="bean-存在哪里怎么存的">Bean 存在哪里，怎么存的</h3>
+<p>在类：FactoryBeanRegistrySupport 里面有一个 Map 叫：factoryBeanObjectCache，单例<br>
+的bean就放在这里，是一个 ConcurrentHashMap。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Cache of singleton objects created by FactoryBeans: FactoryBean name</span></span><br><span class="line"><span class="comment">--&gt; object */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; factoryBeanObjectCache = <span class="keyword">new</span></span><br><span class="line">ConcurrentHashMap&lt;&gt;(<span class="number">16</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="spring-如何管理-bean-的"><a href="#Spring-如何管理-Bean-的" class="headerlink" title="Spring 如何管理 Bean 的"></a>Spring 如何管理 Bean 的</h3><ul>
+<h3 id="spring-如何管理-bean-的">Spring 如何管理 Bean 的</h3>
+<ul>
 <li>通过读取 xml 文件，反射实例化对象，放在 ConcurrentHashMap 里面保存起来。</li>
 <li>通过 BeanFactory 实例化的 Bean 会在第一次真正使用的时候才初始化。</li>
 <li>通过 ApplicationContext 实例化的 Bean 会在创建的时候就初始化了。</li>
 </ul>
-<h3 id="bean-的作用域"><a href="#Bean-的作用域" class="headerlink" title="Bean 的作用域"></a>Bean 的作用域</h3><ul>
+<h3 id="bean-的作用域">Bean 的作用域</h3>
+<ul>
 <li>singleton</li>
 <li>prototype</li>
 <li>request</li>
@@ -465,7 +512,8 @@
 <li>globalsession</li>
 </ul>
 <p>五种作用域中，request、session 和 globalsession 三种作用域仅在基于 web 的应用中使用（不必关心你所采用的是什么 web 应用框架），只能用在基于 web 的 Spring ApplicationContext 环境。一般在标签中通过 scope 指定作用域类型，也可以在下指定默认全局的 scope 类型。其中 Singleton 与 Prototype 类型的区别在于：Prototype 在交给用户后，IOC 容器就结束了使命，放弃对该 bean 的生命周期管理，而 IOC 容器则会对 Singleton 进行完整的生命周期管理；singleton 默认采用非延迟初始化，也可通过设置 lazy-init 属性改变初始化方式，但是 prototype 只能采用延迟初始化方式。</p>
-<h3 id="bean-的生命周期-获得-bean-的步骤"><a href="#Bean-的生命周期-获得-Bean-的步骤" class="headerlink" title="Bean 的生命周期 / 获得 Bean 的步骤"></a>Bean 的生命周期 / 获得 Bean 的步骤</h3><p><img src="https://pic.tyzhang.top/images/2020/07/16/1159210-20190902212824321-1247257996.png" style="zoom:80%;"></p>
+<h3 id="bean-的生命周期-获得-bean-的步骤">Bean 的生命周期 / 获得 Bean 的步骤</h3>
+<img src="https://pic.tyzhang.top/images/2020/07/16/1159210-20190902212824321-1247257996.png" style="zoom:80%;">
 <p>简单的来说，一个 Bean 的生命周期分为四个阶段：</p>
 <ul>
 <li>实例化（Instantiation）</li>
@@ -473,27 +521,32 @@
 <li>初始化（Initialization）</li>
 <li>销毁（Destruction）</li>
 </ul>
-<p><img src="https://pic.tyzhang.top/images/2020/07/16/1159210-20190902212936848-5968038.png" style="zoom:80%;"></p>
-<h3 id="beanfactory"><a href="#BeanFactory" class="headerlink" title="BeanFactory"></a>BeanFactory</h3><p>BeanFactory 是一个接口，用于定义工厂的基本职能并对 IOC 容器的基本行为作了定义。它是负责生产和管理 bean 的一个工厂。在 Spring 中，BeanFactory 是 IOC 容器的核心接口，它的职责包括：实例化、定位、配置应用程序中的对象及建立这些对象间的依赖。BeanFactory 只是个接口，并不是 IOC 容器的具体实现。Spring 提供了许多 IOC 容器的实现，比如 XmlBeanFactory，ClasspathXmlApplicationContext，ApplicationContext 等。BeanFactory 中大致定义了如下行为：</p>
+<img src="https://pic.tyzhang.top/images/2020/07/16/1159210-20190902212936848-5968038.png" style="zoom:80%;">
+<h3 id="beanfactory">BeanFactory</h3>
+<p>BeanFactory 是一个接口，用于定义工厂的基本职能并对 IOC 容器的基本行为作了定义。它是负责生产和管理 bean 的一个工厂。在 Spring 中，BeanFactory 是 IOC 容器的核心接口，它的职责包括：实例化、定位、配置应用程序中的对象及建立这些对象间的依赖。BeanFactory 只是个接口，并不是 IOC 容器的具体实现。Spring 提供了许多 IOC 容器的实现，比如 XmlBeanFactory，ClasspathXmlApplicationContext，ApplicationContext 等。BeanFactory 中大致定义了如下行为：</p>
 <ul>
 <li>getBean(String name)——根据 bean 的名字，获取在 IOC 容器中得到 bean 实例</li>
 <li>containsBean(String name)——提供对 bean 的检索，看看是否在 IOC 容器有这个名字的 bean</li>
 <li>isSingleton(String name)——根据 bean 名字得到 bean 实例，并同时判断这个 bean 是不是单例</li>
 <li>getType(String name)——得到 bean 实例的 Class 类型</li>
 </ul>
-<h3 id="factorybean"><a href="#FactoryBean" class="headerlink" title="FactoryBean"></a>FactoryBean</h3><p>一般情况下，Spring 通过反射机制利用的 class 属性指定实现类实例化 Bean，在某些情况下，实例化 Bean 过程比较复杂，如果按照传统的方式，则需要在中提供大量的配置信息。配置方式的灵活性是受限的，这时采用编码的方式可能会得到一个简单的方案。FactoryBean 也是一个接口，首先实现了这个接口的类也是一个 Bean，但是这个 Bean 是一个可以生产其他 Bean 的特类。通过对接口方法的实现，这个 Bean 被附加了工厂行为和装饰器行为，而具有了生产能力。FactoryBean 接口中的主要方法如下：</p>
+<h3 id="factorybean">FactoryBean</h3>
+<p>一般情况下，Spring 通过反射机制利用的 class 属性指定实现类实例化 Bean，在某些情况下，实例化 Bean 过程比较复杂，如果按照传统的方式，则需要在中提供大量的配置信息。配置方式的灵活性是受限的，这时采用编码的方式可能会得到一个简单的方案。FactoryBean 也是一个接口，首先实现了这个接口的类也是一个 Bean，但是这个 Bean 是一个可以生产其他 Bean 的特类。通过对接口方法的实现，这个 Bean 被附加了工厂行为和装饰器行为，而具有了生产能力。FactoryBean 接口中的主要方法如下：</p>
 <ul>
 <li>getObject()——获取对象</li>
 <li>getObjectType()——获取对象类型</li>
 <li>isSingleton——是否是单例 值得注意的是如果要获取 FactoryBean 本身这个 Bean，在根据名字传参时要添加一个前缀&amp;</li>
 </ul>
-<h3 id="beandefinition"><a href="#BeanDefinition" class="headerlink" title="BeanDefinition"></a>BeanDefinition</h3><p>BeanDefinition 中保存了 Bean 信息，比如这个 Bean 指向的是哪个类、是否是单例的、是否懒加载、Bean 依赖了哪些 Bean 等等。由代码实现的 Bean 在运行时会转换为 BeanDefinition 存在于 BeanFactory 中。</p>
-<h3 id="context"><a href="#Context" class="headerlink" title="Context"></a>Context</h3><ul>
+<h3 id="beandefinition">BeanDefinition</h3>
+<p>BeanDefinition 中保存了 Bean 信息，比如这个 Bean 指向的是哪个类、是否是单例的、是否懒加载、Bean 依赖了哪些 Bean 等等。由代码实现的 Bean 在运行时会转换为 BeanDefinition 存在于 BeanFactory 中。</p>
+<h3 id="context">Context</h3>
+<ul>
 <li>FileSystemXmlApplicationContext：该容器从 XML 文件中加载已被定义的 bean。在这里，你需要提供给构造器 XML 文件的完整路径</li>
 <li>ClassPathXmlApplicationContext：该容器从 XML 文件中加载已被定义的 bean。在这里，你不需要提供 XML 文件的完整路径，只需正确配置 CLASSPATH 环境变量即可，因为，容器会从 CLASSPATH 中搜索 bean 配置文件。</li>
 <li>WebXmlApplicationContext：该容器会在一个 web 应用程序的范围内加载在 XML 文件中已被定义的 bean。</li>
 </ul>
-<h3 id="spring中beanfactory-与-applicationcontext-的区别"><a href="#Spring中BeanFactory-与-ApplicationContext-的区别" class="headerlink" title="Spring中BeanFactory 与 ApplicationContext 的区别"></a>Spring中BeanFactory 与 ApplicationContext 的区别</h3><ul>
+<h3 id="spring中beanfactory-与-applicationcontext-的区别">Spring中BeanFactory 与 ApplicationContext 的区别</h3>
+<ul>
 <li>BeanFactroy 采用的是<strong>延迟加载</strong>形式来注入 Bean 的，即只有在使用到某个 Bean 时(调用 getBean())，才对该 Bean 进行加载实例化，这样，我们就不能发现一些存在的 Spring 的配置问题。而 ApplicationContext 则相反，<strong>它是在容器启动时，一次性创建了所有的 Bean</strong>。这样，在容器启动时，我们就可以发现 Spring 中存在的配置错误</li>
 <li>BeanFactory 和 ApplicationContext 都支持 BeanPostProcessor、BeanFactoryPostProcessor 的使用，但两者之间的区别是： BeanFactory 需要手动注册，而 ApplicationContext 则是自动注册</li>
 <li>ApplicationContext 包还提供了以下的功能：资源访问，如 URL 和文件；事件传播；载入多个（有继承关系）上下文；MessageSource, 提供国际化的消息访问</li>
@@ -511,11 +564,13 @@
 <li>BeanFactory 在解析配置文件时并不会初始化对象，只有在使用对象 getBean() 才会对该对象进行初始化</li>
 <li>ApplicationContext 在解析配置文件时对配置文件中的所有对象都初始化了</li>
 </ul>
-<h2 id="mvc"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><h3 id="spring-mvc"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h3><p>是用 Java 实现的 MVC web 框架，将 model、view、controller 分层，简化开发，使得项目结构更加清晰。</p>
+<h2 id="mvc">MVC</h2>
+<h3 id="spring-mvc">Spring MVC</h3>
+<p>是用 Java 实现的 MVC web 框架，将 model、view、controller 分层，简化开发，使得项目结构更加清晰。</p>
 <ul>
 <li>支持各种视图，而非 jsp</li>
 </ul>
-<ol>
+<ol start="2">
 <li>完美融合 Spring</li>
 <li>处理流程清晰</li>
 </ol>
@@ -523,7 +578,7 @@
 <ul>
 <li>DispatcherServlet（请求分发）</li>
 </ul>
-<ol>
+<ol start="2">
 <li>HandlerMapping（根据请求的URL来查找Handler）</li>
 <li>HandlerAdapter（适配一个 Handler）</li>
 <li>Handler（就是 controller）</li>
@@ -534,7 +589,7 @@
 <ul>
 <li>遇到异常统一往上一层抛，在 controller 层统一捕获处理</li>
 </ul>
-<ol>
+<ol start="2">
 <li>交给 Spring 管理：@ResponseStatus</li>
 <li>自定义全局异常（使用增强处理器）</li>
 </ol>
@@ -546,7 +601,8 @@
 <ul>
 <li>用来映射一个 URL 到一个类或者一个特定的处理方法上。</li>
 </ul>
-<h3 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h3><ul>
+<h3 id="执行流程">执行流程</h3>
+<ul>
 <li>用户请求发送至 DispatcherServlet 类进行处理。</li>
 <li>DispatcherServlet 类遍历所有配置的 HandlerMapping 类请求查找 Handler。</li>
 <li>HandlerMapping 类根据 request 请求的 URL 等信息查找能够进行处理的 Handler，以及相关拦截器 interceptor 并构造 HandlerExecutionChain。</li>
@@ -560,18 +616,23 @@
 <li>DispatcherServlet 类进行视图 View 的渲染，填充 Model。</li>
 <li>DispatcherServlet 类向用户返回响应。</li>
 </ul>
-<h3 id="spring-mvc-只使用一个-dispatcherservlet-来处理所有请求"><a href="#Spring-MVC-只使用一个-DispatcherServlet-来处理所有请求" class="headerlink" title="Spring MVC 只使用一个 DispatcherServlet 来处理所有请求"></a>Spring MVC 只使用一个 DispatcherServlet 来处理所有请求</h3><p>Spring中只使用到了一个DispatcherServlet主要是因为Spring MVC采用的是J2EE设计模式-前端控制模式。</p>
+<h3 id="spring-mvc-只使用一个-dispatcherservlet-来处理所有请求">Spring MVC 只使用一个 DispatcherServlet 来处理所有请求</h3>
+<p>Spring中只使用到了一个DispatcherServlet主要是因为Spring MVC采用的是J2EE设计模式-前端控制模式。</p>
 <p>前端控制器模式主要用来集中处理请求，这样所有的请求都只经过一个处理器处理。这个处理器可以集中处理授权，日志，跟踪请求等。主要用于集中统一化对外的请求接口，便于更好的封装内部逻辑。可以配置两个DispatcherServlet，但是 url-pattern 要有所区分。</p>
-<h3 id="spring为什么要结合使用handlermapping以及handleradapter来处理handler"><a href="#Spring为什么要结合使用HandlerMapping以及HandlerAdapter来处理Handler" class="headerlink" title="Spring为什么要结合使用HandlerMapping以及HandlerAdapter来处理Handler"></a>Spring为什么要结合使用HandlerMapping以及HandlerAdapter来处理Handler</h3><p>Spring 的特点就是父类提供步骤，子类提供实现。符合面向对象中的单一职责原则，代码架构清晰，便于维护，最重要的是代码可复用性高。如 HandlerAdapter 可能会被用于处理多种 Handler。</p>
-<h3 id="controller-和-requestmapping-如何对应"><a href="#Controller-和-RequestMapping-如何对应" class="headerlink" title="Controller 和 RequestMapping 如何对应"></a>Controller 和 RequestMapping 如何对应</h3><p>Spring MVC 怎么找到 Controller的</p>
+<h3 id="spring为什么要结合使用handlermapping以及handleradapter来处理handler">Spring为什么要结合使用HandlerMapping以及HandlerAdapter来处理Handler</h3>
+<p>Spring 的特点就是父类提供步骤，子类提供实现。符合面向对象中的单一职责原则，代码架构清晰，便于维护，最重要的是代码可复用性高。如 HandlerAdapter 可能会被用于处理多种 Handler。</p>
+<h3 id="controller-和-requestmapping-如何对应">Controller 和 RequestMapping 如何对应</h3>
+<p>Spring MVC 怎么找到 Controller的</p>
 <p>Spring MVC 初始化的时候，会对所有的 Bean 扫描，添加了 @Controler 注解以及@RequestMapping 注解的 Bean 添加到 Map 里面，他是一个 LinkedHashMap。key 是 url ，value 是 RequestMappingInfo</p>
-<h3 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h3><p><img src="https://pic.tyzhang.top/images/2020/07/16/005L0VzSly1fz0ddni132j30fv0cz74f.jpg" style="zoom:50%;"></p>
+<h3 id="分层">分层</h3>
+<img src="https://pic.tyzhang.top/images/2020/07/16/005L0VzSly1fz0ddni132j30fv0cz74f.jpg" style="zoom:50%;">
 <p>Dao 层主要做数据持久层的工作，负责与数据库进行联络的一些任务皆封装于此。首先设计 Dao 层的接口，然后在 Spring 的配置文件中定义此接口的实现类，随后在模块中调用此接口来进行数据业务的处理，而不用关心此接口的具体实现类是哪个类，这样结构变得非常清晰。</p>
 <p>Service 层主要负责业务模块的应用逻辑应用设计。首先设计接口，再设计其实现类，接着在 Spring 的配置文件中配置关联关系。定义 Service 层的业务时，具体要调用已经定义的 dao 层接口，封装 Service 层业务逻辑有利于通用的业务逻辑的独立性和重复利用性。服务具有如下特征：抽象、独立、稳定。</p>
 <p>Model 承载的作用就是数据的抽象，描述了一个数据的定义，Model 的实例就是一组组数据。整个系统都可以看成是数据的流动，既然要流动，就一定是有流动的载体。可以理解为将数据库的表结构以 Java 类的形式表现。</p>
 <p>Controller 层负责具体的业务模块流程的控制，此层要调用 Service 层的接口来控制业务流程流转，同样在 Spring 的配置文件里进行配置。对于具体的业务流程，有不同的控制器。设计过程可以将流程进行抽象归纳，设计出可以重复利用的子单元流程模块。这样不仅使程序结构变得清晰，也大大减少了代码量。</p>
 <p>View 层是前台页面的展示。</p>
-<h3 id="spring中分层领域模型规约"><a href="#Spring中分层领域模型规约" class="headerlink" title="Spring中分层领域模型规约"></a>Spring中分层领域模型规约</h3><ul>
+<h3 id="spring中分层领域模型规约">Spring中分层领域模型规约</h3>
+<ul>
 <li>DO（Data Object）：与数据库表结构一一对应，通过 DAO 层向上传输数据源对象。从现实世界中抽象出来的有形或无形的业务实体。</li>
 <li>PO（Persistent Object）：持久化对象，它跟持久层（通常是关系型数据库）的数据结构形成一一对应的映射关系，如果持久层是关系型数据库，那么，数据表中的每个字段（或若干个）就对应 PO 的一个（或若干个）属性。PO 仅仅用于表示数据，没有任何数据操作。通常遵守 Java Bean 的规范，拥有 getter/setter 方法。</li>
 <li>DTO（Data Transfer Object）：数据传输对象，Service 或 Manager 向外传输的对象。泛指用于展示层与服务层之间的数据传输对象。目的是为了 EJB 的分布式应用提供粗粒度的数据实体，以减少分布式调用的次数，从而提高分布式调用的性能和降低网络负载。</li>
@@ -581,8 +642,10 @@
 <li>POJO（Plain Ordinary Java Object）：POJO 专指只有 setter/getter/toString 的简单类，包括 DO/DTO/BO/VO 等。</li>
 <li>Query：数据查询对象，各层接收上层的查询请求。 注意超过2个参数的查询封装，禁止使用 Map 类来传输。</li>
 </ul>
-<h3 id="handlermapping"><a href="#HandlerMapping" class="headerlink" title="HandlerMapping"></a>HandlerMapping</h3><p>HandlerMapping 的作用是根据当前请求的找到对应的 Handler，并将 Handler（执行程序）与一堆 HandlerInterceptor（拦截器）封装到 HandlerExecutionChain 对象中。HandlerMapping 是由 DispatcherServlet 调用，DispatcherServlet 会从容器中取出所有 HandlerMapping 实例并遍历，让 HandlerMapping 实例根据自己实现类的方式去尝试查找 Handler。</p>
-<h3 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h3><p>HandlerInterceptor 是 SpringWebMVC 的拦截器，类似于 Servlet 开发中的过滤器 Filter，用于对请求进行拦截和处理。可以应用如下场景：</p>
+<h3 id="handlermapping">HandlerMapping</h3>
+<p>HandlerMapping 的作用是根据当前请求的找到对应的 Handler，并将 Handler（执行程序）与一堆 HandlerInterceptor（拦截器）封装到 HandlerExecutionChain 对象中。HandlerMapping 是由 DispatcherServlet 调用，DispatcherServlet 会从容器中取出所有 HandlerMapping 实例并遍历，让 HandlerMapping 实例根据自己实现类的方式去尝试查找 Handler。</p>
+<h3 id="拦截器">拦截器</h3>
+<p>HandlerInterceptor 是 SpringWebMVC 的拦截器，类似于 Servlet 开发中的过滤器 Filter，用于对请求进行拦截和处理。可以应用如下场景：</p>
 <ul>
 <li>权限检查，如检测请求是否具有登录权限，如果没有直接返回到登陆页面</li>
 <li>性能监控，用请求处理前和请求处理后的时间差计算整个请求响应完成所消耗的时间</li>
@@ -595,101 +658,131 @@
 <li>postHandler 按拦截器定义逆序调用</li>
 <li>afterCompletion 按拦截器定义逆序调用</li>
 </ul>
-<h2 id="servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h2><p>Servlet，是用 Java 编写的服务器端程序,其主要功能在于交互式地浏览和修改数据，生成动态 Web 内容。狭义的 Servlet 是指 Java 语言实现的一个接口，广义的 Servlet 是指任何实现了这个 Servlet 接口的类。从实现上讲，Servlet 可以响应任何类型的请求，但绝大多数情况下 Servlet 只用来扩展基于 HTTP 协议的 Web 服务器。</p>
-<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><p>当客户端发送 HTTP 请求后，由 Tomcat 内核截获。Tomcat 内核分析 HTTP 请求的内容，解析请求的资源并将请求信息封装成一个  request 对象，此外创建一个 response 对象。创建一个 Servlet 对象并调用 service 方法，例如：</p>
+<h2 id="servlet">Servlet</h2>
+<p>Servlet，是用 Java 编写的服务器端程序,其主要功能在于交互式地浏览和修改数据，生成动态 Web 内容。狭义的 Servlet 是指 Java 语言实现的一个接口，广义的 Servlet 是指任何实现了这个 Servlet 接口的类。从实现上讲，Servlet 可以响应任何类型的请求，但绝大多数情况下 Servlet 只用来扩展基于 HTTP 协议的 Web 服务器。</p>
+<h3 id="工作流程">工作流程</h3>
+<p>当客户端发送 HTTP 请求后，由 Tomcat 内核截获。Tomcat 内核分析 HTTP 请求的内容，解析请求的资源并将请求信息封装成一个  request 对象，此外创建一个 response 对象。创建一个 Servlet 对象并调用 service 方法，例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(request, response)</span> </span>&#123;</span><br><span class="line">    response.getwriter().write(<span class="string">"hello"</span>);    <span class="comment">// write方法将内容写到response缓冲区</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当 service 方法调用完成后，Tomcat 内核从 response 对象中获取写入的内容，并组装成一个 HTTP 响应返回给客户端。</p>
-<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Servlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(ServletConfig var1)</span> <span class="keyword">throws</span> ServletException</span>;</span><br><span class="line">    <span class="function">ServletConfig <span class="title">getServletConfig</span><span class="params">()</span></span>;   <span class="comment">// 这个方法会返回由Servlet容器传给init()方法的ServletConfig对象</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest var1, ServletResponse var2)</span> <span class="keyword">throws</span> ServletException, IOException</span>;</span><br><span class="line">    <span class="function">String <span class="title">getServletInfo</span><span class="params">()</span></span>;    <span class="comment">// 这个方法会返回Servlet的一段描述，可以返回一段字符串</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span></span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="工作原理">工作原理</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Servlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(ServletConfig var1)</span> <span class="keyword">throws</span> ServletException</span>;</span><br><span class="line">    <span class="function">ServletConfig <span class="title">getServletConfig</span><span class="params">()</span></span>;   <span class="comment">// 这个方法会返回由Servlet容器传给init()方法的ServletConfig对象</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest var1, ServletResponse var2)</span> <span class="keyword">throws</span> ServletException, IOException</span>;</span><br><span class="line">    <span class="function">String <span class="title">getServletInfo</span><span class="params">()</span></span>;    <span class="comment">// 这个方法会返回Servlet的一段描述，可以返回一段字符串</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span></span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Servlet 接口定义了 Servlet 与 Servlet 容器之间的契约。</p>
 <p>这个契约是：Servlet 容器将 Servlet 类载入内存，并产生 Servlet 实例，但是要注意的是，在一个应用程序中，Servlet 采用单例模式。用户请求致使 Servlet 容器调用 Servlet 的 Service() 方法，并传入一个 ServletRequest 对象和一个 ServletResponse 对象。ServletRequest 对象和 ServletResponse 对象都是由 Servlet 容器(例如 TomCat )封装好的，并不需要程序员去实现，程序员可以直接使用这两个对象。ServletRequest 中封装了当前的 Http 请求，因此，开发人员不必解析和操作原始的 Http 数据。ServletResponse 表示当前用户的Http响应，程序员只需直接操作 ServletResponse 对象就能把响应轻松的发回给用户。对于每一个应用程序，Servlet 容器还会创建一个 ServletContext 对象。这个对象中封装了上下文（应用程序）的环境详情。每个应用程序只有一个 ServletContext。每个 Servlet 对象也都有一个封装 Servlet 配置的 ServletConfig 对象。</p>
-<h3 id="servlet-与-tomcat-的关系"><a href="#Servlet-与-Tomcat-的关系" class="headerlink" title="Servlet 与 Tomcat 的关系"></a>Servlet 与 Tomcat 的关系</h3><p>Tomcat 是 Web 应用服务器，是一个 Servlet/JSP 容器。Tomcat 作为 Servlet 容器，负责处理客户请求，把请求传送给 Servlet，并将 Servlet 的响应传送回给客户。而 Servlet 是一种运行在支持 Java 语言的服务器上的组件，用于交互式地浏览和修改数据，生成动态 Web 内容。</p>
-<h3 id="servlet的生命周期"><a href="#Servlet的生命周期" class="headerlink" title="Servlet的生命周期"></a>Servlet的生命周期</h3><p>在 Servlet 接口的定义中，init()，service()，destroy() 是定义 Servlet 生命周期的方法。代表了 Servlet 从“出生”到“工作”再到“死亡”的过程。Servlet 容器（例如 TomCat）会根据下面的规则来调用这三个方法：</p>
+<h3 id="servlet-与-tomcat-的关系">Servlet 与 Tomcat 的关系</h3>
+<p>Tomcat 是 Web 应用服务器，是一个 Servlet/JSP 容器。Tomcat 作为 Servlet 容器，负责处理客户请求，把请求传送给 Servlet，并将 Servlet 的响应传送回给客户。而 Servlet 是一种运行在支持 Java 语言的服务器上的组件，用于交互式地浏览和修改数据，生成动态 Web 内容。</p>
+<h3 id="servlet的生命周期">Servlet的生命周期</h3>
+<p>在 Servlet 接口的定义中，init()，service()，destroy() 是定义 Servlet 生命周期的方法。代表了 Servlet 从“出生”到“工作”再到“死亡”的过程。Servlet 容器（例如 TomCat）会根据下面的规则来调用这三个方法：</p>
 <ul>
 <li>当 Servlet 第一次被请求时，Servlet 容器就会开始调用 init 方法来初始化一个 Servlet 对象出来，但是这个方法在后续请求中不会在被 Servlet 容器调用。调用这个方法时，Servlet 容器会传入一个 ServletConfig 对象进来从而对 Servlet 对象进行初始化</li>
 <li>每当请求 Servlet 时，Servlet 容器就会调用 service 方法，执行主要的业务逻辑</li>
 <li>当要销毁 Servlet 时，Servlet 容器就会调用 destory 方法，执行一些后处理逻辑</li>
 </ul>
-<h3 id="请求转发和重定向的区别"><a href="#请求转发和重定向的区别" class="headerlink" title="请求转发和重定向的区别"></a>请求转发和重定向的区别</h3><ul>
+<h3 id="请求转发和重定向的区别">请求转发和重定向的区别</h3>
+<ul>
 <li>从数据共享来看，请求转发中目标页面和转发到的页面共享 request 里的数据；redirect 不共享任何数据</li>
 <li>从运用场景来看，请求转发一般用户用户登录，根据角色转发到响应的模块；redirect 一般用于用户注销登陆时返回主页面和跳转到其它的网站等</li>
 <li>从效率上来看，forward 高；redirect 效率低</li>
 <li>请求转发是服务器调用不同的资源处理同一请求，始终是同一请求；重定向使得浏览器再次向服务器发送请求，前后是两个不同的请求</li>
 </ul>
-<h3 id="servlet-中的异步机制"><a href="#Servlet-中的异步机制" class="headerlink" title="Servlet 中的异步机制"></a>Servlet 中的异步机制</h3><p>Servlet 是单例多线程的机制，因此允许并发访问的线程数目有限。因此 Servlet 建立了一个线程池，请求必须从线程池中获取了线程才能访问 Servlet。若一个请求长时间占有线程，可能导致后面的请求长时间等待，降低了程序的吞吐能力。如果一个线程从 Servlet 线程池中获取了线程以后，另外开启一个线程处理耗时的任务，及时将主线程归还线程池，就解决这个问题。当异步线程执行完毕后，响应结果。异步机制的作用并非提高请求响应速度，而是增加吞吐量，降低每次访问占用 Servlet 线程的时间。</p>
-<h3 id="servlet中的线程安全问题"><a href="#Servlet中的线程安全问题" class="headerlink" title="Servlet中的线程安全问题"></a>Servlet中的线程安全问题</h3><p>Servlet 在默认情况下采用单例多线程模式，但是并发环境下多线程访问 Servlet 的 service 方法会带来线程安全问题。解决方案如下：</p>
+<h3 id="servlet-中的异步机制">Servlet 中的异步机制</h3>
+<p>Servlet 是单例多线程的机制，因此允许并发访问的线程数目有限。因此 Servlet 建立了一个线程池，请求必须从线程池中获取了线程才能访问 Servlet。若一个请求长时间占有线程，可能导致后面的请求长时间等待，降低了程序的吞吐能力。如果一个线程从 Servlet 线程池中获取了线程以后，另外开启一个线程处理耗时的任务，及时将主线程归还线程池，就解决这个问题。当异步线程执行完毕后，响应结果。异步机制的作用并非提高请求响应速度，而是增加吞吐量，降低每次访问占用 Servlet 线程的时间。</p>
+<h3 id="servlet中的线程安全问题">Servlet中的线程安全问题</h3>
+<p>Servlet 在默认情况下采用单例多线程模式，但是并发环境下多线程访问 Servlet 的 service 方法会带来线程安全问题。解决方案如下：</p>
 <ul>
 <li>doGet 方法加 synchronized 同步</li>
 <li>静态资源 final 化</li>
 <li>全局变量改为局部变量</li>
 </ul>
-<h4 id="servlet-中为什么重写-doget-以及-dopost-而不是-service-方法"><a href="#Servlet-中为什么重写-doGet-以及-doPost-而不是-service-方法" class="headerlink" title="Servlet 中为什么重写 doGet 以及 doPost 而不是 service 方法"></a>Servlet 中为什么重写 doGet 以及 doPost 而不是 service 方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    <span class="comment">//判断请求方式</span></span><br><span class="line">    <span class="keyword">if</span>(method.equals(<span class="string">"GET"</span>)) &#123;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"HEAD"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doHead(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"POST"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doPost(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"PUT"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doPut(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"DELETE"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doDelete(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"OPTIONS"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doOptions(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"TRACE"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doTrace(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse res)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    HttpServletRequest request;</span><br><span class="line">    HttpServletResponse response;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        request = (HttpServletRequest)req;</span><br><span class="line">        response = (HttpServletResponse)res;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ClassCastException var6) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ServletException(<span class="string">"non-HTTP request or response"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.service(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="servlet-中为什么重写-doget-以及-dopost-而不是-service-方法">Servlet 中为什么重写 doGet 以及 doPost 而不是 service 方法</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    <span class="comment">//判断请求方式</span></span><br><span class="line">    <span class="keyword">if</span>(method.equals(<span class="string">"GET"</span>)) &#123;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"HEAD"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doHead(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"POST"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doPost(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"PUT"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doPut(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"DELETE"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doDelete(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"OPTIONS"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doOptions(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(method.equals(<span class="string">"TRACE"</span>)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.doTrace(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse res)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    HttpServletRequest request;</span><br><span class="line">    HttpServletResponse response;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        request = (HttpServletRequest)req;</span><br><span class="line">        response = (HttpServletResponse)res;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ClassCastException var6) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ServletException(<span class="string">"non-HTTP request or response"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.service(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>由源码可知，service 方法首先创建 request 与 response 对象，然后进一步调用了其他 service 方法，这个方法仅仅是起到调用转发作用，真正的逻辑实现在 doGet、doPost、doPut 方法中。所以为了实现业务逻辑，应该重写对应的 doGet、doPost 方法。如果重写了 service 方法，那么父类 HttpServlet 中的 service 方法就会失效，所收到的任何请求都会由我们自己覆写的 service 方法来处理。如果同时重写了 service 和 doGet，doPost 方法则一定要在执行完自己代码后调用父类 service 方法，super.service;否则 doGet 与 doPost 不会被调用。</p>
-<h3 id="request-对象中-getattribute-方法与-getparameter-方法的区别"><a href="#Request-对象中-getAttribute-方法与-getParameter-方法的区别" class="headerlink" title="Request 对象中 getAttribute 方法与 getParameter 方法的区别"></a>Request 对象中 getAttribute 方法与 getParameter 方法的区别</h3><ul>
+<h3 id="request-对象中-getattribute-方法与-getparameter-方法的区别">Request 对象中 getAttribute 方法与 getParameter 方法的区别</h3>
+<ul>
 <li>有 setAttribute，没有 setParameter 方法。</li>
 <li>getParameter 获取到的值只能是字符串，不可以是对象，而 getAttribute 获取到的值是 Object 类型的。</li>
 <li>通过 form 表单或者 url 来向另一个页面或者 servlet 传递参数的时候需要用 getParameter 获取值；getAttribute 只能获取 setAttribute 的值。</li>
 </ul>
-<h3 id="jsp-的九大内置对象"><a href="#JSP-的九大内置对象" class="headerlink" title="JSP 的九大内置对象"></a>JSP 的九大内置对象</h3><p>request、response、session、application、out、pagecontext、config、page、exception</p>
+<h3 id="jsp-的九大内置对象">JSP 的九大内置对象</h3>
+<p>request、response、session、application、out、pagecontext、config、page、exception</p>
 <ul>
-<li><p>request</p>
+<li>
+<p>request</p>
 <p>request 对象是 javax.servlet.http.HttpServletRequest 类型的对象，代表客户端的请求信息，主要用于获取客户端的参数和流。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getMethod</span><span class="params">()</span> <span class="comment">//获得提交方式</span></span></span><br><span class="line"><span class="function">String <span class="title">getRequestURI</span><span class="params">()</span> <span class="comment">//获得请求的URL地址</span></span></span><br><span class="line"><span class="function">String <span class="title">getProtocol</span><span class="params">()</span> <span class="comment">// 得到协议名称</span></span></span><br><span class="line"><span class="function">String <span class="title">getServletPath</span><span class="params">()</span> <span class="comment">//获得客户端请求服务器文件的路径</span></span></span><br><span class="line"><span class="function">String <span class="title">getQueryString</span><span class="params">()</span> <span class="comment">//获得URL的查询部分，post方法获得不到信息</span></span></span><br><span class="line"><span class="function">String <span class="title">getServerName</span><span class="params">()</span> <span class="comment">//得到服务器的名称</span></span></span><br><span class="line"><span class="function">String <span class="title">getServerPort</span><span class="params">()</span> <span class="comment">//获得服务器口号</span></span></span><br><span class="line"><span class="function">String <span class="title">getRemoteAddr</span><span class="params">()</span> <span class="comment">//得到客户端的IP地址String fetParameter(String name) //获得客户端传给服务器的name参数的值</span></span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>response</p>
+<li>
+<p>response</p>
 <p>response 对象和 request 是一对相应的内置对象，代表对客户端的响应。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.sendRedirect(目标页面路径); <span class="comment">//重定向</span></span><br><span class="line">response.setHeader(String,String); <span class="comment">//设置 HTTP 头</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>session</p>
+<li>
+<p>session</p>
 <p>session 对象是由服务器自动创建的与请求相关的对象，服务器为每个用户都生成一个 session 对象，用于保存该用户的信息，跟踪用户的操作状态。session 内部使用 Map 来保存数据，即 key-value 对。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">session.setAttribute(String,Object); <span class="comment">//给Object命名String，加入session</span></span><br><span class="line">session.getAttribute(String); <span class="comment">//取名为String的session的值</span></span><br><span class="line">session.removeAttribute(String); <span class="comment">//将名为String的内容从session中移除</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>application</p>
+<li>
+<p>application</p>
 <p>application 对象是 javax.servlet.ServletContext 类型的对象，可将信息保存在服务器中，直到服务器关闭，否则 application 对象中保存的信息会整个应用中都有。</p>
 </li>
-<li><p>out</p>
+<li>
+<p>out</p>
 <p>out 对象用于 Web 浏览器内输出信息，负责管理对客户端的输出。并且管理应用服务器上的输出缓冲区。在使用 out 对象输出数据时，可以对数据缓冲区进行操作，及时清理缓冲区中的残留数据。</p>
 </li>
-<li><p>pagecontext</p>
+<li>
+<p>pagecontext</p>
 <p>pageContext 对象的作用是取得任何范围的参数，通过它可以获取  JSP 页面的 out、request、reponse、session、application 等对象。pageContext 对象的创建和初始化都是由容器来完成的，在 JSP 页面中可以直接使用 pageContext 对象。</p>
 </li>
-<li><p>config</p>
+<li>
+<p>config</p>
 <p>config 对象是 javax.servlet.ServletConfig 类的实例对象。主要作用是取得服务器的配置信息。通过 pageConext 对象的 getServletConfig() 方法可以获取一个 config 对象。当一个 Servlet 初始化时，容器把某些信息通过 config 对象传递给这个 Servlet。 开发者可以在 web.xml  文件中为应用程序环境中的 Servlet 程序和 JSP 页面提供初始化参数。</p>
 </li>
-<li><p>page</p>
+<li>
+<p>page</p>
 <p>page 对象代表 JSP 本身，只有在 JSP 页面内才是合法的。 它是 java.lang.Object 类的实例化对象。page 隐含对象本质上包含当前  Servlet 接口引用的变量，类似于 Java 编程中的 this 指针。</p>
 </li>
-<li><p>exception</p>
+<li>
+<p>exception</p>
 <p>exception 对象的作用是显示异常信息，只有在包含 isErrorPage=”true” 的页面中才可以被使用，在一般的 JSP 页面中使用该对象将无法编译 JSP 文件。excepation 对象和 Java 的所有对象一样，都具有系统提供的继承结构。</p>
 </li>
 </ul>
-<h3 id="四种会话跟踪技术及其作用域"><a href="#四种会话跟踪技术及其作用域" class="headerlink" title="四种会话跟踪技术及其作用域"></a>四种会话跟踪技术及其作用域</h3><ul>
+<h3 id="四种会话跟踪技术及其作用域">四种会话跟踪技术及其作用域</h3>
+<ul>
 <li>page：一个页面</li>
 <li>request：一次请求</li>
 <li>session：一次会话</li>
 <li>application：服务器从启动到停止</li>
 </ul>
-<h2 id="cookie-和-session"><a href="#Cookie-和-Session" class="headerlink" title="Cookie 和 Session"></a>Cookie 和 Session</h2><h3 id="cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>由于 HTTP 协议是无状态协议，所以服务器单从网络连接上无法判断客户端的身份。为了解决这一问题而使用了 Cookie 技术。Cookie 实际上是一小段的文本信息。客户端请求服务器，如果服务器需要记录该用户状态，就使用 response 向客户端浏览器颁发一个 Cookie。客户端浏览器会把 Cookie 保存起来。当浏览器再请求该网站时，浏览器把请求的网址连同该 Cookie 一同提交给服务器。服务器检查该 Cookie，以此来辨认用户状态。</p>
-<h4 id="运行机制"><a href="#运行机制" class="headerlink" title="运行机制"></a>运行机制</h4><p>Cookie 技术是客户端的解决方案，Cookie 就是由服务器发给客户端的特殊信息，而这些信息以文本文件的方式存放在客户端，然后客户端每次向服务器发送请求的时候都会带上这些特殊的信息。具体过程如下：</p>
+<h2 id="cookie-和-session">Cookie 和 Session</h2>
+<h3 id="cookie">Cookie</h3>
+<p>由于 HTTP 协议是无状态协议，所以服务器单从网络连接上无法判断客户端的身份。为了解决这一问题而使用了 Cookie 技术。Cookie 实际上是一小段的文本信息。客户端请求服务器，如果服务器需要记录该用户状态，就使用 response 向客户端浏览器颁发一个 Cookie。客户端浏览器会把 Cookie 保存起来。当浏览器再请求该网站时，浏览器把请求的网址连同该 Cookie 一同提交给服务器。服务器检查该 Cookie，以此来辨认用户状态。</p>
+<h4 id="运行机制">运行机制</h4>
+<p>Cookie 技术是客户端的解决方案，Cookie 就是由服务器发给客户端的特殊信息，而这些信息以文本文件的方式存放在客户端，然后客户端每次向服务器发送请求的时候都会带上这些特殊的信息。具体过程如下：</p>
 <ul>
 <li>客户端发送一个 http 请求到服务器端</li>
 <li>服务器端发送一个 http 响应到客户端，其中包含 Set-Cookie 头部(Cookie 信息保存在响应头中)</li>
 <li>客户端发送一个 http 请求到服务器端，其中包含 Cookie 头部</li>
 <li>服务器端发送一个 http 响应到客户端</li>
 </ul>
-<h4 id="不可跨域名性"><a href="#不可跨域名性" class="headerlink" title="不可跨域名性"></a>不可跨域名性</h4><p>Cookie 在客户端是由浏览器来管理的。浏览器能够保证 Google 只会操作 Google 的 Cookie 而不会操作 Baidu 的 Cookie，从而保证用户的隐私安全。浏览器判断一个网站是否能操作另一个网站 Cookie 的依据是域名。Google 与 Baidu 的域名不一样，因此 Google 不能操作 Baidu 的 Cookie。</p>
-<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><ul>
+<h4 id="不可跨域名性">不可跨域名性</h4>
+<p>Cookie 在客户端是由浏览器来管理的。浏览器能够保证 Google 只会操作 Google 的 Cookie 而不会操作 Baidu 的 Cookie，从而保证用户的隐私安全。浏览器判断一个网站是否能操作另一个网站 Cookie 的依据是域名。Google 与 Baidu 的域名不一样，因此 Google 不能操作 Baidu 的 Cookie。</p>
+<h4 id="应用场景">应用场景</h4>
+<ul>
 <li>记录上次访问时间</li>
 <li>浏览记录</li>
 </ul>
-<h3 id="session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>Session 是一种记录客户状态的机制，不同于 Cookie 的是 Cookie 保存在客户端浏览器中，而 Session 保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。</p>
-<h4 id="运行机制"><a href="#运行机制-1" class="headerlink" title="运行机制"></a>运行机制</h4><p>Session 在服务器端程序运行的过程中创建，当一个用户第一次访问某个网站时会自动创建 HttpSession，每个用户可以访问他自己的 HttpSession。创建 Session 的同时，服务器会为该 Session 生成唯一的 session-id，这个 session-id 在随后的请求中会被用来重新获得已经创建的 Session。Session 被创建之后，就可以调用 Session 相关的方法往 Session 中增加内容了，而这些内容只会保存在服务器中，发到客户端的只有 session-id。当客户端再次发送请求的时候，会将这个 session-id 带上，服务器接受到请求之后就会依据 session-id 找到相应的 Session，从而再次使用 Session。</p>
-<h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p>Session 在用户第一次访问服务器的时候自动创建。需要注意只有访问 JSP、Servlet 等程序时才会创建 Session，只访问 HTML、IMAGE 等静态资源并不会创建 Session。如果尚未生成 Session，也可以使用 request.getSession(true) 强制生成 Session。Session 生成后，只要用户继续访问，服务器就会更新 Session 的最后访问时间，并维护该 Session。用户每访问服务器一次，无论是否读写 Session，服务器都认为该用户的 Session ”活跃(active)”了一次。而当 Session 越来越多时，为了防止内存溢出，会使用超时机制将长期不活跃的 Session 删除，使其失效。</p>
-<h4 id="如何传递id值"><a href="#如何传递ID值" class="headerlink" title="如何传递ID值"></a>如何传递ID值</h4><ul>
+<h3 id="session">Session</h3>
+<p>Session 是一种记录客户状态的机制，不同于 Cookie 的是 Cookie 保存在客户端浏览器中，而 Session 保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。</p>
+<h4 id="运行机制">运行机制</h4>
+<p>Session 在服务器端程序运行的过程中创建，当一个用户第一次访问某个网站时会自动创建 HttpSession，每个用户可以访问他自己的 HttpSession。创建 Session 的同时，服务器会为该 Session 生成唯一的 session-id，这个 session-id 在随后的请求中会被用来重新获得已经创建的 Session。Session 被创建之后，就可以调用 Session 相关的方法往 Session 中增加内容了，而这些内容只会保存在服务器中，发到客户端的只有 session-id。当客户端再次发送请求的时候，会将这个 session-id 带上，服务器接受到请求之后就会依据 session-id 找到相应的 Session，从而再次使用 Session。</p>
+<h4 id="生命周期">生命周期</h4>
+<p>Session 在用户第一次访问服务器的时候自动创建。需要注意只有访问 JSP、Servlet 等程序时才会创建 Session，只访问 HTML、IMAGE 等静态资源并不会创建 Session。如果尚未生成 Session，也可以使用 request.getSession(true) 强制生成 Session。Session 生成后，只要用户继续访问，服务器就会更新 Session 的最后访问时间，并维护该 Session。用户每访问服务器一次，无论是否读写 Session，服务器都认为该用户的 Session ”活跃(active)”了一次。而当 Session 越来越多时，为了防止内存溢出，会使用超时机制将长期不活跃的 Session 删除，使其失效。</p>
+<h4 id="如何传递id值">如何传递ID值</h4>
+<ul>
 <li>保存 session id 的方式可以采用 cookie，这样在交互过程中浏览器可以自动的按照规则把这个标识发送给服务器</li>
 <li>由于 cookie 可以被人为的禁止，必须有其它的机制以便在 cookie 被禁止时仍然能够把 session id 传递回服务器，经常采用的一种技术叫做URL重写</li>
 <li>另一种技术叫做表单隐藏字段。就是服务器会自动修改表单，添加一个隐藏字段，以便在表单提交时能够把 session id 传递回服务器</li>
 </ul>
-<h3 id="cookie-和-session"><a href="#Cookie-和-Session-1" class="headerlink" title="Cookie 和 Session"></a>Cookie 和 Session</h3><div class="table-container">
+<h3 id="cookie-和-session">Cookie 和 Session</h3>
 <table>
 <thead>
 <tr>
@@ -736,13 +829,15 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h2 id="mybatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h2><h3 id="和-的区别"><a href="#和-的区别" class="headerlink" title="#{} 和 ${} 的区别"></a>#{} 和 ${} 的区别</h3><ul>
+<h2 id="mybatis">MyBatis</h2>
+<h3 id="和-的区别">#{} 和 ${} 的区别</h3>
+<ul>
 <li>都是用来传递参数的</li>
 <li>#{} 会为参数加上引号</li>
 <li>${} 就是个占位符，不会对参数做任何处理，参数直接参与编译，引发 SQL 注入问题</li>
 </ul>
-<h3 id="如何生成实现类"><a href="#如何生成实现类" class="headerlink" title="如何生成实现类"></a>如何生成实现类</h3><p>通过动态代理</p>
+<h3 id="如何生成实现类">如何生成实现类</h3>
+<p>通过动态代理</p>
 <ul>
 <li>当调用 Dao接口的某方法() 时，会进入到 MapperProxy 中，执行 invoke() 方法（因为这个Dao 被注入的时候就是一个 MapperProxy 了）</li>
 <li>然后在 invoke() 里面获取一个 MapperMethod，执行他的 execute 方法</li>
@@ -750,22 +845,29 @@
 <li>在 JDBC 层面操作数据库，拿到返回值</li>
 </ul>
 <p>虽然没有给 Mapper 写实现类，但是在获取 Mapper 的时候会触发 MapperProxyFactory 的 newInstance 方法，它通过 JDK 动态代理，传入这个 MapperProxy 作为要回调的 handler</p>
-<h3 id="如果有两个-xml-文件和这个dao-建立关系岂不是冲突了"><a href="#如果有两个-XML-文件和这个Dao-建立关系，岂不是冲突了？" class="headerlink" title="如果有两个 XML 文件和这个Dao 建立关系，岂不是冲突了？"></a>如果有两个 XML 文件和这个Dao 建立关系，岂不是冲突了？</h3><p>不管有几个 XML 和 Dao 建立关系，只要保证 namespace + id 唯一即可。</p>
-<h3 id="dao-接口里面的方法可以重载吗"><a href="#Dao-接口里面的方法可以重载吗？" class="headerlink" title="Dao 接口里面的方法可以重载吗？"></a>Dao 接口里面的方法可以重载吗？</h3><p>不可以！因为 mapper 文件里面的每一个 sql 都是通过 namespace + 方法名 来唯一确定的，一旦重载就打破了此约定。</p>
-<h3 id="几种方式绑定接口"><a href="#几种方式绑定接口" class="headerlink" title="几种方式绑定接口"></a>几种方式绑定接口</h3><ul>
+<h3 id="如果有两个-xml-文件和这个dao-建立关系岂不是冲突了">如果有两个 XML 文件和这个Dao 建立关系，岂不是冲突了？</h3>
+<p>不管有几个 XML 和 Dao 建立关系，只要保证 namespace + id 唯一即可。</p>
+<h3 id="dao-接口里面的方法可以重载吗">Dao 接口里面的方法可以重载吗？</h3>
+<p>不可以！因为 mapper 文件里面的每一个 sql 都是通过 namespace + 方法名 来唯一确定的，一旦重载就打破了此约定。</p>
+<h3 id="几种方式绑定接口">几种方式绑定接口</h3>
+<ul>
 <li>注解：直接在接口上写 sql</li>
 </ul>
-<ol>
+<ol start="2">
 <li>mapper文件</li>
 </ol>
-<h3 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h3><p><img src="https://pic.tyzhang.top/images/2020/08/18/image.png" alt="二级缓存"></p>
+<h3 id="二级缓存">二级缓存</h3>
+<p><img src="https://pic.tyzhang.top/images/2020/08/18/image.png" alt="二级缓存"></p>
 <ul>
-<li>一级缓存属于单个 sqlSession 的，默认开启<ul>
+<li>一级缓存属于单个 sqlSession 的，默认开启
+<ul>
 <li>工作方式：第一次 select 查询缓存，为空，查数据库，写回缓存。第二次查询相同数据直接从缓存返回，若发生 commit 则一级缓存会被清空。</li>
 </ul>
 </li>
-<li>二级缓存属于多个 sqlSession 共享的，默认开启<ul>
-<li>工作方式：每一个 namespace 的 mapper 都有一个二缓存区域。不同的 namespace 的缓存互不影响<br>无缓存时：sqlSession 通过 Executor 访问 DB 有二级缓存时：sqlSession 通过 Executor 的 装饰者：CachingExecutor 先查一遍缓存，有就直接 返回，没有再查数据库。</li>
+<li>二级缓存属于多个 sqlSession 共享的，默认开启
+<ul>
+<li>工作方式：每一个 namespace 的 mapper 都有一个二缓存区域。不同的 namespace 的缓存互不影响<br>
+无缓存时：sqlSession 通过 Executor 访问 DB 有二级缓存时：sqlSession 通过 Executor 的 装饰者：CachingExecutor 先查一遍缓存，有就直接 返回，没有再查数据库。</li>
 </ul>
 </li>
 </ul>

@@ -285,17 +285,23 @@
 <p>博客存放的位置改了好几次，后来稳定下来放在了GitHub上，但是最近Github访问速度慢了不是一点，于是捡起了好久不用的服务器（心疼之前闲置时候的人民币T。T）。</p>
 <p>本篇主要备份步骤，以备不时之需。</p>
 <p>放到服务器上就有些问题，老是需要自己去pull，非常麻烦。为了博客，也是方便以后工程的部署和版本管理更加方便，使用WebHook的自动拉取，每次push完不需要登陆服务器pull了，很方便。</p>
-<h3 id="一-webhook"><a href="#一、WebHook" class="headerlink" title="一、WebHook"></a>一、WebHook</h3><p>Webhooks 是代码托管平台提供的一个功能，对于任意一个项目，可以设置一个 URL，同时选择一些事件，当触发了这些事件时，代码托管平台会自动请求该 URL，并带上一些必要的参数。简单点说，Webhooks 就是一个项目的钩子函数，当你执行一些事件时，会自动调用这个钩子函数，事件就是 push、pull request、fork 等等这些操作。 </p>
-<h3 id="二-安装github并克隆"><a href="#二、安装GitHub并克隆" class="headerlink" title="二、安装GitHub并克隆"></a>二、安装GitHub并克隆</h3><p>在服务器上安装GitHub并配置公钥，这里不再赘述。</p>
+<h3 id="一-webhook">一、WebHook</h3>
+<p>Webhooks 是代码托管平台提供的一个功能，对于任意一个项目，可以设置一个 URL，同时选择一些事件，当触发了这些事件时，代码托管平台会自动请求该 URL，并带上一些必要的参数。简单点说，Webhooks 就是一个项目的钩子函数，当你执行一些事件时，会自动调用这个钩子函数，事件就是 push、pull request、fork 等等这些操作。</p>
+<h3 id="二-安装github并克隆">二、安装GitHub并克隆</h3>
+<p>在服务器上安装GitHub并配置公钥，这里不再赘述。</p>
 <p>将项目克隆到本地。</p>
-<h3 id="三-钩子"><a href="#三、-钩子" class="headerlink" title="三、 钩子"></a>三、 钩子</h3><p>我的服务器采用了宝塔Linux面板管理，它集成了很多开发环境，这里使用宝塔配置WebHook。</p>
-<h4 id="1-安装webhook并添加记录"><a href="#1-安装WebHook并添加记录" class="headerlink" title="1. 安装WebHook并添加记录"></a>1. 安装WebHook并添加记录</h4><p>在宝塔面板中安装WebHook，并添加一条记录。</p>
+<h3 id="三-钩子">三、 钩子</h3>
+<p>我的服务器采用了宝塔Linux面板管理，它集成了很多开发环境，这里使用宝塔配置WebHook。</p>
+<h4 id="1-安装webhook并添加记录">1. 安装WebHook并添加记录</h4>
+<p>在宝塔面板中安装WebHook，并添加一条记录。</p>
 <p><img src="/img/article/getgit.jpg" alt="记录"></p>
 <p>下方脚本输入，注意修改路径：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo ""</span><br><span class="line"><span class="meta">#</span><span class="bash">输出当前时间</span></span><br><span class="line">date --date='0 days ago' "+%Y-%m-%d %H:%M:%S"</span><br><span class="line">echo "Start"</span><br><span class="line"><span class="meta">#</span><span class="bash">判断宝塔WebHook参数是否存在</span></span><br><span class="line">if [ ! -n "$1" ];</span><br><span class="line">then</span><br><span class="line">          echo "param参数错误"</span><br><span class="line">          echo "End"</span><br><span class="line">          exit</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash">git项目路径</span></span><br><span class="line">gitPath="/www/wwwroot/web/$1"</span><br><span class="line"><span class="meta">#</span><span class="bash">git 网址</span></span><br><span class="line">gitHttp="http://git.xxxxx.com/web/$1.git"</span><br><span class="line"></span><br><span class="line">echo "Web站点路径：$gitPath"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">判断项目路径是否存在</span></span><br><span class="line">if [ -d "$gitPath" ]; then</span><br><span class="line">        cd $gitPath</span><br><span class="line">        #判断是否存在git目录</span><br><span class="line">        if [ ! -d ".git" ]; then</span><br><span class="line">                echo "在该目录下克隆 git"</span><br><span class="line">                git clone $gitHttp gittemp</span><br><span class="line">                mv gittemp/.git .</span><br><span class="line">                rm -rf gittemp</span><br><span class="line">        fi</span><br><span class="line">        #拉取最新的项目文件</span><br><span class="line">        git reset --hard origin/master</span><br><span class="line">        git pull</span><br><span class="line">        #设置目录权限</span><br><span class="line">        chown -R www:www $gitPath</span><br><span class="line">        echo "End"</span><br><span class="line">        exit</span><br><span class="line">else</span><br><span class="line">        echo "该项目路径不存在"</span><br><span class="line">        echo "End"</span><br><span class="line">        exit</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<h4 id="2-查看记录获取回调网址"><a href="#2-查看记录获取回调网址" class="headerlink" title="2. 查看记录获取回调网址"></a>2. 查看记录获取回调网址</h4><p><img src="/img/article/huidiao.jpg" alt="回调"></p>
+<h4 id="2-查看记录获取回调网址">2. 查看记录获取回调网址</h4>
+<p><img src="/img/article/huidiao.jpg" alt="回调"></p>
 <p>按照指示拼装一波即可。</p>
-<h4 id="3-填写回调地址"><a href="#3-填写回调地址" class="headerlink" title="3. 填写回调地址"></a>3. 填写回调地址</h4><p>去GitHub项目的设置中，新建一个WebHook填写回调地址。</p>
+<h4 id="3-填写回调地址">3. 填写回调地址</h4>
+<p>去GitHub项目的设置中，新建一个WebHook填写回调地址。</p>
 <p>随便改动一丢丢，push一下看看效果。</p>
 
                 

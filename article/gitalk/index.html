@@ -282,27 +282,34 @@
                 <p>​    如何使用Gitalk作为Jekyll博客的评论系统。</p>
 <p>​    现在基本每个博客主题基本都集成了评论系统，我使用的H2O也不例外。但它使用的D无需账号门槛就可以留言，且在墙内加载较慢，于是便关掉了。师姐使用了Gitalk插件，发现还挺好用，它使用GitHub账号登录评论，这很Geek。</p>
 <p>​    踩了些坑，记录一下，以备将来使用。</p>
-<h3 id="零-原理"><a href="#零、原理" class="headerlink" title="零、原理"></a>零、原理</h3><p>  Gitalk本质上是使用Issue作为评论区的存储区域，也就是说每条评论都相当于是每个文件的Issue里存放的。因此每个评论区的地方都会新开一个Issue。</p>
+<h3 id="零-原理">零、原理</h3>
+<p>Gitalk本质上是使用Issue作为评论区的存储区域，也就是说每条评论都相当于是每个文件的Issue里存放的。因此每个评论区的地方都会新开一个Issue。</p>
 <p><img src="/img/article/gitalk0.png" alt="Gitalk"></p>
-<h3 id="一-准备"><a href="#一、准备" class="headerlink" title="一、准备"></a>一、准备</h3><ol>
+<h3 id="一-准备">一、准备</h3>
+<ol>
 <li>将相应的评论区代码Copy到你要放置评论区的位置。</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 引入Gitalk评论插件  --&gt;</span><br><span class="line">        &#123;% <span class="keyword">if</span> site.gitalk.enable %&#125;</span><br><span class="line">        &lt;!-- 引入Gitalk评论插件  --&gt;</span><br><span class="line">        &lt;link rel=<span class="string">"stylesheet"</span> href=<span class="string">"https://unpkg.com/gitalk/dist/gitalk.css"</span>&gt;</span><br><span class="line">        &lt;script src=<span class="string">"https://unpkg.com/gitalk@latest/dist/gitalk.min.js"</span>&gt;&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div id="gitalk-container"  style="margin:0 auto;width:56%"&gt;&lt;/</span>div&gt;</span><br><span class="line">        &lt;!-- 引入一个生产md5的js，用于对id值进行处理，防止其过长 --&gt;</span><br><span class="line">        &lt;!-- Thank DF:https:<span class="comment">//github.com/NSDingFan/NSDingFan.github.io/issues/3#issuecomment-407496538 --&gt;</span></span><br><span class="line">        &lt;script src=<span class="string">"&#123;&#123; site.baseurl &#125;&#125;/assets/js/md5.min.js"</span>&gt;&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">        &lt;script type="text/</span>javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">            var gitalk = new Gitalk(&#123;</span></span><br><span class="line"><span class="string">            clientID: '&#123;&#123;site.gitalk.clientID&#125;&#125;',</span></span><br><span class="line"><span class="string">            clientSecret: '&#123;&#123;site.gitalk.clientSecret&#125;&#125;',</span></span><br><span class="line"><span class="string">            repo: '&#123;&#123;site.gitalk.repo&#125;&#125;',</span></span><br><span class="line"><span class="string">            owner: '&#123;&#123;site.gitalk.owner&#125;&#125;',</span></span><br><span class="line"><span class="string">            admin: ['&#123;&#123;site.gitalk.admin&#125;&#125;'],</span></span><br><span class="line"><span class="string">            distractionFreeMode: &#123;&#123;site.gitalk.distractionFreeMode&#125;&#125;,</span></span><br><span class="line"><span class="string">            id: md5(location.pathname),</span></span><br><span class="line"><span class="string">            &#125;);</span></span><br><span class="line"><span class="string">            gitalk.render('gitalk-container');</span></span><br><span class="line"><span class="string">        &lt;/script&gt;</span></span><br><span class="line"><span class="string">		&#123;% endif %&#125;</span></span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="2">
 <li>将配置文件Copy到_config.xml文件中并修改为自己的信息。</li>
 </ol>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Gitalk  评论功能</span></span><br><span class="line"><span class="attr">gitalk:</span> </span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span>    <span class="comment">#是否开启Gitalk评论</span></span><br><span class="line">  <span class="attr">clientID:</span> <span class="string">****</span>    <span class="comment">#生成的clientID，下面会讲</span></span><br><span class="line">  <span class="attr">clientSecret:</span> <span class="string">***</span> <span class="comment">#生成的clientSecret</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">ztygalaxy.github.io</span>    <span class="comment">#仓库名称</span></span><br><span class="line">  <span class="attr">owner:</span> <span class="string">ztygalaxy</span>    <span class="comment">#github用户名</span></span><br><span class="line">  <span class="attr">admin:</span> <span class="string">ztygalaxy</span></span><br><span class="line">  <span class="attr">distractionFreeMode:</span> <span class="literal">true</span> <span class="comment">#是否启用类似FB的阴影遮罩</span></span><br></pre></td></tr></table></figure>
-<h3 id="二-申请id和密钥"><a href="#二、申请ID和密钥。" class="headerlink" title="二、申请ID和密钥。"></a>二、申请ID和密钥。</h3><ol>
-<li><p>登录GitHub，<a href="https://github.com/settings/profile" target="_blank" rel="noopener">Settings</a>-&gt;Developer settings-&gt;OAuth Apps。</p>
+<h3 id="二-申请id和密钥">二、申请ID和密钥。</h3>
+<ol>
+<li>
+<p>登录GitHub，<a href="https://github.com/settings/profile" target="_blank" rel="noopener">Settings</a>-&gt;Developer settings-&gt;OAuth Apps。</p>
 </li>
-<li><p>New OAuth App，按照下图提示填写。</p>
+<li>
+<p>New OAuth App，按照下图提示填写。</p>
 <p><img src="/img/article/gitalk1.png" alt="OAuth"></p>
 </li>
-<li><p>填写完成后就可以看到自己的ID和密钥了，填入_config.xml里。</p>
+<li>
+<p>填写完成后就可以看到自己的ID和密钥了，填入_config.xml里。</p>
 <p><img src="/img/article/gitalk2.png" alt="ID"></p>
 </li>
 </ol>
-<h3 id="后"><a href="#后" class="headerlink" title="后"></a>后</h3><p>如果你有Ruby的开发环境，最好调试完毕再Push，避免一步一个雷。</p>
+<h3 id="后">后</h3>
+<p>如果你有Ruby的开发环境，最好调试完毕再Push，避免一步一个雷。</p>
 <p>你也可以使用空白页创建一个留言板，比如当前页面右上角的BBS，生活无尽可能。</p>
 <p>这个插件还有些许小小的问题，比如每篇文章需要你亲自点开才能创建Issue，其他博主有提到怎么自动化，但我尝试未果。</p>
 

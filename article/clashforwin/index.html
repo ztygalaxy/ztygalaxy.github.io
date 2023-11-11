@@ -284,10 +284,13 @@
 </blockquote>
 <p>最近一直用的 Trojan-Qt5 作为机场客户端，换成最新版本后不知为何第一次打开退出后就不能再使用，只能重新解压导入，删除所有本地配置文件未果，作罢。换了 Clash For Windows。</p>
 <p>Clash 默认的规则有点蠢笨，这里参考 GitHub 设置分流规则，实现不同网站使用不同节点。</p>
-<h3 id="1-下载对应平台客户端"><a href="#1-下载对应平台客户端" class="headerlink" title="1. 下载对应平台客户端"></a>1. 下载对应平台客户端</h3><p>下载地址：<a href="https://github.com/tindy2013/subconverter/releases" target="_blank" rel="noopener">https://github.com/tindy2013/subconverter/releases</a></p>
+<h3 id="1-下载对应平台客户端">1. 下载对应平台客户端</h3>
+<p>下载地址：<a href="https://github.com/tindy2013/subconverter/releases" target="_blank" rel="noopener">https://github.com/tindy2013/subconverter/releases</a></p>
 <p>这里以 Windows 为例，下载完成后，解压并执行里面的可执行文件，完成后台服务的启动。</p>
-<h3 id="2-准备自己的订阅链接"><a href="#2-准备自己的订阅链接" class="headerlink" title="2. 准备自己的订阅链接"></a>2. 准备自己的订阅链接</h3><p>这一步依赖于机场提供的订阅链接。</p>
-<h3 id="3-链接转换"><a href="#3-链接转换" class="headerlink" title="3. 链接转换"></a>3. 链接转换</h3><p>简易版填写示例：</p>
+<h3 id="2-准备自己的订阅链接">2. 准备自己的订阅链接</h3>
+<p>这一步依赖于机场提供的订阅链接。</p>
+<h3 id="3-链接转换">3. 链接转换</h3>
+<p>简易版填写示例：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:25500/sub?target=目标订阅&amp;url=格式转换后订阅链接</span><br></pre></td></tr></table></figure>
 <p>例如，有这样一个订阅链接，想转换为 Clash 的订阅。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://dhsajkhjska.dsjskajdljda</span><br></pre></td></tr></table></figure>
@@ -296,10 +299,11 @@
 <p>将目标 clash 和上述地址拼接：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:25500/sub?target=clash&amp;url=https%3A%2F%2Fdhsajkhjska.dsjskajdljda</span><br></pre></td></tr></table></figure>
 <p>将该地址填入下图位置，并点击download，出现新东西后选中：</p>
-<p><img src="https://pic.tyzhang.top/images/2020/12/04/image-20201204145146108.png" alt="image-20201204145146108" style="zoom:50%;"></p>
+<img src="https://pic.tyzhang.top/images/2020/12/04/image-20201204145146108.png" alt="image-20201204145146108" style="zoom:50%;">
 <p>重启客户端，订阅分流如下：</p>
-<p><img src="https://pic.tyzhang.top/images/2020/12/04/image-20201204143658776699b3cda9552e858.png" style="zoom:50%;"> </p>
-<h3 id="4-参考"><a href="#4-参考" class="headerlink" title="4. 参考"></a>4. 参考</h3><p><a href="https://github.com/tindy2013/subconverter" target="_blank" rel="noopener">https://github.com/tindy2013/subconverter</a></p>
+<img src="https://pic.tyzhang.top/images/2020/12/04/image-20201204143658776699b3cda9552e858.png" style="zoom:50%;"> 
+<h3 id="4-参考">4. 参考</h3>
+<p><a href="https://github.com/tindy2013/subconverter" target="_blank" rel="noopener">https://github.com/tindy2013/subconverter</a></p>
 
                 
                 <hr>

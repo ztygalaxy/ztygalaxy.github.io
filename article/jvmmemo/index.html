@@ -282,41 +282,58 @@
                 <blockquote>
 <p>JVM第三篇，JVM的内存模型，完结撒花，<em>★,°</em>:.☆(￣▽￣)/$:<em>.°★</em> 。。</p>
 </blockquote>
-<h3 id="1-内存模型"><a href="#1-内存模型" class="headerlink" title="1. 内存模型"></a>1. 内存模型</h3><p>Java内存模型，Java Memory Module(JMM)的意思。它定义了一套多线程读写共享数据(成员变量、数组)时，对数据的可见性、有序性和原子性的规则和保障。</p>
-<h3 id="2-原子性"><a href="#2-原子性" class="headerlink" title="2. 原子性"></a>2. 原子性</h3><p>表示组成一个事务的多个数据库操作是一个不可分割的原子单元，只有所有的操作执行成功，整个事务才提交。事务中的任何一个数据库操作失败，已经执行的任何操作都必须被撤销，让数据库返回初始状态。例如银行转账操作。</p>
+<h3 id="1-内存模型">1. 内存模型</h3>
+<p>Java内存模型，Java Memory Module(JMM)的意思。它定义了一套多线程读写共享数据(成员变量、数组)时，对数据的可见性、有序性和原子性的规则和保障。</p>
+<h3 id="2-原子性">2. 原子性</h3>
+<p>表示组成一个事务的多个数据库操作是一个不可分割的原子单元，只有所有的操作执行成功，整个事务才提交。事务中的任何一个数据库操作失败，已经执行的任何操作都必须被撤销，让数据库返回初始状态。例如银行转账操作。</p>
 <p>问题提出，两个线程对初始值为 0 的静态变量一个做自增，一个做自减，各做 5000 次，结果是 0 吗？都有可能。</p>
-<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><p>synchronized，同步关键字</p>
+<h4 id="解决办法">解决办法</h4>
+<p>synchronized，同步关键字</p>
 <ul>
-<li><p>语法</p>
+<li>
+<p>语法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(对象)&#123;</span><br><span class="line">    要作为原子操作的代码，一个时刻只能有一个线程进入此代码块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>用synchronized解决并发问题</p>
+<li>
+<p>用synchronized解决并发问题</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">static</span> Object object = <span class="keyword">new</span> Object();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (object) &#123;	<span class="comment">// 锁住同一个对象</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (object) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">                    i--;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        t1.join();</span><br><span class="line">        t2.join();</span><br><span class="line">        System.out.println(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="3-可见性"><a href="#3-可见性" class="headerlink" title="3. 可见性"></a>3. 可见性</h3>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">boolean</span> run = <span class="keyword">true</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (run) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        t.start();</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        run = <span class="keyword">false</span>;	<span class="comment">// 线程t不会如预想的停下来</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><ul>
-<li><p>初始状态下，t线程刚开始从主内存读取了run的值到工作内存。</p>
+<h3 id="3-可见性">3. 可见性</h3>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">boolean</span> run = <span class="keyword">true</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (run) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        t.start();</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        run = <span class="keyword">false</span>;	<span class="comment">// 线程t不会如预想的停下来</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="分析">分析</h4>
+<ul>
+<li>
+<p>初始状态下，t线程刚开始从主内存读取了run的值到工作内存。</p>
 </li>
-<li><p>因为t线程要频繁从主内存中读取run的值，JIT编译器会将run的值缓存至自己的工作内存中的高速缓存内，减少对主存中run的访问，提高效率。</p>
+<li>
+<p>因为t线程要频繁从主内存中读取run的值，JIT编译器会将run的值缓存至自己的工作内存中的高速缓存内，减少对主存中run的访问，提高效率。</p>
 </li>
-<li><p>1秒后，main线程修改了run的值，并同步至主存，而t是从自己的工作内存中的高速缓存中读取这个变量的值，结果永远是旧值。</p>
+<li>
+<p>1秒后，main线程修改了run的值，并同步至主存，而t是从自己的工作内存中的高速缓存中读取这个变量的值，结果永远是旧值。</p>
 </li>
 </ul>
-<h4 id="解决办法"><a href="#解决办法-1" class="headerlink" title="解决办法"></a>解决办法</h4><p>volatile，易变关键字。它可以用来修饰成员变量和静态成员变量，他可以避免线程从自己的工作缓存中查找变量的值，必须要主存中获取它的值，线程操作volatile变量都是直接操作主存。体现可见性，不保证原子性，仅用在一个写线程、多个读线程的情况。</p>
+<h4 id="解决办法">解决办法</h4>
+<p>volatile，易变关键字。它可以用来修饰成员变量和静态成员变量，他可以避免线程从自己的工作缓存中查找变量的值，必须要主存中获取它的值，线程操作volatile变量都是直接操作主存。体现可见性，不保证原子性，仅用在一个写线程、多个读线程的情况。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">static</span> <span class="keyword">boolean</span> run = <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure>
-<h4 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h4><p>synchronized语句块既可以保证代码的原子性，也同时保证代码块内变量的可见性。但缺点是synchronized属于重量级操作，性能相对较低。</p>
+<h4 id="比较">比较</h4>
+<p>synchronized语句块既可以保证代码的原子性，也同时保证代码块内变量的可见性。但缺点是synchronized属于重量级操作，性能相对较低。</p>
 <p>在刚刚的while循环内，写一个System.out.println(1);程序正常输出，查看源代码可知println使用了synchronized关键字。</p>
-<h3 id="4-有序性"><a href="#4-有序性" class="headerlink" title="4. 有序性"></a>4. 有序性</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">boolean</span> ready = <span class="keyword">false</span>;</span><br><span class="line"><span class="comment">// 线程1 执行此方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actor1</span><span class="params">(I_Result r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ready) &#123;</span><br><span class="line">        r.r1 = num + num;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        r.r1 = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 线程2 执行此方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actor2</span><span class="params">(I_Result r)</span> </span>&#123;</span><br><span class="line">    num = <span class="number">2</span>;</span><br><span class="line">    ready = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-有序性">4. 有序性</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">boolean</span> ready = <span class="keyword">false</span>;</span><br><span class="line"><span class="comment">// 线程1 执行此方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actor1</span><span class="params">(I_Result r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ready) &#123;</span><br><span class="line">        r.r1 = num + num;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        r.r1 = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 线程2 执行此方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actor2</span><span class="params">(I_Result r)</span> </span>&#123;</span><br><span class="line">    num = <span class="number">2</span>;</span><br><span class="line">    ready = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>情况1：线程1 先执行，这时 ready = false，所以进入 else 分支结果为 1</li>
-<li>情况2：线程2 先执行 num = 2，但没来得及执行 ready = true，线程1 执行，还是进入 else 分支，结<br>果为1</li>
-<li>情况3：线程2 执行到 ready = true，线程1 执行，这回进入 if 分支，结果为 4(因为 num 已经执行过<br>了)</li>
+<li>情况2：线程2 先执行 num = 2，但没来得及执行 ready = true，线程1 执行，还是进入 else 分支，结<br>
+果为1</li>
+<li>情况3：线程2 执行到 ready = true，线程1 执行，这回进入 if 分支，结果为 4(因为 num 已经执行过<br>
+了)</li>
 <li>还有一种情况，0，指令重排后，先执行了ready=true，然后去执行线程1</li>
 </ul>
-<h4 id="解决办法"><a href="#解决办法-2" class="headerlink" title="解决办法"></a>解决办法</h4><p>volatile 修饰的变量，可以禁用指令重排</p>
+<h4 id="解决办法">解决办法</h4>
+<p>volatile 修饰的变量，可以禁用指令重排</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">boolean</span> ready = <span class="keyword">false</span>;</span><br><span class="line"><span class="comment">// 就不会出现0的结果了</span></span><br></pre></td></tr></table></figure>
-<h4 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h4><p>同一线程内，JVM会在不影响正确性的前提下，可以调整语句的执行顺序。例如：</p>
+<h4 id="理解">理解</h4>
+<p>同一线程内，JVM会在不影响正确性的前提下，可以调整语句的执行顺序。例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> j;</span><br><span class="line"><span class="comment">// 在某个线程内执行如下赋值操作</span></span><br><span class="line">i = ...;	<span class="comment">// 较为耗时的操作</span></span><br><span class="line">j = ...;</span><br></pre></td></tr></table></figure>
 <p>可以看到，至于先执行i还是先执行j，对最终的结果不会产生影响。所以，上面代码真正执行时，既可以是：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i = ...;	<span class="comment">// 较为耗时的操作</span></span><br><span class="line">j = ...;</span><br></pre></td></tr></table></figure>
@@ -333,58 +350,76 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0: new      #2         // class cn/itcast/jvm/t4/Singleton</span><br><span class="line">3: dup</span><br><span class="line">4: invokespecial #3         // Method "&lt;init&gt;":()V</span><br><span class="line">7: putstatic   #4         // Field</span><br><span class="line">INSTANCE:Lcn/itcast/jvm/t4/Singleton;</span><br></pre></td></tr></table></figure>
 <p>47两行执行顺序不固定，可能发生指令重排的问题，JVM可能会优化为：先将引用地址赋值给INSTANCE变量后，再执行构造方法。别的线程可能拿到一个未初始化完毕的单例。</p>
 <p>对 INSTANCE 使用 volatile 修饰即可，可以禁用指令重排，但要注意在 JDK 5 以上的版本的 volatile 才会真正有效。</p>
-<h4 id="happens-before"><a href="#happens-before" class="headerlink" title="happens-before"></a>happens-before</h4><p>happens-before规定了哪些写操作对其他线程的读操作可见，它是可见性与有序性的一套规则总结。</p>
+<h4 id="happens-before">happens-before</h4>
+<p>happens-before规定了哪些写操作对其他线程的读操作可见，它是可见性与有序性的一套规则总结。</p>
 <ul>
-<li><p>线程解锁 m 之前对变量的写，对于接下来对 m 加锁的其它线程对该变量的读可见</p>
+<li>
+<p>线程解锁 m 之前对变量的写，对于接下来对 m 加锁的其它线程对该变量的读可见</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">static</span> Object m = <span class="keyword">new</span> Object();</span><br><span class="line"><span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">    <span class="keyword">synchronized</span>(m) &#123;</span><br><span class="line">        x = <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,<span class="string">"t1"</span>).start();</span><br><span class="line"><span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">    <span class="keyword">synchronized</span>(m) &#123;</span><br><span class="line">        System.out.println(x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,<span class="string">"t2"</span>).start();</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>线程对 volatile 变量的写，对接下来其它线程对该变量的读可见</p>
+<li>
+<p>线程对 volatile 变量的写，对接下来其它线程对该变量的读可见</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">static</span> <span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">    x = <span class="number">10</span>;</span><br><span class="line">&#125;,<span class="string">"t1"</span>).start();</span><br><span class="line"><span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">    System.out.println(x);</span><br><span class="line">&#125;,<span class="string">"t2"</span>).start();</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>变量start前对变量的写，对该线程开始后对该变量的读可见</p>
+<li>
+<p>变量start前对变量的写，对该线程开始后对该变量的读可见</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> x;</span><br><span class="line">x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">    System.out.println(x);</span><br><span class="line">&#125;,<span class="string">"t2"</span>).start();</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>线程结束前对变量的写，对其它线程得知它结束后的读可见(比如其它线程调用 t1.isAlive()或t1.join()等待它结束)</p>
+<li>
+<p>线程结束前对变量的写，对其它线程得知它结束后的读可见(比如其它线程调用 t1.isAlive()或t1.join()等待它结束)</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> x;</span><br><span class="line">Thread t1 = <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">    x = <span class="number">10</span>;</span><br><span class="line">&#125;,<span class="string">"t1"</span>);</span><br><span class="line">t1.start();</span><br><span class="line">t1.join();</span><br><span class="line">System.out.println(x);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>线程 t1 打断 t2(interrupt)前对变量的写，对于其他线程得知 t2 被打断后对变量的读可见(通过t2.interrupted 或 t2.isInterrupted)</p>
+<li>
+<p>线程 t1 打断 t2(interrupt)前对变量的写，对于其他线程得知 t2 被打断后对变量的读可见(通过t2.interrupted 或 t2.isInterrupted)</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> x;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Thread t2 = <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(Thread.currentThread().isInterrupted()) &#123;</span><br><span class="line">                System.out.println(x);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,<span class="string">"t2"</span>);</span><br><span class="line">    t2.start();</span><br><span class="line">    <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        x = <span class="number">10</span>;</span><br><span class="line">        t2.interrupt();</span><br><span class="line">    &#125;,<span class="string">"t1"</span>).start();</span><br><span class="line">    <span class="keyword">while</span>(!t2.isInterrupted()) &#123;</span><br><span class="line">        Thread.yield();</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(x);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>对变量默认值( 0，false，null)的写，对其它线程对该变量的读可见</p>
+<li>
+<p>对变量默认值( 0，false，null)的写，对其它线程对该变量的读可见</p>
 </li>
-<li><p>具有传递性，如果 x hb-&gt; y 并且 y hb-&gt; z 那么有 x hb-&gt; z</p>
+<li>
+<p>具有传递性，如果 x hb-&gt; y 并且 y hb-&gt; z 那么有 x hb-&gt; z</p>
 </li>
-<li><p>变量都是指成员变量或静态成员变量</p>
+<li>
+<p>变量都是指成员变量或静态成员变量</p>
 </li>
 </ul>
-<h3 id="5-cas与原子类"><a href="#5-CAS与原子类" class="headerlink" title="5. CAS与原子类"></a>5. CAS与原子类</h3><h4 id="51-cas"><a href="#5-1-CAS" class="headerlink" title="5.1 CAS"></a>5.1 CAS</h4><p>CAS，Compare and Swap，它体现的是一种乐观锁的思想，比如多个线程要对一个共享的整形变量执行+1操作：</p>
+<h3 id="5-cas与原子类">5. CAS与原子类</h3>
+<h4 id="51-cas">5.1 CAS</h4>
+<p>CAS，Compare and Swap，它体现的是一种乐观锁的思想，比如多个线程要对一个共享的整形变量执行+1操作：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 需要不断尝试</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> 旧值 = 共享变量 ; <span class="comment">// 比如拿到了当前值 0</span></span><br><span class="line">    <span class="keyword">int</span> 结果 = 旧值 + <span class="number">1</span>; <span class="comment">// 在旧值 0 的基础上增加 1 ，正确结果是 1</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">  这时候如果别的线程把共享变量改成了 5，本线程的正确结果 1 就作废了，这时候</span></span><br><span class="line"><span class="comment">  compareAndSwap 返回 false，重新尝试，直到：</span></span><br><span class="line"><span class="comment">  compareAndSwap 返回 true，表示我本线程做修改的同时，别的线程没有干扰</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">    <span class="keyword">if</span>( compareAndSwap ( 旧值, 结果 )) &#123;	<span class="comment">// 在将结果写入共享变量时，检查旧值和共享变量还是否一致</span></span><br><span class="line">        <span class="comment">// 成功，退出循环</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>获取共享变量时，为了保证该变量的可见性，需要使用 volatile 修饰，拿到最新的。结合 CAS 和 volatile 可以实现无锁并发，适用于竞争不激烈、多核 CPU 的场景下</p>
 <ul>
 <li>因为没有使用 synchronized，所以线程不会陷入阻塞，这是效率提升的因素之一</li>
 <li>但如果竞争激烈，可以想到重试必然频繁发生，反而效率会受影响</li>
 </ul>
-<h4 id="52-乐观锁与悲观锁"><a href="#5-2-乐观锁与悲观锁" class="headerlink" title="5.2 乐观锁与悲观锁"></a>5.2 乐观锁与悲观锁</h4><ul>
+<h4 id="52-乐观锁与悲观锁">5.2 乐观锁与悲观锁</h4>
+<ul>
 <li>CAS是基于乐观锁的思想，最乐观的估计，不怕别的线程来修改共享变量，计算改了也没关系，吃亏大不了重试。</li>
 <li>synchronized是基于悲观锁的思想，最悲观的估计，得防着其他线程来修改共享变量，我上锁了你们都别想改，我改完了解开锁，你们才有机会。</li>
 </ul>
-<h4 id="53-原子操作类"><a href="#5-3-原子操作类" class="headerlink" title="5.3 原子操作类"></a>5.3 原子操作类</h4><p>JUC(java.util.concurrent)中提供了原子操作类，可以提供线程安全的操作，例如，AtomicInteger、AtomicBoolean等，它们底层就是采用CAS+volatile来实现的。</p>
+<h4 id="53-原子操作类">5.3 原子操作类</h4>
+<p>JUC(java.util.concurrent)中提供了原子操作类，可以提供线程安全的操作，例如，AtomicInteger、AtomicBoolean等，它们底层就是采用CAS+volatile来实现的。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建原子整数对象</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger i = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    Thread t1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">            i.getAndIncrement();  <span class="comment">// 获取并且自增 i++</span></span><br><span class="line">            <span class="comment">//        i.incrementAndGet(); // 自增并且获取 ++i</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    Thread t2 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">            i.getAndDecrement(); <span class="comment">// 获取并且自减 i--</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    t1.start();</span><br><span class="line">    t2.start();</span><br><span class="line">    t1.join();</span><br><span class="line">    t2.join();</span><br><span class="line">    System.out.println(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
-<h3 id="6-synchronized优化"><a href="#6-synchronized优化" class="headerlink" title="6. synchronized优化"></a>6. synchronized优化</h3><p>Java HotSpot虚拟机中，每个对象都有对象头(包括class指针和Mark Word)。Mark Word平时存储这个对象的哈希码、分代年龄，当加锁时，这些信息就根据情况被替换为标记位、线程锁记录指针、重量级锁指针、线程ID等内容。</p>
+<h3 id="6-synchronized优化">6. synchronized优化</h3>
+<p>Java HotSpot虚拟机中，每个对象都有对象头(包括class指针和Mark Word)。Mark Word平时存储这个对象的哈希码、分代年龄，当加锁时，这些信息就根据情况被替换为标记位、线程锁记录指针、重量级锁指针、线程ID等内容。</p>
 <p>Synchonized是基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。Synchronized 用在方法上时，在字节码中是通过方法的 ACC_SYNCHRONIZED 标志来实现的。而代码块同步则是使用monitorenter和monitorexit指令实现的。</p>
 <p>monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit是插入到方法结束处和异常处，JVM要保证每个monitorenter必须有对应的monitorexit与之配对。任何对象都有一个monitor与之关联，当且一个monitor被持有后，它将处于锁定状态。线程执行到monitorenter指令时，将会尝试获取对象所对应的monitor的所有权，即尝试获得对象的锁，当获得对象的monitor以后，monitor内部的计数器就会自增（初始为0），当同一个线程再次获得monitor的时候，计数器会再次自增。当同一个线程执行monitorexit指令的时候，计数器会进行自减，当计数器为0的时候，monitor就会被释放，其他线程便可以获得monitor。</p>
-<h4 id="61-轻量级锁"><a href="#6-1-轻量级锁" class="headerlink" title="6.1 轻量级锁"></a>6.1 轻量级锁</h4><p>如果一个对象虽然有多线程访问，但多线程访问的时间是错开的(也就是没有竞争)，那么可以使用轻量级锁来优化。这就好比：学生(线程A)用课本占座，上了半节课，出门了(CPU时间到)，回来一看，发现课本没变，说明没有竞争，继续上他的课。 如果这期间有其它学生(线程B)来了，会告知(线程A)有并发访问，线程A 随即升级为重量级锁，进入重量级锁的流程。</p>
+<h4 id="61-轻量级锁">6.1 轻量级锁</h4>
+<p>如果一个对象虽然有多线程访问，但多线程访问的时间是错开的(也就是没有竞争)，那么可以使用轻量级锁来优化。这就好比：学生(线程A)用课本占座，上了半节课，出门了(CPU时间到)，回来一看，发现课本没变，说明没有竞争，继续上他的课。 如果这期间有其它学生(线程B)来了，会告知(线程A)有并发访问，线程A 随即升级为重量级锁，进入重量级锁的流程。</p>
 <p>而重量级锁就不是那么用课本占座那么简单了，可以想象线程A走之前，把座位用一个铁栅栏围起来。</p>
 <p>每个线程都的栈帧都会包含一个锁记录的结构，内部可以存储锁定对象的Mark Word。</p>
-<h4 id="62-锁膨胀"><a href="#6-2-锁膨胀" class="headerlink" title="6.2 锁膨胀"></a>6.2 锁膨胀</h4><p>如果在尝试加轻量级锁的过程中，CAS操作无法成功，这时一种情况就是有其他线程为此对象加上了轻量级锁(有竞争)，这时候需要进行锁膨胀，将轻量级锁变为重量级锁。</p>
-<h4 id="63-重量级锁"><a href="#6-3-重量级锁" class="headerlink" title="6.3 重量级锁"></a>6.3 重量级锁</h4><p>重量级锁竞争的时候，还可以使用自旋来进行优化，如果当前线程自旋成功(即这时候持锁线程已经退出了同步块，释放了锁)，这时当前线程就可以避免拥塞。</p>
+<h4 id="62-锁膨胀">6.2 锁膨胀</h4>
+<p>如果在尝试加轻量级锁的过程中，CAS操作无法成功，这时一种情况就是有其他线程为此对象加上了轻量级锁(有竞争)，这时候需要进行锁膨胀，将轻量级锁变为重量级锁。</p>
+<h4 id="63-重量级锁">6.3 重量级锁</h4>
+<p>重量级锁竞争的时候，还可以使用自旋来进行优化，如果当前线程自旋成功(即这时候持锁线程已经退出了同步块，释放了锁)，这时当前线程就可以避免拥塞。</p>
 <p>在Java 6之后自旋锁是自适应的，比如对象刚刚的一次自旋操作成功过，那么认为这次自旋成功的可能性会高，就多自旋几次；反之，就少自旋甚至不自旋，总之，比较智能。</p>
 <ul>
 <li>自旋会占用CPU时间，单核CPU自旋就是浪费，多核CPU自旋才能发挥优势。</li>
 <li>就像等红灯时汽车要不要熄火，不熄火相当于自旋，熄火了相当于阻塞(等待时间长划算)。</li>
 <li>Java 7以后不能控制是否开启自旋功能。</li>
 </ul>
-<h4 id="64-偏向锁"><a href="#6-4-偏向锁" class="headerlink" title="6.4 偏向锁"></a>6.4 偏向锁</h4><p>轻量级锁在没有竞争时(就自己这个线程)，每次重入仍然需要执行CAS操作。Java 6引入了偏向锁来做进一步优化：只有第一次使用CAS将线程ID设置到对象的Mark Word头，之后发现这个线程ID是自己的就表示没有竞争，不用重新CAS。</p>
+<h4 id="64-偏向锁">6.4 偏向锁</h4>
+<p>轻量级锁在没有竞争时(就自己这个线程)，每次重入仍然需要执行CAS操作。Java 6引入了偏向锁来做进一步优化：只有第一次使用CAS将线程ID设置到对象的Mark Word头，之后发现这个线程ID是自己的就表示没有竞争，不用重新CAS。</p>
 <ul>
 <li>撤销偏向需要将持锁线程升级为轻量级锁，这个过程中所有线程需要暂停(STW)，是一个重量级的操作</li>
 <li>访问对象的 hashCode 也会撤销偏向锁</li>
@@ -393,10 +428,13 @@
 <li>如果撤销偏向到达某个阈值，整个类的所有对象都会变为不可偏向的</li>
 <li>可以主动使用 -XX:-UseBiasedLocking 禁用偏向锁</li>
 </ul>
-<h4 id="65-其他优化"><a href="#6-5-其他优化" class="headerlink" title="6.5 其他优化"></a>6.5 其他优化</h4><ol>
-<li><p>减少上锁时间，同步代码块尽量短</p>
+<h4 id="65-其他优化">6.5 其他优化</h4>
+<ol>
+<li>
+<p>减少上锁时间，同步代码块尽量短</p>
 </li>
-<li><p>减少锁的粒度</p>
+<li>
+<p>减少锁的粒度</p>
 <p>将一个锁拆分为多个锁提高并发度，例如</p>
 <ul>
 <li>ConcurrentHashMap</li>
@@ -404,31 +442,39 @@
 <li>LinkedBlockingQueue入队和出队使用不同的锁，相对于LinkedBlockingQueueArray只有一个锁效率要高。</li>
 </ul>
 </li>
-<li><p>锁粗化</p>
+<li>
+<p>锁粗化</p>
 <p>多次循环进入同步块不如同步块内多次循环 另外 JVM 可能会做如下优化，把多次 append 的加锁操作粗化为一次(因为都是对同一个对象加锁，没必要重入多次)</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> StringBuffer().append(<span class="string">"a"</span>).append(<span class="string">"b"</span>).append(<span class="string">"c"</span>);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>锁消除</p>
+<li>
+<p>锁消除</p>
 <p>JVM 会进行代码的逃逸分析，例如某个加锁对象是方法内局部变量，不会被其它线程所访问到，这时候就会被即时编译器忽略掉所有同步操作。</p>
 </li>
-<li><p>读写分离</p>
+<li>
+<p>读写分离</p>
 <ul>
 <li>CopyOnWriteArrayList</li>
 <li>ConyOnWriteSet</li>
 </ul>
 </li>
 </ol>
-<h4 id="66-锁升级"><a href="#6-6-锁升级" class="headerlink" title="6.6 锁升级"></a>6.6 锁升级</h4><p>无锁状态、偏向锁状态、轻量级锁状态和重量级锁状态。</p>
-<p><strong>偏向锁</strong><br>当一个线程访问同步块并获取锁时，会在对象头和栈帧中的锁记录里存储锁偏向的线程ID，以后该线程在进入和退出同步块时不需要进行CAS操作来加锁和解锁，只需简单地测试一下对象头的Mark Word里是否存储着指向当前线程的偏向锁。如果测试成功，表示线程已经获得了锁。如果测试失败，则需要再测试一下Mark Word中偏向锁的标识是否设置成1（表示当前是偏向锁），如果没有设置，则使用CAS竞争锁；如果设置了，则尝试使用CAS将对象头的偏向锁指向当前线程。</p>
-<p><strong>轻量级锁</strong><br>线程在执行同步块之前，JVM会先在当前线程的栈桢中创建用于存储锁记录的空间，并将对象头中的Mark Word复制到锁记录中。然后线程尝试使用CAS将对象头中的Mark Word替换为指向锁记录的指针。如果成功，当前线程获得锁，如果失败，表示其他线程竞争锁，当前线程便尝试使用自旋来获取锁。</p>
-<p><strong>重量级锁</strong><br>重量级锁是依赖对象内部的monitor锁来实现。当系统检查到锁是重量级锁之后，会把等待想要获得锁的线程进行阻塞，被阻塞的线程不会消耗cup。但是阻塞或者唤醒一个线程时，都需要操作系统来帮忙，需要从用户态转换到内核态，而转换状态是需要消耗很多时间。</p>
+<h4 id="66-锁升级">6.6 锁升级</h4>
+<p>无锁状态、偏向锁状态、轻量级锁状态和重量级锁状态。</p>
+<p><strong>偏向锁</strong><br>
+当一个线程访问同步块并获取锁时，会在对象头和栈帧中的锁记录里存储锁偏向的线程ID，以后该线程在进入和退出同步块时不需要进行CAS操作来加锁和解锁，只需简单地测试一下对象头的Mark Word里是否存储着指向当前线程的偏向锁。如果测试成功，表示线程已经获得了锁。如果测试失败，则需要再测试一下Mark Word中偏向锁的标识是否设置成1（表示当前是偏向锁），如果没有设置，则使用CAS竞争锁；如果设置了，则尝试使用CAS将对象头的偏向锁指向当前线程。</p>
+<p><strong>轻量级锁</strong><br>
+线程在执行同步块之前，JVM会先在当前线程的栈桢中创建用于存储锁记录的空间，并将对象头中的Mark Word复制到锁记录中。然后线程尝试使用CAS将对象头中的Mark Word替换为指向锁记录的指针。如果成功，当前线程获得锁，如果失败，表示其他线程竞争锁，当前线程便尝试使用自旋来获取锁。</p>
+<p><strong>重量级锁</strong><br>
+重量级锁是依赖对象内部的monitor锁来实现。当系统检查到锁是重量级锁之后，会把等待想要获得锁的线程进行阻塞，被阻塞的线程不会消耗cup。但是阻塞或者唤醒一个线程时，都需要操作系统来帮忙，需要从用户态转换到内核态，而转换状态是需要消耗很多时间。</p>
 <p>线程A在进入同步代码块前，先检查MarkWord中的线程ID是否与当前线程ID一致，如果一致（还是线程A获取锁对象），则无需使用CAS来加锁、解锁。</p>
 <p>如果不一致，再检查是否为偏向锁，如果不是，则自旋等待锁释放。</p>
 <p>如果是，再检查该线程是否存在（偏向锁不会主动释放锁），如果不在，则设置线程ID为线程A的ID，此时依然是偏向锁。</p>
 <p>如果还在，则暂停该线程，同时将锁标志位设置为00即轻量级锁（将MarkWord复制到该线程的栈帧中并将MarkWord设置为栈帧中锁记录）。线程A自旋等待锁释放。</p>
 <p>如果自旋次数到了该线程还没有释放锁，或者该线程还在执行，线程A还在自旋等待，这时又有一个线程B过来竞争这个锁对象，那么这个时候轻量级锁就会膨胀为重量级锁。重量级锁把除了拥有锁的线程都阻塞，防止CPU空转。</p>
 <p>如果该线程释放锁，则会唤醒所有阻塞线程，重新竞争锁。</p>
-<h3 id="完结撒花-̄-̄"><a href="#完结撒花-★-°-☆-￣▽￣-°★-。" class="headerlink" title="完结撒花 ★,°:.☆(￣▽￣)/$:.°★ 。"></a>完结撒花 <em>★,°</em>:.☆(￣▽￣)/$:<em>.°★</em> 。</h3>
+<h3 id="完结撒花-̄-̄">完结撒花 <em>★,°</em>:.☆(￣▽￣)/$:<em>.°★</em> 。</h3>
+
                 
                 <hr>
                 <!-- Pager -->
