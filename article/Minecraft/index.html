@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张天宇的文字自留地">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/logo.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          树莓派搭建低功耗Minecraft服务器 - 张天宇的博客 | ztygalaxy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://tyzhang.top/article/Minecraft/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script>
+	</script>
+	<style>
+	* {
+            box-sizing: border-box;
+        }
+
+        form {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        input, button {
+            border: none;
+            outline: none;
+        }
+
+        input {
+            width: 100%;
+            height: 42px;
+            padding-left: 13px;
+        }
+
+        button {
+            height: 42px;
+            width: 42px;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        /*搜索框1*/
+        .bar1 {
+			background: #FFF;
+			max-width: 200px;
+		}
+        .bar1 input {
+			max-height: 30px;
+            border: 2px solid #BFBFBF;
+            border-radius: 5px;
+            background: #FFFFFF;
+            color: #BFBFBF;
+			-webkit-text-fill-color: #BFBFBF;
+        }
+        .bar1 button {
+			max-height: 30px;
+            top: 0;
+            right: 0;
+            background: #BFBFBF;
+            border-radius: 0 5px 5px 0;
+        }
+        .bar1 button:before {
+            content: "\f002";
+            font-family: FontAwesome;
+            font-size: 16px;
+            color: #F9F0DA;
+        }
+		</style>
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="张天宇的博客" type="application/atom+xml">
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('https://api.dujin.org/bing/1920.php')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                            
+                        </div>
+                        <h1>树莓派搭建低功耗Minecraft服务器</h1>
+                        <!-- <h2 class="subheading"></h2> -->
+                        <span class="meta">
+                            张天宇 on
+                            2018-01-15
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">主页</a>
+                    </li>
+					<li>
+                        <a href="/archive/">归档</a>
+                    </li>
+					<li>
+                        <a href="/tags/">标签</a>
+                    </li>
+					<li>
+                        <a href="/about/">关于</a>
+                    </li>
+					<!--
+					修改about在前面的问题
+                    
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    -->
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				
+                <blockquote>
+<p>搭建你自己的Minecraft服务器，以及在树莓派上搭建Minecraft服务器。</p>
+</blockquote>
+<p>为什么要折腾这个？<br>
+为什么要自己搭Minecraft服务器呢？限制于经费，在自己的服务器上玩Minecraft，不是随便谁都可以做的。搭建在服务器上，你可以让服务器一直运行，当你不玩的时候，你的朋友和家人还可以加入到游戏中，继续建造你的世界。你可以尝试修改游戏参数，制作mod，而且还能让你体验一把GM的感觉，这在公共服务器里可是做不到的，而且也不用花很多钱去租远程主机来做服务器。对于Minecraft狂热粉丝而言，搭建Minecraft服务器已经很有吸引力了。但是在树莓派上搭则会更有吸引力。小小的树莓派耗电非常少，你可以不间断地开着服务器，一年的电费也不过几块钱而已。只要一个树莓派，一张SD卡，花上一点时间设置一下，就能有一台全天候的Minecraft服务器，月运行费用只不过一条口香糖的价格。</p>
+<h2><span id="0需要的东西">0.需要的东西</span></h2>
+<p>​	一个已经烧录好系统的树莓派，一台能够联网的PC。</p>
+<h2><span id="1针对minecraft优化树莓派">1.针对Minecraft优化树莓派</span></h2>
+<p>​	将系统分区拓展至整个SD卡分区，选择高级操作选项，拓展分区，重启。</p>
+<p>​	<img src="/img/article/es0.png" alt="拓展分区"></p>
+<p><img src="/img/article/es1.png" alt="拓展分区"></p>
+<h2><span id="2安装java环境">2.安装Java环境</span></h2>
+<p>​	如果你的树莓派不是官方镜像或者没有安装Java环境，请先配置。</p>
+<p>​	检查方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<h2><span id="3配置服务器">3.配置服务器</span></h2>
+<p>​	首先，用下面的命令下载一份代码(建议mkdir新建一个文件夹放置)：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo wget http://ci.md-5.net/job/Spigot/lastSuccessfulBuild/artifact/Spigot-Server/target/spigot.jar</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这个链接可以一直用，因为它指向的是Spigot最新的稳定版</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果有任何问题，可以参考SpigotMC[http://ci.md-5.net/job/Spigot/]的下载页</span></span><br></pre></td></tr></table></figure>
+<p>​	下载完成后，输入下面的命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo java -Xms256M -Xmx900M -jar /home/pi/mc/spigot.jar nogui</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">参数说明：内存将从256M开始分配,最大900M</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里将代码放置在了mc文件夹中</span></span><br></pre></td></tr></table></figure>
+<p>​	接下来服务器启动，屏幕上会出现各种进度百分比。</p>
+<p>​	等上大概几分钟，程序会搭建服务器，生成地图，之后的启动会快很多，大概20-30秒。在命令行用“stop”就可以优雅地关掉服务器，然后你就可以重启服务器，找出问题在哪里。</p>
+<p>​	在上面的流程完成后，你就可以坐在电脑旁普通地玩Minecraft，启动程序，选择多人游戏。你会看到自己建的服务器，这是属于你自己的服务器。</p>
+<h3><span id="祝大家玩的开心">祝大家玩的开心！</span></h3>
+<p>PS：目录下server.properties参数说明，可按需修改</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以下是Minecraft服务器设置文件，true代表执行，false代表不执行。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#Sun Mar 11 18:24:34 CST 2012 此为文件生成时间</span></span><br><span class="line"><span class="comment"># 是否开启地狱，不开启话地狱门将无效</span></span><br><span class="line">	<span class="attr">allow-nether</span>=<span class="string">true</span></span><br><span class="line"><span class="comment"># 地图文件夹名称，下界与末路之地将会自动以nether,ender加上并用下划线隔开</span></span><br><span class="line"><span class="attr">　　level-name</span>=<span class="string">world</span></span><br><span class="line"><span class="comment"># 是否开启GameSpy4协议服务器监听器，用于获取服务器信息，国内应该用不上。</span></span><br><span class="line"><span class="attr">　　enable-query</span>=<span class="string">false</span></span><br><span class="line"><span class="comment"># 是否允许飞行</span></span><br><span class="line"><span class="attr">　　allow-flight</span>=<span class="string">false</span></span><br><span class="line"><span class="comment"># 远程访问服务器的密码，此项可以留空或删除</span></span><br><span class="line"><span class="attr">　　rcon.password</span>=<span class="string"></span></span><br><span class="line"><span class="comment"># 服务器端口(25565为默认端口，联机时无需输入)</span></span><br><span class="line"><span class="attr">　　server-port</span>=<span class="string">25565</span></span><br><span class="line"><span class="comment"># 第5行对应功能的端口</span></span><br><span class="line"><span class="attr">　　query.port</span>=<span class="string">25565</span></span><br><span class="line"><span class="comment"># 地图类型，Default=默认，FLAT=超平坦，LARGEBIOMES=巨型生物群系</span></span><br><span class="line"><span class="attr">　　level-type</span>=<span class="string">DEFAULT</span></span><br><span class="line"><span class="comment"># 是否开启远程访问服务器控制台。技术人员可选。</span></span><br><span class="line"><span class="attr">　　enable-rcon</span>=<span class="string">false</span></span><br><span class="line"><span class="comment"># 地图种子，在生成地图文件夹之前填入此项，可生成特定的地图</span></span><br><span class="line"><span class="attr">　　level-seed</span>=<span class="string"></span></span><br><span class="line"><span class="comment"># 服务器IP，不输入则为默认IP，内网用户的话请填内网IP</span></span><br><span class="line"><span class="attr">　　server-ip</span>=<span class="string"></span></span><br><span class="line"><span class="comment"># 最大建筑高度，上限是256，因为Chunk的高度最大值是256</span></span><br><span class="line"><span class="attr">　　max-build-height</span>=<span class="string">256</span></span><br><span class="line"><span class="comment"># 是否生成NPC</span></span><br><span class="line"><span class="attr">　　spawn-npcs</span>=<span class="string">true</span></span><br><span class="line"><span class="comment"># 是否开启白名单，没有白名单的玩家尝试进入服务器会被自动拒绝</span></span><br><span class="line"><span class="attr">　　white-list</span>=<span class="string">false</span></span><br><span class="line"><span class="comment"># 是否生成动物</span></span><br><span class="line"><span class="attr">　　spawn-animals</span>=<span class="string">true</span></span><br><span class="line"><span class="comment"># 此处填写服务器默认材质下载链接，链接必须以.zip结尾</span></span><br><span class="line"><span class="attr">　　texture-pack</span>=<span class="string"></span></span><br><span class="line"><span class="comment"># 用于给http://snoop.minecraft.net网站发送服务器数据，这样玩家可以从客户端上获取服务器信息，推荐关闭</span></span><br><span class="line"><span class="attr">　　snooper-enabled</span>=<span class="string">false</span></span><br><span class="line"><span class="comment"># 是否开启极限模式，玩家死亡将自动被ban</span></span><br><span class="line"><span class="attr">　　hardcore</span>=<span class="string">false</span></span><br><span class="line"><span class="comment"># 是否开启联网模式(正版专用，盗版必须改成false)</span></span><br><span class="line"><span class="attr">　　online-mode</span>=<span class="string">false</span></span><br><span class="line"><span class="comment"># 是否开启PVP，不是战争服就不要开了</span></span><br><span class="line"><span class="attr">　　pvp</span>=<span class="string">false</span></span><br><span class="line"><span class="comment"># 游戏难度，与单机相同</span></span><br><span class="line"><span class="attr">　　difficulty</span>=<span class="string">1</span></span><br><span class="line"><span class="comment"># 玩家第一次进入游戏时的游戏模式</span></span><br><span class="line"><span class="attr">　　gamemode</span>=<span class="string">0</span></span><br><span class="line"><span class="comment"># 同时在线的最大玩家数</span></span><br><span class="line"><span class="attr">　　max-players</span>=<span class="string">20</span></span><br><span class="line"><span class="comment"># 远程访问服务器的端口号，此项可以留空或删除</span></span><br><span class="line"><span class="attr">　　rcon.port</span>=<span class="string">25575</span></span><br><span class="line"><span class="comment"># 是否生成怪物</span></span><br><span class="line"><span class="attr">　　spawn-monsters</span>=<span class="string">true</span></span><br><span class="line"><span class="comment"># 是否生成建筑物(包括村庄和地牢)</span></span><br><span class="line"><span class="attr">　　generate-structures</span>=<span class="string">true</span></span><br><span class="line"><span class="comment"># 可见距离，最大值为10</span></span><br><span class="line">	<span class="attr">view-distance</span>=<span class="string">10</span></span><br><span class="line"><span class="comment"># 服务器欢迎信息(显示在玩家联机页面)，中文需中文补丁支持和转码，推荐EmEditor文本编辑器，自带转码功能。</span></span><br><span class="line"><span class="attr">　　motd</span>=<span class="string">A Minecraft Server</span></span><br></pre></td></tr></table></figure>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/cyhs-1/" data-toggle="tooltip" data-placement="top" title="次元画社(一)，带有渐变动画的启动Activity">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/talkflow/" data-toggle="tooltip" data-placement="top" title="左右左右左:Android对话流实现">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">0.需要的东西</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">1.针对Minecraft优化树莓派</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">2.安装Java环境</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">3.配置服务器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">祝大家玩的开心！</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">标签</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+				<!--
+                
+                <hr>
+                <h5>朋友们</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://www.freedomly.tk/" target="_blank">Freedomly</a></li>
+                    
+                        <li><a href="https://jlwang1996.github.io/" target="_blank">jlwang1996</a></li>
+                    
+                        <li><a href="http://siwenzheng.github.io/" target="_blank">SiwenZheng</a></li>
+                    
+                        <li><a href="https://loststartvt.github.io/" target="_blank">LostStarTvT</a></li>
+                    
+                        <li><a href="https://zbsong.top/" target="_blank">songzblink</a></li>
+                    
+                        <li><a href="https://dolnw.github.io/" target="_blank">JCWang</a></li>
+                    
+                </ul>
+                
+				-->
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-tian-yu-65-49">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://space.bilibili.com/38534865">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>B</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://m.okjike.com/users/28c5ee85-832c-4a04-ab73-788a507d2bd8">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>J</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ztygalaxy">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 张天宇 2024 
+                    <br>
+                    Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
+                    re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
+					
+					<br>
+                    <a href="http://beian.miit.gov.cn/" style="color: gray">浙 ICP备19045818号</a>
+					<br>
+					<!-- <p class="copyright text-muted" style="margin-top: 5px"> -->
+						<img src="../../img/备案图标.png"/>
+						<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011802001883" style="color: gray">浙公网安备 33011802001883号</a>
+					<!-- </p> -->
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://tyzhang.top/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://tyzhang.top/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张天宇的文字自留地">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/logo.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          MyBatis: CRUD - 张天宇的博客 | ztygalaxy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://tyzhang.top/article/mybatistwo/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script>
+	</script>
+	<style>
+	* {
+            box-sizing: border-box;
+        }
+
+        form {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        input, button {
+            border: none;
+            outline: none;
+        }
+
+        input {
+            width: 100%;
+            height: 42px;
+            padding-left: 13px;
+        }
+
+        button {
+            height: 42px;
+            width: 42px;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        /*搜索框1*/
+        .bar1 {
+			background: #FFF;
+			max-width: 200px;
+		}
+        .bar1 input {
+			max-height: 30px;
+            border: 2px solid #BFBFBF;
+            border-radius: 5px;
+            background: #FFFFFF;
+            color: #BFBFBF;
+			-webkit-text-fill-color: #BFBFBF;
+        }
+        .bar1 button {
+			max-height: 30px;
+            top: 0;
+            right: 0;
+            background: #BFBFBF;
+            border-radius: 0 5px 5px 0;
+        }
+        .bar1 button:before {
+            content: "\f002";
+            font-family: FontAwesome;
+            font-size: 16px;
+            color: #F9F0DA;
+        }
+		</style>
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="张天宇的博客" type="application/atom+xml">
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('https://api.dujin.org/bing/1920.php')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#知识" title="知识">知识</a>
+                            
+                        </div>
+                        <h1>MyBatis: CRUD</h1>
+                        <!-- <h2 class="subheading">MyBatis中的基于代理Dao的CRUD，参数深入和结果集的深入。</h2> -->
+                        <span class="meta">
+                            张天宇 on
+                            2020-03-21
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">主页</a>
+                    </li>
+					<li>
+                        <a href="/archive/">归档</a>
+                    </li>
+					<li>
+                        <a href="/tags/">标签</a>
+                    </li>
+					<li>
+                        <a href="/about/">关于</a>
+                    </li>
+					<!--
+					修改about在前面的问题
+                    
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    -->
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				
+                <blockquote>
+<p>MyBatis中的基于代理Dao的CRUD，参数深入和结果集的深入。</p>
+</blockquote>
+<h3><span id="crud">CRUD</span></h3>
+<h4><span id="查询所有">查询所有</span></h4>
+<p><code>findAll()</code>声明</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">IUserDao</span> &#123;</span><br><span class="line">    List&lt;User&gt; <span class="title function_">findAll</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置IUserDao.xml映射文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;top.tyzhang.dao.IUserDao&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findAll&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;top.tyzhang.domain.User&quot;</span>&gt;</span></span><br><span class="line">        select * from userm</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> Resources.getResourceAsStream(<span class="string">&quot;SqlMapConfig.xml&quot;</span>);</span><br><span class="line">SqlSessionFactory factory=<span class="keyword">new</span> <span class="title class_">SqlSessionFactoryBuilder</span>().build(in);</span><br><span class="line">SqlSession session=factory.openSession();</span><br><span class="line">IUserDao userDao=session.getMapper(IUserDao.class);</span><br><span class="line">List&lt;User&gt; users = userDao.findAll();</span><br><span class="line"><span class="keyword">for</span> (User user:users)</span><br><span class="line">    System.out.println(user);</span><br><span class="line">session.close();</span><br><span class="line">in.close();</span><br></pre></td></tr></table></figure>
+<h4><span id="保存操作">保存操作</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">saveUser</span><span class="params">(User user)</span>;</span><br></pre></td></tr></table></figure>
+<p>配置映射文件，注意表达式中的属性要和类中属性一致</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;saveUser&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;top.tyzhang.domain.User&quot;</span>&gt;</span></span><br><span class="line">        insert into userm(username, address, sex, birthday) values(#&#123;username&#125;, #&#123;address&#125;, #&#123;sex&#125;, #&#123;birthday&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>测试类，使用junit进行了代码整合抽取</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyBatisTest</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> InputStream in;</span><br><span class="line">    <span class="keyword">private</span> IUserDao userDao;</span><br><span class="line">    <span class="keyword">private</span> SqlSession session;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        in = Resources.getResourceAsStream(<span class="string">&quot;SqlMapConfig.xml&quot;</span>);</span><br><span class="line">        SqlSessionFactory factory=<span class="keyword">new</span> <span class="title class_">SqlSessionFactoryBuilder</span>().build(in);</span><br><span class="line">        session=factory.openSession();</span><br><span class="line">        userDao=session.getMapper(IUserDao.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">destroy</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="comment">//因为默认关闭自动提交事务，所以打开提交事务</span></span><br><span class="line">        session.commit();</span><br><span class="line">        session.close();</span><br><span class="line">        in.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">findAll</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        List&lt;User&gt; users = userDao.findAll();</span><br><span class="line">        <span class="keyword">for</span> (User user:users)</span><br><span class="line">            System.out.println(user);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSave</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user.setUsername(<span class="string">&quot;ztygalay&quot;</span>);</span><br><span class="line">        user.setAddress(<span class="string">&quot;shandong&quot;</span>);</span><br><span class="line">        user.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">        user.setBirthday(<span class="keyword">new</span> <span class="title class_">Date</span>());</span><br><span class="line">        userDao.saveUser(user);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5><span id="新增用户id的返回值">新增用户ID的返回值</span></h5>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;saveUser&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;top.tyzhang.domain.User&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--实体类属性，数据库属性，返回类型，执行顺序--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">selectKey</span> <span class="attr">keyProperty</span>=<span class="string">&quot;id&quot;</span> <span class="attr">keyColumn</span>=<span class="string">&quot;id&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;int&quot;</span> <span class="attr">order</span>=<span class="string">&quot;AFTER&quot;</span>&gt;</span></span><br><span class="line">        select last_insert_id()</span><br><span class="line">    <span class="tag">&lt;/<span class="name">selectKey</span>&gt;</span></span><br><span class="line">    insert into userm(username, address, sex, birthday) values(#&#123;username&#125;, #&#123;address&#125;, #&#123;sex&#125;, #&#123;birthday&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">user.setUsername(<span class="string">&quot;ztygalay&quot;</span>);</span><br><span class="line">user.setAddress(<span class="string">&quot;shandong&quot;</span>);</span><br><span class="line">user.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">user.setBirthday(<span class="keyword">new</span> <span class="title class_">Date</span>());</span><br><span class="line">userDao.saveUser(user);</span><br><span class="line">System.out.println(user);</span><br><span class="line"><span class="comment">//输出：User&#123;id=56, username=&#x27;ztygalay&#x27;, address=&#x27;shandong&#x27;, sex=&#x27;男&#x27;, birthday=Thu Mar 19 14:41:03 CST 2020&#125;</span></span><br></pre></td></tr></table></figure>
+<h4><span id="更新操作">更新操作</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">updateUser</span><span class="params">(User user)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateUser&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;top.tyzhang.domain.User&quot;</span>&gt;</span></span><br><span class="line">        update userm set username=#&#123;username&#125;, address=#&#123;address&#125;, sex=#&#123;sex&#125;, birthday=#&#123;birthday&#125; where id=#&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testUpdate</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">    user.setId(<span class="number">55</span>);</span><br><span class="line">    user.setUsername(<span class="string">&quot;张天宇&quot;</span>);</span><br><span class="line">    user.setAddress(<span class="string">&quot;山东&quot;</span>);</span><br><span class="line">    user.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">    user.setBirthday(<span class="keyword">new</span> <span class="title class_">Date</span>());</span><br><span class="line">    userDao.updateUser(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="删除操作">删除操作</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">deleteUser</span><span class="params">(Integer id)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">&quot;deleteUser&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Integer&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--参数只有一个，参数给一个占位符就可以，即只有一个参数时随意写--&gt;</span></span><br><span class="line">    delete from userm where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">delete</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testDelete</span><span class="params">()</span>&#123;</span><br><span class="line">    userDao.deleteUser(<span class="number">55</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="查询一个">查询一个</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User <span class="title function_">findById</span><span class="params">(Integer id)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findById&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Integer&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;top.tyzhang.domain.User&quot;</span>&gt;</span></span><br><span class="line">    select * from userm where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testFindOne</span><span class="params">()</span>&#123;</span><br><span class="line">    System.out.println(userDao.findById(<span class="number">48</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="模糊查询">模糊查询</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;User&gt; <span class="title function_">findByName</span><span class="params">(String username)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--模糊查询的百分号操作由函数提供--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findByName&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;String&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;top.tyzhang.domain.User&quot;</span>&gt;</span></span><br><span class="line">    select * from userm where username like #&#123;name&#125;</span><br><span class="line">    <span class="comment">&lt;!--select * from userm where username like &#x27;%$&#123;value&#125;%&#x27; 其中value是固定名称，了解不推荐--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testFindName</span><span class="params">()</span>&#123;</span><br><span class="line">    List&lt;User&gt; users=userDao.findByName(<span class="string">&quot;%王%&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (User user:users)</span><br><span class="line">        System.out.println(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用value法时，SQL执行的语句为<code>select * from userm where username like '%王%'</code>，即字符串的拼接。而使用name法时，SQL执行的语句为<code>select * from userm where username like ?</code>，参数为%王%(String)，即使用的PreparedStatement的参数占位符，更好一些。</p>
+<h4><span id="查询总数">查询总数</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">findTotal</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findTotal&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;int&quot;</span>&gt;</span></span><br><span class="line">    select count(id) from userm</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3><span id="参数深入">参数深入</span></h3>
+<h4><span id="parametertype输入类型"><code>parameterType</code>(输入类型)</span></h4>
+<ul>
+<li>
+<p>传递简单类型</p>
+</li>
+<li>
+<p>传递<code>pojo</code>对象</p>
+<p>使用<code>orgl</code>表达式解析对象字段的值，#{}或${}括号中的值为<code>pojo</code>属性名称，上述即为示例。</p>
+</li>
+<li>
+<p>传递<code>pojo</code>包装对象，利用一个对象的多个属性查询单个或多个对象。</p>
+<p>创建接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;User&gt; <span class="title function_">findUserByVo</span><span class="params">(QueryVo vo)</span>;</span><br></pre></td></tr></table></figure>
+<p>创建QueryVo实体对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">QueryVo</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> User user;</span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUser</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUser</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.user = user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findUserByVo&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;top.tyzhang.domain.QueryVo&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;top.tyzhang.domain.User&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--使用QueryVo中的user的username属性--&gt;</span></span><br><span class="line">    select * from userm where username like #&#123;user.username&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testFindVo</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">QueryVo</span> <span class="variable">vo</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">QueryVo</span>();</span><br><span class="line">    User user=<span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">    user.setUsername(<span class="string">&quot;%王%&quot;</span>);</span><br><span class="line">    vo.setUser(user);</span><br><span class="line">    List&lt;User&gt; users=userDao.findUserByVo(vo);</span><br><span class="line">    <span class="keyword">for</span> (User userq:users)</span><br><span class="line">        System.out.println(userq);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p><strong>OGNL表达式：</strong> Object Graphic Navigation Language，对象图导航语言。它是通过对象的取值方法来获取数据，在写法上把get省略了。</p>
+</blockquote>
+<h4><span id="resulttype输出类型"><code>resultType</code>(输出类型)</span></h4>
+<p>对输出结果进行封装，基本类型、pojo对象、pojo列表。</p>
+<h4><span id="解决数据库列名和实体类属性不一致">解决数据库列名和实体类属性不一致</span></h4>
+<ol>
+<li>
+<p>起别名</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">&lt;!--配置查询所有  其中id不能乱写必须是dao接口中的方法  resultType写的是实体类的全路径--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findAll&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;top.tyzhang.domain.User&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--实体类中的属性名和数据库表中元素名字匹配不上时，使用别名即可匹配。id为数据库中表的列名，userId为实体类中属性名--&gt;</span></span><br><span class="line">    select id as userId,username as userName,address as userAddress ,sex as userSex, birthday as userBirthday from user</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>配置查询结果中的列名</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置查询结果的列名和实体类的属性名的对应关系--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;userMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;top.tyzhang.domain.User&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--主键字段的对应--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;userId&quot;</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--非主键字段的对应--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;userName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;userAddress&quot;</span> <span class="attr">column</span>=<span class="string">&quot;address&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;userSex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;userBirthday&quot;</span> <span class="attr">column</span>=<span class="string">&quot;bithday&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--再在查询的sql语句的xml中加入配置--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findAll&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span>&gt;</span></span><br><span class="line">    select * from user</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3><span id="xml中的一些配置">XML中的一些配置</span></h3>
+<h4><span id="1-使用properties配置数据库连接信息">1. 使用<code>properties</code>配置数据库连接信息</span></h4>
+<ul>
+<li>URL属性
+<ul>
+<li>
+<p>URL：Uniform Resource Locator，统一资源定位符，可以唯一标志一个资源的位置。如，<a href="http://localhost:8080/mybatisserver/demo1Servlet%E3%80%82">http://localhost:8080/mybatisserver/demo1Servlet。</a></p>
+</li>
+<li>
+<p>URI：Uniform Resource Identifier，统一资源标识符，是在应用中可以可以唯一标志一个资源的位置。</p>
+</li>
+<li>
+<p>精准性：URL&gt;URI</p>
+</li>
+<li>
+<pre><code class="language-xml">&lt;properties url=&quot;file:///C:/Users/ty/tytyty/src/main/resources/jdbcConfig.properties&quot;&gt;
+&lt;/properties&gt;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">- `resources`属性</span><br><span class="line"></span><br><span class="line">  - 用于指定配置文件的位置，是按照类路径来写的，必须存在于类路径下。</span><br><span class="line"></span><br><span class="line">  - ```xml</span><br><span class="line">    &lt;properties resource=&quot;jdbcConfig.properties&quot;&gt;&lt;/properties&gt;</span><br></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4><span id="2-使用typealiases配置别名">2. 使用<code>typeAliases</code>配置别名</span></h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--使用typeAliases配置别名，他只能配置domain中类的别名--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--typeAlias用于配置别名，type属性指定的是实体类中的全限定类名。alias属性指定别名，当指定了别名后不在区分大小写--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">type</span>=<span class="string">&quot;top.tyzhang.domain.User&quot;</span> <span class="attr">alias</span>=<span class="string">&quot;user&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">typeAlias</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4><span id="3-使用package配置别名">3. 使用<code>package</code>配置别名</span></h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--用于指定要配置别名的包，当指定后，该包下的实体类都会注册别名，并且类名就是别名，不再区分大小写--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;top.tyzhang.domain&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>配置映射文件位置中也有<code>package</code>标签。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;mapper resource=&quot;top/tyzhang/dao/IUserDao.xml&quot;/&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--package标签是用于指定dao接口所在的包，当指定了之后就不需要再写mapepr以及resource或者class了--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;top.tyzhang.dao&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/mybatisthr/" data-toggle="tooltip" data-placement="top" title="MyBatis: POOL">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/mybatisfir/" data-toggle="tooltip" data-placement="top" title="MyBatis: Preparation">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">CRUD</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">查询所有</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">保存操作</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">新增用户ID的返回值</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">更新操作</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">删除操作</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">查询一个</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">模糊查询</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">查询总数</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">参数深入</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">parameterType(输入类型)</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">resultType(输出类型)</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">解决数据库列名和实体类属性不一致</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">XML中的一些配置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1. 使用properties配置数据库连接信息</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2. 使用typeAliases配置别名</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3. 使用package配置别名</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">标签</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#知识" title="知识">知识</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+				<!--
+                
+                <hr>
+                <h5>朋友们</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://www.freedomly.tk/" target="_blank">Freedomly</a></li>
+                    
+                        <li><a href="https://jlwang1996.github.io/" target="_blank">jlwang1996</a></li>
+                    
+                        <li><a href="http://siwenzheng.github.io/" target="_blank">SiwenZheng</a></li>
+                    
+                        <li><a href="https://loststartvt.github.io/" target="_blank">LostStarTvT</a></li>
+                    
+                        <li><a href="https://zbsong.top/" target="_blank">songzblink</a></li>
+                    
+                        <li><a href="https://dolnw.github.io/" target="_blank">JCWang</a></li>
+                    
+                </ul>
+                
+				-->
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-tian-yu-65-49">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://space.bilibili.com/38534865">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>B</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://m.okjike.com/users/28c5ee85-832c-4a04-ab73-788a507d2bd8">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>J</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ztygalaxy">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 张天宇 2024 
+                    <br>
+                    Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
+                    re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
+					
+					<br>
+                    <a href="http://beian.miit.gov.cn/" style="color: gray">浙 ICP备19045818号</a>
+					<br>
+					<!-- <p class="copyright text-muted" style="margin-top: 5px"> -->
+						<img src="../../img/备案图标.png"/>
+						<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011802001883" style="color: gray">浙公网安备 33011802001883号</a>
+					<!-- </p> -->
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://tyzhang.top/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://tyzhang.top/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

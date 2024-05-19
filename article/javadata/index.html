@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张天宇的文字自留地">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/logo.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Java 方法篇 - 张天宇的博客 | ztygalaxy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://tyzhang.top/article/javadata/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script>
+	</script>
+	<style>
+	* {
+            box-sizing: border-box;
+        }
+
+        form {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        input, button {
+            border: none;
+            outline: none;
+        }
+
+        input {
+            width: 100%;
+            height: 42px;
+            padding-left: 13px;
+        }
+
+        button {
+            height: 42px;
+            width: 42px;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        /*搜索框1*/
+        .bar1 {
+			background: #FFF;
+			max-width: 200px;
+		}
+        .bar1 input {
+			max-height: 30px;
+            border: 2px solid #BFBFBF;
+            border-radius: 5px;
+            background: #FFFFFF;
+            color: #BFBFBF;
+			-webkit-text-fill-color: #BFBFBF;
+        }
+        .bar1 button {
+			max-height: 30px;
+            top: 0;
+            right: 0;
+            background: #BFBFBF;
+            border-radius: 0 5px 5px 0;
+        }
+        .bar1 button:before {
+            content: "\f002";
+            font-family: FontAwesome;
+            font-size: 16px;
+            color: #F9F0DA;
+        }
+		</style>
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="张天宇的博客" type="application/atom+xml">
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('https://api.dujin.org/bing/1920.php')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#基础知识" title="基础知识">基础知识</a>
+                            
+                        </div>
+                        <h1>Java 方法篇</h1>
+                        <!-- <h2 class="subheading">这篇主要记录了Java中的一些常用数据结构和方法。</h2> -->
+                        <span class="meta">
+                            张天宇 on
+                            2019-11-12
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">主页</a>
+                    </li>
+					<li>
+                        <a href="/archive/">归档</a>
+                    </li>
+					<li>
+                        <a href="/tags/">标签</a>
+                    </li>
+					<li>
+                        <a href="/about/">关于</a>
+                    </li>
+					<!--
+					修改about在前面的问题
+                    
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    -->
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				
+                <blockquote>
+<p>这篇主要记录了Java中的一些常用数据结构和方法。</p>
+</blockquote>
+<h2><span id="list">List</span></h2>
+<h3><span id="增删查改">增删查改</span></h3>
+<p>添加<code>List.add</code>、删除<code>List.remove</code>、查找<code>List.get</code>、更改<code>List.set</code>、存在<code>List.contains</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; person = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">person.add(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">person.add(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">person.remove(<span class="number">1</span>);</span><br><span class="line"><span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> person.get(<span class="number">0</span>);</span><br><span class="line">System.out.println(result); <span class="comment">//A</span></span><br><span class="line">person.set(<span class="number">0</span>, <span class="string">&quot;C&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (String s : person)</span><br><span class="line">	System.out.println(s); <span class="comment">//C</span></span><br><span class="line">System.out.println(person.contains(<span class="string">&quot;C&quot;</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h3><span id="改变与替换">改变与替换</span></h3>
+<p><code>.add</code>将元素放到索引index的位置，原来位置的元素后移。<code>.set</code>替换index位置的元素。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">person.set(<span class="number">1</span>, <span class="string">&quot;D&quot;</span>);</span><br><span class="line">person.add(<span class="number">0</span>, <span class="string">&quot;E&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h3><span id="查看索引">查看索引</span></h3>
+<p><code>indexOf</code>和<code>lastIndexOf</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">person.clear(); <span class="comment">//清空</span></span><br><span class="line">person.add(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">person.add(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">person.add(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">person.add(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">System.out.println(person.indexOf(<span class="string">&quot;A&quot;</span>)); <span class="comment">//0</span></span><br><span class="line">System.out.println(person.lastIndexOf(<span class="string">&quot;A&quot;</span>)); <span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<h3><span id="截取">截取</span></h3>
+<p><code>subList</code>截取区间 [fromIndex,toIndex) 作为新List。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">person.clear();</span><br><span class="line">person.add(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">person.add(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">person.add(<span class="string">&quot;C&quot;</span>);</span><br><span class="line">person.add(<span class="string">&quot;D&quot;</span>);</span><br><span class="line">person.add(<span class="string">&quot;E&quot;</span>);</span><br><span class="line">person = person.subList(<span class="number">1</span>, <span class="number">4</span>);</span><br><span class="line"><span class="keyword">for</span> (String s : person)</span><br><span class="line">	System.out.println(s); <span class="comment">// B C D</span></span><br></pre></td></tr></table></figure>
+<h3><span id="对比">对比</span></h3>
+<p><code>equals</code>对比两个对象，两个对象中的所有元素完全相同。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.equals(fruits)</span><br></pre></td></tr></table></figure>
+<h3><span id="判空">判空</span></h3>
+<p><code>isEmpty()</code></p>
+<h3><span id="去重">去重</span></h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; lst1 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">lst1.add(<span class="string">&quot;aa&quot;</span>);</span><br><span class="line">lst1.add(<span class="string">&quot;dd&quot;</span>);</span><br><span class="line">lst1.add(<span class="string">&quot;ss&quot;</span>);</span><br><span class="line">lst1.add(<span class="string">&quot;aa&quot;</span>);</span><br><span class="line">lst1.add(<span class="string">&quot;ss&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法 1.</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; lst1.size() - <span class="number">1</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> lst1.size() - <span class="number">1</span>; j &gt; i; j--) &#123;</span><br><span class="line">        <span class="keyword">if</span> (lst1.get(j).equals(lst1.get(i))) &#123;</span><br><span class="line">            lst1.remove(j);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(lst1);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法 2.</span></span><br><span class="line">List&lt;String&gt; lst2 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (String s : lst1) &#123;</span><br><span class="line">    <span class="keyword">if</span> (Collections.frequency(lst2, s) &lt; <span class="number">1</span>) &#123;</span><br><span class="line">        lst2.add(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(lst2);</span><br></pre></td></tr></table></figure>
+<p><a href="https://blog.csdn.net/Barcon/article/details/82628120">https://blog.csdn.net/Barcon/article/details/82628120</a></p>
+<h2><span id="priorityqueue">PriorityQueue</span></h2>
+<h3><span id="概述">概述</span></h3>
+<p>优先队列PriorityQueue是Queue接口的实现，可以对其中元素进行排序，可以放基本数据类型的包装类（如：Integer，Long等）或自定义的类。对于基本数据类型的包装器类，优先队列中元素默认排列顺序是升序排列，但对于自己定义的类来说，需要自己定义比较器。</p>
+<h3><span id="常用方法">常用方法</span></h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">peek()<span class="comment">//返回队首元素</span></span><br><span class="line">poll()<span class="comment">//返回队首元素，队首元素出队列</span></span><br><span class="line">add()<span class="comment">//添加元素</span></span><br><span class="line">size()<span class="comment">//返回队列元素个数</span></span><br><span class="line">isEmpty()<span class="comment">//判断队列是否为空，为空返回true,不空返回false</span></span><br></pre></td></tr></table></figure>
+<h3><span id="使用">使用</span></h3>
+<h4><span id="队列保存的是基本数据类型的包装类">队列保存的是基本数据类型的包装类</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义比较器，降序排列</span></span><br><span class="line"><span class="keyword">static</span> Comparator&lt;Integer&gt; cmp = <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Integer&gt;() &#123;</span><br><span class="line">      <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Integer e1, Integer e2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> e2 - e1;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//不用比较器，默认升序排列</span></span><br><span class="line">        Queue&lt;Integer&gt; q = <span class="keyword">new</span> <span class="title class_">PriorityQueue</span>&lt;&gt;();</span><br><span class="line">        q.add(<span class="number">3</span>);</span><br><span class="line">        q.add(<span class="number">2</span>);</span><br><span class="line">        q.add(<span class="number">4</span>);</span><br><span class="line">        <span class="keyword">while</span>(!q.isEmpty())</span><br><span class="line">        &#123;</span><br><span class="line">            System.out.print(q.poll()+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 输出结果</span></span><br><span class="line"><span class="comment">         * 2 3 4 </span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="comment">//使用自定义比较器，降序排列</span></span><br><span class="line">        Queue&lt;Integer&gt; qq = <span class="keyword">new</span> <span class="title class_">PriorityQueue</span>&lt;&gt;(cmp);</span><br><span class="line">        qq.add(<span class="number">3</span>);</span><br><span class="line">        qq.add(<span class="number">2</span>);</span><br><span class="line">        qq.add(<span class="number">4</span>);</span><br><span class="line">        <span class="keyword">while</span>(!qq.isEmpty())</span><br><span class="line">        &#123;</span><br><span class="line">            System.out.print(qq.poll()+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 输出结果</span></span><br><span class="line"><span class="comment">         * 4 3 2 </span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="保存了自定义类">保存了自定义类</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//矩形类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Node</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Node</span><span class="params">(<span class="type">int</span> chang,<span class="type">int</span> kuan)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">this</span>.chang=chang;</span><br><span class="line">        <span class="built_in">this</span>.kuan=kuan;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> chang;</span><br><span class="line">    <span class="type">int</span> kuan;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">　　　　<span class="comment">//自定义比较类，先比较长，长升序排列，若长相等再比较宽，宽降序</span></span><br><span class="line">    <span class="keyword">static</span> Comparator&lt;Node&gt; cNode=<span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Node&gt;() &#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Node o1, Node o2)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(o1.chang!=o2.chang)</span><br><span class="line">                <span class="keyword">return</span> o1.chang-o2.chang;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> o2.kuan-o1.kuan;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        Queue&lt;Node&gt; q=<span class="keyword">new</span> <span class="title class_">PriorityQueue</span>&lt;&gt;(cNode);</span><br><span class="line">        Node n1=<span class="keyword">new</span> <span class="title class_">Node</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">        Node n2=<span class="keyword">new</span> <span class="title class_">Node</span>(<span class="number">2</span>, <span class="number">5</span>);</span><br><span class="line">        Node n3=<span class="keyword">new</span> <span class="title class_">Node</span>(<span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">        Node n4=<span class="keyword">new</span> <span class="title class_">Node</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">        q.add(n1);</span><br><span class="line">        q.add(n2);</span><br><span class="line">        q.add(n3);</span><br><span class="line">        Node n;</span><br><span class="line">        <span class="keyword">while</span>(!q.isEmpty())</span><br><span class="line">        &#123;</span><br><span class="line">            n=q.poll();</span><br><span class="line">            System.out.println(<span class="string">&quot;长: &quot;</span>+n.chang+<span class="string">&quot; 宽：&quot;</span> +n.kuan);</span><br><span class="line">        &#125;</span><br><span class="line">　　　　　<span class="comment">/**</span></span><br><span class="line"><span class="comment">　　　　　　* 输出结果</span></span><br><span class="line"><span class="comment">　　　　　　* 长: 1 宽：2</span></span><br><span class="line"><span class="comment">　　　　　　* 长: 2 宽：5</span></span><br><span class="line"><span class="comment">　　　　　　* 长: 2 宽：3</span></span><br><span class="line"><span class="comment">　　　　　　*/</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="遍历">遍历</span></h4>
+<p>PriorityQueue的iterator()不保证以任何特定顺序遍历队列元素。若想按特定顺序遍历，先将队列转成数组，然后排序遍历。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Queue&lt;Integer&gt; q = <span class="keyword">new</span> <span class="title class_">PriorityQueue</span>&lt;&gt;(cmp);</span><br><span class="line"><span class="type">int</span>[] nums= &#123;<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">6</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i:nums)&#123;</span><br><span class="line">    q.add(i);</span><br><span class="line">&#125;</span><br><span class="line">Object[] nn=q.toArray();</span><br><span class="line">Arrays.sort(nn);</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=nn.length-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">    System.out.print((<span class="type">int</span>)nn[i]+<span class="string">&quot; &quot;</span>);</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 输出结果</span></span><br><span class="line"><span class="comment">* 6 5 4 3 2 1 </span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h4><span id="比较器降序说明">比较器降序说明</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Object&gt; cmp = <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Object&gt;() &#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Object o1, Object o2)</span> &#123;</span><br><span class="line">            <span class="comment">//升序</span></span><br><span class="line">            <span class="keyword">return</span> o1-o2;</span><br><span class="line">            <span class="comment">//降序</span></span><br><span class="line">            <span class="keyword">return</span> o2-o1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<h3><span id="数据流中的中位数">数据流中的中位数</span></h3>
+<p>下面再来看这道题</p>
+<p>如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。</p>
+<p>普通解法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">Insert</span><span class="params">(<span class="type">int</span> num)</span> </span>&#123; s.<span class="built_in">push_back</span>(num); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">GetMedian</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">sort</span>(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>());</span><br><span class="line">        <span class="type">int</span> i = s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">2</span> != <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> s[(i + <span class="number">1</span>) / <span class="number">2</span> - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">return</span> ((<span class="type">double</span>)s[i / <span class="number">2</span> - <span class="number">1</span>] + (<span class="type">double</span>)s[i / <span class="number">2</span>]) / <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>生成一个大顶堆和小顶堆，维持大顶堆的数都小于等于小顶堆的数，且二者个数相等或者相差为1，平均数即在两个栈顶的数之中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="comment">// 右边小顶堆的元素都大于左边大顶堆的元素</span></span><br><span class="line">    <span class="comment">// 并且左边元素的个数，要么与右边相等（偶数次输入），要么比右边大1（奇数次输入）</span></span><br><span class="line">    priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, less&lt;<span class="type">int</span>&gt; &gt; left;      <span class="comment">//大顶堆</span></span><br><span class="line">    priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, greater&lt;<span class="type">int</span>&gt; &gt; right;  <span class="comment">//小顶堆</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">Insert</span><span class="params">(<span class="type">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (left.<span class="built_in">empty</span>() || num &lt;= left.<span class="built_in">top</span>())</span><br><span class="line">            left.<span class="built_in">push</span>(num);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            right.<span class="built_in">push</span>(num);</span><br><span class="line">        <span class="comment">// 左边大顶堆的大小最多可以比右边小顶堆大1（奇数次输入）</span></span><br><span class="line">        <span class="keyword">if</span> (left.<span class="built_in">size</span>() == right.<span class="built_in">size</span>() + <span class="number">2</span>) right.<span class="built_in">push</span>(left.<span class="built_in">top</span>()), left.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="comment">// 因为最后返回的只有可能是左边大顶堆的堆顶，所以右边小顶堆的大小不能比左边小顶堆大</span></span><br><span class="line">        <span class="keyword">if</span> (left.<span class="built_in">size</span>() + <span class="number">1</span> == right.<span class="built_in">size</span>())</span><br><span class="line">            left.<span class="built_in">push</span>(right.<span class="built_in">top</span>()), right.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">GetMedian</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> left.<span class="built_in">size</span>() == right.<span class="built_in">size</span>() ? (left.<span class="built_in">top</span>() + right.<span class="built_in">top</span>()) / <span class="number">2.0</span></span><br><span class="line">                                           : left.<span class="built_in">top</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2><span id="stringbuffer">StringBuffer</span></h2>
+<h3><span id="概述">概述</span></h3>
+<p>当对字符串进行修改时候，需要使用StringBuffer和StringBuilder类。不同于String，他们可以被多次修改而不产生新的对象。StringBuilder 相较于 StringBuffer 有速度优势，所以多数情况下建议使用 StringBuilder 类。然而在应用程序要求线程安全的情况下，则必须使用 StringBuffer 类。</p>
+<p>String适用于少量的字符串操作的情况，StringBuilder适用于单线程下在字符缓冲区进行大量操作的情况，StringBuffer适用多线程下在字符缓冲区进行大量操作的情况。</p>
+<h3><span id="使用">使用</span></h3>
+<h4><span id="tostring">toString()</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">StringBuffer</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>();</span><br><span class="line">s1.toString();</span><br></pre></td></tr></table></figure>
+<h4><span id="append">append()</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">StringBuffer</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>().append(<span class="string">&quot;bbb&quot;</span>);</span><br><span class="line">s1.append(<span class="string">&quot;aaa&quot;</span>);	<span class="comment">//bbbaaa</span></span><br></pre></td></tr></table></figure>
+<h4><span id="charat">charAt()</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(s1.charAt(<span class="number">3</span>));	<span class="comment">//a</span></span><br></pre></td></tr></table></figure>
+<h4><span id="deletecharat">deleteCharAt()</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">StringBuffer</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>().append(<span class="string">&quot;bbbaaa&quot;</span>);</span><br><span class="line">s1.deleteCharAt(<span class="number">3</span>);	<span class="comment">//bbbaa</span></span><br></pre></td></tr></table></figure>
+<h4><span id="delete">delete()</span></h4>
+<p>删除从开始索引到结束索引的字符串。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">StringBuffer</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>().append(<span class="string">&quot;bbbaaa&quot;</span>);</span><br><span class="line">s1.delete(<span class="number">2</span>, <span class="number">4</span>); <span class="comment">//bbaa</span></span><br></pre></td></tr></table></figure>
+<h4><span id="insert">insert()</span></h4>
+<p>在指定索引位置之前插入字符串。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">StringBuffer</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>().append(<span class="string">&quot;bbbaaa&quot;</span>);</span><br><span class="line">s1.insert(<span class="number">2</span>,<span class="string">&quot;cc&quot;</span>);	<span class="comment">//bbccbaaa</span></span><br></pre></td></tr></table></figure>
+<h4><span id="indexof">indexOf()</span></h4>
+<p>返回指定字符串的开始字符索引位置，还可以从某个字符索引位置开始向后匹配，没有找到匹配的就会返回-1。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">StringBuffer</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>().append(<span class="string">&quot;bbbaaa&quot;</span>);</span><br><span class="line">System.out.println(s1.indexOf(<span class="string">&quot;ba&quot;</span>));	<span class="comment">//2</span></span><br><span class="line">System.out.println(s1.indexOf(<span class="string">&quot;ba&quot;</span>,<span class="number">2</span>));	<span class="comment">//2</span></span><br><span class="line">System.out.println(s1.indexOf(<span class="string">&quot;mn&quot;</span>));	<span class="comment">//-1</span></span><br></pre></td></tr></table></figure>
+<h4><span id="lastindexof">lastIndexOf()</span></h4>
+<p>和indexOf()的用法一样，只不过是从后往前匹配，也支持从指定索引开始从后往前去匹配。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">StringBuffer</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>().append(<span class="string">&quot;bbb&quot;</span>);</span><br><span class="line">s1.append(<span class="string">&quot;aaa&quot;</span>);</span><br><span class="line">System.out.println(s1.toString());	<span class="comment">//bbbaaa</span></span><br><span class="line">System.out.println(s1.lastIndexOf(<span class="string">&quot;b&quot;</span>,<span class="number">5</span>));	<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<h4><span id="reverse">reverse()</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">StringBuffer</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>().append(<span class="string">&quot;bbbaaa&quot;</span>);</span><br><span class="line">System.out.println(s1.reverse());</span><br><span class="line">System.out.println(s1.toString());	<span class="comment">///aaabbb</span></span><br></pre></td></tr></table></figure>
+<h4><span id="length">length()</span></h4>
+<p>返回长度。</p>
+<h2><span id="hashmap">HashMap</span></h2>
+<h3><span id="概述">概述</span></h3>
+<p>在JDK1.6，JDK1.7中，HashMap采用位桶+链表实现，即使用链表处理冲突，同一hash值的链表都存储在一个链表里。但是当位于一个桶中的元素较多，即hash值相等的元素较多时，通过key值依次查找的效率较低。而JDK1.8中，HashMap采用位桶+链表+红黑树实现，当链表长度超过阈值（8）时，将链表转换为红黑树，这样大大减少了查找时间。<a href="https://www.cnblogs.com/little-fly/p/7344285.html">参考链接</a></p>
+<p>HashMap的实现是不同步的，这意味着它不是线程安全的。它的key,value都可以是null。此外，HashMap中的映射不是有序的。</p>
+<p>HashMap的实例有两个参数影响其性能：“初始容量”和“加载因子”。初始容量是哈希表在创建时的容量。加载因子是哈希表在其容量自动增加之前可以达到多满的一种尺度。通常默认加载因子是0.75，这是在时间和空间成本上寻求一种折衷。</p>
+<h3><span id="使用">使用</span></h3>
+<h4><span id="构造函数">构造函数</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认构造函数。</span></span><br><span class="line">HashMap()</span><br><span class="line"><span class="comment">// 指定“容量大小”的构造函数</span></span><br><span class="line">HashMap(<span class="type">int</span> capacity)</span><br><span class="line"><span class="comment">// 指定“容量大小”和“加载因子”的构造函数</span></span><br><span class="line">HashMap(<span class="type">int</span> capacity, <span class="type">float</span> loadFactor)</span><br><span class="line"><span class="comment">// 包含“子Map”的构造函数</span></span><br><span class="line">HashMap(Map&lt;? <span class="keyword">extends</span> <span class="title class_">K</span>, ? <span class="keyword">extends</span> <span class="title class_">V</span>&gt; map)</span><br></pre></td></tr></table></figure>
+<h4><span id="api">API</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span>                 <span class="title function_">clear</span><span class="params">()</span>	<span class="comment">//清空HashMap</span></span><br><span class="line">Object               <span class="title function_">clone</span><span class="params">()</span>	<span class="comment">//克隆一个HashMap对象并返回</span></span><br><span class="line"><span class="type">boolean</span>              <span class="title function_">containsKey</span><span class="params">(Object key)</span>	<span class="comment">//判断HashMap是否包含key</span></span><br><span class="line"><span class="type">boolean</span>              <span class="title function_">containsValue</span><span class="params">(Object value)</span>	<span class="comment">//判断HashMap是否包含“值为value”的元素</span></span><br><span class="line">Set&lt;Entry&lt;K, V&gt;&gt;     <span class="title function_">entrySet</span><span class="params">()</span>	<span class="comment">//返回“HashMap中所有Entry的集合”，它是一个集合</span></span><br><span class="line">V                    <span class="title function_">get</span><span class="params">(Object key)</span>	<span class="comment">//获取key对应的value</span></span><br><span class="line">V                    <span class="title function_">getOrDefault</span><span class="params">(Object key, V value)</span>	<span class="comment">//JDK1.8</span></span><br><span class="line"><span class="type">boolean</span>              <span class="title function_">isEmpty</span><span class="params">()</span></span><br><span class="line">Set&lt;K&gt;               <span class="title function_">keySet</span><span class="params">()</span></span><br><span class="line">V                    <span class="title function_">put</span><span class="params">(K key, V value)</span>	<span class="comment">//对外提供接口，让HashMap对象可以通过put()将“key-value”添加到HashMap中</span></span><br><span class="line"><span class="keyword">void</span>                 <span class="title function_">putAll</span><span class="params">(Map&lt;? extends K, ? extends V&gt; map)</span>	<span class="comment">//将&quot;m&quot;的全部元素都添加到HashMap中</span></span><br><span class="line">V                    <span class="title function_">remove</span><span class="params">(Object key)</span>	<span class="comment">//删除“键为key”元素</span></span><br><span class="line"><span class="type">int</span>                  <span class="title function_">size</span><span class="params">()</span>	<span class="comment">//包含键值对的数量</span></span><br><span class="line">Collection&lt;V&gt;        <span class="title function_">values</span><span class="params">()</span></span><br><span class="line">V				    <span class="title function_">replace</span><span class="params">(key,val)</span>	<span class="comment">//对于存在的key，调用replace方法，会替换原来的value，并返回旧value，这和put的效果是一样的；对于不存在的key，replace方法什么都不做。</span></span><br></pre></td></tr></table></figure>
+<h4><span id="遍历">遍历</span></h4>
+<ol>
+<li>
+<p>遍历HashMap的键值对</p>
+<p>第一步：根据entrySet()获取HashMap的“键值对”的Set集合，效率高。<br>
+第二步：通过Iterator迭代器遍历“第一步”得到的集合。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// map中的key是String类型，value是Integer类型</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">integ</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"><span class="type">Iterator</span> <span class="variable">iter</span> <span class="operator">=</span> map.entrySet().iterator();</span><br><span class="line"><span class="keyword">while</span>(iter.hasNext()) &#123;</span><br><span class="line">    Map.<span class="type">Entry</span> <span class="variable">entry</span> <span class="operator">=</span> (Map.Entry)iter.next();</span><br><span class="line">    <span class="comment">// 获取key</span></span><br><span class="line">    key = (String)entry.getKey();</span><br><span class="line">        <span class="comment">// 获取value</span></span><br><span class="line">   	integ = (Integer)entry.getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>遍历HashMap的键</p>
+<p>第一步：根据keySet()获取HashMap的“键”的Set集合。<br>
+第二步：通过Iterator迭代器遍历“第一步”得到的集合。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设map是HashMap对象</span></span><br><span class="line"><span class="comment">// map中的key是String类型，value是Integer类型</span></span><br><span class="line"><span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"><span class="type">Integer</span> <span class="variable">integ</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"><span class="type">Iterator</span> <span class="variable">iter</span> <span class="operator">=</span> map.keySet().iterator();</span><br><span class="line"><span class="keyword">while</span> (iter.hasNext()) &#123;</span><br><span class="line">        <span class="comment">// 获取key</span></span><br><span class="line">    key = (String)iter.next();</span><br><span class="line">        <span class="comment">// 根据key，获取value</span></span><br><span class="line">    integ = (Integer)map.get(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>遍历HashMap的值</p>
+<p>第一步：根据value()获取HashMap的“值”的集合。<br>
+第二步：通过Iterator迭代器遍历“第一步”得到的集合。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// map中的key是String类型，value是Integer类型</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">value</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"><span class="type">Collection</span> <span class="variable">c</span> <span class="operator">=</span> map.values();</span><br><span class="line">Iterator iter= c.iterator();</span><br><span class="line"><span class="keyword">while</span> (iter.hasNext()) &#123;</span><br><span class="line">    value = (Integer)iter.next();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2><span id="string">String</span></h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String x=<span class="string">&quot;fmn&quot;</span>;</span><br><span class="line">x.toUpperCase();</span><br><span class="line">String y=x.replace(<span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;F&#x27;</span>);</span><br><span class="line">String x=<span class="string">&quot;fmn&quot;</span>;  “fmn”是在常量池里的不可变对象。</span><br><span class="line">x.toUpperCase();  在堆中<span class="keyword">new</span>一个<span class="string">&quot;FMN&quot;</span>对象，但无任何引用指向它。</span><br><span class="line">String y=x.replace(<span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;F&#x27;</span>); 在堆中 <span class="keyword">new</span>一个<span class="string">&quot;Fmn&quot;</span>对象，y指向它。</span><br><span class="line">y=y+<span class="string">&quot;wxy&quot;</span>; 在堆中 重新<span class="keyword">new</span>一个<span class="string">&quot;Fmnwxy&quot;</span>对象， 修改y指向，现在y指向它。</span><br></pre></td></tr></table></figure>
+<p>substring()</p>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/userfullink/" data-toggle="tooltip" data-placement="top" title="他山之玉">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/buildwebsite/" data-toggle="tooltip" data-placement="top" title="域名备案过程全记录">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">List</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">增删查改</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">改变与替换</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">查看索引</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">截取</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">对比</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">判空</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">去重</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">PriorityQueue</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">常用方法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.3.1.</span> <span class="toc-nav-text">队列保存的是基本数据类型的包装类</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.3.2.</span> <span class="toc-nav-text">保存了自定义类</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.3.3.</span> <span class="toc-nav-text">遍历</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">2.3.4.</span> <span class="toc-nav-text">比较器降序说明</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">数据流中的中位数</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">StringBuffer</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">toString()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">append()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.3.</span> <span class="toc-nav-text">charAt()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.4.</span> <span class="toc-nav-text">deleteCharAt()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.5.</span> <span class="toc-nav-text">delete()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.6.</span> <span class="toc-nav-text">insert()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.7.</span> <span class="toc-nav-text">indexOf()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.8.</span> <span class="toc-nav-text">lastIndexOf()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.9.</span> <span class="toc-nav-text">reverse()</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.2.10.</span> <span class="toc-nav-text">length()</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">HashMap</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">4.2.1.</span> <span class="toc-nav-text">构造函数</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">4.2.2.</span> <span class="toc-nav-text">API</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">4.2.3.</span> <span class="toc-nav-text">遍历</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">String</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">标签</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#基础知识" title="基础知识">基础知识</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+				<!--
+                
+                <hr>
+                <h5>朋友们</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://www.freedomly.tk/" target="_blank">Freedomly</a></li>
+                    
+                        <li><a href="https://jlwang1996.github.io/" target="_blank">jlwang1996</a></li>
+                    
+                        <li><a href="http://siwenzheng.github.io/" target="_blank">SiwenZheng</a></li>
+                    
+                        <li><a href="https://loststartvt.github.io/" target="_blank">LostStarTvT</a></li>
+                    
+                        <li><a href="https://zbsong.top/" target="_blank">songzblink</a></li>
+                    
+                        <li><a href="https://dolnw.github.io/" target="_blank">JCWang</a></li>
+                    
+                </ul>
+                
+				-->
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-tian-yu-65-49">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://space.bilibili.com/38534865">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>B</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://m.okjike.com/users/28c5ee85-832c-4a04-ab73-788a507d2bd8">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>J</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ztygalaxy">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 张天宇 2024 
+                    <br>
+                    Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
+                    re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
+					
+					<br>
+                    <a href="http://beian.miit.gov.cn/" style="color: gray">浙 ICP备19045818号</a>
+					<br>
+					<!-- <p class="copyright text-muted" style="margin-top: 5px"> -->
+						<img src="../../img/备案图标.png"/>
+						<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011802001883" style="color: gray">浙公网安备 33011802001883号</a>
+					<!-- </p> -->
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://tyzhang.top/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://tyzhang.top/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

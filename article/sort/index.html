@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张天宇的文字自留地">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/logo.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          常用排序算法总结 - 张天宇的博客 | ztygalaxy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://tyzhang.top/article/sort/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script>
+	</script>
+	<style>
+	* {
+            box-sizing: border-box;
+        }
+
+        form {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        input, button {
+            border: none;
+            outline: none;
+        }
+
+        input {
+            width: 100%;
+            height: 42px;
+            padding-left: 13px;
+        }
+
+        button {
+            height: 42px;
+            width: 42px;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        /*搜索框1*/
+        .bar1 {
+			background: #FFF;
+			max-width: 200px;
+		}
+        .bar1 input {
+			max-height: 30px;
+            border: 2px solid #BFBFBF;
+            border-radius: 5px;
+            background: #FFFFFF;
+            color: #BFBFBF;
+			-webkit-text-fill-color: #BFBFBF;
+        }
+        .bar1 button {
+			max-height: 30px;
+            top: 0;
+            right: 0;
+            background: #BFBFBF;
+            border-radius: 0 5px 5px 0;
+        }
+        .bar1 button:before {
+            content: "\f002";
+            font-family: FontAwesome;
+            font-size: 16px;
+            color: #F9F0DA;
+        }
+		</style>
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="张天宇的博客" type="application/atom+xml">
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('https://api.dujin.org/bing/1920.php')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                            
+                        </div>
+                        <h1>常用排序算法总结</h1>
+                        <!-- <h2 class="subheading">十大排序算法总结和实现，头疼的堆排序。</h2> -->
+                        <span class="meta">
+                            张天宇 on
+                            2020-07-28
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">主页</a>
+                    </li>
+					<li>
+                        <a href="/archive/">归档</a>
+                    </li>
+					<li>
+                        <a href="/tags/">标签</a>
+                    </li>
+					<li>
+                        <a href="/about/">关于</a>
+                    </li>
+					<!--
+					修改about在前面的问题
+                    
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    -->
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				
+                <blockquote>
+<p>十大排序算法总结和实现，头疼的堆排序。</p>
+</blockquote>
+<p><img src="https://pic.tyzhang.top/images/2020/07/28/E68E92E5BA8F_E680BBE7BB93.md.png" alt="排序算法"></p>
+<p><strong>稳定性</strong>：假定在待排序的记录序列中，存在多个具有相同的关键字的记录，若经过排序，这些记录的相对次序保持不变，即在原序列中，r[i]=r[j]，且r[i]在r[j]之前，而在排序后的序列中，r[i]仍在r[j]之前，则称这种排序算法是稳定的；否则称为不稳定的。</p>
+<h2><span id="1-直接插入">1. 直接插入</span></h2>
+<p>对于未排序的元素，在已排序的元素中从后向前扫描，找到合适的位置后插入。</p>
+<p>稳定， 因为未排序的元素在向前扫描过程中遇到相同的元素就不会继续向前扫描了，更不会插在它的前面。</p>
+<p>平均和最差情况都是O(n2)，最佳情况为O(n)，如果这个数组本身就是有序的，那么只需要比较 n - 1 次，不需要移动，所以最好的情况下时间复杂度是 n。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*直接插入排序*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] InsertSort(<span class="type">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">null</span> || arr.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; arr.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="comment">// 将 i + 1 位置的数插入到 0 到 i 之间的数组，从后往前遍历</span></span><br><span class="line">        <span class="comment">// current 指 i + 1 的位置元素，pre 指从 0 到 i 依次向前遍历的指针</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">current</span> <span class="operator">=</span> arr[i + <span class="number">1</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">pre</span> <span class="operator">=</span> i;</span><br><span class="line">        <span class="keyword">while</span> (pre &gt;= <span class="number">0</span> &amp;&amp; current &lt; arr[pre]) &#123;</span><br><span class="line">            arr[pre + <span class="number">1</span>] = arr[pre];</span><br><span class="line">            pre--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 最后将原来 i + 1 位置的元素放入现在 0 到 i + 1 之间数组中正确的位置上</span></span><br><span class="line">        <span class="comment">// pre + 1 是因为刚才结束的时候自减了一次</span></span><br><span class="line">        arr[pre + <span class="number">1</span>] = current;</span><br><span class="line">        System.out.println(Arrays.toString(arr));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="2-希尔排序">2. 希尔排序</span></h2>
+<p>将一组数据分成了不同的组，只有同组元素才能比较和排序，随着排序的进行，组数会慢慢减少，组中的元素也会慢慢增多，数组整体也会慢慢有序。</p>
+<p>不稳定，元素间远距离的交换一般都很那保证相同元素的相对位置。</p>
+<p>最差情况O(n2)，平均O(nlogn)，最佳情况O(n)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*希尔排序*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] ShellSort(<span class="type">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">null</span> || arr.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> current, gap = arr.length / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span> (gap &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> gap; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="comment">// 将 pre + gap 的数组插入到 0 到 pre 之间同组的数组，从后往前遍历</span></span><br><span class="line">            <span class="comment">// current 指 pre + gap 的位置元素</span></span><br><span class="line">            current = arr[i];</span><br><span class="line">            <span class="type">int</span> <span class="variable">pre</span> <span class="operator">=</span> i - gap;</span><br><span class="line">            <span class="keyword">while</span> (pre &gt;= <span class="number">0</span> &amp;&amp; arr[pre] &gt; current) &#123;</span><br><span class="line">                arr[pre + gap] = arr[pre];</span><br><span class="line">                pre -= gap;</span><br><span class="line">            &#125;</span><br><span class="line">            arr[pre + gap] = current;</span><br><span class="line">            System.out.println(Arrays.toString(arr));</span><br><span class="line">        &#125;</span><br><span class="line">        gap /= <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="3-简单选择">3. 简单选择</span></h2>
+<p>时间复杂度上最稳定的算法之一，O(n2)，每次都从未排序的数组中找到最小的元素，然后放在最前端。</p>
+<p>不稳定，每趟选择最小元素，但是选哪个不一定，所以没办法保证两个相同元素的相对位置。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*简单选择*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] SelectionSort(<span class="type">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">null</span> || arr.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; arr.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="comment">// 每一轮挑出一个最小的元素，依次与不断增长的 i 位置的元素交换</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">minIndex</span> <span class="operator">=</span> i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i; i &lt; arr.length; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &lt; arr[minIndex]) &#123;</span><br><span class="line">                minIndex = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        arr = swap(arr, minIndex, i);</span><br><span class="line">        System.out.println(Arrays.toString(arr));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="4-堆排序">4. 堆排序</span></h2>
+<p>老硬骨头了，利用了最大堆的数据结构进行排序，因为每次将堆调整为最大堆之后，堆的根节点一定是堆中最大的元素，通过不停的取出最大堆的根节点和重新调整为最大堆，就可以一直得到未排序数组的最大值。</p>
+<p>不稳定，远距离元素交换无法保证相同元素的相对位置。</p>
+<p>任何情况下，都是O(nlogn)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*堆排序*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] HeapSort(<span class="type">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">null</span> || arr.length &lt;= <span class="number">1</span>) <span class="keyword">return</span> arr;</span><br><span class="line">    <span class="comment">// 1. 构建大顶堆</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> arr.length / <span class="number">2</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="comment">// 从第一个非叶子节点从下至上，从右往左调整结构</span></span><br><span class="line">        adjustHeap(arr, i, arr.length);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 2. 调整堆结构，交换栈顶和末尾元素</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> arr.length - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">        swap(arr, <span class="number">0</span>, i);</span><br><span class="line">        adjustHeap(arr, <span class="number">0</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*调整堆过程*/</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">adjustHeap</span><span class="params">(<span class="type">int</span>[] arr, <span class="type">int</span> i, <span class="type">int</span> length)</span> &#123;</span><br><span class="line">    <span class="comment">// 先取出当前元素 i</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> arr[i];</span><br><span class="line">    <span class="comment">// 从 i 结点的左子节点开始，因为数组从 0 开始，所以左孩子节点是 2 * i + 1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> i * <span class="number">2</span> + <span class="number">1</span>; k &lt; length; k = k * <span class="number">2</span> + <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// 如果左孩子节点小于右孩子节点，k 指向右孩子节点</span></span><br><span class="line">        <span class="keyword">if</span> (k + <span class="number">1</span> &lt; length &amp;&amp; arr[k] &lt; arr[k + <span class="number">1</span>]) &#123;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果子节点大于父节点，则将子节点赋值给父节点</span></span><br><span class="line">        <span class="keyword">if</span> (arr[k] &gt; temp) &#123;</span><br><span class="line">            arr[i] = arr[k];</span><br><span class="line">            i = k;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将 temp 放到最终的位置</span></span><br><span class="line">    arr[i] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="5-冒泡排序">5. 冒泡排序</span></h2>
+<p>通过元素的两两交换，将队列中最大的元素移动到队列的末尾。</p>
+<p>稳定，因为两两交换，遇到相等的元素不会交换，保证了相同元素的相对位置不变。</p>
+<p>平均和最差情况为O(n2)，最佳情况为O(n)，因为平均和最差情况下，每次遍历长度为 n 的数组都只能确定一个元素，所以想要确定全部 n 个元素的位置，时间复杂度就是 n * n，最佳情况下，如果数组是有序的，那么只需要遍历一次就够了，所以时间复杂度是 n。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*冒泡排序*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] BubbleSort(<span class="type">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">null</span> || arr.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> arr.length - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt;= i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;</span><br><span class="line">                swap(arr, j, j - <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(Arrays.toString(arr));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="6-快速排序">6. 快速排序</span></h2>
+<p>通过一趟排序将排序的数组分为独立的两部分，前半部分比关键元素小，后半部分比关键元素大，从而确定了中间元素的位置。</p>
+<p>不稳定。</p>
+<p>平均O(nlogn)，最差情况下O(n2)。</p>
+<p>如果修改为双关键字排序，在待排序序列中选取一个记录，让它左边的第一关键字小于它，或者第一关键字等于它但是第二关键字小于它；右边的第一关键字大于它，或者第一关键字等于它但是第二关键字大于它，如此递归。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*快速排序*/</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span>[] QuickSort(<span class="type">int</span>[] arr, <span class="type">int</span> start, <span class="type">int</span> last) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">null</span> || arr.length &lt;= <span class="number">1</span> || start &gt;= last) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// benchmark 基准数，即这一轮需要确定的数</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">benchmark</span> <span class="operator">=</span> arr[start];</span><br><span class="line">    <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> start;</span><br><span class="line">    <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> last;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">        <span class="comment">// 必须右指针先走，分别找右边比 benchmark 小的</span></span><br><span class="line">        <span class="keyword">while</span> (arr[right] &gt;= benchmark &amp;&amp; left &lt; right) right--;</span><br><span class="line">        <span class="comment">// 左边比 benchmark 大的</span></span><br><span class="line">        <span class="keyword">while</span> (arr[left] &lt;= benchmark &amp;&amp; left &lt; right) left++;</span><br><span class="line">        <span class="keyword">if</span> (left &lt; right) &#123;</span><br><span class="line">            swap(arr, left, right);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 基准数归位，即</span></span><br><span class="line">    arr[start] = arr[left];</span><br><span class="line">    arr[left] = benchmark;</span><br><span class="line">    System.out.println(Arrays.toString(arr));</span><br><span class="line">    arr = QuickSort(arr, start, left - <span class="number">1</span>);</span><br><span class="line">    arr = QuickSort(arr, left + <span class="number">1</span>, last);</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="7-归并排序">7. 归并排序</span></h2>
+<p>需要额外空间作为代价，两两排序，然后两个区域一起排序，以此类推。</p>
+<p>稳定，因为在使用额外空间的时候，靠前区域的元素只要小于等于靠后元素就可以被放进额外空间。</p>
+<p>任何情况下都是O(nlogn)，每一层的时间代价都是 n 相关，一共有 logn 层。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*归并排序*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] Merge(<span class="type">int</span>[] arr, <span class="type">int</span> start, <span class="type">int</span> last) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">null</span> || arr.length &lt;= <span class="number">1</span> || start &gt;= last) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; last) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> start + (last - start) / <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// 左右分别递归</span></span><br><span class="line">        arr = Merge(arr, start, mid);</span><br><span class="line">        arr = Merge(arr, mid + <span class="number">1</span>, last);</span><br><span class="line">        <span class="comment">// 从里到外将左右整合为一部分</span></span><br><span class="line">        arr = mergeSort(arr, start, mid, last);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] mergeSort(<span class="type">int</span>[] arr, <span class="type">int</span> start, <span class="type">int</span> mid, <span class="type">int</span> last) &#123;</span><br><span class="line">    <span class="comment">// tempArr 用来临时给 arr 中同一区域元素排序</span></span><br><span class="line">    <span class="type">int</span>[] tempArr = <span class="keyword">new</span> <span class="title class_">int</span>[arr.length];</span><br><span class="line">    <span class="comment">// p1 指 arr 指定区域的左半部分的指针，p2 指指定区域右半部分的指针，p 指额外数组 tempArr 的指针</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">p1</span> <span class="operator">=</span> start, p2 = mid + <span class="number">1</span>, p = start;</span><br><span class="line">    <span class="keyword">while</span> (p1 &lt;= mid &amp;&amp; p2 &lt;= last) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[p1] &lt;= arr[p2]) &#123;</span><br><span class="line">            tempArr[p++] = arr[p1++];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            tempArr[p++] = arr[p2++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (p1 &lt;= mid) tempArr[p++] = arr[p1++];</span><br><span class="line">    <span class="keyword">while</span> (p2 &lt;= last) tempArr[p++] = arr[p2++];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> start; i &lt;= last; i++) &#123;</span><br><span class="line">        arr[i] = tempArr[i];</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(Arrays.toString(arr));</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="8-基数排序">8. 基数排序</span></h2>
+<p>基数排序非比较排序，主要思想是对数组中所有元素根据个位进行排序，再根据十位进行排序，之后是百位，千位，以此类推，直到最高位。</p>
+<p>稳定，因为非比较排序，元素之间的顺序不依赖于元素之间的比较。</p>
+<p>O(nk)，其中 k 是桶的个数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*基数排序*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] RadixSort(<span class="type">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">null</span> || arr.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// max 指数组中最大数，maxDigit 指这个最大的数是几位数</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span> arr[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> a : arr) &#123;</span><br><span class="line">        max = Math.max(max, a);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> <span class="variable">maxDigit</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (max != <span class="number">0</span>) &#123;</span><br><span class="line">        max /= <span class="number">10</span>;</span><br><span class="line">        maxDigit++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// mod 用于为数组中的数取余数，div 用于通过 mod 取余变为个位数</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">mod</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">div</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; bucket = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;ArrayList&lt;Integer&gt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        bucket.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; maxDigit; i++, mod *= <span class="number">10</span>, div *= <span class="number">10</span>) &#123;</span><br><span class="line">        System.out.println(Arrays.toString(arr));</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">            <span class="comment">// num 表示当前元素的个/十/百位是几</span></span><br><span class="line">            <span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> (arr[j] % mod) / div;</span><br><span class="line">            bucket.get(num).add(arr[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; <span class="number">10</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (bucket.get(j).size() != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> x : bucket.get(j)) &#123;</span><br><span class="line">                    arr[index++] = x;</span><br><span class="line">                &#125;</span><br><span class="line">                bucket.get(j).clear();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="9-计数排序">9. 计数排序</span></h2>
+<p>将数组中的元素值转换为键存储在额外空间中。主要思想是额外创建一个数组，额外数组中元素下标是待排序数组中元素的值，而额外数组中的值是其下标的值在待排序数组中作为元素的值出现的次数。</p>
+<p>稳定，非比较排序。</p>
+<p>O(n + k)，k 是桶的个数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*计数排序*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] CountingSort(<span class="type">int</span>[] arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">null</span> || arr.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 因为值的个数和最大最小值都不固定，无法用固定数组来初始化，因此利用最大最小值的差值作为数组个数</span></span><br><span class="line">    <span class="type">int</span> min, max;</span><br><span class="line">    min = max = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> a : arr) &#123;</span><br><span class="line">        min = Math.min(min, a);</span><br><span class="line">        max = Math.max(max, a);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 储存每个元素出现次数</span></span><br><span class="line">    <span class="type">int</span>[] bucket = <span class="keyword">new</span> <span class="title class_">int</span>[max - min + <span class="number">1</span>];</span><br><span class="line">    <span class="comment">// 初始化为 0</span></span><br><span class="line">    <span class="comment">// Arrays.fill(arr, 0);</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> a : arr) &#123;</span><br><span class="line">        bucket[a - min]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; bucket.length; i++) &#123;</span><br><span class="line">        <span class="keyword">while</span> (bucket[i] != <span class="number">0</span>) &#123;</span><br><span class="line">            arr[index++] = i + min;</span><br><span class="line">            bucket[i]--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="10-桶排序">10. 桶排序</span></h2>
+<p>计数排序升级版，也是非比较排序，对数组中数值范围进行划分，数组中的每个元素根据其数值的所在范围，进入不同的“桶”。然后在不同的桶中分别对这些元素进行排序（直接插入排序），再依次输出。</p>
+<p>桶排序是<strong>稳定</strong>的。因为它是非比较排序，元素之间的顺序不依赖元素之间的比较。</p>
+<p>最好和平均情况下 <strong>T(n) = O(n+k)</strong>，最差情况下 <strong>T(n) = O(n2)</strong>，其中 <strong>k</strong> 是桶的个数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*桶排序，bucketSize表示桶的容量*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] BucketSort(<span class="type">int</span>[] arr, <span class="type">int</span> bucketSize) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr == <span class="literal">null</span> || arr.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> min, max;</span><br><span class="line">    min = max = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> a : arr) &#123;</span><br><span class="line">        min = Math.min(min, a);</span><br><span class="line">        max = Math.max(max, a);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 桶的个数</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">bucketCount</span> <span class="operator">=</span> (max - min) / bucketSize + <span class="number">1</span>;</span><br><span class="line">    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; bucket = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;ArrayList&lt;Integer&gt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; bucketCount; i++) &#123;</span><br><span class="line">        bucket.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> a : arr) &#123;</span><br><span class="line">        <span class="comment">// 遍历每个桶</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">bucketIndex</span> <span class="operator">=</span> <span class="number">0</span>; bucketIndex &lt; bucketCount; bucketIndex++) &#123;</span><br><span class="line">            <span class="comment">// 如果 arr 当前元素在该桶的范围内，则将该元素放桶内，并结束桶的循环</span></span><br><span class="line">            <span class="keyword">if</span> (a &gt;= min + bucketIndex * bucketSize &amp;&amp; a &lt; min + (bucketIndex + <span class="number">1</span>) * bucketSize) &#123;</span><br><span class="line">                bucket.get(bucketIndex).add(a);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; bucketCount; i++) &#123;</span><br><span class="line">        <span class="comment">// 对于桶内使用直接插入排序来调整桶内元素的相对顺序</span></span><br><span class="line">        bucket.set(i, InsertSortOfArrayList(bucket.get(i)));</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> x : bucket.get(i)) &#123;</span><br><span class="line">            arr[index++] = x;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*桶排序的直接插入排序*/</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> ArrayList&lt;Integer&gt; <span class="title function_">InsertSortOfArrayList</span><span class="params">(ArrayList&lt;Integer&gt; arrayList)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (arrayList == <span class="literal">null</span> || arrayList.size() &lt;= <span class="number">1</span>) <span class="keyword">return</span> arrayList;</span><br><span class="line">    <span class="type">int</span> current, pre;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; arrayList.size() - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        pre = i;</span><br><span class="line">        current = arrayList.get(i + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">while</span> (arrayList.get(pre) &gt; current &amp;&amp; pre &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            arrayList.set(pre + <span class="number">1</span>, arrayList.get(pre));</span><br><span class="line">            pre--;</span><br><span class="line">        &#125;</span><br><span class="line">        arrayList.set(pre + <span class="number">1</span>, current);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arrayList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/producer/" data-toggle="tooltip" data-placement="top" title="几种生产者-消费者模型">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/model/" data-toggle="tooltip" data-placement="top" title="设计模式">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. 直接插入</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. 希尔排序</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. 简单选择</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4. 堆排序</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5. 冒泡排序</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">6. 快速排序</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">7. 归并排序</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">8. 基数排序</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">9. 计数排序</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">10. 桶排序</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">标签</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+				<!--
+                
+                <hr>
+                <h5>朋友们</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://www.freedomly.tk/" target="_blank">Freedomly</a></li>
+                    
+                        <li><a href="https://jlwang1996.github.io/" target="_blank">jlwang1996</a></li>
+                    
+                        <li><a href="http://siwenzheng.github.io/" target="_blank">SiwenZheng</a></li>
+                    
+                        <li><a href="https://loststartvt.github.io/" target="_blank">LostStarTvT</a></li>
+                    
+                        <li><a href="https://zbsong.top/" target="_blank">songzblink</a></li>
+                    
+                        <li><a href="https://dolnw.github.io/" target="_blank">JCWang</a></li>
+                    
+                </ul>
+                
+				-->
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-tian-yu-65-49">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://space.bilibili.com/38534865">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>B</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://m.okjike.com/users/28c5ee85-832c-4a04-ab73-788a507d2bd8">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>J</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ztygalaxy">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 张天宇 2024 
+                    <br>
+                    Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
+                    re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
+					
+					<br>
+                    <a href="http://beian.miit.gov.cn/" style="color: gray">浙 ICP备19045818号</a>
+					<br>
+					<!-- <p class="copyright text-muted" style="margin-top: 5px"> -->
+						<img src="../../img/备案图标.png"/>
+						<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011802001883" style="color: gray">浙公网安备 33011802001883号</a>
+					<!-- </p> -->
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://tyzhang.top/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://tyzhang.top/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
