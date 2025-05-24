@@ -3,13 +3,6 @@
 
 
     <url>
-        <loc>https://tyzhang.top/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/</loc>
-        <lastmod>2025-05-09T12:17:50.568Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://tyzhang.top/tags/%E8%BF%90%E5%8A%A8/</loc>
         <lastmod>2024-05-22T13:23:22.366Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -19,6 +12,13 @@
     <url>
         <loc>https://tyzhang.top/tags/%E8%AF%BB%E4%B9%A6/</loc>
         <lastmod>2023-11-11T12:44:06.313Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://tyzhang.top/tags/%E5%B0%91%E5%B9%B4%E6%B8%B8/</loc>
+        <lastmod>2023-11-08T16:30:05.088Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
