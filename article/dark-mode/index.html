@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张天宇的文字自留地">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/logo.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          白天是你，夜晚也是你：App 如何拥抱黑夜 - 张天宇的博客 | ztygalaxy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://tyzhang.top/article/dark-mode/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script>
+	</script>
+	<style>
+	* {
+            box-sizing: border-box;
+        }
+
+        form {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        input, button {
+            border: none;
+            outline: none;
+        }
+
+        input {
+            width: 100%;
+            height: 42px;
+            padding-left: 13px;
+        }
+
+        button {
+            height: 42px;
+            width: 42px;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        /*搜索框1*/
+        .bar1 {
+			background: #FFF;
+			max-width: 200px;
+		}
+        .bar1 input {
+			max-height: 30px;
+            border: 2px solid #BFBFBF;
+            border-radius: 5px;
+            background: #FFFFFF;
+            color: #BFBFBF;
+			-webkit-text-fill-color: #BFBFBF;
+        }
+        .bar1 button {
+			max-height: 30px;
+            top: 0;
+            right: 0;
+            background: #BFBFBF;
+            border-radius: 0 5px 5px 0;
+        }
+        .bar1 button:before {
+            content: "\f002";
+            font-family: FontAwesome;
+            font-size: 16px;
+            color: #F9F0DA;
+        }
+		</style>
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="张天宇的博客" type="application/atom+xml">
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('https://api.dujin.org/bing/1920.php')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                            
+                        </div>
+                        <h1>白天是你，夜晚也是你：App 如何拥抱黑夜</h1>
+                        <!-- <h2 class="subheading">App 这么亮是怕我晚上看不到广告？聊聊暗黑模式。</h2> -->
+                        <span class="meta">
+                            张天宇 on
+                            2025-07-10
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ztygalaxy</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">主页</a>
+                    </li>
+					<li>
+                        <a href="/archive/">归档</a>
+                    </li>
+					<li>
+                        <a href="/tags/">标签</a>
+                    </li>
+					<li>
+                        <a href="/about/">关于</a>
+                    </li>
+					<!--
+					修改about在前面的问题
+                    
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/about/">关于</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    -->
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				
+                <blockquote>
+<p>这篇文章将介绍一些在 App 中实现 Dark Mode 时所涉及的实现思路和关键步骤，帮助大家理解其中的一些关键技术。</p>
+</blockquote>
+<h2><span id="关于-darkmode">关于 DarkMode</span></h2>
+<blockquote>
+<p>“下班地铁一开，App 一个白屏亮瞎我。”</p>
+<p>“App 这么亮是怕我晚上看不到广告？”</p>
+<p>“我选了系统暗黑模式，结果你当我没说。”</p>
+</blockquote>
+<p>在技术环节之前，我们先来了解下，什么是 DarkMode。顾名思义，暗色模式，就是一种显示模式。Dark Mode 下，页面会使用较深的背景色和亮色前景色，在环境较暗的情况下，减少页面对眼睛的刺激。对于 OLED 屏幕，Dark Mode 可以节省电池电量，因为黑色像素的显示会关闭屏幕的对应部分。例如，下图分别是即刻功能在亮色和暗色下的两种显示模式：</p>
+<p><img src="https://pic.tyzhang.top/images/2025/07/15/2e18a6d9971b43b41606ec46bc0f2dfe.md.jpg" alt="2e18a6d9971b43b41606ec46bc0f2dfe.md.jpg" style="zoom: 25%;">  <img src="https://pic.tyzhang.top/images/2025/07/15/bd6f0654266a2cea0118ad139bab452e.md.jpg" alt="bd6f0654266a2cea0118ad139bab452e.md.jpg" style="zoom: 25%;"></p>
+<p>随着用户对体验的要求越来越高，Dark Mode 已经是主流应用的标准配置，越来越多的用户在商店呼吁 App 适配 Dark Mode。</p>
+<h2><span id="如何适配-dark-mode">如何适配 Dark Mode</span></h2>
+<blockquote>
+<p>叽里咕噜说什么呢，先给我打两万块钱。</p>
+</blockquote>
+<ol>
+<li>
+<h3><span id="让一部分元素先黑起来">让一部分元素先黑起来</span></h3>
+</li>
+</ol>
+<p>以某个标题 TextView 为例，我们需要让它在 Light Mode 下显示黑色，在 Dark Mode 下显示白色，其他元素类似。颜色 = <code>if (暗黑模式) 暗黑色号 else 亮色色号</code>，这便是最基本的适配思路。但显然，我们不希望在每个组件中都这样判断。</p>
+<ol>
+<li>
+<h3><span id="天下乌鸦一般黑">天下乌鸦一般黑</span></h3>
+</li>
+</ol>
+<p>通常，一个 App 会有自己的设计规范，比如类似功能组件颜色保持一致。</p>
+<p>就像口红的色号一样，我们通过色卡（Color Palette）来统一管理应用的主题色系，为每一个 ARGB 颜色定义一个名字，方便交流、统一维护。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;UIText1&quot;</span>&gt;</span>#fff6f6f6<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;UIText1Display&quot;</span>&gt;</span>#fff0f0f0<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;UIText2&quot;</span>&gt;</span>#e0ffffff<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;UIText3&quot;</span>&gt;</span>#99ffffff<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>
+<h3><span id="怎么黑">怎么黑</span></h3>
+</li>
+</ol>
+<blockquote>
+<p>我不是不想黑，只是还没想好怎么黑</p>
+</blockquote>
+<p>在 Android 中，<code>res/values/colors.xml</code> 定义默认颜色，而 <code>res/values-night/colors.xml</code> 用于定义 Dark Mode 下的颜色。系统在切换主题时，会自动加载对应的色卡资源文件。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- res/values/colors.xml (Light Mode) --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">color</span> <span class="attr">name</span>=<span class="string">&quot;colorPrimary&quot;</span>&gt;</span>#6200EE<span class="tag">&lt;/<span class="name">color</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">color</span> <span class="attr">name</span>=<span class="string">&quot;colorBackground&quot;</span>&gt;</span>#FFFFFF<span class="tag">&lt;/<span class="name">color</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- res/values-night/colors.xml (Dark Mode) --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">color</span> <span class="attr">name</span>=<span class="string">&quot;colorPrimary&quot;</span>&gt;</span>#BB86FC<span class="tag">&lt;/<span class="name">color</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">color</span> <span class="attr">name</span>=<span class="string">&quot;colorBackground&quot;</span>&gt;</span>#121212<span class="tag">&lt;/<span class="name">color</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但一个页面有很多元素，Code 和 XML 中可能也有不少判断点。如果我们为每个元素都去 <code>if else</code> 判断暗黑状态，这显然不可维护。因此 Android 引入了「<strong>主题（Theme）</strong>」的概念。主题（Theme）是一种样式集合，它包含了 UI 控件的颜色、字体、边框等信息。通过设置不同的主题，可以为应用提供不同的视觉风格，改变应用界面的外观，如<code>Theme.Light</code> 和ThemeOverlay.Dark`。</p>
+<p>结合刚才色卡的概念，我们在不同的主题资源文件中定义一个色号，系统从主题中获取该色号的具体值后，应用到 TextView 中去。这个 TextView 在不同的主题下面，就有了不同的颜色。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- theme_dark.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">&quot;ThemeOverlay.Dark&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;UIText1&quot;</span>&gt;</span>#fff6f6f6<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- theme_light.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">&quot;Theme.Light&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;UIText1&quot;</span>&gt;</span>#ff000000<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在业务中使用属性调用方法，确保色号使用的是与主题对应的值。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android:background=<span class="string">&quot;?attr/UITextPrimary&quot;</span></span><br><span class="line"></span><br><span class="line">text.color = R.attr.UITextPrimary</span><br></pre></td></tr></table></figure>
+<p>完成了上述的准备，我们在 <code>Activity</code> 的 <code>onCreate()</code> 中 <code>setTheme()</code> 为当前页面指定主题即可。<code>setTheme()</code> 必须在 <code>onCreate()</code>方法中调用，这样可以确保主题在 <code>Activity</code> 创建时就生效。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setTheme(R.style.ThemeOverlay_Dark) <span class="comment">// 设置主题</span></span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当需要动态修改主题的时候，使用<code>AppCompatDelegate</code>中提供的方法设置和获取。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置系统模式</span></span><br><span class="line"><span class="keyword">public</span> static void setDefaultNightMode(<span class="meta">@NightMode</span> int mode)</span><br><span class="line"><span class="comment">// 获取系统模式</span></span><br><span class="line"><span class="keyword">public</span> static int getDefaultNightMode()</span><br><span class="line"><span class="comment">/** <span class="doctag">@return</span> getDefaultNightMode()</span></span><br><span class="line"><span class="comment">    MODE_NIGHT_FOLLOW_SYSTEM 同步系统全局暗黑模式（默认）</span></span><br><span class="line"><span class="comment">    MODE_NIGHT_NO 强制关闭暗黑模式（亮色主题）</span></span><br><span class="line"><span class="comment">    MODE_NIGHT_YES 强制开启暗黑模式（深色主题）</span></span><br><span class="line"><span class="comment">    MODE_NIGHT_AUTO_TIME 根据日出日落自动切换（需位置权限）</span></span><br><span class="line"><span class="comment">    MODE_NIGHT_AUTO_BATTERY 低电量时自动开启暗黑模式</span></span><br><span class="line"><span class="comment">**/</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：这里只能拿到“App 设的是啥模式”，拿不到“当前到底是亮还是暗”。比如设置跟随系统，但页面还没重建，返回的也只是 FOLLOW_SYSTEM。</p>
+</blockquote>
+<p>在 Android 中，主题切换是通过 <code>Activity</code> 或 <code>Fragment</code> 重建机制来完成的。每当我们切换主题时，系统会重新加载 <code>Activity</code>，这时主题和资源会被重新应用到界面中。因此，当我们希望修改当前页面的主题时，设置完成后，需要触发一次重建。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置为 light 模式</span></span><br><span class="line">AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)</span><br><span class="line">ActivityStack.getActivityStack().filter &#123; !it.isFinishing &#125;</span><br><span class="line">        .forEach &#123; it.recreate() &#125;</span><br></pre></td></tr></table></figure>
+<p>Android 10 增加了系统级别的暗黑切换，系统会自动重建 Activity，并根据 <code>Configuration.uiMode</code> 加载 <code>-night</code> 资源。如果 App 不希望响应系统切换，可以在 <code>AndroidManifest.xml</code> 中添加：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;com.ss.android.ugc.aweme.main.MainActivity&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:configChanges</span>=<span class="string">&quot;smallestScreenSize|screenLayout|uiMode|navigation&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:replace</span>=<span class="string">&quot;android:configChanges&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这会阻止系统重建 Activity，也可以针对单<code>Activity</code>按需响应。<code>onConfigurationChanged</code> 是 Android 开发中用于处理设备配置变化的核心回调方法，它可以响应屏幕旋转、尺寸变化、暗黑模式、系统语言/区域设置、系统字体等，我们可以根据需要在 <code>onConfigurationChanged()</code> 中自行处理：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onConfigurationChanged</span><span class="params">(newConfig: <span class="type">Configuration</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onConfigurationChanged(newConfig)</span><br><span class="line">        <span class="comment">// 手动处理 uiMode 变更</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>
+<h3><span id="该不该黑">该不该黑</span></h3>
+</li>
+</ol>
+<blockquote>
+<p>现在两根金条主题放在这，你告诉我哪一个是高尚暗黑的，哪一个是龌龊亮色的？——谢若林</p>
+</blockquote>
+<p>我们介绍了怎样让一个 App 变成黑色主题，还剩最后一个问题，如何判断它需要使用黑色主题，换句话说，“当前页面到底是不是处于暗黑模式？”<strong>。<strong>再来回忆一下<code>getDefaultNightMode()</code>的返回值，它似乎只告诉了我们</strong>设了什么模式</strong>，比如：</p>
+<ul>
+<li>我设置的是「跟随系统」；</li>
+<li>我设置的是「暗黑模式」；</li>
+<li>……但<strong>它没告诉现在页面到底是不是暗的</strong>。</li>
+</ul>
+<p>想知道页面真正用的资源，是亮是暗，还是得靠资源系统自己做判断。通常我们会在 <code>values/integers.xml</code> 和 <code>values-night/integers.xml</code> 中定义一个布尔值：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- values/integers.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">integer</span> <span class="attr">name</span>=<span class="string">&quot;is_dark_mode&quot;</span>&gt;</span>0<span class="tag">&lt;/<span class="name">integer</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- values-night/integers.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">integer</span> <span class="attr">name</span>=<span class="string">&quot;is_dark_mode&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">integer</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后通过不同的 Context 获取，并为<code>Activity</code>设置上主题：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> isDark = <span class="keyword">when</span> (AppCompatDelegate.getDefaultNightMode()) &#123;</span><br><span class="line">    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -&gt;</span><br><span class="line">        activity.resources.getInteger(R.integer.is_dark_mode) == <span class="number">1</span></span><br><span class="line">    AppCompatDelegate.MODE_NIGHT_YES -&gt; <span class="literal">true</span></span><br><span class="line">    <span class="keyword">else</span> -&gt; <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (isDark) &#123;</span><br><span class="line">    setTheme(R.style.ThemeOverlay_Dark)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    setTheme(R.style.Theme_Light)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原理比较简单，前面我们提到，Android 的资源系统在加载资源的时候，会根据当前的配置（包括亮/暗主题）选择不同的资源文件夹。比如我们只写了一个 <code>R.integer.is_dark_mode</code>，但这个资源在两个目录里都有：</p>
+<ul>
+<li>如果当前是亮色模式，系统加载的是 <code>res/values/integers.xml</code>（值是 0）</li>
+<li>如果当前是暗黑模式，系统加载的是 <code>res/values-night/integers.xml</code>（值是 1）</li>
+</ul>
+<p>调用 <code>.getInteger()</code> 拿到的，就是系统挑出来的那一个。</p>
+<p>至此，我们已经完成了一个 App 进行暗黑模式适配时的关键步骤，整体流程图如下：</p>
+<p><a href="https://pic.tyzhang.top/image/w9mA"><img src="https://pic.tyzhang.top/images/2025/07/15/darkmode.png" alt="darkmode.png" style="zoom: 50%;"></a></p>
+<h2><span id="技术细节">技术细节</span></h2>
+<blockquote>
+<p>Talk is cheap, show me your code.</p>
+</blockquote>
+<p>对于内容丰富、界面复杂的应用，暗黑模式和亮色模式的切换是不可忽视的关键功能。某些情况下，我们可能需要一个页面同时支持多种主题，例如首页 Feed 的元素颜色保持固定，而弹窗等需要根据系统主题来适配。接下来，我们将逐步解析相关的关键源码，帮助理解如何实现这种灵活的主题适配。</p>
+<p><a href="https://pic.tyzhang.top/image/wM8J"><img src="https://pic.tyzhang.top/images/2025/07/15/darkmode1.md.png" alt="darkmode1.md.png"></a></p>
+<ol>
+<li>
+<h3><span id="为-activity-设置主题">为 <code>Activity</code> 设置主题</span></h3>
+</li>
+</ol>
+<p><code>Activity.setTheme()</code> 是为 <code>Activity</code> 设置主题的最直接方法，它主要用于在 <code>Activity</code> 创建时设置应用的主题，从而控制 <code>Activity</code> 内部的 UI 风格和颜色。在实际应用中，我们会在 <code>onCreate()</code> 中调用 <code>setTheme()</code> 来确保 <code>Activity</code> 在创建时加载正确的主题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setTheme</span><span class="params">(<span class="type">int</span> resId)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.setTheme(resId); <span class="comment">// 调用父类的 setTheme 方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>
+<h3><span id="包装-context-以应用不同的主题">包装 <code>Context</code> 以应用不同的主题</span></h3>
+</li>
+</ol>
+<p>我们先看下 <code>Activity</code> 的继承关系：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Activity</span><br><span class="line"> └── ContextThemeWrapper</span><br><span class="line">      └── ContextWrapper</span><br><span class="line">           └── Context</span><br></pre></td></tr></table></figure>
+<p>没错，<code>Activity</code> 本身<strong>就是一个</strong> <strong><code>ContextThemeWrapper</code></strong> 的子类。这意味着，<code>Activity</code> 天生就具备“包装一个主题上下文”的能力。上面提到的<code>Activity.setTheme()</code> 实际上是调用了 <code>ContextThemeWrapper</code> 的逻辑：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ContextThemeWrapper.java</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> void setTheme(int resid) &#123;</span><br><span class="line">    <span class="keyword">if</span> (mThemeResource != resid) &#123;</span><br><span class="line">        mThemeResource = resid;</span><br><span class="line">        initializeTheme(); <span class="comment">// 初始化 Theme 对象</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@UnsupportedAppUsage</span></span><br><span class="line"><span class="keyword">private</span> void initializeTheme() &#123;</span><br><span class="line">    <span class="keyword">final</span> boolean first = mTheme == <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (first) &#123;</span><br><span class="line">        mTheme = getResources().newTheme();</span><br><span class="line">        <span class="keyword">final</span> Resources.Theme theme = getBaseContext().getTheme();</span><br><span class="line">        <span class="keyword">if</span> (theme != <span class="literal">null</span>) &#123;</span><br><span class="line">            mTheme.setTo(theme);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    onApplyThemeResource(mTheme, mThemeResource, first);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Resources.Theme getTheme() &#123;</span><br><span class="line">    <span class="keyword">if</span> (mTheme == <span class="literal">null</span>) &#123;</span><br><span class="line">        mThemeResource = mThemeResource == <span class="number">0</span> ? R.style.Theme_Material : mThemeResource;</span><br><span class="line">        initializeTheme();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mTheme;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它的核心就是：记录我们设置的主题资源 ID（<code>mThemeResource</code>）并初始化一个新的 <code>Theme</code> 对象。这个 <code>Theme</code> 是通过 <code>Resources.newTheme()</code> 创建的，然后再将它与现有资源进行合并，形成当前的 UI 风格。只要我们设置了主题，<code>getTheme()</code> 会自动返回正确的 <code>Resources.Theme</code> 对象。</p>
+<p>回到业务功能中来，在大多数 App 中，会有这样一种场景，首页 Feed 的元素固定颜色(通常为黑色主题色)，而它上面的弹窗等等需要跟随系统设置展示不同的颜色，即面临一个页面多种主题的情况。例如下图：</p>
+<p>暂时无法在飞书文档外展示此内容</p>
+<p><code>Activity</code> 不能直接切主题，我们可以通过 <code>ContextThemeWrapper</code> 来临时包装一个带主题的 Context，用于创建 Dialog，从而确保它们与系统主题一致，反之操作亦然。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : <span class="type">AppCompatActivity</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        <span class="comment">// 强制设置 MainActivity 为暗黑模式</span></span><br><span class="line">        setTheme(R.style.ThemeOverlay_Dark)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line">        <span class="comment">// 展示一个弹窗</span></span><br><span class="line">        showDialog()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">showDialog</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// 根据系统主题选择弹窗的主题</span></span><br><span class="line">        <span class="keyword">val</span> dialogTheme = <span class="keyword">if</span> (暗黑设置) &#123;</span><br><span class="line">            R.style.ThemeOverlay_Dark <span class="comment">// 暗黑模式主题</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            R.style.Theme_Light <span class="comment">// 亮色模式主题</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建 ContextThemeWrapper 来包装当前 Context 并为弹窗应用主题</span></span><br><span class="line">        <span class="keyword">val</span> contextThemeWrapper = ContextThemeWrapper(<span class="keyword">this</span>, dialogTheme)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用包装的 context 来创建 Dialog</span></span><br><span class="line">        <span class="keyword">val</span> dialog = Dialog(contextThemeWrapper)</span><br><span class="line">        dialog.setContentView(R.layout.dialog_layout)</span><br><span class="line">        dialog.show()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看完上面代码示例里弹窗怎么通过 <code>ContextThemeWrapper</code> 套上不同主题之后，你可能已经开始头晕了：</p>
+<blockquote>
+<p><code>Dialog</code> 都得手动包一层 <code>ContextThemeWrapper</code> 才能换主题，那为啥 <code>Activity</code> 本身不需要这些操作，一出生就能 <code>setTheme()</code>，还能理直气壮地拿到带主题的资源，这 <strong>tm</strong> <strong>是谁帮它穿的衣服？</strong></p>
+</blockquote>
+<p>别急，我们要学穿衣服，得先看看光屁股状态下的 <code>Activity</code> 是怎么一步步“穿”起来的。来，我们从 <code>ActivityThread</code>看起：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">ActivityThread</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Activity <span class="title function_">performLaunchActivity</span><span class="params">(ActivityClientRecord r, Intent customIntent)</span> &#123;</span><br><span class="line">        <span class="comment">// 1. 创建 BaseContext（ContextImpl）</span></span><br><span class="line">        <span class="type">ContextImpl</span> <span class="variable">appContext</span> <span class="operator">=</span> createBaseContextForActivity(r);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 创建光屁股的 Activity 实例</span></span><br><span class="line">        <span class="type">Activity</span> <span class="variable">activity</span> <span class="operator">=</span> mInstrumentation.newActivity(</span><br><span class="line">            cl, component.getClassName(), r.intent);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 把 BaseContext 绑到 Activity 上，穿上“Context外套”</span></span><br><span class="line">        activity.attach(appContext, <span class="built_in">this</span>, getInstrumentation(), ...);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看关键的三步：</p>
+<ul>
+<li><strong><code>newActivity()</code></strong>：制造一个裸奔的 <code>Activity</code>，此时它啥都没有。</li>
+<li><strong><code>createBaseContextForActivity()</code></strong>：生成一个 <code>ContextImpl</code>，里面封装好了 <code>Resources</code>、<code>AssetManager</code>、<code>SystemServiceRegistry</code>等核心能力。</li>
+<li><strong><code>attach()</code></strong>：关键，把 <code>ContextImpl</code> 套给 <code>Activity</code>，也就是给它穿上“Context 外套”。</li>
+</ul>
+<p>接下来我们看 <code>Activity</code> 是怎么接过这件衣服的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Activity</span> <span class="keyword">extends</span> <span class="title class_">ContextThemeWrapper</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">attach</span><span class="params">(Context context, ActivityThread aThread, ...)</span> &#123;</span><br><span class="line">        <span class="comment">// 设置 base context 给 ContextThemeWrapper</span></span><br><span class="line">        attachBaseContext(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">attachBaseContext</span><span class="params">(Context newBase)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.attachBaseContext(newBase);</span><br><span class="line">        <span class="comment">// 其他初始化逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意看：<code>Activity</code> 继承自 <code>ContextThemeWrapper</code>，它并不直接拥有 <code>Context</code>，而是通过 <code>attachBaseContext()</code> 把系统提供的 <code>ContextImpl</code> 套进来，变成了一个有主题能力的 <code>Context</code>。</p>
+<p><code>ContextThemeWrapper</code> 本身的实现也非常简单，主要就是把 <code>base context</code> 缓存在内部：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ContextThemeWrapper</span> <span class="keyword">extends</span> <span class="title class_">ContextWrapper</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">attachBaseContext</span><span class="params">(Context newBase)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.attachBaseContext(newBase); <span class="comment">// 继续往下传</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ContextWrapper</span> <span class="keyword">extends</span> <span class="title class_">Context</span> &#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">attachBaseContext</span><span class="params">(Context base)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (mBase != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;Base context already set&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        mBase = base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Resources <span class="title function_">getResources</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> mBase.getResources();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Resources.Theme <span class="title function_">getTheme</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> mBase.getTheme();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Context <span class="title function_">getBaseContext</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> mBase;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面开始技术总结：</p>
+<ul>
+<li><code>Activity</code> 是继承自 <code>ContextThemeWrapper</code> 的；</li>
+<li>系统在 <code>attach()</code> 阶段把一个已经配置好的 <code>ContextImpl</code> 设置给它；</li>
+<li>从此以后，<code>Activity</code> 就可以愉快地通过 <code>getTheme()</code>、<code>getResources()</code> 拿到带主题的资源了；</li>
+</ul>
+<p>所以，它一出生看似啥都不用干，实际是 Android 帮它“穿好了衣服”。</p>
+<ol>
+<li>
+<h3><span id="全局控制夜间模式">全局控制夜间模式</span></h3>
+</li>
+</ol>
+<p><code>AppCompatDelegate</code> 是 Android 提供的用于管理全局主题切换的核心类。可以方便地设置应用的夜间模式，并确保应用在切换主题时，所有的 <code>Activity</code> 都能够自动适应。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AppCompatDelegate</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setDefaultNightMode</span><span class="params">(<span class="type">int</span> mode)</span> &#123;</span><br><span class="line">        sLocalNightMode = mode;</span><br><span class="line">        applyDayNight();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">getDefaultNightMode</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> sLocalNightMode;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">Configuration config = Resources.getSystem().getConfiguration();</span></span><br><span class="line"><span class="comment">config.uiMode = (mode == MODE_NIGHT_YES) ? Configuration.UI_MODE_NIGHT_YES : Configuration.UI_MODE_NIGHT_NO;</span></span><br><span class="line"><span class="comment">Resources.getSystem().updateConfiguration(config, null);</span></span><br><span class="line"><span class="comment">**/</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>setDefaultNightMode(int mode)</code>：该方法用于设置应用的默认夜间模式。它根据传入的 <code>mode</code>（如 <code>MODE_NIGHT_YES</code> 或 <code>MODE_NIGHT_NO</code>）来调整整个应用的显示模式。
+<ul>
+<li><strong><code>MODE_NIGHT_NO</code>****：强制使用亮色模式。</strong></li>
+<li><strong><code>MODE_NIGHT_YES</code><strong><strong>：强制使用</strong></strong>暗黑模式</strong>**。**</li>
+<li><strong><code>MODE_NIGHT_FOLLOW_SYSTEM</code>****：跟随系统设置自动切换（默认）。</strong></li>
+<li><code>MODE_NIGHT_AUTO_TIME</code>：根据时间（例如日出日落）自动切换。</li>
+<li><code>MODE_NIGHT_AUTO_BATTERY</code>：低电量时自动开启暗黑模式。</li>
+</ul>
+</li>
+<li><code>getDefaultNightMode()</code>：获取应用当前的夜间模式。</li>
+<li><code>applyDayNight()</code>：这个方法会根据当前的模式应用相应的主题。<code>AppCompatDelegate</code> 确保整个应用的主题切换一致性。</li>
+</ul>
+<ol>
+<li>
+<h3><span id="重新创建-activity-以应用新主题">重新创建 <code>Activity</code> 以应用新主题</span></h3>
+</li>
+</ol>
+<p>在 Android 中，主题的变更并不会自动让界面“刷新”出新的样式。比如我们在运行时通过<code>AppCompatDelegate.setDefaultNightMode()</code> 修改了夜间模式，但如果没有对当前页面做任何处理，界面仍然会保留旧主题的样式。此时，就轮到一个非常关键的方法登场了：<code>Acticity.recreate()</code></p>
+<p>简单来说，<code>recreate()</code> 的作用是：销毁当前的 Activity 实例 → 创建一个新的实例 → 重新走一遍 <code>onCreate()</code> 等生命周期 → 重新加载主题、布局和资源。</p>
+<p>它背后做了很多工作，包括：</p>
+<ul>
+<li>调用 <code>onSaveInstanceState()</code> 保存当前状态；</li>
+<li>销毁当前 Activity（即触发 <code>onDestroy()</code>）；</li>
+<li>重新走 <code>attachBaseContext()</code>、<code>onCreate()</code> 等生命周期；</li>
+<li>系统重新加载主题样式（包括 <code>values-night</code> 资源）；</li>
+<li><code>View</code> 重新根据当前主题重绘。</li>
+</ul>
+<p>在实际的适配过程中中，我们会遇到部分场景不需要或者临时没有人力适配，那么它们理应不受到主题切换的影响，即不需要<code>recreate</code>。那么我们在什么情况下需要调用 <code>recreate()</code>呢？</p>
+<h4><span id="情况一用户在系统设置中切换了亮暗主题">情况一：用户在系统设置中切换了亮/暗主题</span></h4>
+<p>假设用户在系统设置里从亮色切换到暗色，系统会发出配置变更（<code>uiMode</code> 变了），此时如果没有特殊处理，Activity 会自动被系统重建。但如果手动在 <code>AndroidManifest.xml</code> 中设置了拦截：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;.MainActivity&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:configChanges</span>=<span class="string">&quot;uiMode|screenLayout|orientation|screenSize&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>那么系统就不会帮忙重建了，主题也不会自动更新。这时可以在<code>Activity</code>选择手动响应：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> currentNightMode: <span class="built_in">Int</span> = <span class="number">0</span></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">    <span class="comment">// 记录当前启动时的主题模式</span></span><br><span class="line">    currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK</span><br><span class="line">    setContentView(R.layout.activity_main)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onConfigurationChanged</span><span class="params">(newConfig: <span class="type">Configuration</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onConfigurationChanged(newConfig)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> newNightMode = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK</span><br><span class="line">    <span class="keyword">if</span> (newNightMode != currentNightMode) &#123;</span><br><span class="line">        <span class="comment">// 主题模式发生了变化（亮/暗切换）</span></span><br><span class="line">        recreate()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="情况二用户主动在-app-设置页切换主题">情况二：用户主动在 App 设置页切换主题</span></h4>
+<p>例如在设置页中，用户选择了“暗黑模式”而不跟随系统，需要通过以下方式切换主题：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)</span><br></pre></td></tr></table></figure>
+<p>但仅仅设置默认模式还不够，此时当前 Activity 并不会自动刷新，需要我们手动调用 <code>recreate()</code>：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)</span><br><span class="line">recreate()  <span class="comment">// 刷新当前页面</span></span><br></pre></td></tr></table></figure>
+<p>如果我们希望整个 App 的多个页面都刷新并立即生效：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ActivityStack.getActivities().forEach &#123; activity -&gt;</span><br><span class="line">    <span class="keyword">if</span> (!activity.isFinishing) &#123;</span><br><span class="line">        activity.recreate()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>避免在 <code>isFinishing == true</code> 的 Activity 中调用：已经要销毁了，没必要再重建。</li>
+<li>在切换主题后，如果还有旧的 Dialog 没有销毁，那么它们仍然会用旧的主题。需要统一 dismiss 所有旧的 Dialog，并在新的主题下重新创建。</li>
+</ul>
+</blockquote>
+<ol>
+<li>
+<h3><span id="configuration-和-resources-怎么配合的"><code>Configuration</code> 和 <code>Resources</code> 怎么配合的？</span></h3>
+</li>
+</ol>
+<p>上文我们说了，<code>Activity</code> 穿上了 <code>ContextThemeWrapper</code> 这层主题衣服，里面包的是系统生成的 <code>ContextImpl</code>，而 <code>ContextImpl</code> 又藏着全系统的 <code>Resources</code>。那这个 <code>Resources</code> 到底怎么知道要加载 <code>res/values</code> 还是 <code>res/values-night</code> 呢？它总不能靠猜吧？</p>
+<p>**它看的是配置（Configuration）里的 uiMode。**也就是说，Android 的资源系统在加载资源前，会查一下当前的 <code>Configuration</code> 配置，比如：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> config = context.resources.configuration</span><br><span class="line"><span class="keyword">val</span> isNightMode = config.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES</span><br></pre></td></tr></table></figure>
+<p>如果 <code>uiMode</code> 表示当前是 Night 模式，那系统就会自动选择 <code>res/values-night</code> 目录下的资源来加载，比如颜色、尺寸、图片等等。</p>
+<p>那这个配置是谁设置的？怎么变的？就得靠 <code>Resources.updateConfiguration()</code> 出场了。来看一下源码的关键方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Resources.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateConfiguration</span><span class="params">(Configuration config, DisplayMetrics metrics)</span> &#123;</span><br><span class="line">    <span class="comment">// 更新系统配置，应用新的主题设置</span></span><br><span class="line">    <span class="comment">// 内部会重新解析资源表，选择新的资源版本</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法的作用就是告诉 <code>Resources</code>：“哥们，配置变了，赶紧更新一下！”它会根据新的 <code>Configuration</code> 和 <code>DisplayMetrics</code>，重新初始化资源加载器，重新定位应该用哪套资源（比如亮色 or 暗黑）。</p>
+<p>在实际开发中，我们不需要手动调用这个方法。系统会在以下几种场景自动触发它：</p>
+<ul>
+<li>用户切换了系统暗黑模式；</li>
+<li>应用调用了 <code>AppCompatDelegate.setDefaultNightMode()</code>；</li>
+<li>当前 Activity 被 <code>recreate()</code> 重建时，会走完整的创建流程，系统也会根据当前配置重建对应的资源对象。</li>
+</ul>
+<p>所以我们只要保证配置传递正确，光腚猴子在这，系统资源系统就会“自动帮忙挑衣服”，我们定义在 <code>values-night/colors.xml</code> 里的那些颜色、样式、数值，都会在正确的时机自动加载上来。</p>
+<p>在 App 中，我们可能**并不满足于系统“自己加载”，而是希望在代码里知道当前到底是处于<strong><strong>暗黑模式</strong></strong>还是亮色模式。**举个例子：</p>
+<ul>
+<li>我在代码里要给某个自定义组件设置颜色；</li>
+<li>这个颜色是 Server 下发的，在 XML 里不太好定义，我得自己判断用哪个；</li>
+<li>但是当前设置的是「跟随系统」模式，<code>AppCompatDelegate.getDefaultNightMode()</code> 只告诉我“你设的是跟随”，<strong>可我想知道的是：“现在是黑的吗？”</strong></li>
+</ul>
+<p>这时候，Android 没有给我们一个现成的 API，正如上文<code>该不该黑</code>章节介绍的，我们可以用资源系统本身的小技巧来搞定，在 <code>values</code> 和 <code>values-night</code> 中定义一个同名的变量 <code>is_dark_mode</code>，只不过两个文件里赋的值不一样，在亮色模式时，系统会加载 <code>0</code>，在暗黑模式时，系统会加载 <code>1</code>。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> isDark = <span class="keyword">when</span> (AppCompatDelegate.getDefaultNightMode()) &#123;</span><br><span class="line">    AppCompatDelegate.MODE_NIGHT_YES -&gt; <span class="literal">true</span></span><br><span class="line">    AppCompatDelegate.MODE_NIGHT_NO -&gt; <span class="literal">false</span></span><br><span class="line">    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -&gt; &#123;</span><br><span class="line">        <span class="comment">// 关键点：用当前 Context 的资源系统获取 is_dark_mode</span></span><br><span class="line">        context.resources.getInteger(R.integer.is_dark_mode) == <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> -&gt; <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，我们无需再去拿系统的设置、配置、Context 类型、ViewMode，全靠资源系统自动加载逻辑来判断当前到底用的是哪套资源。</p>
+<ol>
+<li>
+<h3><span id="activitycontext-和-applicationcontext"><code>Activity.context</code> 和 <code>ApplicationContext</code></span></h3>
+</li>
+</ol>
+<p>上面的代码有个隐藏坑——<strong>我们用的是哪个 Context？</strong></p>
+<p>在暗黑模式的适配过程中，我们通常需要判断当前的主题状态（亮色或暗色模式），以便正确加载相应的资源和设置。Android 提供了一个机制，让我们可以通过 <code>AppCompatDelegate.getDefaultNightMode()</code> 获取当前的主题模式，但根据不同的情况，我们需要选择不同的 <code>Context</code> 来获取资源。</p>
+<h4><span id="1-亮色或暗色模式时">1. 亮色或暗色模式时：</span></h4>
+<p>当我们明确设置了亮色模式（<code>MODE_NIGHT_NO</code>）或暗黑模式（<code>MODE_NIGHT_YES</code>）时，<code>Activity</code> 会根据当前的配置自动加载正确的资源。此时，我们可以直接通过 <code>Activity</code> 的 <code>resources</code> 获取主题相关的资源：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> isDark = <span class="keyword">when</span> (AppCompatDelegate.getDefaultNightMode()) &#123;</span><br><span class="line">    AppCompatDelegate.MODE_NIGHT_YES -&gt; <span class="literal">true</span></span><br><span class="line">    AppCompatDelegate.MODE_NIGHT_NO -&gt; <span class="literal">false</span></span><br><span class="line">    <span class="keyword">else</span> -&gt; <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种情况下，<code>Activity</code> 的 <code>resources</code> 已经是最新的，它能正确反映当前的主题状态。</p>
+<h4><span id="2-跟随系统模式时">2. 跟随系统模式时：</span></h4>
+<p>当我们设置为「跟随系统模式」时，问题就变得复杂。因为在某些情况下，<code>Activity</code> 还没有重建，依然会使用旧的 <code>Resources</code>，这时会导致获取的资源不准确。</p>
+<p>为了解决这个问题，我们应该使用 <code>applicationContext</code> 来获取<strong>系统级别</strong>的资源。<code>ApplicationContext</code> 不会随着 <code>Activity</code> 的重建而改变，因此它总是能够准确反映当前的系统主题：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> isDark = <span class="keyword">when</span> (AppCompatDelegate.getDefaultNightMode()) &#123;</span><br><span class="line">    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -&gt;</span><br><span class="line">        context.applicationContext.resources.getInteger(R.integer.is_dark_mode) == <span class="number">1</span></span><br><span class="line">    AppCompatDelegate.MODE_NIGHT_YES -&gt; <span class="literal">true</span></span><br><span class="line">    AppCompatDelegate.MODE_NIGHT_NO -&gt; <span class="literal">false</span></span><br><span class="line">    <span class="keyword">else</span> -&gt; <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="再聊主题切换">再聊主题切换</span></h2>
+<p>我们在前文中探讨了 <code>Activity.recreate()</code> 机制来实现主题切换，确保用户界面能够随着主题模式的变化而及时更新。这种方法简单直接，却存在一些缺点，尤其是在复杂的应用场景下：</p>
+<ol>
+<li>
+<h3><span id="acticity-重建不是最优解">Acticity 重建不是最优解</span></h3>
+</li>
+</ol>
+<ul>
+<li><strong>性能开销：</strong> 当我们在切换主题时，调用 <code>Activity.recreate()</code> 会导致整个 Activity 被销毁并重新创建。这一过程不仅耗费时间，还会带来内存消耗和 CPU 占用的增加。在复杂的页面中，尤其是那些包含大量数据和复杂视图的页面，重新加载会显得尤为明显，用户体验可能会受到影响。</li>
+<li><strong>状态丢失：</strong> <code>Activity.recreate()</code> 会导致当前的 Activity 完全销毁并重新创建，这意味着之前的状态（如滚动位置、用户输入的数据等）可能会丢失，例如在 Lite 中，用户在系统切换主题时将会回到主 Feed 中重新观看视频。尽管 Android 提供了 <code>onSaveInstanceState()</code> 和 <code>onRestoreInstanceState()</code> 来保存和恢复状态，但在实际使用中，这些方法的实现和数据恢复往往比较麻烦，容易出错，业务适配成本比较高。</li>
+</ul>
+<h3><span id="2-业界其他方案">2. <strong>业界其他方案</strong></span></h3>
+<p><strong>CircularRevealSwitch / 环形揭示切换</strong></p>
+<blockquote>
+<p><a href="https://github.com/YenalyLiew/CircularRevealSwitch">https://github.com/YenalyLiew/CircularRevealSwitch</a></p>
+</blockquote>
+<p>在切换模式时，先截图当前屏幕，将其设置为 ImageView，然后执行环形动画，最后在动画完成后切换主题。解决<code>recreate()</code> 带来的界面闪烁问题。</p>
+<p><strong>Compose主题切换</strong></p>
+<p><a href="https://juejin.cn/post/7070671629713408031?searchId=20250428163933400642139E72EC613940">https://juejin.cn/post/7070671629713408031?searchId=20250428163933400642139E72EC613940</a></p>
+<p>通过自定义 <code>LightColorPalette</code> 和 <code>DarkColorPalette</code> 来分别实现浅色模式和深色模式的主题。然后通过判断系统是否为夜间模式（<code>isSystemInDarkTheme()</code>）来动态加载不同的主题。将主题设置成一个 <code>State</code>，通过Compose 状态管理来驱动 UI 变更，即，当用户切换主题时，通过修改该 <code>State</code> 值，系统会自动刷新 UI。</p>
+<h2><span id="写在后面">写在后面</span></h2>
+<blockquote>
+<p>技术是没有终点的，只有不断前行的步伐，完美的实现永远是一个不断进化的过程。</p>
+</blockquote>
+<p>适配暗黑模式不只是为了“看上去酷”。它实际上是为了让用户的眼睛在黑暗中更舒适，让他们在使用我们的应用时感到轻松。而作为开发者，我们不仅仅是一个技术实现者，也是 App 的使用者，更是一个用户体验的创造者。</p>
+<p>在这篇文章中，我们探讨了如何利用 <code>Activity</code> 重建、<code>AppCompatDelegate</code> 以及 <code>ContextThemeWrapper</code> 等等来适配 App 的暗黑模式，但这并不应该是最终的解决方案。事实上，随着设备配置和 Android 系统版本的不断更新，暗黑模式的适配还可能面临新的挑战。</p>
+<p>此外，对于应用的性能优化、资源的合理管理和避免不必要的 <code>Activity</code> 重建，也将是我们未来的关注重点。</p>
+<p>毕竟，极致的用户流畅体验才是开发者最终的目标。</p>
+<!--声明：本文不涉及任何业务代码，仅从 Android 官方代码聊聊暗黑模式的实现，以上代称 App。本文版权归本人所有，后面会收拾收拾结合业务在小组内分享一下。-->
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/article/sport-record/" data-toggle="tooltip" data-placement="top" title="卡路里回收中心">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">关于 DarkMode</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">如何适配 Dark Mode</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">让一部分元素先黑起来</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">天下乌鸦一般黑</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">怎么黑</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">该不该黑</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">技术细节</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">为 Activity 设置主题</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">包装 Context 以应用不同的主题</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">全局控制夜间模式</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">重新创建 Activity 以应用新主题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.4.1.</span> <span class="toc-nav-text">情况一：用户在系统设置中切换了亮&#x2F;暗主题</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.4.2.</span> <span class="toc-nav-text">情况二：用户主动在 App 设置页切换主题</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">Configuration 和 Resources 怎么配合的？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">3.6.</span> <span class="toc-nav-text">Activity.context 和 ApplicationContext</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.6.1.</span> <span class="toc-nav-text">1. 亮色或暗色模式时：</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link"><span class="toc-nav-number">3.6.2.</span> <span class="toc-nav-text">2. 跟随系统模式时：</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">再聊主题切换</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Acticity 重建不是最优解</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">2. 业界其他方案</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">写在后面</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">标签</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+				<!--
+                
+                <hr>
+                <h5>朋友们</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://www.freedomly.tk/" target="_blank">Freedomly</a></li>
+                    
+                        <li><a href="https://jlwang1996.github.io/" target="_blank">jlwang1996</a></li>
+                    
+                        <li><a href="http://siwenzheng.github.io/" target="_blank">SiwenZheng</a></li>
+                    
+                        <li><a href="https://loststartvt.github.io/" target="_blank">LostStarTvT</a></li>
+                    
+                        <li><a href="https://zbsong.top/" target="_blank">songzblink</a></li>
+                    
+                        <li><a href="https://dolnw.github.io/" target="_blank">JCWang</a></li>
+                    
+                </ul>
+                
+				-->
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: ''
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-tian-yu-65-49">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://space.bilibili.com/38534865">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>B</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+				
+                    <li>
+                        <a target="_blank" href="https://m.okjike.com/users/28c5ee85-832c-4a04-ab73-788a507d2bd8">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse"><b>J</b></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ztygalaxy">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 张天宇 2025 
+                    <br>
+                    Theme by <a href="http://www.huweihuang.com">Huwei Huang</a>
+                    re-Ported by <a href="https://github.com/ztygalaxy">ztygalaxy</a>
+					
+					<br>
+                    <a href="http://beian.miit.gov.cn/" style="color: gray">浙 ICP备19045818号</a>
+					<br>
+					<!-- <p class="copyright text-muted" style="margin-top: 5px"> -->
+						<img src="../../img/备案图标.png"/>
+						<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011802001883" style="color: gray">浙公网安备 33011802001883号</a>
+					<!-- </p> -->
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://tyzhang.top/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://tyzhang.top/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?...">
+</script>
+</body>
+
+</html>
